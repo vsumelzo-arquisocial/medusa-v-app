@@ -1,0 +1,5557 @@
+[
+ {
+  "id": 1,
+  "name": "Legion Outrider Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 30,
+  "base_size": 2,
+  "max_size": 2,
+  "main_unit": [
+   26
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 2,
+  "name": "Legion Scimitar Jetbike Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 35,
+  "base_size": 3,
+  "max_size": 9,
+  "main_unit": [
+   27
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Scimitar Jetbike",
+    "unit_ref": 27,
+    "options": [
+     {
+      "number": 3,
+      "cost": 35,
+      "size": 3
+     },
+     {
+      "number": 6,
+      "cost": 70,
+      "size": 6
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 3,
+  "name": "Legion Land Speeder Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 30,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [
+   28
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Land Speeder",
+    "unit_ref": 28,
+    "options": [
+     {
+      "number": 2,
+      "cost": 30,
+      "size": 2
+     },
+     {
+      "number": 4,
+      "cost": 60,
+      "size": 4
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 4,
+  "name": "Legion Javelin Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 33,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [
+   29
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Javelin",
+    "unit_ref": 29,
+    "options": [
+     {
+      "number": 2,
+      "cost": 33,
+      "size": 2
+     },
+     {
+      "number": 4,
+      "cost": 66,
+      "size": 4
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 5,
+  "name": "Legion Deathstorm Drop Pod Battery",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 32,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [
+   20
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Deathstorm Drop Pod",
+    "unit_ref": 20,
+    "options": [
+     {
+      "number": 2,
+      "cost": 32,
+      "size": 2
+     },
+     {
+      "number": 4,
+      "cost": 64,
+      "size": 4
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 6,
+  "name": "Auxilia Cyclops Battery",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 40,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [
+   49
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Cyclops",
+    "unit_ref": 49,
+    "options": [
+     {
+      "number": 2,
+      "cost": 40,
+      "size": 2
+     },
+     {
+      "number": 4,
+      "cost": 80,
+      "size": 4
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 7,
+  "name": "Auxilia Malcador Infernus Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 70,
+  "base_size": 1,
+  "max_size": 3,
+  "main_unit": [
+   51
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Malcador Infernus",
+    "unit_ref": 51,
+    "options": [
+     {
+      "number": 1,
+      "cost": 70,
+      "size": 1
+     },
+     {
+      "number": 2,
+      "cost": 140,
+      "size": 2
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 8,
+  "name": "Auxilia Valdor Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 70,
+  "base_size": 1,
+  "max_size": 3,
+  "main_unit": [
+   52
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Valdor",
+    "unit_ref": 52,
+    "options": [
+     {
+      "number": 1,
+      "cost": 70,
+      "size": 1
+     },
+     {
+      "number": 2,
+      "cost": 140,
+      "size": 2
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 9,
+  "name": "Auxilia Stormhammer Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 100,
+  "base_size": 1,
+  "max_size": 3,
+  "main_unit": [
+   53
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Stormhammer",
+    "unit_ref": 53,
+    "options": [
+     {
+      "number": 1,
+      "cost": 100,
+      "size": 1
+     },
+     {
+      "number": 2,
+      "cost": 200,
+      "size": 2
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 10,
+  "name": "Auxilia Medusa Battery",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Artillery"
+  ],
+  "base_cost": 130,
+  "base_size": 4,
+  "max_size": 12,
+  "main_unit": [
+   54
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Medusa",
+    "unit_ref": 54,
+    "options": [
+     {
+      "number": 4,
+      "cost": 130,
+      "size": 4
+     },
+     {
+      "number": 8,
+      "cost": 260,
+      "size": 8
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 11,
+  "name": "Auxilia Basilisk Battery",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Artillery"
+  ],
+  "base_cost": 140,
+  "base_size": 4,
+  "max_size": 12,
+  "main_unit": [
+   55
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Basilisk",
+    "unit_ref": 55,
+    "options": [
+     {
+      "number": 4,
+      "cost": 140,
+      "size": 4
+     },
+     {
+      "number": 8,
+      "cost": 280,
+      "size": 8
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 12,
+  "name": "Chmagos Prime",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 25,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   72
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 13,
+  "name": "Archmagos Prime On Abeyant",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 45,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   73
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 14,
+  "name": "Adsecularis Tech-Thrall Covenant",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Core"
+  ],
+  "base_cost": 30,
+  "base_size": 4,
+  "max_size": 10,
+  "main_unit": [
+   74
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Tech-thralls",
+    "unit_ref": 74,
+    "options": [
+     {
+      "number": 2,
+      "cost": 12,
+      "size": 2
+     },
+     {
+      "number": 4,
+      "cost": 22,
+      "size": 4
+     },
+     {
+      "number": 6,
+      "cost": 30,
+      "size": 6
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 15,
+  "name": "Thallax Cohort",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Core"
+  ],
+  "base_cost": 25,
+  "base_size": 2,
+  "max_size": 8,
+  "main_unit": [
+   75
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Thallax",
+    "unit_ref": 75,
+    "options": [
+     {
+      "number": 2,
+      "cost": 25,
+      "size": 2
+     },
+     {
+      "number": 4,
+      "cost": 40,
+      "size": 4
+     },
+     {
+      "number": 6,
+      "cost": 60,
+      "size": 6
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 16,
+  "name": "Chments                Auxilia",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 15,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   76
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 17,
+  "name": "Myrmidon Secutor Host",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 30,
+  "base_size": 2,
+  "max_size": 8,
+  "main_unit": [
+   77
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Myrmidon Secutors",
+    "unit_ref": 77,
+    "options": [
+     {
+      "number": 2,
+      "cost": 25,
+      "size": 2
+     },
+     {
+      "number": 4,
+      "cost": 40,
+      "size": 4
+     },
+     {
+      "number": 6,
+      "cost": 60,
+      "size": 6
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 18,
+  "name": "Myrmidon Destructor Host",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 30,
+  "base_size": 2,
+  "max_size": 8,
+  "main_unit": [
+   78
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Myrmidon Destructors",
+    "unit_ref": 78,
+    "options": [
+     {
+      "number": 2,
+      "cost": 25,
+      "size": 2
+     },
+     {
+      "number": 4,
+      "cost": 40,
+      "size": 4
+     },
+     {
+      "number": 6,
+      "cost": 60,
+      "size": 6
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 19,
+  "name": "Arlatax Battle-Automata Maniple",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 40,
+  "base_size": 1,
+  "max_size": 5,
+  "main_unit": [
+   79
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Arlatax",
+    "unit_ref": 79,
+    "options": [
+     {
+      "number": 1,
+      "cost": 35,
+      "size": 1
+     },
+     {
+      "number": 2,
+      "cost": 65,
+      "size": 2
+     },
+     {
+      "number": 4,
+      "cost": 110,
+      "size": 4
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 20,
+  "name": "Domitar Battle-Automata Maniple",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 35,
+  "base_size": 1,
+  "max_size": 5,
+  "main_unit": [
+   80
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Domitar",
+    "unit_ref": 80,
+    "options": [
+     {
+      "number": 1,
+      "cost": 30,
+      "size": 1
+     },
+     {
+      "number": 2,
+      "cost": 55,
+      "size": 2
+     },
+     {
+      "number": 4,
+      "cost": 105,
+      "size": 4
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 21,
+  "name": "Castellax Battle-Automata Maniple",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 70,
+  "base_size": 2,
+  "max_size": 8,
+  "main_unit": [
+   81
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Castellax",
+    "unit_ref": 81,
+    "options": [
+     {
+      "number": 2,
+      "cost": 70,
+      "size": 2
+     },
+     {
+      "number": 4,
+      "cost": 130,
+      "size": 4
+     },
+     {
+      "number": 6,
+      "cost": 180,
+      "size": 6
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 22,
+  "name": "Vorax Battle-Automata Maniple",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 40,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [
+   82
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Vorax",
+    "unit_ref": 82,
+    "options": [
+     {
+      "number": 1,
+      "cost": 40,
+      "size": 1
+     },
+     {
+      "number": 2,
+      "cost": 70,
+      "size": 2
+     },
+     {
+      "number": 3,
+      "cost": 105,
+      "size": 3
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 23,
+  "name": "Vultarax Stratos-Automata Squadron",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 35,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [
+   83
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Vultarax",
+    "unit_ref": 83,
+    "options": [
+     {
+      "number": 1,
+      "cost": 35,
+      "size": 1
+     },
+     {
+      "number": 2,
+      "cost": 60,
+      "size": 2
+     },
+     {
+      "number": 3,
+      "cost": 85,
+      "size": 3
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 24,
+  "name": "Thanatar Siege-Automata Maniple",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Bastion"
+  ],
+  "base_cost": 110,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [
+   84
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Thanatar",
+    "unit_ref": 84,
+    "options": [
+     {
+      "number": 1,
+      "cost": 55,
+      "size": 1
+     },
+     {
+      "number": 2,
+      "cost": 100,
+      "size": 2
+     },
+     {
+      "number": 4,
+      "cost": 185,
+      "size": 4
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 25,
+  "name": "Krios Battle Tank Squadron",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 100,
+  "base_size": 3,
+  "max_size": 9,
+  "main_unit": [
+   85
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Krios",
+    "unit_ref": 85,
+    "options": [
+     {
+      "number": 3,
+      "cost": 90,
+      "size": 3
+     },
+     {
+      "number": 6,
+      "cost": 170,
+      "size": 6
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 26,
+  "name": "Krios Venator Squadron",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 60,
+  "base_size": 2,
+  "max_size": 8,
+  "main_unit": [
+   85
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [
+   {
+    "name": "Additional Krios",
+    "unit_ref": 85,
+    "options": [
+     {
+      "number": 2,
+      "cost": 60,
+      "size": 2
+     },
+     {
+      "number": 4,
+      "cost": 110,
+      "size": 4
+     },
+     {
+      "number": 6,
+      "cost": 160,
+      "size": 6
+     }
+    ]
+   }
+  ],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1000,
+  "name": "Legion Command Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 285,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1001,
+  "name": "Legion Command Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 230,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1002,
+  "name": "Legion Command Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 370,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1003,
+  "name": "Legion Command Squad",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 25,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   12
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1004,
+  "name": "Legion Kratos Commander",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "HQ",
+   "Heavy Armour"
+  ],
+  "base_cost": 100,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   13
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1005,
+  "name": "Legion Kratos Commander",
+  "faction": "Legiones Astartes",
+  "subfaction": "Iron Warriors",
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "HQ",
+   "Heavy Armour"
+  ],
+  "base_cost": 620,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   13
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1006,
+  "name": "Legion Predator Commander",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "HQ",
+   "Battle Tank"
+  ],
+  "base_cost": 60,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   6
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1007,
+  "name": "Legion Saturnine Command",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 50,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1008,
+  "name": "Legion Saturnine Command",
+  "faction": "Legiones Astartes",
+  "subfaction": "Salamanders",
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 570,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1009,
+  "name": "Legion Sicaran Commander",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "HQ",
+   "Battle Tank"
+  ],
+  "base_cost": 70,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   8
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1010,
+  "name": "Legion Tactical Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Core"
+  ],
+  "base_cost": 35,
+  "base_size": 4,
+  "max_size": 12,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1011,
+  "name": "Legion Tactical Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Core"
+  ],
+  "base_cost": 0,
+  "base_size": 8,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1012,
+  "name": "Dedicated Spartans",
+  "faction": "Legiones Astartes",
+  "subfaction": "Death Guard",
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 0,
+  "base_size": 2,
+  "max_size": 2,
+  "main_unit": [
+   21
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1013,
+  "name": "Legion Assault Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 30,
+  "base_size": 4,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1014,
+  "name": "Legion Assault Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1015,
+  "name": "Legion Contemptor Dreadnought Talon",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 70,
+  "base_size": 4,
+  "max_size": 10,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1016,
+  "name": "Legion Contemptor Dreadnought Talon",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1017,
+  "name": "Legion Deathstorm Drop Pod Battery",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 40,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [
+   20
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1018,
+  "name": "Legion Missile Launcher Support Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 50,
+  "base_size": 4,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1019,
+  "name": "Legion Missile Launcher Support Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1020,
+  "name": "Legion Missile Support Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": "Death Guard",
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 0,
+  "base_size": 8,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1021,
+  "name": "Legion Palisade Drop Pod",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 25,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   24
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1022,
+  "name": "Legion Plasma Gun Support Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 35,
+  "base_size": 4,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1023,
+  "name": "Legion Plasma Gun Support Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": "Alpha Legion",
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 5,
+  "base_size": 8,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1024,
+  "name": "Legion Plasma Gun Support Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 140,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1025,
+  "name": "Legion Rapier Battery",
+  "faction": "Legiones Astartes",
+  "subfaction": "Death Guard",
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 175,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [
+   16
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1026,
+  "name": "Legion Rapier Battery Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 40,
+  "base_size": 2,
+  "max_size": 8,
+  "main_unit": [
+   16
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1027,
+  "name": "Legion Saturnine Terminator Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 85,
+  "base_size": 3,
+  "max_size": 9,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1028,
+  "name": "Legion Saturnine Terminator Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": "Salamanders",
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 0,
+  "base_size": 6,
+  "max_size": 6,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1029,
+  "name": "Legion Terminator Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 50,
+  "base_size": 4,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1030,
+  "name": "Legion Terminator Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": "Iron Warriors",
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 170,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1031,
+  "name": "Legion Terminator Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": "Death Guard",
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1032,
+  "name": "Leviathan Siege Dreadnought Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 75,
+  "base_size": 4,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1033,
+  "name": "Leviathan Siege Dreadnought Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 205,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1034,
+  "name": "Demi-company Rhinos",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Transport"
+  ],
+  "base_cost": 10,
+  "base_size": 1,
+  "max_size": 31,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1035,
+  "name": "Dreadnought Drop Pod Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Transport"
+  ],
+  "base_cost": 12,
+  "base_size": 1,
+  "max_size": 8,
+  "main_unit": [
+   25
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1036,
+  "name": "Dreadnought Drop Pod Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Transport"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [
+   25
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1037,
+  "name": "Legion Drop Pod Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Transport"
+  ],
+  "base_cost": 10,
+  "base_size": 1,
+  "max_size": 8,
+  "main_unit": [
+   23
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1038,
+  "name": "Legion Drop Pods",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Transport"
+  ],
+  "base_cost": 0,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   23
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1039,
+  "name": "Legion Land Raider Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Transport"
+  ],
+  "base_cost": 35,
+  "base_size": 1,
+  "max_size": 8,
+  "main_unit": [
+   22
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1040,
+  "name": "Legion Land Raider Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": "Alpha Legion",
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Transport",
+   "Dedicated"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [
+   22
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1041,
+  "name": "Legion Palisade Drop Pod",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Transport"
+  ],
+  "base_cost": 0,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   24
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1042,
+  "name": "Legion Rhino Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Transport"
+  ],
+  "base_cost": 10,
+  "base_size": 1,
+  "max_size": 20,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1043,
+  "name": "Legion Spartan Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Transport"
+  ],
+  "base_cost": 70,
+  "base_size": 1,
+  "max_size": 8,
+  "main_unit": [
+   21
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1044,
+  "name": "Legion Spartan Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": "Iron Warriors",
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "Transport"
+  ],
+  "base_cost": 0,
+  "base_size": 2,
+  "max_size": 2,
+  "main_unit": [
+   21
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1045,
+  "name": "Legion Termite Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Transport"
+  ],
+  "base_cost": 14,
+  "base_size": 1,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1046,
+  "name": "Legion Javelin Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 35,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [
+   29
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1047,
+  "name": "Legion Javelin Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": "White Scars",
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 0,
+  "base_size": 6,
+  "max_size": 6,
+  "main_unit": [
+   29
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1048,
+  "name": "Legion Land Speeder Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": "White Scars",
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 305,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [
+   28
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1049,
+  "name": "Legion Outrider Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 25,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [
+   26
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1050,
+  "name": "Legion Outrider Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": "White Scars",
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 265,
+  "base_size": 6,
+  "max_size": 6,
+  "main_unit": [
+   26
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1051,
+  "name": "Legion Scimitar Jetbike Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": "White Scars",
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 0,
+  "base_size": 9,
+  "max_size": 9,
+  "main_unit": [
+   27
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1052,
+  "name": "Legion Sabre Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Light Armour"
+  ],
+  "base_cost": 120,
+  "base_size": 4,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1053,
+  "name": "Legion Sabre Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": "Iron Hands",
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Light Armour"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1054,
+  "name": "Legion Sabre Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": "Alpha Legion",
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Light Armour"
+  ],
+  "base_cost": 295,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1055,
+  "name": "Legion Predator Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 115,
+  "base_size": 3,
+  "max_size": 9,
+  "main_unit": [
+   6
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1056,
+  "name": "Legion Sicaran Arcus Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 95,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [
+   8
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1057,
+  "name": "Legion Sicaran Omega Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 90,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [
+   8
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1058,
+  "name": "Legion Sicaran Omega Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": "Iron Hands",
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 150,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [
+   8
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1059,
+  "name": "Legion Sicaran Punisher Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 90,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [
+   8
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1060,
+  "name": "Legion Sicaran Punisher Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": "Alpha Legion",
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 245,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [
+   8
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1061,
+  "name": "Legion Sicaran Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 90,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [
+   8
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1062,
+  "name": "Legion Sicaran Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": "Iron Hands",
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 260,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [
+   8
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1063,
+  "name": "Legion Vindicator Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 140,
+  "base_size": 4,
+  "max_size": 10,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1064,
+  "name": "Legion Vindicator Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1065,
+  "name": "Legion Ascalon Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 110,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1066,
+  "name": "Legion Cerberus Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 85,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1067,
+  "name": "Legion Falchion Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 130,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1068,
+  "name": "Legion Falchion Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": "Iron Warriors",
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 790,
+  "base_size": 3,
+  "max_size": 3,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1069,
+  "name": "Legion Fellblade Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 120,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1070,
+  "name": "Legion Fellblade Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": "Iron Warriors",
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 0,
+  "base_size": 3,
+  "max_size": 3,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1071,
+  "name": "Legion Glaive Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 110,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1072,
+  "name": "Legion Glaive Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": "Iron Warriors",
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 0,
+  "base_size": 3,
+  "max_size": 3,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1073,
+  "name": "Legion Kratos Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 140,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [
+   13
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1074,
+  "name": "Legion Kratos Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": "Iron Warriors",
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 185,
+  "base_size": 3,
+  "max_size": 3,
+  "main_unit": [
+   13
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1075,
+  "name": "Legion Kratos Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": "Iron Warriors",
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 0,
+  "base_size": 3,
+  "max_size": 3,
+  "main_unit": [
+   13
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1076,
+  "name": "Legion Mastodon Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 130,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1077,
+  "name": "Legion Mastodon Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": "Salamanders",
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 0,
+  "base_size": 2,
+  "max_size": 2,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1078,
+  "name": "Legion Typhon Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 80,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1079,
+  "name": "Legion Typhon Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": "Iron Warriors",
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 0,
+  "base_size": 3,
+  "max_size": 3,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1080,
+  "name": "Legion Scorpius Battery",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Artillery"
+  ],
+  "base_cost": 100,
+  "base_size": 2,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1081,
+  "name": "Legion Whirlwind Battery",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Artillery"
+  ],
+  "base_cost": 90,
+  "base_size": 2,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1082,
+  "name": "Legion Whirlwind Battery",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Artillery"
+  ],
+  "base_cost": 520,
+  "base_size": 6,
+  "max_size": 6,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1083,
+  "name": "Araknae Weapons Platform Battery",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Bastion"
+  ],
+  "base_cost": 30,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1084,
+  "name": "Legion Deredeo Dreadnought Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Bastion"
+  ],
+  "base_cost": 85,
+  "base_size": 4,
+  "max_size": 8,
+  "main_unit": [
+   5
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1085,
+  "name": "Legion Saturnine Dreadnought Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Bastion"
+  ],
+  "base_cost": 70,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1086,
+  "name": "Legion Saturnine Dreadnought Detachment",
+  "faction": "Legiones Astartes",
+  "subfaction": "Salamanders",
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Bastion"
+  ],
+  "base_cost": 495,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1087,
+  "name": "Legion Tarantula Battery",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Bastion"
+  ],
+  "base_cost": 36,
+  "base_size": 4,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1088,
+  "name": "Legion Fire Raptor Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Air Support"
+  ],
+  "base_cost": 100,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [
+   1
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1089,
+  "name": "Legion Storm Eagle Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Air Support"
+  ],
+  "base_cost": 85,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [
+   3
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1090,
+  "name": "Legion Thunderhawk Gunship",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Air Support"
+  ],
+  "base_cost": 150,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [
+   2
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1091,
+  "name": "Legion Xiphon Interceptor Squadron",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Air Support"
+  ],
+  "base_cost": 95,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [
+   4
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1092,
+  "name": "Command Squad Rhino",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Dedicated"
+  ],
+  "base_cost": 0,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   12
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1093,
+  "name": "Rhino Dedicated Transports",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Dedicated"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1094,
+  "name": "Storm Eagle Dedicated Transports",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Dedicated"
+  ],
+  "base_cost": 85,
+  "base_size": 1,
+  "max_size": 10,
+  "main_unit": [
+   3
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1095,
+  "name": "Thunderhawk Dedicated Transports",
+  "faction": "Legiones Astartes",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Dedicated"
+  ],
+  "base_cost": 150,
+  "base_size": 1,
+  "max_size": 10,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1096,
+  "name": "Auxilia Tactical Command",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 10,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   34
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1097,
+  "name": "Auxilia Tactical Command",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 300,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   34
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1098,
+  "name": "Auxilia Tactical Command",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 270,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   34
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1099,
+  "name": "Auxilia Tactical Command",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 385,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   34
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1100,
+  "name": "Legate Commander Detachment",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 16,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1101,
+  "name": "Legate Commander Detachment",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 335,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1102,
+  "name": "Legate Commander Detachment",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 0,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1103,
+  "name": "Legate Commander Detachment",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 360,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1104,
+  "name": "Tank Commander",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 10,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1105,
+  "name": "Auxilia Lasrifle Tercio",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Core"
+  ],
+  "base_cost": 30,
+  "base_size": 4,
+  "max_size": 16,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1106,
+  "name": "Auxilia Lasrifle Tercio",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Core"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 16,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1107,
+  "name": "Auxilia Cyclops Detachment",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 40,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [
+   49
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1108,
+  "name": "Auxilia Ogryn Charonite Section",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 70,
+  "base_size": 4,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1109,
+  "name": "Auxilia Ogryn Charonite Section",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 50,
+  "base_size": 8,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1110,
+  "name": "Auxilia Veletaris Storm Section",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 40,
+  "base_size": 4,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1111,
+  "name": "Auxilia Veletaris Storm Section",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 0,
+  "base_size": 8,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1112,
+  "name": "Auxilia Arvus Lighter",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Transport"
+  ],
+  "base_cost": 12,
+  "base_size": 1,
+  "max_size": 20,
+  "main_unit": [
+   41
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1113,
+  "name": "Auxilia Dracosan Detachment",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Transport",
+   "Dedicated"
+  ],
+  "base_cost": 42,
+  "base_size": 1,
+  "max_size": 8,
+  "main_unit": [
+   50
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1114,
+  "name": "Auxilia Dracosan Transports",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Transport"
+  ],
+  "base_cost": 0,
+  "base_size": 2,
+  "max_size": 2,
+  "main_unit": [
+   50
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1115,
+  "name": "Legate Dracosan Transport",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Transport"
+  ],
+  "base_cost": 0,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   50
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1116,
+  "name": "Veletaris Dracosan Transport",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "Transport"
+  ],
+  "base_cost": 0,
+  "base_size": 2,
+  "max_size": 2,
+  "main_unit": [
+   50
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1117,
+  "name": "Auxilia Aethon Heavy Sentinel Patrol",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 35,
+  "base_size": 2,
+  "max_size": 8,
+  "main_unit": [
+   35
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1118,
+  "name": "Auxilia Aethon Heavy Sentinel Patrol",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 55,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [
+   35
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1119,
+  "name": "Auxilia Aethon Heavy Sentinel Patrol",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [
+   35
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1120,
+  "name": "Auxilia Malcador Infernus Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 60,
+  "base_size": 1,
+  "max_size": 3,
+  "main_unit": [
+   51
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1121,
+  "name": "Auxilia Malcador Infernus Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 490,
+  "base_size": 2,
+  "max_size": 2,
+  "main_unit": [
+   51
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1122,
+  "name": "Auxilia Valdor Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 60,
+  "base_size": 1,
+  "max_size": 3,
+  "main_unit": [
+   52
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1123,
+  "name": "Auxilia Valdor Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 0,
+  "base_size": 2,
+  "max_size": 2,
+  "main_unit": [
+   52
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1124,
+  "name": "Leman Russ Annihilator Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 170,
+  "base_size": 4,
+  "max_size": 10,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1125,
+  "name": "Leman Russ Annihilator Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1126,
+  "name": "Leman Russ Demolisher Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 165,
+  "base_size": 4,
+  "max_size": 10,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1127,
+  "name": "Leman Russ Demolisher Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1128,
+  "name": "Leman Russ Executioner Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 160,
+  "base_size": 4,
+  "max_size": 10,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1129,
+  "name": "Leman Russ Executioner Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1130,
+  "name": "Leman Russ Executioner Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 410,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1131,
+  "name": "Leman Russ Executioner Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 675,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1132,
+  "name": "Leman Russ Exterminator Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 160,
+  "base_size": 4,
+  "max_size": 10,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1133,
+  "name": "Leman Russ Exterminator Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1134,
+  "name": "Leman Russ Strike Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 160,
+  "base_size": 4,
+  "max_size": 10,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1135,
+  "name": "Leman Russ Strike Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1136,
+  "name": "Leman Russ Vanquisher Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 175,
+  "base_size": 4,
+  "max_size": 10,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1137,
+  "name": "Leman Russ Vanquisher Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 465,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1138,
+  "name": "Malcador Annihilator Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 150,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1139,
+  "name": "Malcador Annihilator Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 0,
+  "base_size": 2,
+  "max_size": 2,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1140,
+  "name": "Malcador Tank Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 150,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [
+   40
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1141,
+  "name": "Malcador Tank Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [
+   40
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1142,
+  "name": "Malcador Vanquisher Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 160,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1143,
+  "name": "Auxilia Baneblade Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 100,
+  "base_size": 1,
+  "max_size": 3,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1144,
+  "name": "Auxilia Hellhammer Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 100,
+  "base_size": 1,
+  "max_size": 3,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1145,
+  "name": "Auxilia Shadowsword Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 120,
+  "base_size": 1,
+  "max_size": 3,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1146,
+  "name": "Auxilia Stormblade Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 110,
+  "base_size": 1,
+  "max_size": 3,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1147,
+  "name": "Auxilia Stormblade Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 410,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1148,
+  "name": "Auxilia Stormhammer Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 0,
+  "base_size": 3,
+  "max_size": 3,
+  "main_unit": [
+   53
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1149,
+  "name": "Auxilia Stormsword Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 100,
+  "base_size": 1,
+  "max_size": 3,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1150,
+  "name": "Auxilia Stormsword Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 370,
+  "base_size": 3,
+  "max_size": 3,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1151,
+  "name": "Auxilia Basilisk Battery",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Artillery"
+  ],
+  "base_cost": 130,
+  "base_size": 4,
+  "max_size": 12,
+  "main_unit": [
+   55
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1152,
+  "name": "Auxilia Basilisk Battery",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "Artillery"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [
+   55
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1153,
+  "name": "Auxilia Medusa Battery",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Artillery"
+  ],
+  "base_cost": 120,
+  "base_size": 4,
+  "max_size": 12,
+  "main_unit": [
+   54
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1154,
+  "name": "Auxilia Medusa Battery",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "Artillery"
+  ],
+  "base_cost": 110,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [
+   54
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1155,
+  "name": "Auxilia Rapier Battery",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Bastion"
+  ],
+  "base_cost": 60,
+  "base_size": 4,
+  "max_size": 12,
+  "main_unit": [
+   37
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1156,
+  "name": "Auxilia Rapier Battery",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Bastion"
+  ],
+  "base_cost": 0,
+  "base_size": 8,
+  "max_size": 8,
+  "main_unit": [
+   37
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1157,
+  "name": "Auxilia Tarantula Battery",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Bastion"
+  ],
+  "base_cost": 30,
+  "base_size": 3,
+  "max_size": 9,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1158,
+  "name": "Auxilia Avenger Strike Fighter Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Air Support"
+  ],
+  "base_cost": 85,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [
+   44
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1159,
+  "name": "Auxilia Lightning Fighter Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Air Support"
+  ],
+  "base_cost": 85,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [
+   43
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1160,
+  "name": "Auxilia Marauder Bomber Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Air Support"
+  ],
+  "base_cost": 85,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [
+   45
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1161,
+  "name": "Auxilia Thunderbolt Squadron",
+  "faction": "Solar Auxillia",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Air Support"
+  ],
+  "base_cost": 80,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1162,
+  "name": "Archmagos Prime",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 25,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   72
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1163,
+  "name": "Archmagos Prime on Abeyant",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 610,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [
+   72
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1164,
+  "name": "Cortex Controller",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 10,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1165,
+  "name": "Adsecularis Tech-thrall Covenant",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Core"
+  ],
+  "base_cost": 40,
+  "base_size": 5,
+  "max_size": 15,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1166,
+  "name": "Castellax Battle-automata Maniple",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 0,
+  "base_size": 6,
+  "max_size": 6,
+  "main_unit": [
+   81
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1167,
+  "name": "Domitar Battle-automata Maniple",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 0,
+  "base_size": 3,
+  "max_size": 3,
+  "main_unit": [
+   80
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1168,
+  "name": "Tech-Priest Auxilia",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 15,
+  "base_size": 1,
+  "max_size": 3,
+  "main_unit": [
+   76
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1169,
+  "name": "Tech-Priest Auxilia",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 890,
+  "base_size": 3,
+  "max_size": 3,
+  "main_unit": [
+   76
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1170,
+  "name": "Triaros Armoured Conveyor",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Transport",
+   "Dedicated"
+  ],
+  "base_cost": 22,
+  "base_size": 1,
+  "max_size": 20,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1171,
+  "name": "Ursarax Cohort",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 30,
+  "base_size": 2,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1172,
+  "name": "Vorax Battle-automata Maniple",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [
+   82
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1173,
+  "name": "Vultarax Stratos-automata Squadron",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [
+   83
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1174,
+  "name": "Karacnos Assault-tank Squadron",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 40,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1175,
+  "name": "Krios Battle-tank Squadron",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 100,
+  "base_size": 3,
+  "max_size": 9,
+  "main_unit": [
+   85
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1176,
+  "name": "Krios Venator Squadron",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 0,
+  "base_size": 6,
+  "max_size": 6,
+  "main_unit": [
+   85
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1177,
+  "name": "Thanatar Siege-automata Maniple",
+  "faction": "Mechanicum",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Bastion"
+  ],
+  "base_cost": 0,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [
+   84
+  ],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1178,
+  "name": "Archmagos Prime",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 25,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1179,
+  "name": "Archmagos Prime on Abeyant",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 45,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1180,
+  "name": "Scintillax 'Cyclops' Noospheric Stalker Network",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": "Traitor",
+  "unique": false,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 75,
+  "base_size": 1,
+  "max_size": 6,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1181,
+  "name": "Scintillax 'Cyclops' Noospheric Stalker Network",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "HQ"
+  ],
+  "base_cost": 200,
+  "base_size": 4,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1182,
+  "name": "Adsecularis Tech-thrall Covenant",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Core"
+  ],
+  "base_cost": 40,
+  "base_size": 5,
+  "max_size": 15,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1183,
+  "name": "Adsecularis Tech-thrall Covenant",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "Core"
+  ],
+  "base_cost": 0,
+  "base_size": 8,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1184,
+  "name": "Errax 'Butcher' Assault Stalker Company",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": "Traitor",
+  "unique": false,
+  "detachment_type": [
+   "Core"
+  ],
+  "base_cost": 45,
+  "base_size": 1,
+  "max_size": 9,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1185,
+  "name": "Thallax Cohort",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Core"
+  ],
+  "base_cost": 25,
+  "base_size": 2,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1186,
+  "name": "Myrmidon Destructor Host",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 30,
+  "base_size": 2,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1187,
+  "name": "Myrmidon Secutor Host",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 30,
+  "base_size": 2,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1188,
+  "name": "Myrmidon Secutor Host",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 0,
+  "base_size": 6,
+  "max_size": 6,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1189,
+  "name": "Tech-Priest Auxilia",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Support"
+  ],
+  "base_cost": 15,
+  "base_size": 1,
+  "max_size": 3,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1190,
+  "name": "Triaros Armoured Conveyor",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": true,
+  "detachment_type": [
+   "Transport",
+   "Dedicated"
+  ],
+  "base_cost": 22,
+  "base_size": 1,
+  "max_size": 20,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1191,
+  "name": "Harpax 'Swarmer' Scout Host",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 30,
+  "base_size": 4,
+  "max_size": 10,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1192,
+  "name": "Ursarax Cohort",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Vanguard"
+  ],
+  "base_cost": 30,
+  "base_size": 2,
+  "max_size": 8,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1193,
+  "name": "Tenebrax 'Archer' Battle Stalker Company",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": "Traitor",
+  "unique": false,
+  "detachment_type": [
+   "Light Armour"
+  ],
+  "base_cost": 35,
+  "base_size": 1,
+  "max_size": 6,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1194,
+  "name": "Karacnos Assault-tank Squadron",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 40,
+  "base_size": 1,
+  "max_size": 4,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1195,
+  "name": "Krios Battle-tank Squadron",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Battle Tank"
+  ],
+  "base_cost": 100,
+  "base_size": 3,
+  "max_size": 9,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1196,
+  "name": "Serperos 'Overlord' Heavy Stalker Maniple",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": "Traitor",
+  "unique": false,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 175,
+  "base_size": 2,
+  "max_size": 6,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1197,
+  "name": "Serperos 'Overlord' Heavy Stalker Maniple",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "Heavy Armour"
+  ],
+  "base_cost": 700,
+  "base_size": 6,
+  "max_size": 6,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1198,
+  "name": "Triaros Armoured Conveyor",
+  "faction": "Dark Mechanicum",
+  "subfaction": null,
+  "allegiance": "Traitor",
+  "unique": true,
+  "detachment_type": [
+   "Dedicated"
+  ],
+  "base_cost": 0,
+  "base_size": 2,
+  "max_size": 2,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1199,
+  "name": "Acastus Knight Asterius Banner",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Knight"
+  ],
+  "base_cost": 240,
+  "base_size": 1,
+  "max_size": 2,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1200,
+  "name": "Acastus Knight Porphyrion Banner",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Knight"
+  ],
+  "base_cost": 230,
+  "base_size": 1,
+  "max_size": 2,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1201,
+  "name": "Cerastus Knight Atrapos Banner",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Knight"
+  ],
+  "base_cost": 180,
+  "base_size": 1,
+  "max_size": 3,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1202,
+  "name": "Cerastus Knight Banner",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Knight"
+  ],
+  "base_cost": 160,
+  "base_size": 1,
+  "max_size": 3,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1203,
+  "name": "Cerastus Knight Banner",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Knight"
+  ],
+  "base_cost": 0,
+  "base_size": 2,
+  "max_size": 2,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1204,
+  "name": "Knight Armiger Talon",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Knight"
+  ],
+  "base_cost": 120,
+  "base_size": 3,
+  "max_size": 3,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1205,
+  "name": "Mechanicum Knight Moirax Talon",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Knight"
+  ],
+  "base_cost": 135,
+  "base_size": 3,
+  "max_size": 3,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1206,
+  "name": "Questoris Knight Banner",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Knight"
+  ],
+  "base_cost": 130,
+  "base_size": 1,
+  "max_size": 3,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1207,
+  "name": "Questoris Knight Banner",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Knight"
+  ],
+  "base_cost": 0,
+  "base_size": 2,
+  "max_size": 2,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1208,
+  "name": "Questoris Mechanicum Knight Banner",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Knight"
+  ],
+  "base_cost": 140,
+  "base_size": 1,
+  "max_size": 3,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1209,
+  "name": "Dire Wolf Heavy Scout Titan",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Titan"
+  ],
+  "base_cost": 350,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1210,
+  "name": "Reaver Battle Titan",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Titan"
+  ],
+  "base_cost": 400,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1211,
+  "name": "Reaver Battle Titan",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Titan"
+  ],
+  "base_cost": 780,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1212,
+  "name": "Warbringer Nemesis Titan",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Titan"
+  ],
+  "base_cost": 525,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1213,
+  "name": "Warhound Hunting Pack",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Titan"
+  ],
+  "base_cost": 300,
+  "base_size": 1,
+  "max_size": 3,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1214,
+  "name": "Warhound Hunting Pack",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": true,
+  "detachment_type": [
+   "Titan"
+  ],
+  "base_cost": 960,
+  "base_size": 2,
+  "max_size": 2,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1215,
+  "name": "Warlord Battle Titan",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Titan"
+  ],
+  "base_cost": 600,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1216,
+  "name": "Warlord-Sinister Battle Titan",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": "Loyalist",
+  "unique": false,
+  "detachment_type": [
+   "Titan"
+  ],
+  "base_cost": 675,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1217,
+  "name": "Warmaster Heavy Battle Titan",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Titan"
+  ],
+  "base_cost": 850,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ },
+ {
+  "id": 1218,
+  "name": "Warmaster Iconoclast Titan",
+  "faction": "Strategic Assets",
+  "subfaction": null,
+  "allegiance": null,
+  "unique": false,
+  "detachment_type": [
+   "Titan"
+  ],
+  "base_cost": 850,
+  "base_size": 1,
+  "max_size": 1,
+  "main_unit": [],
+  "related_unit": [],
+  "dataslate_loadout": [],
+  "upgrade_options": [],
+  "loadout_options": [],
+  "datasheet_info": []
+ }
+]

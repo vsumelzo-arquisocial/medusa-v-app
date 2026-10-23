@@ -1,0 +1,3045 @@
+[
+  {
+    "id": 1,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Fire Raptor",
+    "movement": "25\"",
+    "save": 3,
+    "caf": 0,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "special_rules": [
+      {
+        "name": "Flyer"
+      },
+      {
+        "name": "Hover"
+      },
+      {
+        "name": "Jink",
+        "value": "5+"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Thunderhawk Gunship",
+    "movement": "25\"",
+    "save": 2,
+    "caf": 0,
+    "morale": null,
+    "wounds": 2,
+    "weapons": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "special_rules": [
+      {
+        "name": "Flyer"
+      },
+      {
+        "name": "Hover"
+      },
+      {
+        "name": "Jink",
+        "value": "5+"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Storm Eagle",
+    "movement": "25\"",
+    "save": 3,
+    "caf": 0,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "special_rules": [
+      {
+        "name": "Assault Transport",
+        "value": "5"
+      },
+      {
+        "name": "Flyer"
+      },
+      {
+        "name": "Hover"
+      },
+      {
+        "name": "Jink",
+        "value": "5+"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Xiphon Interceptor",
+    "movement": "30\"",
+    "save": 3,
+    "caf": 0,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "special_rules": [
+      {
+        "name": "Assault Transport",
+        "value": "5"
+      },
+      {
+        "name": "Flyer"
+      },
+      {
+        "name": "Hover"
+      },
+      {
+        "name": "Jink",
+        "value": "5+"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Walker",
+      "value": 1
+    },
+    "name": "Deredeo Dreadnought",
+    "movement": "5\"",
+    "save": 4,
+    "caf": 2,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "special_rules": [
+      {
+        "name": "Armoured"
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "5+"
+      },
+      {
+        "name": "Tracking Array"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Walker",
+      "value": 1
+    },
+    "name": "Legion Predator",
+    "movement": "9\"",
+    "save": 3,
+    "caf": 2,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "special_rules": [
+      {
+        "name": "Armoured"
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "5+"
+      },
+      {
+        "name": "Tracking Array"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Legio Tarantula",
+    "movement": "-",
+    "save": 5,
+    "caf": -3,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      23,
+      24,
+      25,
+      26,
+      21,
+      22
+    ],
+    "special_rules": [
+      {
+        "name": "Automated Sentry"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Legion Sicaran",
+    "movement": "10\"",
+    "save": 3,
+    "caf": 2,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      23,
+      24,
+      25,
+      26,
+      21,
+      22
+    ],
+    "special_rules": [
+      {
+        "name": "Automated Sentry"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Tactical Legionaries",
+    "movement": "5\"",
+    "save": 5,
+    "caf": 2,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "special_rules": [
+      {
+        "name": "(Tactical Legionaries): None. (Assault Marines): Jump Packs"
+      },
+      {
+        "name": "Independent (Legion Terminators): Bulky"
+      },
+      {
+        "name": "Deep Strike"
+      },
+      {
+        "name": "Implacable"
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "6+"
+      },
+      {
+        "name": "Steadfast"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Walker",
+      "value": 1
+    },
+    "name": "Assault Marines",
+    "movement": "7\"",
+    "save": 5,
+    "caf": 3,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      27,
+      28,
+      29,
+      30,
+      31,
+      46,
+      47,
+      48,
+      49
+    ],
+    "special_rules": [
+      {
+        "name": "(Tactical Legionaries): None. (Assault Marines): Jump Packs"
+      },
+      {
+        "name": "Independent (Legion Terminators): Bulky"
+      },
+      {
+        "name": "Deep Strike"
+      },
+      {
+        "name": "Implacable"
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "6+"
+      },
+      {
+        "name": "Steadfast"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Super-Heavy Vehicle",
+      "value": 1
+    },
+    "name": "Legion Terminators",
+    "movement": "5\"",
+    "save": 4,
+    "caf": 4,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "special_rules": [
+      {
+        "name": "(Tactical Legionaries): None. (Assault Marines): Jump Packs"
+      },
+      {
+        "name": "Independent (Legion Terminators): Bulky"
+      },
+      {
+        "name": "Deep Strike"
+      },
+      {
+        "name": "Implacable"
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "6+"
+      },
+      {
+        "name": "Steadfast"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Command Squad",
+    "movement": "5\"",
+    "save": 4,
+    "caf": 4,
+    "morale": 2,
+    "wounds": 1,
+    "weapons": [
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "special_rules": [
+      {
+        "name": "(Tactical Legionaries): None. (Assault Marines): Jump Packs"
+      },
+      {
+        "name": "Independent (Legion Terminators): Bulky"
+      },
+      {
+        "name": "Deep Strike"
+      },
+      {
+        "name": "Implacable"
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "6+"
+      },
+      {
+        "name": "Steadfast"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Legion Kratos",
+    "movement": "8\"",
+    "save": 2,
+    "caf": 3,
+    "morale": 3,
+    "wounds": 2,
+    "weapons": [
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      22,
+      38,
+      39,
+      40
+    ],
+    "special_rules": []
+  },
+  {
+    "id": 14,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Rhino Transport",
+    "movement": "9\"",
+    "save": 4,
+    "caf": 0,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      22,
+      38,
+      39,
+      40
+    ],
+    "special_rules": []
+  },
+  {
+    "id": 15,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Walker",
+      "value": 1
+    },
+    "name": "Contemptor Dreadnaught",
+    "movement": "5\"",
+    "save": 4,
+    "caf": 5,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      41,
+      42,
+      43,
+      44,
+      45
+    ],
+    "special_rules": [
+      {
+        "name": "Armoured"
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "6+"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Walker",
+      "value": 1
+    },
+    "name": "Legion Rapier",
+    "movement": "4\"",
+    "save": 5,
+    "caf": 1,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      41,
+      42,
+      43,
+      44,
+      45
+    ],
+    "special_rules": [
+      {
+        "name": "Armoured"
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "6+"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Walker",
+      "value": 1
+    },
+    "name": "Leviathan Dreadnought",
+    "movement": "5\"",
+    "save": 4,
+    "caf": 5,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      46,
+      47,
+      48,
+      49,
+      30
+    ],
+    "special_rules": [
+      {
+        "name": "Armoured"
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "5+"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Super-Heavy Vehicle",
+      "value": 1
+    },
+    "name": "Support Legionaries",
+    "movement": "5\"",
+    "save": 5,
+    "caf": 1,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      28,
+      31
+    ],
+    "special_rules": []
+  },
+  {
+    "id": 19,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Super-Heavy Vehicle",
+      "value": 1
+    },
+    "name": "Support Legionaries",
+    "movement": "5\"",
+    "save": 5,
+    "caf": 3,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      29
+    ],
+    "special_rules": []
+  },
+  {
+    "id": 20,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Deathstorm Drop Pod",
+    "movement": "-",
+    "save": 4,
+    "caf": -8,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      29
+    ],
+    "special_rules": [
+      {
+        "name": "Drop Pod"
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Spartan",
+    "movement": "8\"",
+    "save": 2,
+    "caf": 2,
+    "morale": 3,
+    "wounds": 2,
+    "weapons": [
+      50,
+      51,
+      35,
+      52,
+      40,
+      53
+    ],
+    "special_rules": [
+      {
+        "name": "Assault transport",
+        "value": "5"
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Land Raider",
+    "movement": "9\"",
+    "save": 2,
+    "caf": 2,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      50,
+      51,
+      35,
+      52,
+      40,
+      53
+    ],
+    "special_rules": [
+      {
+        "name": "Assault transport",
+        "value": "5"
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Drop Pod",
+    "movement": "-",
+    "save": 4,
+    "caf": -3,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      54
+    ],
+    "special_rules": [
+      {
+        "name": "(Drop Pod)    Drop Pod"
+      },
+      {
+        "name": "Transport (2) (Palisade)    Drop Pod"
+      },
+      {
+        "name": "Sheild Generator",
+        "value": "5+"
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Palisade Drop Pod",
+    "movement": "-",
+    "save": 4,
+    "caf": -8,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      54
+    ],
+    "special_rules": [
+      {
+        "name": "(Drop Pod)    Drop Pod"
+      },
+      {
+        "name": "Transport (2) (Palisade)    Drop Pod"
+      },
+      {
+        "name": "Sheild Generator",
+        "value": "5+"
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Dreadnought Drop Pod",
+    "movement": "-",
+    "save": 4,
+    "caf": -8,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      54
+    ],
+    "special_rules": [
+      {
+        "name": "(Drop Pod)    Drop Pod"
+      },
+      {
+        "name": "Transport (2) (Palisade)    Drop Pod"
+      },
+      {
+        "name": "Sheild Generator",
+        "value": "5+"
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Cavalry",
+      "value": 1
+    },
+    "name": "Outrider",
+    "movement": "10\"",
+    "save": 5,
+    "caf": 2,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      55,
+      56,
+      57,
+      195,
+      29
+    ],
+    "special_rules": [
+      {
+        "name": "Jink",
+        "value": "6+"
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Cavalry",
+      "value": 1
+    },
+    "name": "Scimitar Jetbike",
+    "movement": "10\"",
+    "save": 5,
+    "caf": 2,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      55,
+      56,
+      57
+    ],
+    "special_rules": [
+      {
+        "name": "Jink",
+        "value": "6+"
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Cavalry",
+      "value": 1
+    },
+    "name": "Land Speeder",
+    "movement": "10\"",
+    "save": 4,
+    "caf": 1,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      58,
+      59,
+      60,
+      61,
+      22,
+      62,
+      196
+    ],
+    "special_rules": [
+      {
+        "name": "Jink",
+        "value": "6+"
+      },
+      {
+        "name": "Skimmer"
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "faction": "Legiones Astartes",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Cavalry",
+      "value": 1
+    },
+    "name": "Javelin",
+    "movement": "10\"",
+    "save": 4,
+    "caf": 1,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      58,
+      59,
+      60,
+      61,
+      22,
+      62,
+      196,
+      197
+    ],
+    "special_rules": [
+      {
+        "name": "Jink",
+        "value": "6+"
+      },
+      {
+        "name": "Skimmer"
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Auxilia Commander",
+    "movement": "5\"",
+    "save": 6,
+    "caf": 3,
+    "morale": 2,
+    "wounds": 1,
+    "weapons": [
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69
+    ],
+    "special_rules": [
+      {
+        "name": "Commander"
+      },
+      {
+        "name": "Inspire",
+        "value": "8\""
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "6+"
+      },
+      {
+        "name": "Master Tactician"
+      },
+      {
+        "name": "Solar Auxilia HQ",
+        "value": "10\""
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Auxiliaries",
+    "movement": "5\"",
+    "save": 6,
+    "caf": 0,
+    "morale": 4,
+    "wounds": 1,
+    "weapons": [
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69
+    ],
+    "special_rules": [
+      {
+        "name": "Commander"
+      },
+      {
+        "name": "Inspire",
+        "value": "8\""
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "6+"
+      },
+      {
+        "name": "Master Tactician"
+      },
+      {
+        "name": "Solar Auxilia HQ",
+        "value": "10\""
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Super-Heavy Vehicle",
+      "value": 1
+    },
+    "name": "Veletarii",
+    "movement": "5\"",
+    "save": 6,
+    "caf": 1,
+    "morale": 4,
+    "wounds": 1,
+    "weapons": [
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69
+    ],
+    "special_rules": [
+      {
+        "name": "Commander"
+      },
+      {
+        "name": "Inspire",
+        "value": "8\""
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "6+"
+      },
+      {
+        "name": "Master Tactician"
+      },
+      {
+        "name": "Solar Auxilia HQ",
+        "value": "10\""
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Super-Heavy Vehicle",
+      "value": 1
+    },
+    "name": "Charonite Ogryns",
+    "movement": "5\"",
+    "save": 6,
+    "caf": 3,
+    "morale": 4,
+    "wounds": 1,
+    "weapons": [
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ],
+    "special_rules": [
+      {
+        "name": "Commander"
+      },
+      {
+        "name": "Inspire",
+        "value": "8\""
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "6+"
+      },
+      {
+        "name": "Master Tactician"
+      },
+      {
+        "name": "Solar Auxilia HQ",
+        "value": "10\""
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Super-Heavy Vehicle",
+      "value": 1
+    },
+    "name": "Tactical Command",
+    "movement": "5\"",
+    "save": 6,
+    "caf": 1,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      65,
+      67,
+      68
+    ],
+    "special_rules": [
+      {
+        "name": "Commander"
+      },
+      {
+        "name": "Inspire",
+        "value": "8\""
+      },
+      {
+        "name": "Solar Auxilia HQ",
+        "value": "6\""
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Super-Heavy Vehicle",
+      "value": 1
+    },
+    "name": "Aethon Heavy Sentinel",
+    "movement": "7\"",
+    "save": 4,
+    "caf": 0,
+    "morale": 4,
+    "wounds": 1,
+    "weapons": [
+      69,
+      70,
+      71
+    ],
+    "special_rules": [
+      {
+        "name": "Furious Charge"
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Legio Tarantula",
+    "movement": "-",
+    "save": 5,
+    "caf": -3,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      23,
+      44,
+      72,
+      45
+    ],
+    "special_rules": [
+      {
+        "name": "Automated Sentry"
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Auxilia Rapier",
+    "movement": "4\"",
+    "save": 6,
+    "caf": 0,
+    "morale": 4,
+    "wounds": 1,
+    "weapons": [
+      23,
+      44,
+      72,
+      45
+    ],
+    "special_rules": [
+      {
+        "name": "Automated Sentry"
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Leman Russ Tank",
+    "movement": "8\"",
+    "save": 2,
+    "caf": 2,
+    "morale": 4,
+    "wounds": 1,
+    "weapons": [
+      73,
+      74,
+      26,
+      52,
+      75,
+      76,
+      34,
+      77
+    ],
+    "special_rules": [
+      {
+        "name": "Chain of Command"
+      },
+      {
+        "name": "Explorator Adaption"
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Auxilia Super-Heavy Tank",
+    "movement": "7\"",
+    "save": 2,
+    "caf": 4,
+    "morale": 4,
+    "wounds": 2,
+    "weapons": [
+      73,
+      74,
+      26,
+      52,
+      75,
+      76,
+      34,
+      77
+    ],
+    "special_rules": [
+      {
+        "name": "Chain of Command"
+      },
+      {
+        "name": "Explorator Adaption"
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Malcador Tank",
+    "movement": "9\"",
+    "save": 3,
+    "caf": 2,
+    "morale": 4,
+    "wounds": 2,
+    "weapons": [
+      78,
+      79,
+      80,
+      81,
+      82,
+      26,
+      52,
+      83,
+      84,
+      85
+    ],
+    "special_rules": [
+      {
+        "name": ": Chain of Command"
+      },
+      {
+        "name": "Explorator Adaption"
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Arvus Lighter",
+    "movement": "25\"",
+    "save": 4,
+    "caf": 0,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      78,
+      79,
+      80,
+      81,
+      82,
+      26,
+      52,
+      83,
+      84,
+      85
+    ],
+    "special_rules": [
+      {
+        "name": ": Chain of Command"
+      },
+      {
+        "name": "Explorator Adaption"
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Thunderbolt Fighter",
+    "movement": "25\"",
+    "save": 4,
+    "caf": 0,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      86,
+      1,
+      9,
+      87,
+      88,
+      89,
+      90
+    ],
+    "special_rules": [
+      {
+        "name": "Flyer"
+      },
+      {
+        "name": "Interceptor"
+      },
+      {
+        "name": "Jink",
+        "value": "5+"
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Lightning Fighter",
+    "movement": "30\"",
+    "save": 4,
+    "caf": 0,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      86,
+      1,
+      9,
+      87,
+      88,
+      89,
+      90
+    ],
+    "special_rules": [
+      {
+        "name": "Flyer"
+      },
+      {
+        "name": "Interceptor"
+      },
+      {
+        "name": "Jink",
+        "value": "5+"
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Avenger Strike Fighter",
+    "movement": "28\"",
+    "save": 4,
+    "caf": 0,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      1,
+      91,
+      92,
+      93,
+      9,
+      87,
+      88,
+      94,
+      95,
+      96
+    ],
+    "special_rules": [
+      {
+        "name": "Flyer"
+      },
+      {
+        "name": "Interceptor"
+      },
+      {
+        "name": "Jink",
+        "value": "5+"
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Marauder Bomber",
+    "movement": "24\"",
+    "save": 3,
+    "caf": 0,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      1,
+      91,
+      92,
+      93,
+      9,
+      87,
+      88,
+      94,
+      95,
+      96
+    ],
+    "special_rules": [
+      {
+        "name": "Flyer"
+      },
+      {
+        "name": "Interceptor"
+      },
+      {
+        "name": "Jink",
+        "value": "5+"
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Marauder Colossus",
+    "movement": "22\"",
+    "save": 3,
+    "caf": 0,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      97,
+      98,
+      99,
+      9,
+      87,
+      88
+    ],
+    "special_rules": [
+      {
+        "name": "Flyer"
+      },
+      {
+        "name": "Jink",
+        "value": "5+"
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Marauder Pathfinder",
+    "movement": "22\"",
+    "save": 3,
+    "caf": 0,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      97,
+      98,
+      99,
+      9,
+      87,
+      88
+    ],
+    "special_rules": [
+      {
+        "name": "Flyer"
+      },
+      {
+        "name": "Jink",
+        "value": "5+"
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Marauder Destroyer",
+    "movement": "24\"",
+    "save": 3,
+    "caf": 0,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      100,
+      101,
+      102,
+      9,
+      87,
+      88,
+      103,
+      104
+    ],
+    "special_rules": [
+      {
+        "name": "Flyer"
+      },
+      {
+        "name": "Jink",
+        "value": "5+"
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Cyclops",
+    "movement": "9\"",
+    "save": 5,
+    "caf": -8,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      100,
+      101,
+      102,
+      9,
+      87,
+      88,
+      103,
+      104
+    ],
+    "special_rules": [
+      {
+        "name": "Flyer"
+      },
+      {
+        "name": "Jink",
+        "value": "5+"
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Dracosan",
+    "movement": "8\"",
+    "save": 2,
+    "caf": 2,
+    "morale": 4,
+    "wounds": 1,
+    "weapons": [
+      105,
+      83,
+      85
+    ],
+    "special_rules": [
+      {
+        "name": "Explorator Adaption"
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Malcador Infernus",
+    "movement": "8\"",
+    "save": 3,
+    "caf": 1,
+    "morale": 4,
+    "wounds": 2,
+    "weapons": [
+      105,
+      83,
+      85,
+      198
+    ],
+    "special_rules": [
+      {
+        "name": "Explorator Adaption"
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Valdor",
+    "movement": "8\"",
+    "save": 3,
+    "caf": 1,
+    "morale": 4,
+    "wounds": 2,
+    "weapons": [
+      106,
+      83,
+      85,
+      107,
+      108,
+      109,
+      52,
+      110,
+      111,
+      199,
+      200
+    ],
+    "special_rules": [
+      {
+        "name": ": Chain of Command"
+      },
+      {
+        "name": "Explorator Adaption"
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Super-Heavy Vehicle",
+      "value": 3
+    },
+    "name": "Stormhammer",
+    "movement": "6\"",
+    "save": 2,
+    "caf": 2,
+    "morale": 4,
+    "wounds": 2,
+    "weapons": [
+      106,
+      83,
+      85,
+      107,
+      108,
+      109,
+      52,
+      110,
+      111,
+      201,
+      202
+    ],
+    "special_rules": [
+      {
+        "name": ": Chain of Command"
+      },
+      {
+        "name": "Explorator Adaption"
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Medusa",
+    "movement": "6\"",
+    "save": 3,
+    "caf": 0,
+    "morale": 4,
+    "wounds": 1,
+    "weapons": [
+      112,
+      113
+    ],
+    "special_rules": [
+      {
+        "name": ": Chain of Command"
+      },
+      {
+        "name": "Explorator Adaption"
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "faction": "Solar Auxillia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Basilisk",
+    "movement": "6\"",
+    "save": 3,
+    "caf": 0,
+    "morale": 4,
+    "wounds": 1,
+    "weapons": [
+      112,
+      113
+    ],
+    "special_rules": [
+      {
+        "name": ": Chain of Command"
+      },
+      {
+        "name": "Explorator Adaption"
+      }
+    ]
+  },
+  {
+    "id": 56,
+    "faction": "Questoris Familia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Questoris Knight",
+    "movement": "8\"",
+    "save": 3,
+    "caf": 8,
+    "morale": 2,
+    "wounds": 3,
+    "weapons": [
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123
+    ],
+    "special_rules": [
+      {
+        "name": ": Independent"
+      },
+      {
+        "name": "Ion Shields",
+        "value": "4+"
+      },
+      {
+        "name": "Nimble"
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "faction": "Questoris Familia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Knight Armiger",
+    "movement": "8\"",
+    "save": 3,
+    "caf": 6,
+    "morale": 2,
+    "wounds": 2,
+    "weapons": [
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123
+    ],
+    "special_rules": [
+      {
+        "name": ": Independent"
+      },
+      {
+        "name": "Ion Shields",
+        "value": "4+"
+      },
+      {
+        "name": "Nimble"
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "faction": "Questoris Familia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Mechanicum Questoris Knight",
+    "movement": "8\"",
+    "save": 3,
+    "caf": 8,
+    "morale": 2,
+    "wounds": 3,
+    "weapons": [
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131
+    ],
+    "special_rules": [
+      {
+        "name": ": Blessed Auto-simulacra"
+      },
+      {
+        "name": "Independent"
+      },
+      {
+        "name": "Ionic Flare Shield"
+      },
+      {
+        "name": "Ion Shields",
+        "value": "4+"
+      },
+      {
+        "name": "Nimble"
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "faction": "Questoris Familia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Knight Moirax",
+    "movement": "8\"",
+    "save": 3,
+    "caf": 6,
+    "morale": 2,
+    "wounds": 2,
+    "weapons": [
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131
+    ],
+    "special_rules": [
+      {
+        "name": ": Blessed Auto-simulacra"
+      },
+      {
+        "name": "Independent"
+      },
+      {
+        "name": "Ionic Flare Shield"
+      },
+      {
+        "name": "Ion Shields",
+        "value": "4+"
+      },
+      {
+        "name": "Nimble"
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "faction": "Questoris Familia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Cerastus Knight",
+    "movement": "9\"",
+    "save": 3,
+    "caf": 11,
+    "morale": 2,
+    "wounds": 3,
+    "weapons": [
+      132,
+      133,
+      134,
+      135,
+      136,
+      137
+    ],
+    "special_rules": [
+      {
+        "name": "Furious Charge"
+      },
+      {
+        "name": "Independent"
+      },
+      {
+        "name": "Ion Sheilds",
+        "value": "4+"
+      },
+      {
+        "name": "Nimble"
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "faction": "Questoris Familia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Cerastus Knight Atrapos",
+    "movement": "9\"",
+    "save": 3,
+    "caf": 11,
+    "morale": 2,
+    "wounds": 3,
+    "weapons": [
+      132,
+      133,
+      134,
+      135,
+      136,
+      137
+    ],
+    "special_rules": [
+      {
+        "name": "Furious Charge"
+      },
+      {
+        "name": "Independent"
+      },
+      {
+        "name": "Ion Sheilds",
+        "value": "4+"
+      },
+      {
+        "name": "Nimble"
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "faction": "Questoris Familia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Cerastus Knight Lancer",
+    "movement": "9\"",
+    "save": 3,
+    "caf": 11,
+    "morale": 2,
+    "wounds": 3,
+    "weapons": [
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147
+    ],
+    "special_rules": [
+      {
+        "name": "Furious Charge"
+      },
+      {
+        "name": "Independent"
+      },
+      {
+        "name": "Ion Sheilds",
+        "value": "3+"
+      },
+      {
+        "name": "Nimble"
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "faction": "Questoris Familia",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Acastus Knight",
+    "movement": "6\"",
+    "save": 2,
+    "caf": 7,
+    "morale": 2,
+    "wounds": 3,
+    "weapons": [
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147
+    ],
+    "special_rules": [
+      {
+        "name": "Furious Charge"
+      },
+      {
+        "name": "Independent"
+      },
+      {
+        "name": "Ion Sheilds",
+        "value": "3+"
+      },
+      {
+        "name": "Nimble"
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "faction": "Collegia Titanica",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Warhound Scout Titan",
+    "movement": "7\"",
+    "save": 2,
+    "caf": 10,
+    "morale": null,
+    "wounds": 4,
+    "weapons": [
+      148,
+      6,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166
+    ],
+    "special_rules": [
+      {
+        "name": ": Agile"
+      },
+      {
+        "name": "Void Shields",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "faction": "Collegia Titanica",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Reaver Battle Titan",
+    "movement": "6\"",
+    "save": 2,
+    "caf": 12,
+    "morale": null,
+    "wounds": 5,
+    "weapons": [
+      148,
+      6,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166
+    ],
+    "special_rules": [
+      {
+        "name": ": Agile"
+      },
+      {
+        "name": "Void Shields",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "faction": "Collegia Titanica",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Dire Wolf Titan",
+    "movement": "7\"",
+    "save": 2,
+    "caf": 10,
+    "morale": null,
+    "wounds": 4,
+    "weapons": [
+      167,
+      168,
+      169,
+      170,
+      171,
+      172,
+      173,
+      157,
+      158,
+      159,
+      160
+    ],
+    "special_rules": [
+      {
+        "name": ": Agile"
+      },
+      {
+        "name": "Infiltrate"
+      },
+      {
+        "name": "Void Shields",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "faction": "Collegia Titanica",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Warbringer Nemesis Titan",
+    "movement": "5\"",
+    "save": 2,
+    "caf": 12,
+    "morale": null,
+    "wounds": 5,
+    "weapons": [
+      167,
+      168,
+      169,
+      170,
+      171,
+      172,
+      173,
+      157,
+      158,
+      159,
+      160
+    ],
+    "special_rules": [
+      {
+        "name": ": Agile"
+      },
+      {
+        "name": "Infiltrate"
+      },
+      {
+        "name": "Void Shields",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "faction": "Collegia Titanica",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Warlord Battle Titan",
+    "movement": "5\"",
+    "save": 2,
+    "caf": 14,
+    "morale": null,
+    "wounds": 6,
+    "weapons": [
+      172,
+      174,
+      175,
+      173,
+      176,
+      177,
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      184,
+      185,
+      186,
+      187,
+      188,
+      44,
+      149,
+      148,
+      189
+    ],
+    "special_rules": [
+      {
+        "name": ": Void Shields",
+        "value": "6"
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "faction": "Collegia Titanica",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Warmaster Heavy Battle Titan",
+    "movement": "5\"",
+    "save": 1,
+    "caf": 18,
+    "morale": null,
+    "wounds": 7,
+    "weapons": [
+      172,
+      174,
+      175,
+      173,
+      176,
+      177,
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      184,
+      185,
+      186,
+      187,
+      188,
+      44,
+      149,
+      148,
+      189
+    ],
+    "special_rules": [
+      {
+        "name": ": Void Shields",
+        "value": "6"
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "faction": "Collegia Titanica",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Warlord-Sinister Battle Titan",
+    "movement": "5\"",
+    "save": 2,
+    "caf": 14,
+    "morale": null,
+    "wounds": 6,
+    "weapons": [
+      190,
+      191,
+      176,
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      186,
+      187,
+      188,
+      44,
+      149,
+      148,
+      192,
+      193,
+      194
+    ],
+    "special_rules": [
+      {
+        "name": ": Void Shields",
+        "value": "6"
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "faction": "Collegia Titanica",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Warmaster Iconoclast Titan",
+    "movement": "6\"",
+    "save": 1,
+    "caf": 18,
+    "morale": null,
+    "wounds": 7,
+    "weapons": [
+      190,
+      191,
+      176,
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      186,
+      187,
+      188,
+      44,
+      149,
+      148,
+      192,
+      193,
+      194
+    ],
+    "special_rules": [
+      {
+        "name": ": Void Shields",
+        "value": "6"
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "faction": "Mechanicum",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Archmagos Prime",
+    "movement": "5\"",
+    "save": 4,
+    "caf": 3,
+    "morale": 2,
+    "wounds": 1,
+    "weapons": [
+      203
+    ],
+    "special_rules": [
+      {
+        "name": "Battlesmith"
+      },
+      {
+        "name": "Commander"
+      },
+      {
+        "name": "Cortex Controller"
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "5+"
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "faction": "Mechanicum",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Archmagos on Abeyant",
+    "movement": "6\"",
+    "save": 4,
+    "caf": 4,
+    "morale": 2,
+    "wounds": 2,
+    "weapons": [
+      204,
+      205
+    ],
+    "special_rules": []
+  },
+  {
+    "id": 74,
+    "faction": "Mechanicum",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Tech-thralls",
+    "movement": "5\"",
+    "save": 6,
+    "caf": -1,
+    "morale": null,
+    "wounds": 1,
+    "weapons": [
+      206
+    ],
+    "special_rules": []
+  },
+  {
+    "id": 75,
+    "faction": "Mechanicum",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Thallax",
+    "movement": "7\"",
+    "save": 5,
+    "caf": 1,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      207,
+      208
+    ],
+    "special_rules": [
+      {
+        "name": "giving them greater tactical flexibi on the battlefield"
+      }
+    ]
+  },
+  {
+    "id": 76,
+    "faction": "Mechanicum",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Tech-Priest",
+    "movement": "5\"",
+    "save": 5,
+    "caf": 2,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [],
+    "special_rules": [
+      {
+        "name": "Attached Deployment"
+      },
+      {
+        "name": "Battlesmith"
+      },
+      {
+        "name": "Cortex Controller"
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "6+"
+      }
+    ]
+  },
+  {
+    "id": 77,
+    "faction": "Mechanicum",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Myrmidon Secutors",
+    "movement": "5\"",
+    "save": 4,
+    "caf": 6,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      209
+    ],
+    "special_rules": [
+      {
+        "name": "Implacable"
+      }
+    ]
+  },
+  {
+    "id": 78,
+    "faction": "Mechanicum",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Infantry",
+      "value": 1
+    },
+    "name": "Myrmidon Destructors",
+    "movement": "5\"",
+    "save": 4,
+    "caf": 3,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      210,
+      211
+    ],
+    "special_rules": [
+      {
+        "name": "that of a Legionary. Implacable"
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "faction": "Mechanicum",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Walker",
+      "value": 1
+    },
+    "name": "Arlatax",
+    "movement": "7\"",
+    "save": 4,
+    "caf": 6,
+    "morale": null,
+    "wounds": 2,
+    "weapons": [
+      212,
+      58
+    ],
+    "special_rules": [
+      {
+        "name": "Armoured"
+      },
+      {
+        "name": "Cybernetica Cortex",
+        "value": "Advance, Charge"
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "6+"
+      },
+      {
+        "name": "Jump Packs"
+      }
+    ]
+  },
+  {
+    "id": 80,
+    "faction": "Mechanicum",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Walker",
+      "value": 1
+    },
+    "name": "Domitar",
+    "movement": "5\"",
+    "save": 4,
+    "caf": 4,
+    "morale": null,
+    "wounds": 2,
+    "weapons": [
+      28,
+      213
+    ],
+    "special_rules": [
+      {
+        "name": "Armoured"
+      },
+      {
+        "name": "Cybernetica Cortex",
+        "value": "Advance, March"
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "6+"
+      }
+    ]
+  },
+  {
+    "id": 81,
+    "faction": "Mechanicum",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Walker",
+      "value": 1
+    },
+    "name": "Castellax",
+    "movement": "5\"",
+    "save": 4,
+    "caf": 4,
+    "morale": null,
+    "wounds": 2,
+    "weapons": [
+      214,
+      215
+    ],
+    "special_rules": [
+      {
+        "name": "Armoured"
+      },
+      {
+        "name": "Cybernetica Cortex",
+        "value": "Advance, March"
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "6+"
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "faction": "Mechanicum",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Walker",
+      "value": 1
+    },
+    "name": "Vorax",
+    "movement": "7\"",
+    "save": 4,
+    "caf": 3,
+    "morale": null,
+    "wounds": 2,
+    "weapons": [
+      216,
+      207
+    ],
+    "special_rules": [
+      {
+        "name": "Cybernetica Cortex",
+        "value": "Charge, March"
+      },
+      {
+        "name": "Forward Deployment"
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "6+"
+      }
+    ]
+  },
+  {
+    "id": 83,
+    "faction": "Mechanicum",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Cavalry",
+      "value": 1
+    },
+    "name": "Vultarax",
+    "movement": "9\"",
+    "save": 4,
+    "caf": 2,
+    "morale": null,
+    "wounds": 2,
+    "weapons": [
+      217,
+      218
+    ],
+    "special_rules": [
+      {
+        "name": "Armoured"
+      },
+      {
+        "name": "Cybernetica Cortex",
+        "value": "Advance, March"
+      },
+      {
+        "name": "Invulnerable Save",
+        "value": "6+"
+      },
+      {
+        "name": "Outflank"
+      },
+      {
+        "name": "Skimmer"
+      }
+    ]
+  },
+  {
+    "id": 84,
+    "faction": "Mechanicum",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Walker",
+      "value": 1
+    },
+    "name": "Thanatar",
+    "movement": "4\"",
+    "save": 4,
+    "caf": 4,
+    "morale": null,
+    "wounds": 2,
+    "weapons": [
+      219,
+      220,
+      221
+    ],
+    "special_rules": []
+  },
+  {
+    "id": 85,
+    "faction": "Mechanicum",
+    "subfaction": null,
+    "allegiance": null,
+    "unique": false,
+    "unit_type": {
+      "type": "Vehicle",
+      "value": 2
+    },
+    "name": "Krios",
+    "movement": "8\"",
+    "save": 3,
+    "caf": 0,
+    "morale": 3,
+    "wounds": 1,
+    "weapons": [
+      224,
+      225,
+      226,
+      227
+    ],
+    "special_rules": []
+  }
+]

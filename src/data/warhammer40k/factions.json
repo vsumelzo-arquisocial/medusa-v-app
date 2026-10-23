@@ -1,0 +1,1782 @@
+{
+  "edition": 11,
+  "sourceVersion": "1.6",
+  "checkedAt": "2026-10-19",
+  "sourceUrl": "https://mfm.warhammer-community.com/",
+  "factions": [
+    {
+      "id": "space-marines",
+      "name": "Marines Espaciales",
+      "officialName": "SPACE MARINES",
+      "group": "imperium",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/space-marines",
+      "variants": [
+        {
+          "id": "imperial-fists",
+          "name": "Puños Imperiales",
+          "kind": "chapter",
+          "catalogueId": null
+        },
+        {
+          "id": "iron-hands",
+          "name": "Manos de Hierro",
+          "kind": "chapter",
+          "catalogueId": null
+        },
+        {
+          "id": "salamanders",
+          "name": "Salamandras",
+          "kind": "chapter",
+          "catalogueId": null
+        },
+        {
+          "id": "raven-guard",
+          "name": "Guardia del Cuervo",
+          "kind": "chapter",
+          "catalogueId": null
+        },
+        {
+          "id": "ultramarines",
+          "name": "Ultramarines",
+          "kind": "chapter",
+          "catalogueId": null
+        },
+        {
+          "id": "white-scars",
+          "name": "Cicatrices Blancas",
+          "kind": "chapter",
+          "catalogueId": null
+        },
+        {
+          "id": "black-templars",
+          "name": "Templarios Negros",
+          "kind": "chapter",
+          "catalogueId": "black-templars"
+        },
+        {
+          "id": "blood-angels",
+          "name": "Ángeles Sangrientos",
+          "kind": "chapter",
+          "catalogueId": "blood-angels"
+        },
+        {
+          "id": "dark-angels",
+          "name": "Ángeles Oscuros",
+          "kind": "chapter",
+          "catalogueId": "dark-angels"
+        },
+        {
+          "id": "deathwatch",
+          "name": "Deathwatch",
+          "kind": "chapter",
+          "catalogueId": "deathwatch"
+        },
+        {
+          "id": "space-wolves",
+          "name": "Lobos Espaciales",
+          "kind": "chapter",
+          "catalogueId": "space-wolves"
+        }
+      ],
+      "detachments": [
+        {
+          "id": "space-marines--assault-brethren",
+          "name": "ASSAULT BRETHREN"
+        },
+        {
+          "id": "space-marines--blade-of-ultramar",
+          "name": "BLADE OF ULTRAMAR"
+        },
+        {
+          "id": "space-marines--ceramite-sentinels",
+          "name": "CERAMITE SENTINELS"
+        },
+        {
+          "id": "space-marines--deathwatch-support",
+          "name": "DEATHWATCH SUPPORT"
+        },
+        {
+          "id": "space-marines--devastator-brethren",
+          "name": "DEVASTATOR BRETHREN"
+        },
+        {
+          "id": "space-marines--forgefathers-seekers",
+          "name": "FORGEFATHER’S SEEKERS"
+        },
+        {
+          "id": "space-marines--gauntlet-task-force",
+          "name": "GAUNTLET TASK FORCE"
+        },
+        {
+          "id": "space-marines--gladius-task-force",
+          "name": "GLADIUS TASK FORCE"
+        },
+        {
+          "id": "space-marines--gravis-linebreaker-force",
+          "name": "GRAVIS LINEBREAKER FORCE"
+        },
+        {
+          "id": "space-marines--gravis-siege-force",
+          "name": "GRAVIS SIEGE FORCE"
+        },
+        {
+          "id": "space-marines--ironclad-champions",
+          "name": "IRONCLAD CHAMPIONS"
+        },
+        {
+          "id": "space-marines--ironstorm-spearhead",
+          "name": "IRONSTORM SPEARHEAD"
+        },
+        {
+          "id": "space-marines--medusa-s-wrath",
+          "name": "MEDUSA'S WRATH"
+        },
+        {
+          "id": "space-marines--phobos-shadow-force",
+          "name": "PHOBOS SHADOW FORCE"
+        },
+        {
+          "id": "space-marines--phobos-shock-force",
+          "name": "PHOBOS SHOCK FORCE"
+        },
+        {
+          "id": "space-marines--shadowmark-talon",
+          "name": "SHADOWMARK TALON"
+        },
+        {
+          "id": "space-marines--spearpoint-task-force",
+          "name": "SPEARPOINT TASK FORCE"
+        },
+        {
+          "id": "space-marines--stormlance-task-force",
+          "name": "STORMLANCE TASK FORCE"
+        },
+        {
+          "id": "space-marines--tactical-brethren",
+          "name": "TACTICAL BRETHREN"
+        },
+        {
+          "id": "space-marines--tacticus-attack-force",
+          "name": "TACTICUS ATTACK FORCE"
+        },
+        {
+          "id": "space-marines--tacticus-firestorm-force",
+          "name": "TACTICUS FIRESTORM FORCE"
+        },
+        {
+          "id": "space-marines--terminator-storm-force",
+          "name": "TERMINATOR STORM FORCE"
+        }
+      ]
+    },
+    {
+      "id": "black-templars",
+      "name": "Templarios Negros",
+      "officialName": "BLACK TEMPLARS",
+      "group": "imperium",
+      "parentId": "space-marines",
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/black-templars",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "black-templars--assault-brethren",
+          "name": "ASSAULT BRETHREN"
+        },
+        {
+          "id": "black-templars--deathwatch-support",
+          "name": "DEATHWATCH SUPPORT"
+        },
+        {
+          "id": "black-templars--devastator-brethren",
+          "name": "DEVASTATOR BRETHREN"
+        },
+        {
+          "id": "black-templars--fist-of-the-god-emperor",
+          "name": "FIST OF THE GOD-EMPEROR"
+        },
+        {
+          "id": "black-templars--gauntlet-task-force",
+          "name": "GAUNTLET TASK FORCE"
+        },
+        {
+          "id": "black-templars--gravis-linebreaker-force",
+          "name": "GRAVIS LINEBREAKER FORCE"
+        },
+        {
+          "id": "black-templars--gravis-siege-force",
+          "name": "GRAVIS SIEGE FORCE"
+        },
+        {
+          "id": "black-templars--ironclad-champions",
+          "name": "IRONCLAD CHAMPIONS"
+        },
+        {
+          "id": "black-templars--ironstorm-spearhead",
+          "name": "IRONSTORM SPEARHEAD"
+        },
+        {
+          "id": "black-templars--marshal-s-household",
+          "name": "MARSHAL'S HOUSEHOLD"
+        },
+        {
+          "id": "black-templars--phobos-shadow-force",
+          "name": "PHOBOS SHADOW FORCE"
+        },
+        {
+          "id": "black-templars--phobos-shock-force",
+          "name": "PHOBOS SHOCK FORCE"
+        },
+        {
+          "id": "black-templars--stormlance-task-force",
+          "name": "STORMLANCE TASK FORCE"
+        },
+        {
+          "id": "black-templars--tactical-brethren",
+          "name": "TACTICAL BRETHREN"
+        },
+        {
+          "id": "black-templars--tacticus-attack-force",
+          "name": "TACTICUS ATTACK FORCE"
+        },
+        {
+          "id": "black-templars--tacticus-firestorm-force",
+          "name": "TACTICUS FIRESTORM FORCE"
+        },
+        {
+          "id": "black-templars--terminator-storm-force",
+          "name": "TERMINATOR STORM FORCE"
+        },
+        {
+          "id": "black-templars--vow-sworn-crusaders",
+          "name": "VOW-SWORN CRUSADERS"
+        }
+      ]
+    },
+    {
+      "id": "blood-angels",
+      "name": "Ángeles Sangrientos",
+      "officialName": "BLOOD ANGELS",
+      "group": "imperium",
+      "parentId": "space-marines",
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/blood-angels",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "blood-angels--angelic-inheritors",
+          "name": "ANGELIC INHERITORS"
+        },
+        {
+          "id": "blood-angels--assault-brethren",
+          "name": "ASSAULT BRETHREN"
+        },
+        {
+          "id": "blood-angels--deathwatch-support",
+          "name": "DEATHWATCH SUPPORT"
+        },
+        {
+          "id": "blood-angels--devastator-brethren",
+          "name": "DEVASTATOR BRETHREN"
+        },
+        {
+          "id": "blood-angels--encarmine-speartip",
+          "name": "ENCARMINE SPEARTIP"
+        },
+        {
+          "id": "blood-angels--gauntlet-task-force",
+          "name": "GAUNTLET TASK FORCE"
+        },
+        {
+          "id": "blood-angels--gladius-task-force",
+          "name": "GLADIUS TASK FORCE"
+        },
+        {
+          "id": "blood-angels--gravis-linebreaker-force",
+          "name": "GRAVIS LINEBREAKER FORCE"
+        },
+        {
+          "id": "blood-angels--gravis-siege-force",
+          "name": "GRAVIS SIEGE FORCE"
+        },
+        {
+          "id": "blood-angels--ironclad-champions",
+          "name": "IRONCLAD CHAMPIONS"
+        },
+        {
+          "id": "blood-angels--ironstorm-spearhead",
+          "name": "IRONSTORM SPEARHEAD"
+        },
+        {
+          "id": "blood-angels--phobos-shadow-force",
+          "name": "PHOBOS SHADOW FORCE"
+        },
+        {
+          "id": "blood-angels--phobos-shock-force",
+          "name": "PHOBOS SHOCK FORCE"
+        },
+        {
+          "id": "blood-angels--stormlance-task-force",
+          "name": "STORMLANCE TASK FORCE"
+        },
+        {
+          "id": "blood-angels--tactical-brethren",
+          "name": "TACTICAL BRETHREN"
+        },
+        {
+          "id": "blood-angels--tacticus-attack-force",
+          "name": "TACTICUS ATTACK FORCE"
+        },
+        {
+          "id": "blood-angels--tacticus-firestorm-force",
+          "name": "TACTICUS FIRESTORM FORCE"
+        },
+        {
+          "id": "blood-angels--terminator-storm-force",
+          "name": "TERMINATOR STORM FORCE"
+        },
+        {
+          "id": "blood-angels--wrath-of-the-doomed",
+          "name": "WRATH OF THE DOOMED"
+        }
+      ]
+    },
+    {
+      "id": "dark-angels",
+      "name": "Ángeles Oscuros",
+      "officialName": "DARK ANGELS",
+      "group": "imperium",
+      "parentId": "space-marines",
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/dark-angels",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "dark-angels--assault-brethren",
+          "name": "ASSAULT BRETHREN"
+        },
+        {
+          "id": "dark-angels--darkflight-pursuit",
+          "name": "DARKFLIGHT PURSUIT"
+        },
+        {
+          "id": "dark-angels--deathwatch-support",
+          "name": "DEATHWATCH SUPPORT"
+        },
+        {
+          "id": "dark-angels--devastator-brethren",
+          "name": "DEVASTATOR BRETHREN"
+        },
+        {
+          "id": "dark-angels--gauntlet-task-force",
+          "name": "GAUNTLET TASK FORCE"
+        },
+        {
+          "id": "dark-angels--gladius-task-force",
+          "name": "GLADIUS TASK FORCE"
+        },
+        {
+          "id": "dark-angels--gravis-linebreaker-force",
+          "name": "GRAVIS LINEBREAKER FORCE"
+        },
+        {
+          "id": "dark-angels--gravis-siege-force",
+          "name": "GRAVIS SIEGE FORCE"
+        },
+        {
+          "id": "dark-angels--inner-circle-task-force",
+          "name": "INNER CIRCLE TASK FORCE"
+        },
+        {
+          "id": "dark-angels--ironclad-champions",
+          "name": "IRONCLAD CHAMPIONS"
+        },
+        {
+          "id": "dark-angels--ironstorm-spearhead",
+          "name": "IRONSTORM SPEARHEAD"
+        },
+        {
+          "id": "dark-angels--phobos-shadow-force",
+          "name": "PHOBOS SHADOW FORCE"
+        },
+        {
+          "id": "dark-angels--phobos-shock-force",
+          "name": "PHOBOS SHOCK FORCE"
+        },
+        {
+          "id": "dark-angels--stormlance-task-force",
+          "name": "STORMLANCE TASK FORCE"
+        },
+        {
+          "id": "dark-angels--tactical-brethren",
+          "name": "TACTICAL BRETHREN"
+        },
+        {
+          "id": "dark-angels--tacticus-attack-force",
+          "name": "TACTICUS ATTACK FORCE"
+        },
+        {
+          "id": "dark-angels--tacticus-firestorm-force",
+          "name": "TACTICUS FIRESTORM FORCE"
+        },
+        {
+          "id": "dark-angels--terminator-storm-force",
+          "name": "TERMINATOR STORM FORCE"
+        },
+        {
+          "id": "dark-angels--wrath-of-the-rock",
+          "name": "WRATH OF THE ROCK"
+        }
+      ]
+    },
+    {
+      "id": "deathwatch",
+      "name": "Deathwatch",
+      "officialName": "DEATHWATCH",
+      "group": "imperium",
+      "parentId": "space-marines",
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/deathwatch",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "deathwatch--assault-brethren",
+          "name": "ASSAULT BRETHREN"
+        },
+        {
+          "id": "deathwatch--black-spear-task-force",
+          "name": "BLACK SPEAR TASK FORCE"
+        },
+        {
+          "id": "deathwatch--devastator-brethren",
+          "name": "DEVASTATOR BRETHREN"
+        },
+        {
+          "id": "deathwatch--gauntlet-task-force",
+          "name": "GAUNTLET TASK FORCE"
+        },
+        {
+          "id": "deathwatch--gladius-task-force",
+          "name": "GLADIUS TASK FORCE"
+        },
+        {
+          "id": "deathwatch--gravis-linebreaker-force",
+          "name": "GRAVIS LINEBREAKER FORCE"
+        },
+        {
+          "id": "deathwatch--gravis-siege-force",
+          "name": "GRAVIS SIEGE FORCE"
+        },
+        {
+          "id": "deathwatch--ironclad-champions",
+          "name": "IRONCLAD CHAMPIONS"
+        },
+        {
+          "id": "deathwatch--ironstorm-spearhead",
+          "name": "IRONSTORM SPEARHEAD"
+        },
+        {
+          "id": "deathwatch--phobos-shadow-force",
+          "name": "PHOBOS SHADOW FORCE"
+        },
+        {
+          "id": "deathwatch--phobos-shock-force",
+          "name": "PHOBOS SHOCK FORCE"
+        },
+        {
+          "id": "deathwatch--stormlance-task-force",
+          "name": "STORMLANCE TASK FORCE"
+        },
+        {
+          "id": "deathwatch--tactical-brethren",
+          "name": "TACTICAL BRETHREN"
+        },
+        {
+          "id": "deathwatch--tacticus-attack-force",
+          "name": "TACTICUS ATTACK FORCE"
+        },
+        {
+          "id": "deathwatch--tacticus-firestorm-force",
+          "name": "TACTICUS FIRESTORM FORCE"
+        },
+        {
+          "id": "deathwatch--terminator-storm-force",
+          "name": "TERMINATOR STORM FORCE"
+        }
+      ]
+    },
+    {
+      "id": "space-wolves",
+      "name": "Lobos Espaciales",
+      "officialName": "SPACE WOLVES",
+      "group": "imperium",
+      "parentId": "space-marines",
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/space-wolves",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "space-wolves--assault-brethren",
+          "name": "ASSAULT BRETHREN"
+        },
+        {
+          "id": "space-wolves--champions-of-fenris",
+          "name": "CHAMPIONS OF FENRIS"
+        },
+        {
+          "id": "space-wolves--deathwatch-support",
+          "name": "DEATHWATCH SUPPORT"
+        },
+        {
+          "id": "space-wolves--devastator-brethren",
+          "name": "DEVASTATOR BRETHREN"
+        },
+        {
+          "id": "space-wolves--gauntlet-task-force",
+          "name": "GAUNTLET TASK FORCE"
+        },
+        {
+          "id": "space-wolves--gladius-task-force",
+          "name": "GLADIUS TASK FORCE"
+        },
+        {
+          "id": "space-wolves--gravis-linebreaker-force",
+          "name": "GRAVIS LINEBREAKER FORCE"
+        },
+        {
+          "id": "space-wolves--gravis-siege-force",
+          "name": "GRAVIS SIEGE FORCE"
+        },
+        {
+          "id": "space-wolves--ironclad-champions",
+          "name": "IRONCLAD CHAMPIONS"
+        },
+        {
+          "id": "space-wolves--ironstorm-spearhead",
+          "name": "IRONSTORM SPEARHEAD"
+        },
+        {
+          "id": "space-wolves--phobos-shadow-force",
+          "name": "PHOBOS SHADOW FORCE"
+        },
+        {
+          "id": "space-wolves--phobos-shock-force",
+          "name": "PHOBOS SHOCK FORCE"
+        },
+        {
+          "id": "space-wolves--saga-of-the-beastslayer",
+          "name": "SAGA OF THE BEASTSLAYER"
+        },
+        {
+          "id": "space-wolves--saga-of-the-great-wolf",
+          "name": "SAGA OF THE GREAT WOLF"
+        },
+        {
+          "id": "space-wolves--stormlance-task-force",
+          "name": "STORMLANCE TASK FORCE"
+        },
+        {
+          "id": "space-wolves--tactical-brethren",
+          "name": "TACTICAL BRETHREN"
+        },
+        {
+          "id": "space-wolves--tacticus-attack-force",
+          "name": "TACTICUS ATTACK FORCE"
+        },
+        {
+          "id": "space-wolves--tacticus-firestorm-force",
+          "name": "TACTICUS FIRESTORM FORCE"
+        },
+        {
+          "id": "space-wolves--terminator-storm-force",
+          "name": "TERMINATOR STORM FORCE"
+        }
+      ]
+    },
+    {
+      "id": "grey-knights",
+      "name": "Caballeros Grises",
+      "officialName": "GREY KNIGHTS",
+      "group": "imperium",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/grey-knights",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "grey-knights--argent-assault",
+          "name": "ARGENT ASSAULT"
+        },
+        {
+          "id": "grey-knights--augurium-task-force",
+          "name": "AUGURIUM TASK FORCE"
+        },
+        {
+          "id": "grey-knights--banishers",
+          "name": "BANISHERS"
+        },
+        {
+          "id": "grey-knights--brotherhood-strike",
+          "name": "BROTHERHOOD STRIKE"
+        },
+        {
+          "id": "grey-knights--fires-of-purgation",
+          "name": "FIRES OF PURGATION"
+        },
+        {
+          "id": "grey-knights--hallowed-conclave",
+          "name": "HALLOWED CONCLAVE"
+        },
+        {
+          "id": "grey-knights--immaterial-interdiction",
+          "name": "IMMATERIAL INTERDICTION"
+        },
+        {
+          "id": "grey-knights--sanctic-spearhead",
+          "name": "SANCTIC SPEARHEAD"
+        },
+        {
+          "id": "grey-knights--warpbane-task-force",
+          "name": "WARPBANE TASK FORCE"
+        }
+      ]
+    },
+    {
+      "id": "adepta-sororitas",
+      "name": "Adepta Sororitas",
+      "officialName": "ADEPTA SORORITAS",
+      "group": "imperium",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/adepta-sororitas",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "adepta-sororitas--army-of-faith",
+          "name": "ARMY OF FAITH"
+        },
+        {
+          "id": "adepta-sororitas--bringers-of-flame",
+          "name": "BRINGERS OF FLAME"
+        },
+        {
+          "id": "adepta-sororitas--champions-of-faith",
+          "name": "CHAMPIONS OF FAITH"
+        },
+        {
+          "id": "adepta-sororitas--chorus-of-condemnation",
+          "name": "CHORUS OF CONDEMNATION"
+        },
+        {
+          "id": "adepta-sororitas--hallowed-martyrs",
+          "name": "HALLOWED MARTYRS"
+        },
+        {
+          "id": "adepta-sororitas--penitent-host",
+          "name": "PENITENT HOST"
+        },
+        {
+          "id": "adepta-sororitas--sacred-champions",
+          "name": "SACRED CHAMPIONS"
+        },
+        {
+          "id": "adepta-sororitas--sanctified-orators",
+          "name": "SANCTIFIED ORATORS"
+        }
+      ]
+    },
+    {
+      "id": "adeptus-custodes",
+      "name": "Adeptus Custodes",
+      "officialName": "ADEPTUS CUSTODES",
+      "group": "imperium",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/adeptus-custodes",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "adeptus-custodes--aquilan-shield",
+          "name": "AQUILAN SHIELD"
+        },
+        {
+          "id": "adeptus-custodes--auric-champions",
+          "name": "AURIC CHAMPIONS"
+        },
+        {
+          "id": "adeptus-custodes--dread-host",
+          "name": "DREAD HOST"
+        },
+        {
+          "id": "adeptus-custodes--emissaries-imperatus",
+          "name": "EMISSARIES IMPERATUS"
+        },
+        {
+          "id": "adeptus-custodes--emperors-chosen",
+          "name": "EMPEROR’S CHOSEN"
+        },
+        {
+          "id": "adeptus-custodes--gravassault-force",
+          "name": "GRAV‑ASSAULT FORCE"
+        },
+        {
+          "id": "adeptus-custodes--guardians-of-the-throne",
+          "name": "GUARDIANS OF THE THRONE"
+        },
+        {
+          "id": "adeptus-custodes--honoured-companions",
+          "name": "HONOURED COMPANIONS"
+        },
+        {
+          "id": "adeptus-custodes--lions-of-the-emperor",
+          "name": "LIONS OF THE EMPEROR"
+        },
+        {
+          "id": "adeptus-custodes--might-of-the-moritoi",
+          "name": "MIGHT OF THE MORITOI"
+        },
+        {
+          "id": "adeptus-custodes--null-maiden-vigil",
+          "name": "NULL MAIDEN VIGIL"
+        },
+        {
+          "id": "adeptus-custodes--shadowkeepers",
+          "name": "SHADOWKEEPERS"
+        },
+        {
+          "id": "adeptus-custodes--solar-watch",
+          "name": "SOLAR WATCH"
+        }
+      ]
+    },
+    {
+      "id": "adeptus-mechanicus",
+      "name": "Adeptus Mechanicus",
+      "officialName": "ADEPTUS MECHANICUS",
+      "group": "imperium",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/adeptus-mechanicus",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "adeptus-mechanicus--cohort-acquisitus",
+          "name": "COHORT ACQUISITUS"
+        },
+        {
+          "id": "adeptus-mechanicus--cohort-cybernetica",
+          "name": "COHORT CYBERNETICA"
+        },
+        {
+          "id": "adeptus-mechanicus--data-psalm-conclave",
+          "name": "DATA-PSALM CONCLAVE"
+        },
+        {
+          "id": "adeptus-mechanicus--eradication-cohort",
+          "name": "ERADICATION COHORT"
+        },
+        {
+          "id": "adeptus-mechanicus--explorator-maniple",
+          "name": "EXPLORATOR MANIPLE"
+        },
+        {
+          "id": "adeptus-mechanicus--haloscreed-battle-clade",
+          "name": "HALOSCREED BATTLE CLADE"
+        },
+        {
+          "id": "adeptus-mechanicus--lords-of-the-forge",
+          "name": "LORDS OF THE FORGE"
+        },
+        {
+          "id": "adeptus-mechanicus--luminen-auto-choir",
+          "name": "LUMINEN AUTO-CHOIR"
+        },
+        {
+          "id": "adeptus-mechanicus--rad-zone-corps",
+          "name": "RAD-ZONE CORPS"
+        },
+        {
+          "id": "adeptus-mechanicus--skitarii-hunter-cohort",
+          "name": "SKITARII HUNTER COHORT"
+        }
+      ]
+    },
+    {
+      "id": "astra-militarum",
+      "name": "Astra Militarum",
+      "officialName": "ASTRA MILITARUM",
+      "group": "imperium",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/astra-militarum",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "astra-militarum--abhuman-auxiliaries",
+          "name": "ABHUMAN AUXILIARIES"
+        },
+        {
+          "id": "astra-militarum--armoured-infantry",
+          "name": "ARMOURED INFANTRY"
+        },
+        {
+          "id": "astra-militarum--bridgehead-strike",
+          "name": "BRIDGEHEAD STRIKE"
+        },
+        {
+          "id": "astra-militarum--combined-arms",
+          "name": "COMBINED ARMS"
+        },
+        {
+          "id": "astra-militarum--designation-force",
+          "name": "DESIGNATION FORCE"
+        },
+        {
+          "id": "astra-militarum--grizzled-company",
+          "name": "GRIZZLED COMPANY"
+        },
+        {
+          "id": "astra-militarum--hammer-of-the-emperor",
+          "name": "HAMMER OF THE EMPEROR"
+        },
+        {
+          "id": "astra-militarum--mechanised-assault",
+          "name": "MECHANISED ASSAULT"
+        },
+        {
+          "id": "astra-militarum--recon-element",
+          "name": "RECON ELEMENT"
+        },
+        {
+          "id": "astra-militarum--siege-regiment",
+          "name": "SIEGE REGIMENT"
+        },
+        {
+          "id": "astra-militarum--steel-hammer",
+          "name": "STEEL HAMMER"
+        }
+      ]
+    },
+    {
+      "id": "imperial-agents",
+      "name": "Agentes Imperiales",
+      "officialName": "IMPERIAL AGENTS",
+      "group": "imperium",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/imperial-agents",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "imperial-agents--imperialis-fleet",
+          "name": "IMPERIALIS FLEET"
+        },
+        {
+          "id": "imperial-agents--ordo-hereticus-purgation-force",
+          "name": "ORDO HERETICUS, PURGATION FORCE"
+        },
+        {
+          "id": "imperial-agents--ordo-malleus-daemon-hunters",
+          "name": "ORDO MALLEUS, DAEMON HUNTERS"
+        },
+        {
+          "id": "imperial-agents--ordo-xenos-alien-hunters",
+          "name": "ORDO XENOS, ALIEN HUNTERS"
+        },
+        {
+          "id": "imperial-agents--veiled-blade-elimination-force",
+          "name": "VEILED BLADE ELIMINATION FORCE"
+        }
+      ]
+    },
+    {
+      "id": "imperial-knights",
+      "name": "Caballeros Imperiales",
+      "officialName": "IMPERIAL KNIGHTS",
+      "group": "imperium",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/imperial-knights",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "imperial-knights--dominus-foebreakers",
+          "name": "DOMINUS FOEBREAKERS"
+        },
+        {
+          "id": "imperial-knights--freeblade-company",
+          "name": "FREEBLADE COMPANY"
+        },
+        {
+          "id": "imperial-knights--gate-warden-lance",
+          "name": "GATE WARDEN LANCE"
+        },
+        {
+          "id": "imperial-knights--questor-forgepact",
+          "name": "QUESTOR FORGEPACT"
+        },
+        {
+          "id": "imperial-knights--questoris-companions",
+          "name": "QUESTORIS COMPANIONS"
+        },
+        {
+          "id": "imperial-knights--spearhead-at-arms",
+          "name": "SPEARHEAD-AT-ARMS"
+        },
+        {
+          "id": "imperial-knights--throne-bonded-outriders",
+          "name": "THRONE-BONDED OUTRIDERS"
+        },
+        {
+          "id": "imperial-knights--valourstrike-lance",
+          "name": "VALOURSTRIKE LANCE"
+        }
+      ]
+    },
+    {
+      "id": "titan-legions",
+      "name": "Legiones Titánicas",
+      "officialName": "TITAN LEGIONS",
+      "group": "imperium",
+      "parentId": null,
+      "role": "support",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/titan-legions",
+      "variants": [],
+      "detachments": []
+    },
+    {
+      "id": "chaos-space-marines",
+      "name": "Marines Espaciales del Caos",
+      "officialName": "CHAOS SPACE MARINES",
+      "group": "chaos",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/chaos-space-marines",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "chaos-space-marines--cabal-of-chaos",
+          "name": "CABAL OF CHAOS"
+        },
+        {
+          "id": "chaos-space-marines--chaos-cult",
+          "name": "CHAOS CULT"
+        },
+        {
+          "id": "chaos-space-marines--creations-of-bile",
+          "name": "CREATIONS OF BILE"
+        },
+        {
+          "id": "chaos-space-marines--cult-of-the-arkifane",
+          "name": "CULT OF THE ARKIFANE"
+        },
+        {
+          "id": "chaos-space-marines--deceptors",
+          "name": "DECEPTORS"
+        },
+        {
+          "id": "chaos-space-marines--devotees-of-destruction",
+          "name": "DEVOTEES OF DESTRUCTION"
+        },
+        {
+          "id": "chaos-space-marines--dread-talons",
+          "name": "DREAD TALONS"
+        },
+        {
+          "id": "chaos-space-marines--fellhammer-siege-host",
+          "name": "FELLHAMMER SIEGE-HOST"
+        },
+        {
+          "id": "chaos-space-marines--hurons-marauders",
+          "name": "HURON’S MARAUDERS"
+        },
+        {
+          "id": "chaos-space-marines--murdertalon-raiders",
+          "name": "MURDERTALON RAIDERS"
+        },
+        {
+          "id": "chaos-space-marines--nightmare-hunt",
+          "name": "NIGHTMARE HUNT"
+        },
+        {
+          "id": "chaos-space-marines--pactbound-zealots",
+          "name": "PACTBOUND ZEALOTS"
+        },
+        {
+          "id": "chaos-space-marines--renegade-raiders",
+          "name": "RENEGADE RAIDERS"
+        },
+        {
+          "id": "chaos-space-marines--renegade-warband",
+          "name": "RENEGADE WARBAND"
+        },
+        {
+          "id": "chaos-space-marines--soulforged-warpack",
+          "name": "SOULFORGED WARPACK"
+        },
+        {
+          "id": "chaos-space-marines--veterans-of-the-long-war",
+          "name": "VETERANS OF THE LONG WAR"
+        },
+        {
+          "id": "chaos-space-marines--warpstrike-champions",
+          "name": "WARPSTRIKE CHAMPIONS"
+        }
+      ]
+    },
+    {
+      "id": "chaos-daemons",
+      "name": "Demonios del Caos",
+      "officialName": "CHAOS DAEMONS",
+      "group": "chaos",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/chaos-daemons",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "chaos-daemons--blood-legion",
+          "name": "BLOOD LEGION"
+        },
+        {
+          "id": "chaos-daemons--cavalcade-of-chaos",
+          "name": "CAVALCADE OF CHAOS"
+        },
+        {
+          "id": "chaos-daemons--daemonic-incursion",
+          "name": "DAEMONIC INCURSION"
+        },
+        {
+          "id": "chaos-daemons--legion-of-excess",
+          "name": "LEGION OF EXCESS"
+        },
+        {
+          "id": "chaos-daemons--lords-of-the-warp",
+          "name": "LORDS OF THE WARP"
+        },
+        {
+          "id": "chaos-daemons--plague-legion",
+          "name": "PLAGUE LEGION"
+        },
+        {
+          "id": "chaos-daemons--scintillating-legion",
+          "name": "SCINTILLATING LEGION"
+        },
+        {
+          "id": "chaos-daemons--shadow-legion",
+          "name": "SHADOW LEGION"
+        },
+        {
+          "id": "chaos-daemons--warptide",
+          "name": "WARPTIDE"
+        }
+      ]
+    },
+    {
+      "id": "chaos-knights",
+      "name": "Caballeros del Caos",
+      "officialName": "CHAOS KNIGHTS",
+      "group": "chaos",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/chaos-knights",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "chaos-knights--bastions-of-tyranny",
+          "name": "BASTIONS OF TYRANNY"
+        },
+        {
+          "id": "chaos-knights--helhunt-lance",
+          "name": "HELHUNT LANCE"
+        },
+        {
+          "id": "chaos-knights--houndpack-lance",
+          "name": "HOUNDPACK LANCE"
+        },
+        {
+          "id": "chaos-knights--hunting-warpack",
+          "name": "HUNTING WARPACK"
+        },
+        {
+          "id": "chaos-knights--iconoclast-fiefdom",
+          "name": "ICONOCLAST FIEFDOM"
+        },
+        {
+          "id": "chaos-knights--infernal-lance",
+          "name": "INFERNAL LANCE"
+        },
+        {
+          "id": "chaos-knights--lords-of-dread",
+          "name": "LORDS OF DREAD"
+        },
+        {
+          "id": "chaos-knights--traitoris-lance",
+          "name": "TRAITORIS LANCE"
+        }
+      ]
+    },
+    {
+      "id": "chaos-titan-legions",
+      "name": "Legiones Titánicas del Caos",
+      "officialName": "CHAOS TITAN LEGIONS",
+      "group": "chaos",
+      "parentId": null,
+      "role": "support",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/chaos-titan-legions",
+      "variants": [],
+      "detachments": []
+    },
+    {
+      "id": "death-guard",
+      "name": "Guardia de la Muerte",
+      "officialName": "DEATH GUARD",
+      "group": "chaos",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/death-guard",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "death-guard--champions-of-contagion",
+          "name": "CHAMPIONS OF CONTAGION"
+        },
+        {
+          "id": "death-guard--contagion-engines",
+          "name": "CONTAGION ENGINES"
+        },
+        {
+          "id": "death-guard--death-lords-chosen",
+          "name": "DEATH LORD’S CHOSEN"
+        },
+        {
+          "id": "death-guard--flyblown-host",
+          "name": "FLYBLOWN HOST"
+        },
+        {
+          "id": "death-guard--mortarions-hammer",
+          "name": "MORTARION’S HAMMER"
+        },
+        {
+          "id": "death-guard--paragons-of-putrescence",
+          "name": "PARAGONS OF PUTRESCENCE"
+        },
+        {
+          "id": "death-guard--shamblerot-vectorium",
+          "name": "SHAMBLEROT VECTORIUM"
+        },
+        {
+          "id": "death-guard--tallyband-summoners",
+          "name": "TALLYBAND SUMMONERS"
+        },
+        {
+          "id": "death-guard--virulent-vectorium",
+          "name": "VIRULENT VECTORIUM"
+        }
+      ]
+    },
+    {
+      "id": "emperors-children",
+      "name": "Hijos del Emperador",
+      "officialName": "EMPEROR’S CHILDREN",
+      "group": "chaos",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/emperors-children",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "emperors-children--carnival-of-excess",
+          "name": "CARNIVAL OF EXCESS"
+        },
+        {
+          "id": "emperors-children--coterie-of-the-conceited",
+          "name": "COTERIE OF THE CONCEITED"
+        },
+        {
+          "id": "emperors-children--court-of-the-phoenician",
+          "name": "COURT OF THE PHOENICIAN"
+        },
+        {
+          "id": "emperors-children--elegant-brutes",
+          "name": "ELEGANT BRUTES"
+        },
+        {
+          "id": "emperors-children--frenzied-host",
+          "name": "FRENZIED HOST"
+        },
+        {
+          "id": "emperors-children--mercurial-host",
+          "name": "MERCURIAL HOST"
+        },
+        {
+          "id": "emperors-children--peerless-bladesmen",
+          "name": "PEERLESS BLADESMEN"
+        },
+        {
+          "id": "emperors-children--rapid-evisceration",
+          "name": "RAPID EVISCERATION"
+        },
+        {
+          "id": "emperors-children--slaaneshs-chosen",
+          "name": "SLAANESH’S CHOSEN"
+        },
+        {
+          "id": "emperors-children--spectacle-of-slaughter",
+          "name": "SPECTACLE OF SLAUGHTER"
+        }
+      ]
+    },
+    {
+      "id": "thousand-sons",
+      "name": "Mil Hijos",
+      "officialName": "THOUSAND SONS",
+      "group": "chaos",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/thousand-sons",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "thousand-sons--changehost-of-deceit",
+          "name": "CHANGEHOST OF DECEIT"
+        },
+        {
+          "id": "thousand-sons--grand-coven",
+          "name": "GRAND COVEN"
+        },
+        {
+          "id": "thousand-sons--hexwarp-thrallband",
+          "name": "HEXWARP THRALLBAND"
+        },
+        {
+          "id": "thousand-sons--ritual-of-regeneration",
+          "name": "RITUAL OF REGENERATION"
+        },
+        {
+          "id": "thousand-sons--rubricae-phalanx",
+          "name": "RUBRICAE PHALANX"
+        },
+        {
+          "id": "thousand-sons--sekhetar-cohort",
+          "name": "SEKHETAR COHORT"
+        },
+        {
+          "id": "thousand-sons--servants-of-change",
+          "name": "SERVANTS OF CHANGE"
+        },
+        {
+          "id": "thousand-sons--warpforged-cabal",
+          "name": "WARPFORGED CABAL"
+        },
+        {
+          "id": "thousand-sons--warpmeld-pact",
+          "name": "WARPMELD PACT"
+        }
+      ]
+    },
+    {
+      "id": "world-eaters",
+      "name": "Devoradores de Mundos",
+      "officialName": "WORLD EATERS",
+      "group": "chaos",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/world-eaters",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "world-eaters--berzerker-warband",
+          "name": "BERZERKER WARBAND"
+        },
+        {
+          "id": "world-eaters--brazen-engines",
+          "name": "BRAZEN ENGINES"
+        },
+        {
+          "id": "world-eaters--butchers-of-khorne",
+          "name": "BUTCHERS OF KHORNE"
+        },
+        {
+          "id": "world-eaters--cult-of-blood",
+          "name": "CULT OF BLOOD"
+        },
+        {
+          "id": "world-eaters--goretrack-onslaught",
+          "name": "GORETRACK ONSLAUGHT"
+        },
+        {
+          "id": "world-eaters--khorne-daemonkin",
+          "name": "KHORNE DAEMONKIN"
+        },
+        {
+          "id": "world-eaters--possessed-slaughterband",
+          "name": "POSSESSED SLAUGHTERBAND"
+        },
+        {
+          "id": "world-eaters--vessels-of-wrath",
+          "name": "VESSELS OF WRATH"
+        }
+      ]
+    },
+    {
+      "id": "aeldari",
+      "name": "Aeldari",
+      "officialName": "AELDARI",
+      "group": "xenos",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/aeldari",
+      "variants": [
+        {
+          "id": "harlequins",
+          "name": "Arlequines",
+          "kind": "force",
+          "catalogueId": null
+        },
+        {
+          "id": "ynnari",
+          "name": "Ynnari",
+          "kind": "force",
+          "catalogueId": null
+        }
+      ],
+      "detachments": [
+        {
+          "id": "aeldari--armoured-warhost",
+          "name": "ARMOURED WARHOST"
+        },
+        {
+          "id": "aeldari--aspect-host",
+          "name": "ASPECT HOST"
+        },
+        {
+          "id": "aeldari--corsair-coterie",
+          "name": "CORSAIR COTERIE"
+        },
+        {
+          "id": "aeldari--devoted-of-ynnead",
+          "name": "DEVOTED OF YNNEAD"
+        },
+        {
+          "id": "aeldari--eldritch-raiders",
+          "name": "ELDRITCH RAIDERS"
+        },
+        {
+          "id": "aeldari--fateful-performance",
+          "name": "FATEFUL PERFORMANCE"
+        },
+        {
+          "id": "aeldari--ghosts-of-the-webway",
+          "name": "GHOSTS OF THE WEBWAY"
+        },
+        {
+          "id": "aeldari--guardian-battlehost",
+          "name": "GUARDIAN BATTLEHOST"
+        },
+        {
+          "id": "aeldari--path-of-the-outcast",
+          "name": "PATH OF THE OUTCAST"
+        },
+        {
+          "id": "aeldari--seer-council",
+          "name": "SEER COUNCIL"
+        },
+        {
+          "id": "aeldari--serpents-brood",
+          "name": "SERPENT’S BROOD"
+        },
+        {
+          "id": "aeldari--spirit-conclave",
+          "name": "SPIRIT CONCLAVE"
+        },
+        {
+          "id": "aeldari--twilight-flickers",
+          "name": "TWILIGHT FLICKERS"
+        },
+        {
+          "id": "aeldari--warhost",
+          "name": "WARHOST"
+        },
+        {
+          "id": "aeldari--windrider-host",
+          "name": "WINDRIDER HOST"
+        }
+      ]
+    },
+    {
+      "id": "drukhari",
+      "name": "Drukhari",
+      "officialName": "DRUKHARI",
+      "group": "xenos",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/drukhari",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "drukhari--covenite-coterie",
+          "name": "COVENITE COTERIE"
+        },
+        {
+          "id": "drukhari--exhibition-of-slaughter",
+          "name": "EXHIBITION OF SLAUGHTER"
+        },
+        {
+          "id": "drukhari--kabalite-agonysts",
+          "name": "KABALITE AGONYSTS"
+        },
+        {
+          "id": "drukhari--kabalite-cartel",
+          "name": "KABALITE CARTEL"
+        },
+        {
+          "id": "drukhari--realspace-raiders",
+          "name": "REALSPACE RAIDERS"
+        },
+        {
+          "id": "drukhari--reapers-wager",
+          "name": "REAPER’S WAGER"
+        },
+        {
+          "id": "drukhari--skysplinter-assault",
+          "name": "SKYSPLINTER ASSAULT"
+        },
+        {
+          "id": "drukhari--spectacle-of-spite",
+          "name": "SPECTACLE OF SPITE"
+        },
+        {
+          "id": "drukhari--tools-of-torment",
+          "name": "TOOLS OF TORMENT"
+        }
+      ]
+    },
+    {
+      "id": "genestealer-cults",
+      "name": "Cultos Genestealer",
+      "officialName": "GENESTEALER CULTS",
+      "group": "xenos",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/genestealer-cults",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "genestealer-cults--biosanctic-broodsurge",
+          "name": "BIOSANCTIC BROODSURGE"
+        },
+        {
+          "id": "genestealer-cults--brood-brothers-auxilia",
+          "name": "BROOD BROTHERS AUXILIA"
+        },
+        {
+          "id": "genestealer-cults--final-day",
+          "name": "FINAL DAY"
+        },
+        {
+          "id": "genestealer-cults--heroes-of-the-uprising",
+          "name": "HEROES OF THE UPRISING"
+        },
+        {
+          "id": "genestealer-cults--host-of-ascension",
+          "name": "HOST OF ASCENSION"
+        },
+        {
+          "id": "genestealer-cults--outlander-claw",
+          "name": "OUTLANDER CLAW"
+        },
+        {
+          "id": "genestealer-cults--purestrain-broodswarm",
+          "name": "PURESTRAIN BROODSWARM"
+        },
+        {
+          "id": "genestealer-cults--xenocreed-congregation",
+          "name": "XENOCREED CONGREGATION"
+        },
+        {
+          "id": "genestealer-cults--xenocult-masses",
+          "name": "XENOCULT MASSES"
+        }
+      ]
+    },
+    {
+      "id": "leagues-of-votann",
+      "name": "Ligas de los Votann",
+      "officialName": "LEAGUES OF VOTANN",
+      "group": "xenos",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/leagues-of-votann",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "leagues-of-votann--armoured-trailblazers",
+          "name": "ARMOURED TRAILBLAZERS"
+        },
+        {
+          "id": "leagues-of-votann--brandfast-oathband",
+          "name": "BRANDFAST OATHBAND"
+        },
+        {
+          "id": "leagues-of-votann--delve-assault-shift",
+          "name": "DÊLVE ASSAULT SHIFT"
+        },
+        {
+          "id": "leagues-of-votann--farseekers",
+          "name": "FARSEEKERS"
+        },
+        {
+          "id": "leagues-of-votann--hearthband",
+          "name": "HEARTHBAND"
+        },
+        {
+          "id": "leagues-of-votann--hearthfyre-arsenal",
+          "name": "HEARTHFYRE ARSENAL"
+        },
+        {
+          "id": "leagues-of-votann--hearthguard-covenant",
+          "name": "HEARTHGUARD COVENANT"
+        },
+        {
+          "id": "leagues-of-votann--mercenary-oathband",
+          "name": "MERCENARY OATHBAND"
+        },
+        {
+          "id": "leagues-of-votann--needgaard-oathband",
+          "name": "NEEDGAÂRD OATHBAND"
+        },
+        {
+          "id": "leagues-of-votann--persecution-prospect",
+          "name": "PERSECUTION PROSPECT"
+        }
+      ]
+    },
+    {
+      "id": "necrons",
+      "name": "Necrones",
+      "officialName": "NECRONS",
+      "group": "xenos",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/necrons",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "necrons--annihilation-legion",
+          "name": "ANNIHILATION LEGION"
+        },
+        {
+          "id": "necrons--awakened-dynasty",
+          "name": "AWAKENED DYNASTY"
+        },
+        {
+          "id": "necrons--canoptek-court",
+          "name": "CANOPTEK COURT"
+        },
+        {
+          "id": "necrons--cryptek-conclave",
+          "name": "CRYPTEK CONCLAVE"
+        },
+        {
+          "id": "necrons--cursed-legion",
+          "name": "CURSED LEGION"
+        },
+        {
+          "id": "necrons--hand-of-the-dynasty",
+          "name": "HAND OF THE DYNASTY"
+        },
+        {
+          "id": "necrons--hypercrypt-legion",
+          "name": "HYPERCRYPT LEGION"
+        },
+        {
+          "id": "necrons--obeisance-phalanx",
+          "name": "OBEISANCE PHALANX"
+        },
+        {
+          "id": "necrons--pantheon-of-woe",
+          "name": "PANTHEON OF WOE"
+        },
+        {
+          "id": "necrons--skyshroud-spearhead",
+          "name": "SKYSHROUD SPEARHEAD"
+        },
+        {
+          "id": "necrons--starshatter-arsenal",
+          "name": "STARSHATTER ARSENAL"
+        },
+        {
+          "id": "necrons--the-phaeron-s-armoury",
+          "name": "THE PHAERON'S ARMOURY"
+        }
+      ]
+    },
+    {
+      "id": "orks",
+      "name": "Orkos",
+      "officialName": "ORKS",
+      "group": "xenos",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/orks",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "orks--blitz-brigade",
+          "name": "BLITZ BRIGADE"
+        },
+        {
+          "id": "orks--brute-bosses",
+          "name": "BRUTE BOSSES"
+        },
+        {
+          "id": "orks--bully-boyz",
+          "name": "BULLY BOYZ"
+        },
+        {
+          "id": "orks--da-big-hunt",
+          "name": "DA BIG HUNT"
+        },
+        {
+          "id": "orks--dread-mob",
+          "name": "DREAD MOB"
+        },
+        {
+          "id": "orks--flyboyz",
+          "name": "FLYBOYZ"
+        },
+        {
+          "id": "orks--green-tide",
+          "name": "GREEN TIDE"
+        },
+        {
+          "id": "orks--kult-of-speed",
+          "name": "KULT OF SPEED"
+        },
+        {
+          "id": "orks--madcap-meks",
+          "name": "MADCAP MEKS"
+        },
+        {
+          "id": "orks--runt-swarm",
+          "name": "RUNT SWARM"
+        },
+        {
+          "id": "orks--shoota-boyz",
+          "name": "SHOOTA BOYZ"
+        },
+        {
+          "id": "orks--taktikal-brigade",
+          "name": "TAKTIKAL BRIGADE"
+        },
+        {
+          "id": "orks--war-horde",
+          "name": "WAR HORDE"
+        },
+        {
+          "id": "orks--wreckas",
+          "name": "WRECKAS"
+        },
+        {
+          "id": "orks--wurrband",
+          "name": "WURRBAND"
+        }
+      ]
+    },
+    {
+      "id": "tau-empire",
+      "name": "Imperio T’au",
+      "officialName": "T’AU EMPIRE",
+      "group": "xenos",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/tau-empire",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "tau-empire--advanced-acquisition-cadre",
+          "name": "ADVANCED ACQUISITION CADRE"
+        },
+        {
+          "id": "tau-empire--auxiliary-cadre",
+          "name": "AUXILIARY CADRE"
+        },
+        {
+          "id": "tau-empire--experimental-prototype-cadre",
+          "name": "EXPERIMENTAL PROTOTYPE CADRE"
+        },
+        {
+          "id": "tau-empire--kauyon",
+          "name": "KAUYON"
+        },
+        {
+          "id": "tau-empire--kroot-hunting-pack",
+          "name": "KROOT HUNTING PACK"
+        },
+        {
+          "id": "tau-empire--montka",
+          "name": "MONT’KA"
+        },
+        {
+          "id": "tau-empire--retaliation-cadre",
+          "name": "RETALIATION CADRE"
+        }
+      ]
+    },
+    {
+      "id": "tyranids",
+      "name": "Tiránidos",
+      "officialName": "TYRANIDS",
+      "group": "xenos",
+      "parentId": null,
+      "role": "army",
+      "sourceUrl": "https://mfm.warhammer-community.com/en/tyranids",
+      "variants": [],
+      "detachments": [
+        {
+          "id": "tyranids--ambush-predators",
+          "name": "AMBUSH PREDATORS"
+        },
+        {
+          "id": "tyranids--assimilation-swarm",
+          "name": "ASSIMILATION SWARM"
+        },
+        {
+          "id": "tyranids--crusher-stampede",
+          "name": "CRUSHER STAMPEDE"
+        },
+        {
+          "id": "tyranids--invasion-fleet",
+          "name": "INVASION FLEET"
+        },
+        {
+          "id": "tyranids--subterranean-assault",
+          "name": "SUBTERRANEAN ASSAULT"
+        },
+        {
+          "id": "tyranids--synaptic-nexus",
+          "name": "SYNAPTIC NEXUS"
+        },
+        {
+          "id": "tyranids--talons-of-the-norn-queen",
+          "name": "TALONS OF THE NORN QUEEN"
+        },
+        {
+          "id": "tyranids--unending-swarm",
+          "name": "UNENDING SWARM"
+        },
+        {
+          "id": "tyranids--vanguard-onslaught",
+          "name": "VANGUARD ONSLAUGHT"
+        },
+        {
+          "id": "tyranids--warrior-bioform-onslaught",
+          "name": "WARRIOR BIOFORM ONSLAUGHT"
+        }
+      ]
+    }
+  ]
+}

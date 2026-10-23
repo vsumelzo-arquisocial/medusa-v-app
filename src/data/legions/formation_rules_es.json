@@ -1,0 +1,470 @@
+{
+ "Inducted Cohorts||All Legion HQ Detachments within this formation gain the Solar Auxilia HQ (10\") Special Rule": {
+  "name_es": "Cohortes incorporadas",
+  "text_es": "Todos los Destacamentos de Cuartel General de la Legión de esta formación obtienen la regla especial Cuartel General de los Solar Auxilia (10\")."
+ },
+ "Subordinate||Detachments and models selected from the Solar Auxilia Army List as part of this Formation do not count as [Legion Name] Detachments or models and do not gain any additional special rules associated with any Legion.": {
+  "name_es": "Subordinados",
+  "text_es": "Los Destacamentos y las miniaturas seleccionados de la Lista de Ejército de los Solar Auxilia como parte de esta Formación no cuentan como Destacamentos o miniaturas de [Nombre de la Legión] y no obtienen ninguna regla especial adicional asociada a ninguna Legión."
+ },
+ "Custom formation||This formation is for people who want to use the list builder to create their own custom Formations.": {
+  "name_es": "Formación personalizada",
+  "text_es": "Esta formación es para quienes quieran utilizar el creador de listas para crear sus propias Formaciones personalizadas."
+ },
+ "Dedicated Transports||Any Legiones Astartes Detachment within the Formation that contains only Infantry models may be upgraded with Legion Rhinos as Dedicated Transports.": {
+  "name_es": "Transportes asignados",
+  "text_es": "Cualquier Destacamento de Legiones Astartes de esta Formación que contenga únicamente miniaturas de Infantería puede mejorarse con Rhinos de la Legión como Transportes asignados."
+ },
+ "Heart of the Legion||Compulsory Core Detachment slots in this Formation must be filled with Legion Tactical Detachments. All non-Infantry models within this Formation increase their Tactical Strength by 1 when contesting an Objective marker that an Infantry model within this Formation is also contesting.": {
+  "name_es": "Corazón de la Legión",
+  "text_es": "Las opciones obligatorias de Destacamentos Básicos de esta Formación deben cubrirse con Destacamentos Tácticos de la Legión. Todas las miniaturas que no sean de Infantería de esta Formación aumentan su Fuerza Táctica en 1 cuando disputen un marcador de Objetivo que también esté disputando una miniatura de Infantería de esta Formación."
+ },
+ "Dedicated Transports||Any Legiones Astartes Detachment within a Legion Aerial Assault Formation can be upgraded with Legion Storm Eagles or Legion Thunderhawks as Dedicated Transports, at a cost of +85 points per Storm Eagle and +150 points per Legion Thunderhawk": {
+  "name_es": "Transportes asignados",
+  "text_es": "Cualquier Destacamento de Legiones Astartes de una Formación de Asalto Aéreo de la Legión puede mejorarse con Storm Eagles de la Legión o Thunderhawks de la Legión como Transportes asignados, con un coste de +85 puntos por Storm Eagle y +150 puntos por Thunderhawk de la Legión."
+ },
+ "Aerial Assault||All Detachments within the Formation that do not have the Flyer special rule must begin the game Embarked upon a Transport with the Flyer special rule": {
+  "name_es": "Asalto aéreo",
+  "text_es": "Todos los Destacamentos de esta Formación que no tengan la regla especial Volador deben comenzar la partida Embarcados en un Transporte con la regla especial Volador."
+ },
+ "Rapid Reaction Force||Compulsory Vanguard Detachment slots in this Formation must be filled with Legion Scimitar Jetbike Squadron, Legion Land Speeder Squadron or Legion Javelin Squadron Detachments": {
+  "name_es": "Fuerza de reacción rápida",
+  "text_es": "Las opciones obligatorias de Destacamentos de Vanguardia de esta Formación deben cubrirse con Destacamentos de Escuadrones de Motocicletas a Reacción Scimitar de la Legión, Escuadrones de Land Speeders de la Legión o Escuadrones de Javelins de la Legión."
+ },
+ "Swift Assault||All Legion Scimitar Jetbike Squadron, Legion Land Speeder Squadron or Legion Javelin Squadron in this Formation gain the Outflank special rule": {
+  "name_es": "Asalto veloz",
+  "text_es": "Todos los Escuadrones de Motocicletas a Reacción Scimitar de la Legión, Escuadrones de Land Speeders de la Legión o Escuadrones de Javelins de la Legión de esta Formación obtienen la regla especial Flanqueo."
+ },
+ "Dedicated Transports||All Legiones Astartes Detachments within the Formation that contain only Infantry models (excluding models with the Deep Strike special rule) must be upgraded with Legion Drop Pods as Dedicated Transports, and all Legiones Astartes Detachments within the Formation that contain only Walker models (excluding models with the Deep Strike special rule) must be upgraded with Dreadnought Drop Pods as Dedicated Transports.": {
+  "name_es": "Transportes asignados",
+  "text_es": "Todos los Destacamentos de Legiones Astartes de esta Formación que contengan únicamente miniaturas de Infantería (excluidas las miniaturas con la regla especial Despliegue rápido) deben mejorarse con Cápsulas de Desembarco de la Legión como Transportes asignados, y todos los Destacamentos de Legiones Astartes de esta Formación que contengan únicamente miniaturas de Andadores (excluidas las miniaturas con la regla especial Despliegue rápido) deben mejorarse con Cápsulas de Desembarco para Dreadnoughts como Transportes asignados."
+ },
+ "Heavy Assault||At least two Compulsory Support Detachments slots in this Formation mus be filled with Legion Terminator Detachments. Any remaining Compulsory Support Detachment slots in this Formation must be filled with Legion Terminator Detachments, Legion Contemptor Dreadnought Talons or Leviathan Siege Dreadnought Detachments.": {
+  "name_es": "Asalto pesado",
+  "text_es": "Al menos dos opciones obligatorias de Destacamentos de Apoyo de esta Formación deben cubrirse con Destacamentos de Exterminadores de la Legión. Cualquier opción obligatoria de Destacamento de Apoyo restante de esta Formación debe cubrirse con Destacamentos de Exterminadores de la Legión, Garras de Dreadnoughts Contemptor de la Legión o Destacamentos de Dreadnoughts de Asedio Leviathan."
+ },
+ "Dedicated Transports||All Legiones Astartes Detachments within this Formation that contain only Infantry models must be upgraded with Legion Spartans or Legion Land Raiders as Dedicated Transports.": {
+  "name_es": "Transportes asignados",
+  "text_es": "Todos los Destacamentos de Legiones Astartes de esta Formación que contengan únicamente miniaturas de Infantería deben mejorarse con Spartans de la Legión o Land Raiders de la Legión como Transportes asignados."
+ },
+ "Dedicated Transports||All Legiones Astartes Detachments within this Formation that contain only Infantry models (excluding models with the Deep Strike special rule) must be upgraded with Legion Termites as Dedicated Transports.": {
+  "name_es": "Transportes asignados",
+  "text_es": "Todos los Destacamentos de Legiones Astartes de esta Formación que contengan únicamente miniaturas de Infantería (excluidas las miniaturas con la regla especial Despliegue rápido) deben mejorarse con Termites de la Legión como Transportes asignados."
+ },
+ "Subterranean Assault||When a Detachment from this Formation that has been upgraded with Legion Termites as Dedicated Transports Deep Strikes, after placing and scattering the initial model, roll a D6 for each enemy Detachment with a Scale of 2 or less that is within 6\" of that initial model. On a 5+, that enemy Detachment suffers the effects of the Quake trait as if a hit had been scored against it by a weapon with that trait.": {
+  "name_es": "Asalto subterráneo",
+  "text_es": "Cuando un Destacamento de esta Formación que haya sido mejorado con Termites de la Legión como Transportes asignados realice un Despliegue rápido, tras colocar y dispersar la miniatura inicial, tira un D6 por cada Destacamento enemigo con una Escala de 2 o menos que esté a 6\" o menos de esa miniatura inicial. Con un 5+, ese Destacamento enemigo sufre los efectos del rasgo Sísmico como si hubiera recibido un impacto de un arma con ese rasgo."
+ },
+ "Support Formation (Legiones Astartes)||This is a Legiones Astartes Support Formation. An army can include one Support Formation for each Legiones Astartes Formation without the Support Formation (Legiones Astartes) rule.": {
+  "name_es": "Formación de apoyo (Legiones Astartes)",
+  "text_es": "Esta es una Formación de Apoyo de Legiones Astartes. Un ejército puede incluir una Formación de Apoyo por cada Formación de Legiones Astartes sin la regla Formación de apoyo (Legiones Astartes)."
+ },
+ "Forge Lord||HQ Detachment slots in this Support Formation must be filled by HQ Detachments chosen from the Legiones Astartes Army List": {
+  "name_es": "Señor de la Forja",
+  "text_es": "Las opciones de Destacamentos de Cuartel General de esta Formación de Apoyo deben cubrirse con Destacamentos de Cuartel General seleccionados de la Lista de Ejército de Legiones Astartes."
+ },
+ "||Support, Vanguard and Bastion Detachment slots in this Support Formation must be filled with Detachments from the Mechanicum Taghmata Army List. Detachments taken from the Mechanicum Taghmata Army List in this way must have the Cybernetica Cortex (X) special rule": {
+  "name_es": "",
+  "text_es": "Las opciones de Destacamentos de Apoyo, Vanguardia y Bastión de esta Formación de Apoyo deben cubrirse con Destacamentos de la Lista de Ejército del Taghmata Mechanicum. Los Destacamentos seleccionados de la Lista de Ejército del Taghmata Mechanicum de este modo deben tener la regla especial Córtex cibernético (X)."
+ },
+ "||Core Detachment slots in this Support Formation may be filled by Core Detachments chosen from the Legiones Astartes Army List or with Thallax Cohort Detachments chosen from the Mechanicum Taghmata Army List. HQ and Core Detachments chosen from the Legiones Astartes Army List in this Support Formation gain the Cortex Controller special rule": {
+  "name_es": "",
+  "text_es": "Las opciones de Destacamentos Básicos de esta Formación de Apoyo pueden cubrirse con Destacamentos Básicos seleccionados de la Lista de Ejército de Legiones Astartes o con Destacamentos de Cohortes Thallax seleccionados de la Lista de Ejército del Taghmata Mechanicum. Los Destacamentos de Cuartel General y Básicos seleccionados de la Lista de Ejército de Legiones Astartes de esta Formación de Apoyo obtienen la regla especial Controlador de córtex."
+ },
+ "||Detachments from the Mechanicum Taghmata Army List in this Support Formation do not gain the Legiones Astartes special rule selected for this Support Formation, but instead gain the Line special rule while that Detachment is within 8\" of a Legiones Astartes Detachment from the same Support Formation": {
+  "name_es": "",
+  "text_es": "Los Destacamentos de la Lista de Ejército del Taghmata Mechanicum de esta Formación de Apoyo no obtienen la regla especial Legiones Astartes seleccionada para esta Formación de Apoyo, sino que obtienen la regla especial Línea mientras ese Destacamento esté a 8\" o menos de un Destacamento de Legiones Astartes de la misma Formación de Apoyo."
+ },
+ "Saturnine Assault||HQ Detachment slots in this Formation must be filled with Legion Saturnine Command Detachments, Support Detachment slots in this Formation must be filled with Legion Saturnine Terminator Detachments and Bastion Detachment slots in this Formation must be filled with Legion Saturnine Dreadnought Detachments.": {
+  "name_es": "Asalto Saturnine",
+  "text_es": "Las opciones de Destacamentos de Cuartel General de esta Formación deben cubrirse con Destacamentos de Mando Saturnine de la Legión, las opciones de Destacamentos de Apoyo de esta Formación deben cubrirse con Destacamentos de Exterminadores Saturnine de la Legión y las opciones de Destacamentos de Bastión de esta Formación deben cubrirse con Destacamentos de Dreadnoughts Saturnine de la Legión."
+ },
+ "Saturnine Teleportation Transponder||Legion Saturnine Command Detachments and Legion Terminator Detachments from this Formation have the Deep Strike special rule. All Detachments in this Formation with the Deep Strike special rule must Deep Strike in the same Movement phase as the Detachment that includes the Legion Saturnine Command Detachment": {
+  "name_es": "Transpondedor de teleportación Saturnine",
+  "text_es": "Los Destacamentos de Mando Saturnine de la Legión y los Destacamentos de Exterminadores de la Legión de esta Formación tienen la regla especial Despliegue rápido. Todos los Destacamentos de esta Formación con la regla especial Despliegue rápido deben realizar un Despliegue rápido en la misma fase de Movimiento que el Destacamento que incluye el Destacamento de Mando Saturnine de la Legión."
+ },
+ "||During that Movement phase, the Detachment that includes the Legion Saturnine Command Detachment must be the first from this Formation to Deep Strike, and all other Detachments from this Formation that Deep Strike must have their first model placed within 6\" of the Legion Saturnine Command Squad model from that Detachment. If the Saturnine Command Squad model would be destroyed before all such Deep Strikes have been completed, leave the model in place until all such Deep Strikes have been completed, and then remove the model from the battlefield.": {
+  "name_es": "",
+  "text_es": "Durante esa fase de Movimiento, el Destacamento que incluye el Destacamento de Mando Saturnine de la Legión debe ser el primero de esta Formación en realizar un Despliegue rápido, y todos los demás Destacamentos de esta Formación que realicen un Despliegue rápido deben colocar su primera miniatura a 6\" o menos de la miniatura de la Escuadra de Mando Saturnine de la Legión de ese Destacamento. Si la miniatura de la Escuadra de Mando Saturnine fuera a ser destruida antes de que se hayan completado todos esos Despliegues rápidos, deja la miniatura en su sitio hasta que se hayan completado todos esos Despliegues rápidos y, después, retira la miniatura del campo de batalla."
+ },
+ "Unstoppable Advance||While a Heavy Armour Detachment from this Formation has two or more models, models in that unit have the following additional weapon:": {
+  "name_es": "Avance imparable",
+  "text_es": "Mientras un Destacamento de Blindados Pesados de esta Formación tenga dos o más miniaturas, las miniaturas de esa unidad tienen la siguiente arma adicional:"
+ },
+ "Crushing treads||Range: \"-\", Dice: \"-\", To Hit: \"-\", AP: \"-1\", Traits: \"Rend, Wrecker (1)\"": {
+  "name_es": "Orugas aplastantes",
+  "text_es": "Alcance: \"-\", Dados: \"-\", Para impactar: \"-\", FP: \"-1\", Rasgos: \"Acerado, Demoledor (1)\""
+ },
+ "Defensive Strongpoint||Bastion Detachment slots in this Formation must be filled with Araknae Weapons Platform Battery Detachments or Legion Tarantula Battery Detachments. Detachments in this Formation may not be deployed using the Infiltrate special rule.": {
+  "name_es": "Posición defensiva fortificada",
+  "text_es": "Las opciones de Destacamentos de Bastión de esta Formación deben cubrirse con Destacamentos de Baterías de Plataformas de Armas Araknae o Destacamentos de Baterías Tarantula de la Legión. Los Destacamentos de esta Formación no pueden desplegarse utilizando la regla especial Infiltración."
+ },
+ "Overlapping Fire||Weapons that Araknae Weapons Platform models in this Formation have gain the Point Defence trait": {
+  "name_es": "Fuego superpuesto",
+  "text_es": "Las armas de las miniaturas de Plataforma de Armas Araknae de esta Formación obtienen el rasgo Defensa puntual."
+ },
+ "Iconic Formation||Each Iconic Formation consists of two elements: Standard Detachments and Expanded Detachments. When an Iconic Formation is added to your Army Roster, you can either add only the Standard Detachments for the points cost listed, or the Standard Detachments and the Expanded Detachments, paying the additional points cost for the Expanded Detachments. A player may choose not to include every Detachment listed under the Expanded Detachments section, but the points cost is not reduced if they do so.": {
+  "name_es": "Formación icónica",
+  "text_es": "Cada Formación icónica consta de dos elementos: Destacamentos estándar y Destacamentos ampliados. Cuando se añade una Formación icónica a tu Lista de ejército, puedes añadir solo los Destacamentos estándar por el coste en puntos indicado, o bien los Destacamentos estándar y los Destacamentos ampliados, pagando el coste en puntos adicional de los Destacamentos ampliados. Un jugador puede optar por no incluir todos los Destacamentos indicados en la sección de Destacamentos ampliados, pero el coste en puntos no se reduce si lo hace."
+ },
+ "Sons of Ferrus Manus||This Formation must be from the Iron Hands Legion and can only be included in an Army with the Loyalist Allegiance. In addition, an Army can only include one Iron Hands Seeker-Killer Clave Ultor Formation.": {
+  "name_es": "Hijos de Ferrus Manus",
+  "text_es": "Esta Formación debe pertenecer a la Legión de los Manos de Hierro y solo puede incluirse en un Ejército de Lealtad lealista. Además, un Ejército solo puede incluir una Formación de Clave Ultor de Buscadores-Asesinos de los Manos de Hierro."
+ },
+ "Seeker-killers||Detachments from this Formation have the Macro-extinction Targeting Protocols special rule.": {
+  "name_es": "Buscadores-asesinos",
+  "text_es": "Los Destacamentos de esta Formación tienen la regla especial Protocolos de selección de blancos de macroextinción."
+ },
+ "Sons of Perturabo||This Formation must be from the Iron Warriors Legion and can only be included in an Army with the Traitor Allegiance. In addition, an Army can only include one Iron Warriors Proioxis Macro-Assault Wing Formation": {
+  "name_es": "Hijos de Perturabo",
+  "text_es": "Esta Formación debe pertenecer a la Legión de los Guerreros de Hierro y solo puede incluirse en un Ejército de Lealtad traidora. Además, un Ejército solo puede incluir una Formación de Ala de Macroasalto Proioxis de los Guerreros de Hierro."
+ },
+ "Hammerblow Assault||Legion Terminator models from this Formation increase their CAF by 2 during any round in which they Disembarked form a Spartan model form this Formation.": {
+  "name_es": "Asalto de martillazo",
+  "text_es": "Las miniaturas de Exterminadores de la Legión de esta Formación aumentan su CAF en 2 durante cualquier ronda en la que hayan Desembarcado de una miniatura de Spartan de esta Formación."
+ },
+ "Protean Instrument||This Formation must be from the Alpha Legion. In addition, an Army can only include one Alpha Legion Harrow Group Arcadus Formation.": {
+  "name_es": "Instrumento proteico",
+  "text_es": "Esta Formación debe pertenecer a la Legión Alfa. Además, un Ejército solo puede incluir una Formación de Grupo de Destrucción Arcadus de la Legión Alfa."
+ },
+ "Obfuscation Protocols||Detachments from this Formation have the Outflank and Scout special rules.": {
+  "name_es": "Protocolos de ofuscación",
+  "text_es": "Los Destacamentos de esta Formación tienen las reglas especiales Flanquear y Exploradores."
+ },
+ "Sons of the Pale King||This Formation must be from the Death Guard Legion.": {
+  "name_es": "Hijos del Rey Pálido",
+  "text_es": "Esta Formación debe pertenecer a la Legión de la Guardia de la Muerte."
+ },
+ "Shattering Volleys||Missile Launchers models in this Formation are equipped with gain the Demolisher special rule while their Detachment is not Garrisoned within a Structure.": {
+  "name_es": "Andanadas devastadoras",
+  "text_es": "Los lanzamisiles con los que están equipadas las miniaturas de esta Formación obtienen la regla especial Demoledor mientras su Destacamento no esté Guarnecido en una Estructura."
+ },
+ "Sons of the Khan||This Formation must be from the White Scars Legion.": {
+  "name_es": "Hijos del Khan",
+  "text_es": "Esta Formación debe pertenecer a la Legión de los Cicatrices Blancas."
+ },
+ "Ride the Wind||Standard Detachments in this Formation gain the Forward Deployment special rule.": {
+  "name_es": "Cabalgar el viento",
+  "text_es": "Los Destacamentos estándar de esta Formación obtienen la regla especial Despliegue avanzado."
+ },
+ "Officer of the Line||The Command Squad model in this Formation can use the Master Tactician special rule twice when it is activated, but it if does, both Detachments selected to have their order replaced must be from this Formation": {
+  "name_es": "Oficial de línea",
+  "text_es": "La miniatura de Escuadra de Mando de esta Formación puede usar la regla especial Maestro táctico dos veces cuando se activa, pero, si lo hace, ambos Destacamentos seleccionados para sustituir su orden deben pertenecer a esta Formación."
+ },
+ "Backbone of the Legion||Legion Tactical Detachments from this Formation have the Line special rule.": {
+  "name_es": "Columna vertebral de la Legión",
+  "text_es": "Los Destacamentos Tácticos de la Legión de esta Formación tienen la regla especial Línea."
+ },
+ "Shattering Barrage||When making a Fight roll for an enemy model that is Garrisoned within a Structure that is in a Fight against an Infantry model from this Formation, the controlling player does not gain the Structure Bonus to that model's CAF if that Structure has lost any wounds": {
+  "name_es": "Bombardeo devastador",
+  "text_es": "Al realizar una tirada de Combate para una miniatura enemiga que esté Guarnecida en una Estructura y que esté en Combate contra una miniatura de Infantería de esta Formación, el jugador que la controla no obtiene la Bonificación de Estructura al CAF de esa miniatura si dicha Estructura ha perdido alguna herida."
+ },
+ "Tip of the Spear||All Detachments in this Formation must start the battle deployed within their Dedicated Transports. WHen a Detachment from this Formation Deep Strikes, after placing the first model, that model does not Scatter": {
+  "name_es": "Punta de lanza",
+  "text_es": "Todos los Destacamentos de esta Formación deben comenzar la batalla desplegados dentro de sus Transportes asignados. Cuando un Destacamento de esta Formación realiza un Despliegue rápido, tras colocar la primera miniatura, esa miniatura no se Dispersa."
+ },
+ "Heavy Assault Cadre||When a Saturnine Terminator model from this Formation Disembarks from a Mastodon model from this Formation, weapons that Saturnine Terminator model has gain the Shred trait until the end of the round.": {
+  "name_es": "Cuadro de asalto pesado",
+  "text_es": "Cuando una miniatura de Exterminador Saturnine de esta Formación Desembarca de una miniatura de Mastodon de esta Formación, las armas de esa miniatura de Exterminador Saturnine obtienen el rasgo Despedazar hasta el final de la ronda."
+ },
+ "Sons of Vulkan||This Formation must be from the Salamanders Legion and can only be included in an Army with the Loyalist Allegiance. In addition, an Army can only include one Salamanders Saturnine Heavy Assault Cadre Formation.": {
+  "name_es": "Hijos de Vulkan",
+  "text_es": "Esta Formación debe pertenecer a la Legión de los Salamandras y solo puede incluirse en un Ejército de Lealtad lealista. Además, un Ejército solo puede incluir una Formación de Cuadro de Asalto Pesado Saturnine de los Salamandras."
+ },
+ "Overwhelming Destruction||If a Morale check would be made for an enemy Detachment as a result of being fired at by a Detachment from this Formation, the controlling player subtracts 1 from the result of that Morale check.": {
+  "name_es": "Destrucción abrumadora",
+  "text_es": "Si debe realizarse un chequeo de Moral para un Destacamento enemigo como resultado de recibir disparos de un Destacamento de esta Formación, el jugador que lo controla resta 1 al resultado de ese chequeo de Moral."
+ },
+ "Breakers of Legions||This Formation must be from the Iron Warriors Legion and can only be included in an Army with the Traitor Allegiance. #################################################################################################### ####################################################################################################": {
+  "name_es": "Quebrantadores de legiones",
+  "text_es": "Esta Formación debe pertenecer a la Legión de los Guerreros de Hierro y solo puede incluirse en un Ejército de Lealtad traidora. #################################################################################################### ####################################################################################################"
+ },
+ "Disciplined Ranks|| Compulsory Core Detachment slots within this Formation must be filled with Auxilia Lasrifle Tercio Detachments": {
+  "name_es": "Filas disciplinadas",
+  "text_es": "Las casillas de Destacamentos básicos obligatorios de esta Formación deben ocuparse con Destacamentos de Tercio de Rifles Láser de Auxilia."
+ },
+ "Tank Commander||One Vehicle model from a Compulsory Detachment must be upgraded to a Tank Commander for +10 points (see page 178).": {
+  "name_es": "Comandante de tanque",
+  "text_es": "Una miniatura de Vehículo de un Destacamento obligatorio debe mejorarse a Comandante de tanque por +10 puntos (véase la página 178)."
+ },
+ "Forward Positions||Compulsory Core Detachment slots in this Formation must be filled with Auxilia Veletaris Storm Sections. All Solar Auxilia Detachments within a Solar Auxilia Pioneer Company that consist entirely of Infantry models without the Bulky special rule gain the Infiltrate special rule. All other Solar Auxilia Detachments within the Solar Auxilia Pioneer Company gain the Forward Deployment special rule": {
+  "name_es": "Posiciones avanzadas",
+  "text_es": "Las casillas de Destacamentos básicos obligatorios de esta Formación deben ocuparse con Secciones de Asalto Veletaris de Auxilia. Todos los Destacamentos de Solar Auxilia de una Compañía de Pioneros de Solar Auxilia compuestos íntegramente por miniaturas de Infantería sin la regla especial Corpulento obtienen la regla especial Infiltración. Todos los demás Destacamentos de Solar Auxilia de la Compañía de Pioneros de Solar Auxilia obtienen la regla especial Despliegue avanzado."
+ },
+ "Pulverising Volleys||Earthshaker cannon and Medusa siege guns that models in this Formation are equipped with do not suffer a -1 penalty to all Hit rolls when firing against a target they cannot draw line of sight to.": {
+  "name_es": "Andanadas pulverizadoras",
+  "text_es": "Los cañones estremecedores y los cañones de asedio Medusa con los que están equipadas las miniaturas de esta Formación no sufren una penalización de -1 a todas las tiradas para Impactar cuando disparan contra un objetivo hasta el que no pueden trazar línea de visión."
+ },
+ "Dedicated Transports||All Solar Auxilia Detachments within the Formation that contain only Infantry models (excluding models with the Deep Strike special rule) must be upgraded with Dracosans as Dedicated Transports.": {
+  "name_es": "Transportes asignados",
+  "text_es": "Todos los Destacamentos de Solar Auxilia de esta Formación que contengan únicamente miniaturas de Infantería (excluyendo las miniaturas con la regla especial Despliegue rápido) deben mejorarse con Dracosans como Transportes asignados."
+ },
+ "Tank Commander|| One Super-heavy Vehicle model from a Compulsory Detachment must be upgraded to a Tank Commander for +10 points (see page 178 of the Legions Imperialis Rulebook).": {
+  "name_es": "Comandante de tanque",
+  "text_es": "Una miniatura de Vehículo superpesado de un Destacamento obligatorio debe mejorarse a Comandante de tanque por +10 puntos (consulta la página 178 del reglamento de Legions Imperialis)."
+ },
+ "Mobile Fortifications||While two or more models from this Formation are within range of the same Objective marker, increase the Tactical Strength of each model from this Formation that is within range of that Objective marker by 1 when determining which player captures that Objective marker.": {
+  "name_es": "Fortificaciones móviles",
+  "text_es": "Mientras dos o más miniaturas de esta Formación estén dentro del alcance del mismo marcador de Objetivo, aumenta en 1 la Fuerza táctica de cada miniatura de esta Formación que esté dentro del alcance de ese marcador de Objetivo al determinar qué jugador captura ese marcador de Objetivo."
+ },
+ "Armored Company||Leman Russ slots in this Formation must be filled with Leman Russ Strike Squadrons, Leman Russ Vanquisher Squadrons, Leman Russ Executioner Squadrons, Leman Russ Demolisher Squadrons, Leman Russ Annihilator Squadrons or Leman Russ Exterminator Squadrons": {
+  "name_es": "Compañía acorazada",
+  "text_es": "Las opciones de Leman Russ de esta Formación deben cubrirse con Escuadrones de ataque Leman Russ, Escuadrones Leman Russ Vanquisher, Escuadrones Leman Russ Executioner, Escuadrones Leman Russ Demolisher, Escuadrones Leman Russ Annihilator o Escuadrones Leman Russ Exterminator"
+ },
+ "Tank Commander|| One Vehicle model from a Compulsory Detachment must be upgraded to a Tank Commander for +10 points (see page 178 of the Legions Imperialis Rulebook).": {
+  "name_es": "Comandante de tanque",
+  "text_es": "Una miniatura de Vehículo de un Destacamento obligatorio debe mejorarse a Comandante de tanque por +10 puntos (consulta la página 178 del reglamento de Legions Imperialis)."
+ },
+ "Tank Commander||One Super-heavy Vehicle model from a Compulsory Detachment must be upgraded to a Tank Commander for +10 points (see page 178 of the Legions Imperialis Rulebook).": {
+  "name_es": "Comandante de tanque",
+  "text_es": "Una miniatura de Vehículo superpesado de un Destacamento obligatorio debe mejorarse a Comandante de tanque por +10 puntos (consulta la página 178 del reglamento de Legions Imperialis)."
+ },
+ "Titan Hunters||If an Auxilia Shadowsword Detachment from this Formation that is issued with a First Fire Order is firing at a Titan Detachment, volcano cannon that models in the Auxilia Shadowsword Detachment are equipped with are treated as having the Accurate weapon trait": {
+  "name_es": "Cazadores de Titanes",
+  "text_es": "Si un Destacamento de Shadowsword Auxilia de esta Formación que haya recibido una Orden de Primer fuego dispara contra un Destacamento de Titanes, los cañones volcán con los que estén equipadas las miniaturas del Destacamento de Shadowsword Auxilia se consideran dotados del rasgo de arma Precisa"
+ },
+ "Support Formation (Solar Auxillia)||This is a Solar Auxillia Support Formation. An army can include one Support Formation for each Solar Auxillia Formation without the Support Formation (Solar Auxillia) rule.": {
+  "name_es": "Formación de apoyo (Solar Auxilia)",
+  "text_es": "Esta es una Formación de apoyo de Solar Auxilia. Un ejército puede incluir una Formación de apoyo por cada Formación de Solar Auxilia sin la regla Formación de apoyo (Solar Auxilia)."
+ },
+ "Master of Automata||HQ Detachment slots in this Support Formation must be filled by HQ Detachments chosen from the Solar Auxilia Army List. HQ Detachments chosen from the Solar Auxilia Army List in this Support Formation gain the Cortex Controller special rule": {
+  "name_es": "Señor de los autómatas",
+  "text_es": "Las opciones de Destacamento de Cuartel general de esta Formación de apoyo deben cubrirse con Destacamentos de Cuartel general elegidos de la Lista de ejército de Solar Auxilia. Los Destacamentos de Cuartel general elegidos de la Lista de ejército de Solar Auxilia de esta Formación de apoyo obtienen la regla especial Controlador de córtex"
+ },
+ "Cybernetica Cortex||Optional Support, Vanguard and Bastion Detachment slots in this Support Formation must be filled with Detachments from the Mechanicum Taghmata Army List. Detachments taken from the Mechanicum Taghmata Army List in this way must have the Cybernetica Cortex (X) special rule": {
+  "name_es": "Córtex Cybernetica",
+  "text_es": "Las opciones de Destacamento de Apoyo, Vanguardia y Bastión opcionales de esta Formación de apoyo deben cubrirse con Destacamentos de la Lista de ejército de Taghmata del Mechanicum. Los Destacamentos elegidos de la Lista de ejército de Taghmata del Mechanicum de este modo deben tener la regla especial Córtex Cybernetica (X)"
+ },
+ "||Core Detachment slots in this Support Formation may be filled by Core Detachments chosen from the Solar\tAuxilia Army List or with Thallax Cohort Detachments chosen from the Mechanicum Taghmata Army List": {
+  "name_es": "",
+  "text_es": "Las opciones de Destacamento básico de esta Formación de apoyo pueden cubrirse con Destacamentos básicos elegidos de la Lista de ejército de Solar Auxilia o con Destacamentos de Cohorte Thallax elegidos de la Lista de ejército de Taghmata del Mechanicum"
+ },
+ "Defenders of Tallarn||This formation can only be included in an Army with the Loyalist Allegiance. In addition, an Army can only include one Tallarn Reborn Carmine Ambush Tercio.": {
+  "name_es": "Defensores de Tallarn",
+  "text_es": "Esta Formación solo puede incluirse en un Ejército de Lealtad leal. Además, un Ejército solo puede incluir un Tercio de emboscada Carmesí Renacido de Tallarn."
+ },
+ "Ambush Tercio||Detachments from this Formation have the Forward Deployment and Scout special rules": {
+  "name_es": "Tercio de emboscada",
+  "text_es": "Los Destacamentos de esta Formación tienen las reglas especiales Despliegue avanzado y Explorador"
+ },
+ "Despoilers of Tallarn||This formation can only be included in an Army with the Traitor Allegiance. In addition, an Army can only include one Galibed Oathsworn Thyreos Siege Breaker Company": {
+  "name_es": "Expoliadores de Tallarn",
+  "text_es": "Esta Formación solo puede incluirse en un Ejército de Lealtad traidora. Además, un Ejército solo puede incluir una Compañía rompeasedios Thyreos de los Juramentados de Galibed"
+ },
+ "Thyreos Doctrine||While an Auxilia Medusa Battery or Auxilia Basilik Battery Detachment from this Formation is within 2\" of an Auxilia Stormsword Squadron from this Formation, each time a hit is scored against that Auxilia Medusa Battery or Auxilia Basilisk Battery Detachment, unless that hit was from a weapon with the Barrage or Heavy Barrage trait, you can allocated that hit to a Stormsword model from this Formation that is also visible to the firing Detachment.": {
+  "name_es": "Doctrina Thyreos",
+  "text_es": "Mientras un Destacamento de Batería Medusa Auxilia o de Batería Basilisk Auxilia de esta Formación esté a 2\" o menos de un Escuadrón de Stormsword Auxilia de esta Formación, cada vez que se consiga un impacto contra ese Destacamento de Batería Medusa Auxilia o de Batería Basilisk Auxilia, a menos que ese impacto proceda de un arma con el rasgo Andanada o Andanada pesada, puedes asignar ese impacto a una miniatura de Stormsword de esta Formación que también sea visible para el Destacamento que dispara."
+ },
+ "Elite Commander||Legate Commander Detachments from the Expanded Detachments in this Formation do not count towards the maximum number permitted in an Army.": {
+  "name_es": "Comandante de élite",
+  "text_es": "Los Destacamentos de Comandante legado de los Destacamentos ampliados de esta Formación no cuentan para el número máximo permitido en un Ejército."
+ },
+ "Volley Fire||While an Auxilia Lasrile Tercio Detachment in this Formation contains 5 or more Auxiliaries models, Auxilia lasrifles that models in that Detachment are equipped with have the Rapid Fire rule": {
+  "name_es": "Fuego de salvas",
+  "text_es": "Mientras un Destacamento de Tercio de rifles láser Auxilia de esta Formación contenga 5 o más miniaturas de Auxiliares, los rifles láser Auxilia con los que estén equipadas las miniaturas de ese Destacamento tienen la regla Fuego rápido"
+ },
+ "Mechanised Tercios||While a Detachment from this Formation contains a Tank Commander model, that Detachment has the Nimble and Steadfast special rules.": {
+  "name_es": "Tercios mecanizados",
+  "text_es": "Mientras un Destacamento de esta Formación contenga una miniatura de Comandante de tanque, ese Destacamento tiene las reglas especiales Ágil y Firme."
+ },
+ "Favoured of the Warmaster||This Formation can only be included in an Army with the Traitor Allegiance": {
+  "name_es": "Predilectos del Señor de la Guerra",
+  "text_es": "Esta Formación solo puede incluirse en un Ejército de Lealtad traidora"
+ },
+ "Overwhelming Aggression||Infantry and Walker Detachments in this Formation gain the Furious Charge special rule": {
+  "name_es": "Agresión abrumadora",
+  "text_es": "Los Destacamentos de Infantería y Andadores de esta Formación obtienen la regla especial Carga furiosa"
+ },
+ "Defenders of Beta-Garmon||This Formation can only be included in an Army with the Loyalist Allegiance.": {
+  "name_es": "Defensores de Beta-Garmon",
+  "text_es": "Esta Formación solo puede incluirse en un Ejército de Lealtad leal."
+ },
+ "Deathless||Detachments in this Formation gain the Feel No Pain special rule while any models from that Detachment are within 10\" of any enemy Deatchments in an Army with the Traitor Allegiance.": {
+  "name_es": "Inmortales",
+  "text_es": "Los Destacamentos de esta Formación obtienen la regla especial No hay dolor mientras alguna miniatura de ese Destacamento esté a 10\" o menos de cualquier Destacamento enemigo de un Ejército de Lealtad traidora."
+ },
+ "Defenders of the Legion||This Formation can only be included in an Army with the Loyalist Allegiance.": {
+  "name_es": "Defensores de la Legión",
+  "text_es": "Esta Formación solo puede incluirse en un Ejército de Lealtad leal."
+ },
+ "Armoured Charge||If a Detachment in this Formation has a Charge Order, until the end of that round it has the following additional weapon:": {
+  "name_es": "Carga acorazada",
+  "text_es": "Si un Destacamento de esta Formación tiene una Orden de Carga, hasta el final de esa ronda tiene la siguiente arma adicional:"
+ },
+ "Crushing bulk||Range: \"-\", Dice: \"-\", To Hit: \"-\", AP: \"-\", Trait: \"Rend #################################################################################################### ####################################################################################################": {
+  "name_es": "Masa aplastante",
+  "text_es": "Alcance: \"-\", Dados: \"-\", Para impactar: \"-\", FP: \"-\", Rasgo: \"Desgarrar #################################################################################################### ####################################################################################################"
+ },
+ "Cortex Controller||One Vehicle model from a Compulsory Detachment may be upgraded with the Cortex Controllers special rule for +10 points": {
+  "name_es": "Controlador de córtex",
+  "text_es": "Una miniatura de Vehículo de un Destacamento obligatorio puede mejorarse con la regla especial Controladores de córtex por +10 puntos"
+ },
+ "Legio Cybernetica||All slots within this Formation, apart from Core, Transport and Titan slots, must be filled with Detachments that have either the Cortex Controller or Cybernetica Cortex (X) special rule. The range of Cortex Controller's effects for all models within the Formation is 12\" instead of 9\"": {
+  "name_es": "Legio Cybernetica",
+  "text_es": "Todas las casillas de esta Formación, excepto las de Núcleo, Transporte y Titán, deben ocuparse con Destacamentos que tengan la regla especial Controlador de córtex o Córtex Cybernetica (X). El alcance de los efectos de Controlador de córtex para todas las miniaturas de la Formación es de 12\" en lugar de 9\""
+ },
+ "Dedicated Transports||Detachments within this Formation that contain only Infantry models may be upgraded with Triaros Armoured Conveyors as Dedicated Transports": {
+  "name_es": "Transportes asignados",
+  "text_es": "Los Destacamentos de esta Formación que solo contengan miniaturas de Infantería pueden mejorarse con Transportes blindados Triaros como Transportes asignados"
+ },
+ "Servants of the Lacrymaerta||Compulsory Core Detachment slots in this Formation must be filled with Adsecularis Tech-thrall Covenant Detachments.": {
+  "name_es": "Siervos de la Lacrymaerta",
+  "text_es": "Las casillas obligatorias de Destacamentos de Núcleo de esta Formación deben ocuparse con Destacamentos de Congregaciones de Tecnoesclavos Adsecularis."
+ },
+ "Legionbuilder note||There is only one Itnerant Cybernetica Cohort formation but it lets you choose between having three support detachments or vanguard detachments as the compulsory slots. So I have split them into two different formations as a work around": {
+  "name_es": "Nota de Legionbuilder",
+  "text_es": "Solo hay una formación de Cohorte Cybernetica itinerante, pero permite elegir entre tener tres destacamentos de apoyo o tres destacamentos de vanguardia como casillas obligatorias. Por ello, la he dividido en dos formaciones diferentes como solución alternativa"
+ },
+ "Support Formation (Mechanicum)||This is a Mechanicum Support Formation. An army can include one Support Formation for each Mechanicum Formation without the Support Formation (Mechanicum) rule.": {
+  "name_es": "Formación de apoyo (Mechanicum)",
+  "text_es": "Esta es una Formación de apoyo del Mechanicum. Un ejército puede incluir una Formación de apoyo por cada Formación del Mechanicum que no tenga la regla Formación de apoyo (Mechanicum)."
+ },
+ "Order Cascade||Whenever a Detachment in this Support Formation is activated, the controlling player may choose another friendly Detachment from this Support Formation within 6\" of the activated Detachment that has already revealed its Order this round. The activated Detachment may discard its Order token and replace it with a new Order chosen from those shown in the Cybernetica Cortex (X) special rule of the chosen friendly Detachment.": {
+  "name_es": "Cascada de órdenes",
+  "text_es": "Siempre que se active un Destacamento de esta Formación de apoyo, el jugador que lo controla puede elegir otro Destacamento amigo de esta Formación de apoyo situado a 6\" o menos del Destacamento activado que ya haya revelado su Orden esta ronda. El Destacamento activado puede descartar su marcador de Orden y sustituirlo por una nueva Orden elegida entre las indicadas en la regla especial Córtex Cybernetica (X) del Destacamento amigo elegido."
+ },
+ "||All Detachments included in this Support Formation must have the Cybernetica Cortex (X) special rule. Detachments within this Support Formation cannot benefit from the Cortex Controller special rule – they cannot be issued Orders other than those from their variant of the Cybernetica Cortex (X) special rule or another variant through the Order Cascade special rule.": {
+  "name_es": "",
+  "text_es": "Todos los Destacamentos incluidos en esta Formación de apoyo deben tener la regla especial Córtex Cybernetica (X). Los Destacamentos de esta Formación de apoyo no pueden beneficiarse de la regla especial Controlador de córtex: no pueden recibir Órdenes distintas de las de su variante de la regla especial Córtex Cybernetica (X), o de otra variante mediante la regla especial Cascada de órdenes."
+ },
+ "Cult of Destruction||Support Detachment slots within this Formation must be filled with Myrmidon Secutor Host or  Myrmidon Destructor Host Detachments.": {
+  "name_es": "Culto a la destrucción",
+  "text_es": "Las casillas de Destacamentos de Apoyo de esta Formación deben ocuparse con Destacamentos de Huestes de Myrmidones Secutores o Huestes de Myrmidones Destructores."
+ },
+ "Defenders of Magma City||This Formation can only be included in an Army with the Loyalist Allegiance": {
+  "name_es": "Defensores de la Ciudad del Magma",
+  "text_es": "Esta Formación solo puede incluirse en un Ejército de Lealtad Lealista"
+ },
+ "Adaptive Protocols||When a Detachment from this Formation that has the Cybernetica Cortex (X) special rule is activated, its Order may be replaced with a new Order. The new Order must be the same Order as one issued to a friendly Detachment from this Formation that has the Cybernetica Cortex (X) special rule and is within 6\" of the activated Detachment. The new Order can be an Order other than those show in the activated Detachment's Cybernetica Cortex (X) special rule, even oif the activated Detachment is not within range of a Cyber Controller. #################################################################################################### ####################################################################################################": {
+  "name_es": "Protocolos adaptativos",
+  "text_es": "Cuando se active un Destacamento de esta Formación que tenga la regla especial Córtex Cybernetica (X), su Orden puede sustituirse por una nueva Orden. La nueva Orden debe ser la misma que una impartida a un Destacamento amigo de esta Formación que tenga la regla especial Córtex Cybernetica (X) y esté a 6\" o menos del Destacamento activado. La nueva Orden puede ser una Orden distinta de las indicadas en la regla especial Córtex Cybernetica (X) del Destacamento activado, incluso si el Destacamento activado no está dentro del alcance de un Cibercontrolador. #################################################################################################### ####################################################################################################"
+ },
+ "Legionbuilder note||Due to how some of the compulsory slots can only be filled with Traitor allegiance detachments this Formation will also be classed as a Traitor Formation.": {
+  "name_es": "Nota de Legionbuilder",
+  "text_es": "Dado que algunas de las casillas obligatorias solo pueden ocuparse con destacamentos de lealtad Traidora, esta Formación también se clasificará como Formación Traidora."
+ },
+ "Command - Urgency||When a Detachment with the Networked Anima special rule is activated during the Movement phase, all models within it increase their Movement characteristic by 2\" if the detachment is within 6\" of a model with the Noosphere Controller special rule. This effect lasts until the end of the round.": {
+  "name_es": "Mando - Urgencia",
+  "text_es": "Cuando se active un Destacamento con la regla especial Ánima en red durante la fase de Movimiento, todas sus miniaturas aumentan su atributo de Movimiento en 2\" si el destacamento está a 6\" o menos de una miniatura con la regla especial Controlador de noosfera. Este efecto dura hasta el final de la ronda."
+ },
+ "Terror Protocol||Compulsory Core Detachment slots in this Formation must be filled with Errax 'Butcher' Assault Stalker Cohort Detachments.": {
+  "name_es": "Protocolo de terror",
+  "text_es": "Las casillas obligatorias de Destacamentos de Núcleo de esta Formación deben ocuparse con Destacamentos de Cohortes de Acechadores de asalto Errax «Carnicero»."
+ },
+ "Command - Exterminate||Hits scored by a model with the Noospehere Controller special rule from this Formation mark the target Detachment until the end of the round. Models from this Formation with the Networked Anima special rule may re-roll HIt rolls of a 1 when firing upon a marked Detachment.": {
+  "name_es": "Mando - Exterminar",
+  "text_es": "Los impactos logrados por una miniatura de esta Formación con la regla especial Controlador de noosfera marcan al Destacamento objetivo hasta el final de la ronda. Las miniaturas de esta Formación con la regla especial Ánima en red pueden repetir las tiradas para Impactar de 1 al disparar contra un Destacamento marcado."
+ },
+ "Swarm Protocol||Compulsory Vanguard Detachment slots in this Formation must be filled with Harpax 'Swarmer' Scout Host Detachments.": {
+  "name_es": "Protocolo de enjambre",
+  "text_es": "Las casillas obligatorias de Destacamentos de Vanguardia de esta Formación deben ocuparse con Destacamentos de Huestes exploradoras Harpax «Enjambrador»."
+ },
+ "||Any Harpax 'Swarmer' Scout Host selected within a Complusory Detachment slot may be upgraded to a 'Controller Host' for +15pts. A Detachment upgraded in this way gains the Noosphere Controller and Invulnerable Save (6+) special rules.": {
+  "name_es": "",
+  "text_es": "Cualquier Hueste exploradora Harpax «Enjambrador» seleccionada en una casilla de Destacamento obligatorio puede mejorarse a «Hueste controladora» por +15 pts. Un Destacamento mejorado de este modo obtiene las reglas especiales Controlador de noosfera y Salvación invulnerable (6+)."
+ },
+ "Command - Overwhelm||Harpax 'Swarmer' Scout Host Detachments within this Formation gain the Infiltrate special rule. All Detachments from this FOrmation with the Networked Anima special rule count their Scale as 1 higher for purposes of determining if enemy Detachments are Engaged and Pinnd while within 8\" of a model from this Formation with the Noosphere Controller rule.": {
+  "name_es": "Mando - Abrumar",
+  "text_es": "Los Destacamentos de Huestes exploradoras Harpax «Enjambrador» de esta Formación obtienen la regla especial Infiltración. Todos los Destacamentos de esta Formación con la regla especial Ánima en red consideran su Escala 1 punto mayor a efectos de determinar si los Destacamentos enemigos están Trabados e Inmovilizados mientras estén a 8\" o menos de una miniatura de esta Formación con la regla Controlador de noosfera."
+ },
+ "*Note||This is only ot determine if the enemy Detachment is Engaged and Pinned - the Harpax Swarms are still Engaged and Pinned by enemy Detachments of Scale (1).": {
+  "name_es": "*Nota",
+  "text_es": "Esto solo sirve para determinar si el Destacamento enemigo está Trabado e Inmovilizado: los Enjambres Harpax siguen quedando Trabados e Inmovilizados por Destacamentos enemigos de Escala (1)."
+ },
+ "Dedicated Transports||Any Dark Mechanicum Detachment within the Formation that contain only Infantry or Walker models may be upgraded with Triaros Armoured Conveyors as Dedicated Transports": {
+  "name_es": "Transportes asignados",
+  "text_es": "Cualquier Destacamento del Mechanicum Oscuro de esta Formación que solo contenga miniaturas de Infantería o Bípodes puede mejorarse con Transportes blindados Triaros como Transportes asignados"
+ },
+ "Augumented Thralls||Compulsory Core Detachment slots in this Formation must be filled with Adsecularis Tech-thrall Covenant Detachments.": {
+  "name_es": "Esclavos aumentados",
+  "text_es": "Las casillas obligatorias de Destacamentos de Núcleo de esta Formación deben ocuparse con Destacamentos de Congregaciones de Tecnoesclavos Adsecularis."
+ },
+ "Support Formation (Dark Mechanicum)||This is a Dark Mechanicum Support Formation. An army can include one Support Formation for each Dark Mechanicum Formation without the Support Formation (Dark Mechanicum) rule.": {
+  "name_es": "Formación de apoyo (Mechanicum Oscuro)",
+  "text_es": "Esta es una Formación de apoyo del Mechanicum Oscuro. Un ejército puede incluir una Formación de apoyo por cada Formación del Mechanicum Oscuro que no tenga la regla Formación de apoyo (Mechanicum Oscuro)."
+ },
+ "Automata Malefica||All slots within this Support Formation must be filled by Detachments taken from the Mechanicum Taghmata Army List. Detachments taken from the Mechanicum Taghmata Army List must have the Cybernetica Cortex (X) special rule or the Cortex Controller special rule": {
+  "name_es": "Automata Malefica",
+  "text_es": "Todas las casillas de esta Formación de apoyo deben ocuparse con Destacamentos elegidos de la Lista de ejército Taghmata del Mechanicum. Los Destacamentos elegidos de la Lista de ejército Taghmata del Mechanicum deben tener la regla especial Córtex Cybernetica (X) o la regla especial Controlador de córtex"
+ },
+ "||All Detachments included in this Support Formation with the Cybernetica Cortex (X) special rule replace the variant they have with Cybernetica Cortex (March, Charge) and have the Dread Aura (3\") special rule": {
+  "name_es": "",
+  "text_es": "Todos los Destacamentos incluidos en esta Formación de apoyo con la regla especial Córtex Cybernetica (X) sustituyen su variante por Córtex Cybernetica (Marcha, Carga) y tienen la regla especial Aura de pavor (3\")"
+ },
+ "Servants of Kelbor-Hal||This Formation can only be included in an Army with the Traitor Allegiance": {
+  "name_es": "Siervos de Kelbor-Hal",
+  "text_es": "Esta Formación solo puede incluirse en un Ejército de Lealtad Traidora"
+ },
+ "Protocol - Scourge||While a Detachment from this Formation with the Networked Anima special rule is within 8\" of a model with the Noosphere Controller special rule from this Formation, all models in that Detachment increase the range of their weapons by 4\" #################################################################################################### ####################################################################################################": {
+  "name_es": "Protocolo - Azote",
+  "text_es": "Mientras un Destacamento de esta Formación con la regla especial Ánima en red esté a 8\" o menos de una miniatura de esta Formación con la regla especial Controlador de noosfera, todas las miniaturas de ese Destacamento aumentan el alcance de sus armas en 4\" #################################################################################################### ####################################################################################################"
+ },
+ "Support Formation (Collegia Titanica)||This is a Collegia Titanica Support Formation. An army can include one Support Formation for each Collegia Titanica Formation without the Support Formation (Collegia Titanica) rule.": {
+  "name_es": "Formación de apoyo (Collegia Titanica)",
+  "text_es": "Esta es una formación de apoyo de la Collegia Titanica. Un ejército puede incluir una formación de apoyo por cada formación de la Collegia Titanica que no tenga la regla Formación de apoyo (Collegia Titanica)."
+ },
+ "Bound Taghma||All slots within this Support Formation, apart from Titan Detachment slots, must be filled by Detachments taken from the Mechanicum Taghmata Army List. Non-Core Detachments taken from the Mechanicum Taghmata Army List must have the Cybernetica Cortex (X) special rule": {
+  "name_es": "Taghma vinculado",
+  "text_es": "Todos los espacios de esta formación de apoyo, salvo los espacios de destacamentos de Titanes, deben ocuparse con destacamentos de la lista de ejército Taghmata del Mechanicum. Los destacamentos que no sean básicos elegidos de la lista de ejército Taghmata del Mechanicum deben tener la regla especial Córtex cibernético (X)"
+ },
+ "||All Titan Detachments within this Support Formation gain the Cortex Controller special rule. A Titan model from this Support Formation counts its Tactical Strength as equal to its remaining Wounds while within 3\" of a non-Titan Detachment from this Support Formation.": {
+  "name_es": "",
+  "text_es": "Todos los destacamentos de Titanes de esta formación de apoyo obtienen la regla especial Controlador de córtex. Una miniatura de Titán de esta formación de apoyo considera que su Fuerza táctica es igual a sus Heridas restantes mientras esté a 3\" o menos de un destacamento que no sea de Titanes de esta formación de apoyo."
+ },
+ "Defenders of Magma City||This Formation can only be included in an Army with the Loyalist Allegiance. In addition, an Army can only include one Demi-maniple Aeterna.": {
+  "name_es": "Defensores de la Ciudad del Magma",
+  "text_es": "Esta formación solo puede incluirse en un ejército de lealtad lealista. Además, un ejército solo puede incluir un Semimanípulo Aeterna."
+ },
+ "Children of the Storm||Once per game, when a Titan from this Formation finishes its activation during the Combat phase, it may immediately fire one of its weapons again. #################################################################################################### ####################################################################################################": {
+  "name_es": "Hijos de la tormenta",
+  "text_es": "Una vez por partida, cuando un Titán de esta formación termine su activación durante la fase de Combate, puede volver a disparar inmediatamente una de sus armas. #################################################################################################### ####################################################################################################"
+ },
+ "Seneschal||After this Formation is deployed, or after all deployment is finished if the Formation is deployed in Reserve, choose one model that is part of a Compulsory Detachment to be upgraded to a Baron for free. A model upgraded in this way increases its CAF by +2 and its Wounds characteristic by 1": {
+  "name_es": "Senescal",
+  "text_es": "Después de desplegar esta formación, o después de que termine todo el despliegue si la formación se despliega en Reserva, elige una miniatura que forme parte de un destacamento obligatorio para ascenderla a Barón de forma gratuita. Una miniatura ascendida de este modo aumenta su CAF en +2 y su atributo de Heridas en 1"
+ },
+ "Household Spear||All Detachments within this Formation gain the Forward Deployment special rule.": {
+  "name_es": "Lanza de la casa",
+  "text_es": "Todos los destacamentos de esta formación obtienen la regla especial Despliegue avanzado."
+ },
+ "Favoured by the Omnissiah||All Questoris Knights in this Formation must have the Knight Styrix or Knight Magaera weapon loadout. All Armiger slots must be filled with Mechanicum Knight Moirax Talons": {
+  "name_es": "Favorecidos por el Omnissiah",
+  "text_es": "Todos los Caballeros Questoris de esta formación deben tener la configuración de armamento del Caballero Styrix o del Caballero Magaera. Todos los espacios de Armiger deben ocuparse con Garras de Caballeros Moirax del Mechanicum"
+ },
+ "Support Formation (Questoris Familia)||This is a Questoris Familia Support Formation. An army can include one Support Formation for each Questoris Familia Formation without the Support Formation (Questoris Familia) rule.": {
+  "name_es": "Formación de apoyo (Questoris Familia)",
+  "text_es": "Esta es una formación de apoyo de la Questoris Familia. Un ejército puede incluir una formación de apoyo por cada formación de la Questoris Familia que no tenga la regla Formación de apoyo (Questoris Familia)."
+ },
+ "Household Vanguard||All Vanguard Detachment slots within this Support Formation must be filled by Detachments taken from the Mechanicum Taghmata Army List. Detachments taken from the Mechanicum Taghmata Army List must have the Cybernetica Cortex (X) special rule": {
+  "name_es": "Vanguardia de la casa",
+  "text_es": "Todos los espacios de destacamentos de vanguardia de esta formación de apoyo deben ocuparse con destacamentos de la lista de ejército Taghmata del Mechanicum. Los destacamentos elegidos de la lista de ejército Taghmata del Mechanicum deben tener la regla especial Córtex cibernético (X)"
+ },
+ "||Knight Detachments in this Support Formation gain special rules depending on the Compulsory Detachments chosen": {
+  "name_es": "",
+  "text_es": "Los destacamentos de Caballeros de esta formación de apoyo obtienen reglas especiales en función de los destacamentos obligatorios elegidos"
+ },
+ "||• If all Compulsory Vanguard Detachment slots are filled with Vorax Battle-automata Maniple Detachments, then all Knight Detachments in this Support Formation gain the Forward Deployment special rule": {
+  "name_es": "",
+  "text_es": "• Si todos los espacios de destacamentos de vanguardia obligatorios se ocupan con destacamentos de Manípulos de autómatas de batalla Vorax, todos los destacamentos de Caballeros de esta formación de apoyo obtienen la regla especial Despliegue avanzado"
+ },
+ "||• If all Compulsory Vanguard Detachment slots are filled with Vultarax Stratos-automata Squadron Detachments, then all Knight Detachments in this Support Formation gain the Outflank special rule": {
+  "name_es": "",
+  "text_es": "• Si todos los espacios de destacamentos de vanguardia obligatorios se ocupan con destacamentos de Escuadrones de estratoautómatas Vultarax, todos los destacamentos de Caballeros de esta formación de apoyo obtienen la regla especial Flanqueo"
+ },
+ "||All Questoris Knight Banner and Cerastus Knight Banner Detachments within this Support Formation gain the Cortex Controller special rule": {
+  "name_es": "",
+  "text_es": "Todos los destacamentos de Estandartes de Caballeros Questoris y Estandartes de Caballeros Cerastus de esta formación de apoyo obtienen la regla especial Controlador de córtex"
+ },
+ "Inducted Automata||All slots within this Support Formation, apart from Knight Detachment slots, must be filled by Detachments taken from the Mechanicum Taghmata Army List. Detachments taken from the Mechanicum Taghmata Army List must have the Cybernetica Cortex (X) special rule": {
+  "name_es": "Autómatas incorporados",
+  "text_es": "Todos los espacios de esta formación de apoyo, salvo los espacios de destacamentos de Caballeros, deben ocuparse con destacamentos de la lista de ejército Taghmata del Mechanicum. Los destacamentos elegidos de la lista de ejército Taghmata del Mechanicum deben tener la regla especial Córtex cibernético (X)"
+ },
+ "||All Knight Detachments within this Support Formation gain the Cortex Controller special rule. Questoris Knight Armiger Talons and Mechanicum Knight Moirax Talons cannot be taken as Detachment Upgrades for Detachments taken in Knight Detachment slots #################################################################################################### ####################################################################################################": {
+  "name_es": "",
+  "text_es": "Todos los destacamentos de Caballeros de esta formación de apoyo obtienen la regla especial Controlador de córtex. Las Garras de Caballeros Armiger Questoris y las Garras de Caballeros Moirax del Mechanicum no pueden elegirse como mejoras de destacamento para los destacamentos elegidos en espacios de destacamentos de Caballeros #################################################################################################### ####################################################################################################"
+ },
+ "Paragon of Duty||Each Knight scion is a master of battle, trained in the tactics of their Household. As such each Knight model within this Formation that has the Independat Special rule always form its own Independent Unit, even if there are several models within a Detachment that have the same name.": {
+  "name_es": "Paladín del deber",
+  "text_es": "Cada vástago de Caballero es un maestro de la batalla, adiestrado en las tácticas de su casa. Por ello, cada miniatura de Caballero de esta formación que tenga la regla especial Independiente siempre forma su propia unidad independiente, aunque haya varias miniaturas con el mismo nombre en un destacamento."
+ }
+}

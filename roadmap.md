@@ -1,0 +1,116 @@
+# Roadmap
+- [x] Mejoras de nave: base ×10 y aumento acumulativo del 25 % por nivel; descuentos preservados y trabajos pagados intactos. Cobros verificados en PostgreSQL aislado.
+- [x] Medusa IV/V: cinco nuevas rutas marítimas en IV, cada isla física tiene salida; desde cada región se llega a las 54/42 regiones en los vecinos reales. Destinos marítimos clicables comprobados con sesión real en ambos mapas; 25 pruebas superadas.
+- [x] Medusa IV/V: todas sus 54/42 regiones conectadas, vecinos reales coinciden con mapas; capacidad inicial estándar 200 OC con factores raciales; mejoras ×10 sin cambiar reparaciones, unidades, ingresos ni trabajos ya pagados. 30 pruebas superadas y nave real muestra 200 OC y mejora 3000 cr; no se compraron obras de prueba.
+- [x] Inicio de ataques planetarios: cualquiera confirma primero, ambos deben iniciar; Borrar eliminado de Partidas/Admin y permisos revocados. 17 pruebas superadas, build OK.
+- [ ] Comprobar inicio de ataque planetario con dos jugadores en pantalla — bloqueado: la sesión de prueba no terminó de cargar Partidas; flujo verificado en PostgreSQL aislado en ambos órdenes.
+- [x] Sistema Medusa: vista de sistema, 8 planetas/lunas nuevos con regiones, viajes warp desde Mando, conquista solo donde está la nave, panel de control de campaña (6 pruebas; pantallas comprobadas con sesión real, sin viajar con la nave real).
+- [ ] Probar un viaje y un desembarco en otro planeta con la cuenta real — pendiente de tu permiso (movería tu nave y tienes una toma en curso en Medusa V).
+- [x] Descontar unidades en preparación de los requisitos pendientes y restaurarlos al cancelar: 13 pruebas superadas; con sesión real, Kroot 3→2→1→desaparece, persistencia tras recarga y vuelve a 3 al cancelar los tres encargos de prueba (sin dejarlos activos).
+- [x] Reinicio completo del perfil: borra fichas, historiales personales, reclutamiento, nave, trabajos, listas y territorios; conserva cuenta/permisos y resultados compartidos. Cinco pruebas superadas con copias aisladas y aviso verificado con sesión real; no se reinició la cuenta real.
+- [x] Archivo naval: «Ver combate» sin animación, decisiones con iconos, barras históricas respecto al casco inicial y resultado explicado; comprobado en combate real archivado de 15 rondas.
+- [x] Mando: regla racial y habilidades de la nave enemiga al seleccionar objetivo; comprobado con objetivo de prueba Orko, sin lanzar ataques. 22 pruebas de regresión superadas.
+- [x] Cola compartida de nave: máximo cinco incluyendo el activo; casco, construcción/mejora y reparación de módulos uno a la vez en orden; 9 pruebas nuevas (36 con regresiones). Con sesión real: tres trabajos previos conservados, uno activo; mejora encolada, persistida tras recarga y cancelada con devolución.
+- [x] Mando: resumen textual de rondas resueltas con órdenes y daño de ambos; casco restante y porcentaje del máximo junto a ambas naves (12 pruebas; pantalla comprobada con datos de prueba sin alterar naves reales).
+- [x] Bloqueo de ataques simultáneos y protección warp durante 48 horas desde el fin del combate (incluye pruebas de declaraciones paralelas y vencimiento).
+- [x] Mando: vista exterior animada con propulsores, averías y escapes de gas (simulación visual sin alterar casco real; escritorio y móvil).
+- [x] Ambientación compartida por facción en todas las ventanas: emblemas y colores propios (T’au comprobado con sesión; tokens Imperium/Caos inspeccionados).
+- [x] Renovar naves: catálogo e identidad racial, bodega OC y pantalla Nave.
+- [x] Renovar naves: casco persistente, reparaciones, créditos protegidos y comunicaciones.
+- [x] Renovar naves: cinco rondas, continuación mutua, retirada y silencio a las 24 horas (pruebas PostgreSQL).
+- [x] Renovar naves: trayectorias/repeticiones raciales; defensa de cinco órdenes guardada y leída tras recarga.
+- [ ] Verificar duelo naval completo con dos jugadores reales — bloqueado: solo una nave disponible; no se ha provocado un combate real ni daños al usuario.
+- [x] Campaña: Orden, Caos e Incursores por facción; regiones sin dueño neutrales (mapa, puente, Estrategos; 15 pruebas y mapa verificado con sesión).
+- [x] Nave del puente por raza y facción también en la vista orbital, sin depender de leal/traidor.
+- [x] Sustituir leal/traidor por raza, facción y variantes oficiales en la selección inicial y el puente; guardado y validación comprobados con 14 pruebas.
+- [ ] Verificar selección inicial completa con una cuenta real — bloqueado: esta copia aún no tiene usuarios registrados.
+- [x] Crear catálogo consultable de Warhammer 40.000, 11.ª edición: 30 entradas del manual oficial v1.6, capítulos y fuerzas con unidades propias, destacamentos por facción; 6 pruebas y navegación/búsqueda verificadas. Sin modificar todavía juramento, listas ni reglas de campaña.
+- [x] Revisar exportación y requisitos de contraseña: 16 pruebas de política, preparación y primer administrador superadas
+- [ ] Confirmar la cuenta administradora en el espacio de destino — bloqueado: destino aún no disponible; exportar código no traslada cuentas
+- [ ] Ajustar reglas de contraseña alojadas a 10 caracteres, mayúscula, minúscula y número, sin símbolo obligatorio — bloqueado: ajuste manual en More → Users → Auth settings → Email → Password rules
+- [x] Primera cuenta administradora en instalaciones nuevas, asignación única y segura ante registros simultáneos (14 pruebas superadas; administradores actuales conservados)
+- [x] Incluir preparación segura del administrador en el código exportable, con contraseña externa y ejecución explícita al migrar (17 pruebas superadas; ejecución real en destino pendiente de migración)
+- [x] Cuenta administradora solicitada creada y acceso comprobado; cuentas no se incluyen en exportaciones de código
+- [x] Otorgar rol administrador desde Administración con verificación de permisos (probado con cuenta temporal y recarga)
+- [x] Registro: mostrar y validar mínimo 10 caracteres, mayúscula, minúscula y número (10 pruebas de contraseña y permisos superadas)
+- [x] Ingreso diario: recogida manual cada 24 horas, botón y cuenta atrás; sin abono automático (verificado en Puente y Nave con cuenta temporal)
+- [x] Reservas: al eliminar unidades desaparecen sus fichas; conservar solo caídos en combate como histórico (comprobado en Reservas con cuenta temporal)
+- [x] Administración: eliminar jugadores con confirmación y protección de la cuenta propia
+- [x] Reinicio de campaña: anular operaciones pendientes y preservar batallas, honores e historiales (prueba sobre copias temporales sin alterar datos reales)
+- [ ] Reiniciar progreso de todos los jugadores a cero, conservando sus cuentas — bloqueado: se rechazó la autorización de borrado global
+- [ ] Reiniciar app como nueva, conservando todas las cuentas y el catálogo del juego — bloqueado: se rechazó la autorización de borrado global
+- [x] Separar límites de toma neutral y ataque a jugador, mostrar ambas operaciones y retirarlas por separado
+- [ ] Comprobar dos operaciones simultáneas en el mapa con sesión real — bloqueado: sesión de usuario no disponible
+- [x] Resolución aleatoria de ataques por acuerdo de atacante y defensor, excepto Espaciopuerto inicial
+- [ ] Verificar acuerdo de ambos en un ataque real — bloqueado: no hay ataques activos entre jugadores
+- [x] Fase 1: logo, estética, carga Matrix, cuentas con aprobación, juramento, puente de mando
+- [x] Fase 2a: tipos y motor de reglas del creador de listas (puntos, tamaño, ruptura, avisos) con pruebas
+- [ ] Fase 2b: datos completos del juego — bloqueado: el reglamento básico está escaneado; faltan formaciones y la mayoría de destacamentos (esperando decisión del usuario)
+- [x] Fase 2c-1: creador de listas (simulación libre y Mi colección), Mis listas, Mi colección
+- [x] Fichas de unidad en Mi colección
+- [x] Fase 2c-2: formaciones en el creador (74 formaciones, 245 destacamentos)
+- [ ] Referencia, vista de impresión; mejoras de tamaño de los destacamentos nuevos (faltan datos), Referencia, impresión — antes: pantallas del creador, Mis listas, Referencia, vista de impresión
+- [x] Fase 3a: gestor de partidas (desafíos abiertos/directos, exclusiones, escenario aleatorio/elegido)
+- [x] Escenarios cargados (23)
+- [ ] Fase 3b: asistente de batalla, resultados
+- [ ] Fase 4: nave en Medusa V
+- [ ] Fase 5: renombre, medallas, habilidades, bombardeos, expediciones
+- [x] Ficha Titán/Caballero profesional: esquema realista + efectos de daño
+- [x] Mapas/textos de las 12 misiones del reglamento + secundarios
+
+- [ ] Reglas propias de cada Legión (sin datos)
+- [x] Batalla: resumen de misión + despliegue lo primero; luego registro
+- [x] Ayudas: quitar asistente de impacto; "asistente rápido" con regla del ejército y de sus formaciones
+- [x] Reglas traducidas al español, buscador ES/EN, todos los rasgos de arma y reglas especiales
+- [x] Listas: imprimir fichas de unidades (estilo ejemplo), titanes/caballeros con imagen y casillas de escudos/heridas
+- [x] Esquema realista para cada tipo de unidad
+- [x] Cargar 11 misiones (Great Slaughter + Dark Mechanicum) con mapa y resumen
+- [x] Nombres de Titanes/Caballeros, lista obligatoria al aceptar, avisos al rival, ver lista rival
+- [ ] Pantalla de resultados: puntuación final, secundario logrado, regla de derrota real
+- [x] Fase A: nave fortaleza (módulos, obras, ingreso diario)
+- [ ] Fase B: Arsenal (reclutamiento con tiempos, capacidad, bajas permanentes, reparación) — esperando decisiones
+- [x] Fase C: planeta Medusa V (42 regiones, Espaciopuerto, fases, conquista, estandarte, bonus)
+- [x] Partidas multijugador 1 vs 2 y 2 vs 2 con escenarios reales, puntos y turnos equilibrados (gestor y asistente por equipos)
+- [x] Fase D: medallas, rangos, bombardeos, panel admin de costes
+- [x] Puente y esquema de nave con versión leal y traidora distintas
+- [x] Reclutamiento: Colección → Mis reservas (unidades se reclutan con créditos y tiempo)
+- [x] Estrategos: lista de jugadores (retrato, nombre, bando, facción, medallas, méritos, batallas; en conquista Espaciopuerto y % de regiones)
+- [x] Estandarte plegado tras botón «Cambiar estandarte» + subida de imagen propia
+- [x] Bajas reales al cerrar batalla, daños persistentes de Titanes/Caballeros con reparación, Relicario para recuperar Titanes caídos
+- [x] Bombardeo orbital (Baterías orbitales, carga recargable) y Drop Pods de un uso, usables en batalla
+- [x] Medallas y méritos (logros) + ranking: puntos, mejor batalla, mejor unidad
+- [x] Habilidades de veteranía de un uso para Titanes, personajes y superpesados (ganadas con Renombre)
+- [x] Listas: categorías «Simuladas libres» / «Medusa V» (solo Reservas); batallas de campaña exigen lista Medusa V
+- [x] Mapa: emblema del jugador en su Espaciopuerto en ambas vistas
+- [x] Regiones del planeta solo sobre tierra firme, por continentes, cada región con su escenario de batalla fijo
+- [x] Estrategos en tiempo real al ganar regiones (% de conquista)
+- [x] Ataques animados en el planeta: flecha color estandarte origen→objetivo, nave lanzando drop pods; visible para todos
+- [x] Admin: ajustar créditos/renombre, dar/quitar honores, forzar conquista de región, herramientas de soporte
+- [x] Rutas marítimas entre continentes dibujadas de forma sutil en el mapa
+- [x] Barra única de conquista leales/traidores con tu aporte
+- [ ] App publicada: no reproduzco el fallo (portada, acceso y Puente con sesión cargan bien) — esperando captura o mensaje del usuario
+- [ ] Reglas propias de cada Legión — bloqueado: los manuales subidos no las incluyen; esperando fuente o permiso para reglas de la casa
+- [x] Veteranos únicos (Titanes, Caballeros, comandantes) y honores aleatorios
+- [x] Logros navales «Corsario del vacío» y «Muro de acero»
+- [x] Listas 40k: simulación / reclutamiento, 1000-1500-2000, reglas de DP/mejoras/límites, exportar, imprimir, importar de la app oficial
+- [x] Formato Patrulla de combate (documentos oficiales de 10.ª; los de 11.ª solo en la app oficial)
+- [ ] Palabras clave (Línea de batalla, Héroe épico) automáticas — bloqueado: el manual de puntos no las incluye; hoy el jugador las marca
+- [x] Listas solo por importación (normal y patrulla) con requisitos de reclutamiento; borrar creador y listas viejas
+- [x] Reclutamiento: todo lo reclutable, stock, lo que piden tus listas; héroes épicos solo una vez
+- [x] Quitar todo lo heredado de Titanes/Caballeros
+- [x] Interfaz de la nave propia de cada raza y nombres de módulos por raza
+
+## Rediseño de Partidas 40k (Victor, 20-oct-2026)
+- [x] Nuevo desafío simplificado: abierta/directa, tipo patrulla|normal, puntos editables (def. 2000), sin formato ni escenario, lista obligatoria oculta hasta iniciar batalla y editable hasta entonces; exclusiones en abiertas
+- [x] Asistente de batalla 40k: ambos pulsan iniciar; 3 ventanas (PV por jugador, unidades/armas con bajas y heridas, comunicación perdida al destruir)
+- [x] Cierre con doble OK, autoconfirmación a las 24 h, aplicación de bajas a fichas wh40k_squads al confirmar
+- [x] Impugnación: congela el resultado hasta que un admin aplica, edita o elimina
+- [x] Batallas de campaña: 7 días para jugar, autorresolución aleatoria salvo zona de desembarco (fracasa si no se juega); autorresolver mutuo como ahora
+- [ ] Verificar batalla 40k completa en la app con dos jugadores reales — bloqueado: solo hay una cuenta y sin listas jugables importadas
+- [ ] Fallos preexistentes de fixtures: admin-campaign-reset (sin regiones) y veteran-dismissal (sin titanes en catálogo) — la base remezclada no tiene datos de referencia
+
+## Puesta en marcha tras remezclar (21-oct-2026)
+- [x] Migraciones Drizzle copiadas limpiadas y set vacío rescaffoldado: journal vacío, sin SQL heredado y registro del destino a cero
+- [x] Restaurado el trigger de registro en auth.users (crea ficha y reparte el arranque único de administrador) y fila de arranque único a claimed=false
+- [ ] Sembrar datos de referencia: regiones del planeta con vecinos marítimos, cuerpos celestes, catálogo de módulos, catálogo de unidades, escenarios y precios de unidades 40k
+- [ ] Verificar registro de la primera cuenta administradora en la app — bloqueado: la verificación real consumiría el arranque único; hacerla cuando el usuario cree su cuenta

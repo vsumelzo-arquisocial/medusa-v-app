@@ -1,0 +1,36 @@
+[
+  {
+    "name": "Armoured",
+    "description": [
+      "Hits scored by a weapon with the Light trait against a model with the Armoured special rule count their AP as o. In addition, a model with the Armoured special rule may re-roll failed Save rolls made against Hits scored by a weapon with the Light trait."
+    ]
+  },
+  {
+    "name": "Attached Deployment",
+    "description": [
+      "Models with the Attached Deployment special rule are not deployed as normal nor do they act independently on the battlefield. Instead, when deploying a Detachment during deployment,",
+      "a player may assign one or more models with this special rule to that Detachment, so long as the two are the same Detachment type. For the remainder of the battle,",
+      "the model counts as a part of the Detachment it is attached to and cannot leave it for any reason.",
+      "If, for whatever reason, a model with the Attached Deployment special rule cannot be assigned to a",
+      "friendly Detachment during deployment (e.g., due to",
+      "no Detachment of the same type in the same Formation) then it cannot be deployed and counts as destroyed."
+    ]
+  },
+  {
+    "name": "Battlesmith",
+    "description": [
+      "If a friendly Walker, Vehicle or Super-heavy Vehicle, or a model with the Automata or Automated Sentry special rule, within 3\" of a model with this rule suffers a Wound due to a special rule or one that is inflicted by a weapon with an AP of -2 or worse, roll a D6. On a 5+, that Wound is ignored and has no effect. Battlesmith cannot be used against Wounds suffered in",
+      "a Fight."
+    ]
+  },
+  {
+    "name": "Commander",
+    "description": [
+      "Detachments with the Commander special rule are the commanders of your Army.",
+      "When deploying a Formation that includes any models with this special rule during deployment, a player must assign all models with this special rule to a Detachment in that Formation, so long as the two are of the same Detachment type. For the remainder of the battle,",
+      "the model counts as a part of the Detachment it is attached to and cannot leave it for any reason.",
+      "A Detachment can only ever have one model with the Commander special rule attached to it at any given time.",
+      "If, for whatever reason, a model with the Commander special rule cannot be assigned to a friendly Detachment during deployment (e.g., due to there being no Detachment of the same type in the same Formation) then it acts as its own Detachment on the battlefield."
+    ]
+  }
+]

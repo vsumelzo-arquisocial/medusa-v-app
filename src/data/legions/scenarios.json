@@ -1,0 +1,209 @@
+[
+{
+"name": "Confrontation",
+"image": "confrontation.jpg",
+"deployment": "Bordes largos: cada jugador despliega en una franja de 10\" en su borde de la mesa (6'×4'). Tierra de nadie de 28\" en el centro.",
+"objectives": "6 objetivos: 3 en cada zona de despliegue, a 8\" del borde, separados 12\"-18\"-18\"-12\".",
+"victory": "Al final de cada ronda: 3 PV por cada objetivo no disputado que controles en tu zona de despliegue; 7 PV por cada objetivo no disputado que controles en la zona del rival.",
+"special_rules": "",
+"game_length": "5 rondas"
+},
+{
+"name": "Seize and Hold",
+"image": "seize-and-hold.jpg",
+"deployment": "Bordes largos: zonas de 10\" en cada borde largo.",
+"objectives": "6 objetivos: 2 en cada zona de despliegue (a 8\" del borde y 20\" de los laterales) y 2 neutrales en la línea central, a 20\" de los laterales.",
+"victory": "Al final de cada ronda: 2 PV por objetivo no disputado en tu zona; 5 PV por objetivo neutral no disputado; 7 PV por objetivo no disputado en la zona del rival.",
+"special_rules": "",
+"game_length": "5 rondas"
+},
+{
+"name": "No Man's Land",
+"image": "no-mans-land.jpg",
+"deployment": "Bordes largos: zonas de 10\" en cada borde largo.",
+"objectives": "3 objetivos en la línea central, separados 15\" entre sí y de los laterales.",
+"victory": "Al final de cada ronda: 3 PV si controlas 1 objetivo no disputado; 7 PV si controlas 2; 11 PV si controlas los 3.",
+"special_rules": "",
+"game_length": "5 rondas"
+},
+{
+"name": "Hold Ground",
+"image": "hold-ground.jpg",
+"deployment": "Bordes largos: zonas de 10\" en cada borde largo.",
+"objectives": "3 objetivos: uno en cada zona de despliegue (a 8\" del borde y 15\" de un lateral, en esquinas opuestas) y uno en el centro de la mesa.",
+"victory": "Al final de cada ronda: 2 PV por el objetivo de tu zona; 5 PV por el de la zona rival; 9 PV por el del centro (siempre que esté no disputado y lo controles).",
+"special_rules": "",
+"game_length": "5 rondas"
+},
+{
+"name": "Stronghold Assault",
+"image": "stronghold-assault.jpg",
+"deployment": "Bordes largos: zonas de 10\" en cada borde largo.",
+"objectives": "4 objetivos: uno en cada zona de despliegue (centrado, a 8\" del borde) y 2 neutrales en la línea central, a 20\" de los laterales.",
+"victory": "Al final de cada ronda: 4 PV por objetivo neutral no disputado; 9 PV si controlas el objetivo de la zona rival. Al final de la batalla: 7 PV si controlas el objetivo de tu zona.",
+"special_rules": "",
+"game_length": "5 rondas"
+},
+{
+"name": "Devastation",
+"image": "devastation.jpg",
+"deployment": "Bordes largos: zonas de 10\" en cada borde largo.",
+"objectives": "6 objetivos: 2 en cada zona de despliegue y 2 neutrales en la línea central, a 20\" de los laterales.",
+"victory": "Al final de cada ronda: 5 PV por objetivo no disputado en tu zona; 3 PV por objetivo neutral no disputado.",
+"special_rules": "Tácticas de devastación: al final de cada ronda, si controlas un objetivo en la zona rival lo destruyes (se retira de la mesa) y ganas 10 PV inmediatamente.",
+"game_length": "5 rondas"
+},
+{
+"name": "Flanking Action",
+"image": "flanking-action.jpg",
+"deployment": "Bordes largos: zonas de 10\" en cada borde largo.",
+"objectives": "5 objetivos: uno centrado en cada zona de despliegue y 3 neutrales en la línea central (uno en el centro y dos a 15\" de los laterales).",
+"victory": "Al final de cada ronda: 2 PV por el objetivo de tu zona; 4 PV por cada neutral no disputado (6 PV por cada uno si controlas dos o más); 8 PV por el objetivo de la zona rival.",
+"special_rules": "",
+"game_length": "5 rondas"
+},
+{
+"name": "Retrieval",
+"image": "retrieval.jpg",
+"deployment": "Bordes largos: zonas de 10\" en cada borde largo.",
+"objectives": "3 objetivos en la línea central, separados 15\" entre sí y de los laterales.",
+"victory": "Al final de cada ronda: 5 PV por cada objetivo no disputado que controles.",
+"special_rules": "Proteger la información: tras puntuar, quien controle objetivos no disputados puede moverlos hasta 5\" (empieza quien tenga la iniciativa). No pueden atravesar enemigos, solaparse con modelos, estructuras o terreno infranqueable, ni salir de la mesa.",
+"game_length": "5 rondas"
+},
+{
+"name": "Forward Push",
+"image": "forward-push.jpg",
+"deployment": "Bordes cortos: cada jugador despliega en una franja de 18\" en su borde corto.",
+"objectives": "6 objetivos en dos filas (a 12\" de los bordes largos), separados 18\"-12\"-12\"-18\".",
+"victory": "Al final de cada ronda, por cada objetivo no disputado que controles: 3 PV si está a 18\" de tu borde; 5 PV si está a 30\"; 9 PV si está a 42\".",
+"special_rules": "",
+"game_length": "5 rondas"
+},
+{
+"name": "Conquest",
+"image": "conquest.jpg",
+"deployment": "Esquinas opuestas: cada jugador despliega en un rectángulo de 20\"×24\" en su esquina.",
+"objectives": "6 objetivos repartidos por la mesa (ver mapa), uno en cada zona de despliegue.",
+"victory": "Al final de cada ronda: 4 PV por cada objetivo no disputado que controles; +5 PV si controlas al menos 3 objetivos no disputados (+9 PV en su lugar si uno de ellos está en la zona rival).",
+"special_rules": "",
+"game_length": "5 rondas"
+},
+{
+"name": "All Out War",
+"image": "all-out-war.jpg",
+"deployment": "Mitades: cada jugador despliega en su mitad de 24\" de la mesa. Todos los modelos deben desplegarse a más de 8\" de los enemigos ya desplegados (Infiltrate puede desplegar en la zona rival a más de 4\").",
+"objectives": "Por turnos, empezando quien controla el campo de batalla, cada jugador coloca 3 objetivos en su zona, a más de 8\" de cualquier borde y a más de 10\" de otros objetivos.",
+"victory": "Al final de cada ronda: 3 PV por objetivo no disputado en tu zona; 7 PV por objetivo no disputado en la zona rival.",
+"special_rules": "",
+"game_length": "5 rondas"
+},
+{
+"name": "Point Assault",
+"image": "point-assault.jpg",
+"deployment": "Triángulos enfrentados: cada zona es un triángulo desde un borde largo hasta el centro de la mesa. Despliega a más de 3\" de los enemigos ya desplegados.",
+"objectives": "5 objetivos: uno en cada zona (a 10\" del borde), uno en el centro y dos en la línea central (a 15\" de los laterales).",
+"victory": "Al final de cada ronda: 2 PV por el objetivo de tu zona; 7 PV por el de la zona rival; 4 PV por cada neutral no disputado (el central cuenta como neutral); +4 PV si controlas dos o más neutrales y uno es el central.",
+"special_rules": "",
+"game_length": "5 rondas"
+},
+{
+"name": "Ambush",
+"image": "ambush.jpg",
+"deployment": "El campo mide 60 pulgadas de ancho y 48 de fondo: el atacante dispone de dos franjas de 3 pulgadas de profundidad junto a los bordes largos opuestos, separadas por 42 pulgadas. El defensor despliega primero y ocupa la franja central indicada en el mapa, que atraviesa todo el ancho del campo. Salvo los destacamentos en Reserva, cada formación del atacante debe desplegar íntegramente en una de sus dos zonas, y debe haber al menos una formación en cada zona si es posible.",
+"objectives": "Hay cinco marcadores de objetivo. Tres están sobre la línea central horizontal, dentro de la zona del defensor, a 15, 30 y 45 pulgadas del borde izquierdo. Los otros dos están sobre la línea central vertical, a 30 pulgadas de los bordes laterales: uno a 12 pulgadas del borde superior y otro a 12 pulgadas del inferior.",
+"victory": "Al final de cada ronda, el atacante obtiene 3 PV por cada objetivo no disputado que controle, o 5 PV si está dentro de la zona de despliegue del defensor; el defensor obtiene 2 PV por cada objetivo no disputado que controle. Al final de la batalla, cada jugador obtiene además 3 PV por cada objetivo no disputado que controle fuera de la zona del defensor y 5 PV por cada uno que controle dentro de ella.",
+"special_rules": "El defensor se considera en control del campo de batalla. En lugar de determinar los objetivos secundarios normalmente, el atacante recibe «Control the Battlefield» y el defensor «Defiant». Para las huidas, cada jugador tiene dos bordes propios: todos los modelos del destacamento huyen hacia el borde propio más cercano a la mayoría de sus modelos. Si no hay mayoría, el jugador que lo controla determina al azar hacia cuál de sus bordes huye.",
+"game_length": "5 rondas de batalla."
+},
+{
+"name": "Strongpoint Defence",
+"image": "strongpoint-defence.jpg",
+"deployment": "El defensor controla el campo de batalla y despliega primero. La zona del atacante está junto al borde izquierdo del plano; el defensor dispone de una zona avanzada y otra de retaguardia, ambas franjas de 12 pulgadas de anchura que recorren las 48 pulgadas entre los bordes superior e inferior. La zona de retaguardia está junto al borde derecho y queda separada de la avanzada por una franja de 12 pulgadas. Salvo las unidades en Reserva, todos los destacamentos deben desplegar en las zonas de su bando.",
+"objectives": "Hay cinco marcadores de objetivo. Dos están en la zona avanzada del defensor y otros dos en su retaguardia: cada pareja está sobre el eje central de su franja, a 6 pulgadas de ambos límites laterales, con un marcador a 12 pulgadas del borde superior y el otro a 12 pulgadas del inferior. El quinto está en el centro de la franja entre las dos zonas del defensor, a 6 pulgadas de cada una y a 24 pulgadas de los bordes superior e inferior.",
+"victory": "Al final de cada ronda, el atacante obtiene 3 PV por cada objetivo no disputado que controle, o 5 PV por cada uno si controla ambos objetivos de la zona avanzada del defensor. El defensor obtiene 2 PV por cada objetivo no disputado que controle, o 3 PV por cada uno si controla ambos objetivos de su zona avanzada. Al final de la batalla, el atacante obtiene además 1 PV por cada objetivo no disputado que controle en la zona avanzada, 2 PV si controla el objetivo situado entre las zonas y 4 PV por cada objetivo no disputado que controle en la retaguardia. El defensor obtiene además 3 PV por cada objetivo no disputado que controle al final de la batalla; si controla los cuatro objetivos de sus zonas de despliegue, obtiene en su lugar 4 PV por cada uno de esos cuatro.",
+"special_rules": "Cada Formación del defensor debe desplegar íntegramente en una misma zona, salvo sus destacamentos en Reserva; si es posible, debe desplegar al menos una Formación en cada zona. En lugar de determinar los objetivos secundarios normalmente, el atacante recibe automáticamente Vital Intel y el defensor Control the Battlefield.",
+"game_length": "5 rondas de batalla."
+},
+{
+"name": "Planetary Assault",
+"image": "planetary-assault.jpg",
+"deployment": "El defensor despliega todos sus destacamentos en la zona central de 54 × 42 pulgadas, situada a 3 pulgadas de cada borde del campo de batalla. El borde del atacante es el izquierdo del mapa y el del defensor, el derecho. El defensor es el único que despliega sobre el campo al inicio; todos los destacamentos del atacante comienzan en Reserva.",
+"objectives": "Hay cinco marcadores de objetivo: uno en el centro del campo de batalla y otros dos sobre la misma línea horizontal, a 15 pulgadas a izquierda y derecha del central y a 15 pulgadas del borde lateral correspondiente. Los otros dos están sobre el eje vertical central, uno a 12 pulgadas del borde superior y otro a 12 pulgadas del borde inferior.",
+"victory": "Al final de la segunda ronda y de cada ronda posterior, el atacante obtiene 3 PV por cada objetivo no disputado que controle, o 5 PV si se trata del objetivo central. El defensor obtiene 2 PV por cada objetivo no disputado que controle en esos mismos momentos. Al final de la batalla, cada jugador obtiene además 3 PV por cada objetivo no disputado que controle.",
+"special_rules": "Se considera que el defensor controla el campo de batalla. Los destacamentos del atacante que normalmente no puedan comenzar en Reserva obtienen Outflank, salvo los destacamentos de Infantería sin unidades de Transporte Asignado, que obtienen Deep Strike en su lugar. Ambos jugadores reciben automáticamente el objetivo secundario Control the Battlefield, en vez de determinar sus objetivos secundarios de la forma habitual.",
+"game_length": "5 rondas de batalla."
+},
+{
+"name": "Seize the Terminal",
+"image": "seize-the-terminal.jpg",
+"deployment": "El atacante despliega en una franja de 6 pulgadas de profundidad a lo largo del borde superior. El defensor despliega primero, en una zona central de 36 pulgadas de anchura y 18 pulgadas de profundidad junto al borde inferior, dejando 12 pulgadas a cada lado. El defensor debe desplegar allí todos sus destacamentos salvo los que estén en Reserva; el atacante puede dejar cualquier destacamento en Reserva y debe desplegar el resto en su propia zona.",
+"objectives": "Hay cinco marcadores de objetivo: tres en el centro de las entradas de túnel y dos dentro de la zona del defensor. Las entradas se representan con plantillas de 5 pulgadas: las dos superiores tienen su borde exterior a 8 pulgadas del lateral correspondiente, y sus bordes inferiores están 10 pulgadas por encima del borde superior de la entrada central. La entrada central está sobre el eje longitudinal del campo, con su borde superior a 18 pulgadas del límite delantero de la zona del atacante y a 6 pulgadas del límite delantero de la zona del defensor. Los otros dos objetivos están a 8 pulgadas del borde inferior y a 8 pulgadas hacia dentro desde el lateral correspondiente de la zona del defensor.",
+"victory": "Se aplican las condiciones de victoria y el sistema de puntos de victoria de las misiones de juego equilibrado, con las modificaciones de esta misión. En lugar de determinar los objetivos secundarios normalmente, el atacante recibe automáticamente Plant the Standard y el defensor recibe Collapse the Tunnels.",
+"special_rules": "Las tres entradas de túnel se colocan antes que el resto del terreno; sus bordes cuentan como bordes adicionales del campo del atacante para la llegada de Reservas. Aunque el apartado Mag-rail Tunnels excluye inicialmente la Huida, el apartado específico Fleeing indica que las entradas presentes también cuentan para ella: los destacamentos del atacante huyen hacia el borde propio más cercano a la mayoría de sus miniaturas, incluyendo las entradas y su borde señalado del campo. Si no hay mayoría, el jugador que controla el destacamento determina al azar hacia qué borde huye.",
+"game_length": "Cinco rondas de batalla."
+},
+{
+"name": "Domination",
+"image": "titandeath-domination.jpg",
+"deployment": "En un campo de 60 × 48 pulgadas, las zonas de despliegue son dos triángulos opuestos: uno en la esquina superior izquierda del mapa y otro en la inferior derecha. Cada triángulo abarca 30 pulgadas del borde largo y 24 pulgadas del borde corto adyacente, con una diagonal que une los puntos medios de esos bordes. Los bordes propios de los jugadores son los bordes largos superior e inferior, respectivamente; el despliegue es simétrico, sin distinción entre atacante y defensor.",
+"objectives": "Hay cinco marcadores de objetivo alineados sobre la diagonal que va de la esquina inferior izquierda a la superior derecha. Uno está en el centro del campo, a 30 pulgadas de los bordes cortos y 24 pulgadas de los largos. Los otros cuatro se sitúan sobre esa diagonal, a 12 y 24 pulgadas del objetivo central en cada dirección, de modo que entre marcadores consecutivos hay 12 pulgadas.",
+"victory": "Al final de cada ronda, cada jugador obtiene 3 PV por cada marcador de objetivo que controle sin que esté disputado. Al final de la batalla, cada jugador obtiene además 5 PV por cada marcador de objetivo que controle sin que esté disputado.",
+"special_rules": "Se utilizan las reglas de Titandeath. Los jugadores pueden acordar otro tamaño de campo, ajustando las zonas de despliegue y la colocación de los objetivos según sea necesario.",
+"game_length": "5 rondas de batalla."
+},
+{
+"name": "Breakthrough",
+"image": "titandeath-breakthrough.jpg",
+"deployment": "En un campo de batalla de 60 × 48 pulgadas, cada jugador dispone de una franja de despliegue de 14 pulgadas de profundidad junto a uno de los dos bordes largos opuestos, abarcando toda su anchura. Las zonas están separadas por 20 pulgadas, con sus límites a 10 pulgadas de la línea central. El despliegue es simétrico; la misión no establece un atacante, un defensor ni una prioridad de despliegue específica.",
+"objectives": "Hay cinco marcadores de objetivo. Tres están sobre la línea central horizontal, a 24 pulgadas de ambos bordes largos: uno en el centro y los otros dos a 16 pulgadas a izquierda y derecha de este, quedando cada uno a 14 pulgadas del borde corto más cercano. Los otros dos están sobre el eje central perpendicular, a 14 pulgadas del objetivo central hacia cada borde largo, dentro de las respectivas zonas de despliegue y a 10 pulgadas del borde largo correspondiente.",
+"victory": "Al final de cada ronda, cada jugador obtiene puntos de victoria por cada objetivo que controle sin disputa: 2 PV si está en su propia zona de despliegue, 4 PV si está fuera de ambas zonas de despliegue y 8 PV si está en la zona de despliegue del adversario.",
+"special_rules": "Misión destinada exclusivamente a las reglas de Titandeath, sin reglas especiales adicionales propias. Los jugadores pueden acordar otro tamaño de campo de batalla y ajustar las zonas de despliegue y la colocación de objetivos según corresponda.",
+"game_length": "5 rondas de batalla."
+},
+{
+"name": "Point of Conflict",
+"image": "titandeath-point-of-conflict.jpg",
+"deployment": "En un campo de 60″ × 48″, cada jugador despliega en una zona triangular apoyada en uno de los dos bordes largos opuestos. Cada triángulo tiene como base todo el borde de 60″ y su vértice está sobre el eje central, a 16″ de ese borde y a 8″ del centro del campo. Se utiliza el procedimiento general de despliegue, sin una prioridad especial de atacante o defensor indicada para esta misión.",
+"objectives": "Hay cinco marcadores: uno en el centro exacto del campo y cuatro situados a 18″ a izquierda o derecha del centro y a 8″ por encima o por debajo de él. Estos cuatro marcadores forman un rectángulo alrededor del objetivo central.",
+"victory": "Al final de cada ronda, cada jugador obtiene 3 puntos de victoria por cada marcador de objetivo no disputado que controle. Además, obtiene 5 puntos de victoria si controla el marcador central no disputado.",
+"special_rules": "Se aplican las reglas de Titandeath. Cada jugador tiene también un objetivo secundario, cuyos puntos se añaden a los obtenidos por la misión; cualquier marcador secundario debe distinguirse claramente de los marcadores de misión.",
+"game_length": "5 rondas de batalla."
+},
+{
+"name": "Flashpoint – River Crossing",
+"image": "river-crossing.jpg",
+"deployment": "El campo de batalla mide 60\" × 48\". El atacante despliega en una franja de 12\" de profundidad junto al borde corto izquierdo del mapa, y el defensor en otra de 12\" junto al borde corto derecho; ambas abarcan los 48\" de su borde.",
+"objectives": "Los dos puentes sobre el río son los objetivos que se deben controlar; el mapa no señala marcadores de objetivo adicionales. Los jugadores colocan un puente cada uno, alternándose y empezando por el jugador cuya facción tenga más Puntos de Campaña, con una separación mínima de 12\" entre los puentes. Su posición exacta a lo largo del río la eligen los jugadores.",
+"victory": "Al final de la batalla, cada puente otorga 10 PV a quien lo controle: se compara la Fuerza Táctica total de las miniaturas de cada jugador situadas a 3\" o menos del puente, y en caso de empate nadie lo controla. Además, un jugador obtiene 15 PV si la Fuerza Táctica total de sus miniaturas en la zona de despliegue enemiga es al menos el doble de la de las miniaturas enemigas en esa misma zona. Los jugadores determinan un objetivo secundario de la forma habitual.",
+"special_rules": "Al colocar el terreno, se sitúa un río desde el centro de un borde largo hasta un punto a 3\" o menos del centro del borde largo opuesto. La facción vencedora obtiene 8 Puntos de Campaña, pero sus jugadores no reciben Puntos de Requisición por esta batalla. Como beneficio del Flashpoint, durante el Grand Clash cada jugador de la facción vencedora puede elegir una formación propia: todas sus unidades reciben la regla especial Despliegue Avanzado.",
+"game_length": "5 rondas de batalla."
+},
+{
+"name": "Flashpoint – Assault the City",
+"image": "assault-the-city.jpg",
+"deployment": "El campo mide 60 × 48 pulgadas; las zonas de despliegue ocupan toda la longitud de dos bordes cortos opuestos, con 16 pulgadas de profundidad para el atacante y 20 para el defensor, separadas por 24 pulgadas. El defensor despliega primero todos sus destacamentos salvo los que estén en reserva; después despliega el atacante en su propia zona.",
+"objectives": "Hay tres localizaciones objetivo en lugar de marcadores normales: las afueras de la ciudad, la plaza y el centro de mando. Las afueras son una franja de 3 pulgadas de anchura que va de un borde largo al otro; el mapa sitúa su límite del lado atacante a 14 pulgadas de la zona atacante y a 10 pulgadas del inicio de la zona defensora. La plaza es un área de 5 × 5 pulgadas sin estructuras y con una cantidad mínima de otros terrenos, mientras que el centro de mando es una estructura de al menos 3 × 3 pulgadas. El defensor coloca ambos dentro de su zona antes que cualquier otro terreno, a un mínimo de 6 pulgadas de cualquier borde y de 15 pulgadas entre sí; el mapa representa la plaza arriba y el centro de mando abajo.",
+"victory": "Al final de la batalla se obtienen 6 PV por controlar las afueras, 10 PV por la plaza y 15 PV por el centro de mando. Para controlar las afueras o la plaza, la Fuerza Táctica total de tus miniaturas dentro de esa localización debe ser al menos el doble que la del adversario en ella. Controlas el centro de mando si tienes uno o más destacamentos guarneciéndolo; si nadie lo guarnece, se trata como un marcador del tamaño de su superficie y se determina su control normalmente con la Fuerza Táctica de las miniaturas situadas a 3 pulgadas o menos. El atacante recibe automáticamente el objetivo secundario Plant the Standard y el defensor Control the Battlefield, en lugar de determinar sus objetivos secundarios normalmente.",
+"special_rules": "El centro de mando no puede destruirse. La facción vencedora obtiene 8 puntos de campaña, pero sus jugadores no reciben puntos de requisición por esta batalla. Como beneficio para el Grand Clash, cada jugador de esa facción recibe 250 puntos de requisición adicionales, que pueden superar el límite habitual. Además, los puntos de requisición se añaden al máximo permitido para contingentes aliados: el 30 % del límite de puntos más el total de puntos de requisición.",
+"game_length": "5 rondas de batalla."
+},
+{
+"name": "Flashpoint – Depot Raid",
+"image": "depot-raid.jpg",
+"deployment": "En un campo de 60\" de ancho, atacante y defensor despliegan en franjas de 10\" de profundidad junto a bordes largos opuestos, separadas por 28\". El defensor despliega primero todos sus destacamentos salvo los que estén en Reserva; después despliega el atacante.",
+"objectives": "Hay tres depósitos de municiones, cada uno representado por un área de terreno infranqueable de 3\" × 3\" que funciona como marcador de objetivo. Los centros de los dos depósitos laterales están a 16\" del borde corto más cercano y a 20\" del borde largo del defensor. El centro del tercer depósito está sobre el límite delantero de la zona de despliegue del defensor, a 10\" de su borde largo y a 30\" de cada borde corto.",
+"victory": "Al final de cada ronda, cada jugador obtiene 5 puntos de victoria (PV) por cada depósito que controle. Al final de la batalla, el defensor pierde 10 PV por cada depósito destruido. El atacante recibe automáticamente el objetivo secundario Carnage y el defensor Vital Intel, en lugar de determinarlos normalmente.",
+"special_rules": "Los depósitos se controlan como objetivos normales, utilizando la Fuerza Táctica de las miniaturas situadas a 3\" o menos de ellos. Durante el paso de calcular PV de la fase Final, el defensor puede detonar un depósito si lo controlaba al inicio del turno y sigue controlándolo: no obtiene PV por él ese turno y el depósito se retira. Cada miniatura, amiga o enemiga, situada a 5\" o menos debe efectuar una salvación con FP -1 que ignora los escudos de vacío; si falla, sufre una herida. En campaña, la facción vencedora obtiene 8 puntos de campaña, sin puntos de requisición, y acceso a un bombardeo de artillería durante el Grand Clash.",
+"game_length": "5 rondas de batalla."
+},
+{
+"name": "Grand Clash – The Fall of Magma City",
+"image": "fall-of-magma-city.jpg",
+"deployment": "El campo mide 120″ de ancho por 72″ de fondo; los defensores despliegan primero en Refinery Storage Vats (franja izquierda de 30″ de ancho que llega hasta la franja inferior de Lava Bed), Prytaneum Entrance (zona central junto al borde superior, de 30″ de ancho y separada 15″ de cada zona lateral defensora) y Typhon Garrison-cloister (zona superior derecha de 30″ de ancho por 40″ de fondo). Cada jugador defensor debe desplegar al menos una Formación en Typhon Garrison-cloister; además, debe haber al menos una Formación por cada dos jugadores defensores, redondeando hacia arriba, en Prytaneum Entrance, pudiendo proceder varias del mismo jugador. Después, los atacantes despliegan en Lava Bed (franja inferior de 16″ de fondo, a ambos lados del corredor central), Typhon Causeway (corredor inferior central de 20″ de ancho, situado a 50″ de cada borde lateral) o Causeway Beachhead (prolongación de ese corredor otros 16″ hacia el interior). Ningún Destacamento puede desplegar a menos de 3″ de un Destacamento enemigo.",
+"objectives": "No se colocan marcadores de objetivo: se utilizan cuatro áreas de conquista, correspondientes a las zonas delimitadas en el mapa. Son Refinery Storage Vats, a la izquierda; Prytaneum Entrance, en el centro del borde superior; Typhon Garrison-cloister, en la esquina superior derecha; y Causeway Beachhead, en el corredor central, inmediatamente por encima de Typhon Causeway. Controla cada área el bando cuya Fuerza Táctica total de las miniaturas dentro de ella sea mayor, sin necesidad de duplicar la del enemigo; solo queda disputada si ambos totales son iguales.",
+"victory": "Al final de la segunda ronda y de cada ronda posterior, los atacantes obtienen 4 PV por controlar Causeway Beachhead y 8 PV por Typhon Garrison-cloister; los defensores obtienen 4 PV por Typhon Garrison-cloister y 8 PV por Causeway Beachhead. Al final de la batalla, cualquier bando obtiene 15 PV por controlar Refinery Storage Vats y 15 PV por Typhon Garrison-cloister; además, los atacantes obtienen 10 PV por Causeway Beachhead y 30 PV por Prytaneum Entrance, mientras que los defensores obtienen 20 PV por Causeway Beachhead y 10 PV por Prytaneum Entrance. Los PV se acumulan por facción, no por jugador, y no se utilizan objetivos secundarios.",
+"special_rules": "Al inicio de una ronda, cada jugador atacante que tenga al menos tres Destacamentos destruidos apartados puede devolverlos todos como una nueva Formación improvisada, sin reglas especiales de Formación ni obligación de ajustarse a una lista de ejército. Reciben órdenes como si estuvieran en Reserva y entran por el borde atacante, salvo que puedan usar Deep Strike para entrar en Reserva mediante esa regla. Durante su despliegue, los defensores pueden colocar hasta cuatro cañones defensivos repartidos entre Prytaneum Entrance y Typhon Garrison-cloister: son estructuras de fortificación de hasta 2″ × 2″ y capacidad de guarnición 0, y cada uno puede activarse una vez por fase durante First Fire en lugar de un Destacamento. Se aplica la secuencia de Grand Clash: cuando una facción activa, cada uno de sus jugadores activa simultáneamente un Destacamento y el general de la facción resuelve el orden cuando sea relevante.",
+"game_length": "5 rondas de batalla."
+}
+]

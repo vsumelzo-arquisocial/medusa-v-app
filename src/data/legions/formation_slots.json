@@ -1,0 +1,4389 @@
+[
+ {
+  "id": 1,
+  "type": "HQ",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1003
+  ],
+  "description": "Legion"
+ },
+ {
+  "id": 2,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1010
+  ],
+  "description": "Legion"
+ },
+ {
+  "id": 3,
+  "type": "Battle Tank",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1055,
+   1061
+  ],
+  "description": "Legion"
+ },
+ {
+  "id": 4,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1100,
+   1096
+  ],
+  "description": "Solar"
+ },
+ {
+  "id": 5,
+  "type": "Core",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1105
+  ],
+  "description": "Solar"
+ },
+ {
+  "id": 6,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1134,
+   1140
+  ],
+  "description": "Solar"
+ },
+ {
+  "id": 7,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1015
+  ],
+  "description": "Legion"
+ },
+ {
+  "id": 8,
+  "type": "Vanguard",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1117
+  ],
+  "description": "Solar"
+ },
+ {
+  "id": 9,
+  "type": "HQ",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 10,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 11,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 12,
+  "type": "Vanguard",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 13,
+  "type": "Light Armour",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 14,
+  "type": "Battle Tank",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 15,
+  "type": "Heavy Armour",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 16,
+  "type": "Artillery",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 17,
+  "type": "Air Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 18,
+  "type": "Bastion",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 19,
+  "type": "Transport",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 20,
+  "type": "HQ",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 21,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 22,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 23,
+  "type": "Bastion",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 24,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 25,
+  "type": "Transport",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 26,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 27,
+  "type": "Vanguard",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 28,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1034
+  ],
+  "description": "Dedicated transport Rhinos"
+ },
+ {
+  "id": 29,
+  "type": "Light Armour",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 30,
+  "type": "Air Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 31,
+  "type": "Artillery",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 32,
+  "type": "Battle Tank",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 33,
+  "type": "Heavy Armour",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 34,
+  "type": "HQ",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 35,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 36,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 37,
+  "type": "Bastion",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 38,
+  "type": "Bastion",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 39,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 40,
+  "type": "Artillery",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 41,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 42,
+  "type": "Air Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 43,
+  "type": "Heavy Armour",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 44,
+  "type": "Artillery",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 45,
+  "type": "HQ",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1004,
+   1009,
+   1006
+  ]
+ },
+ {
+  "id": 46,
+  "type": "Battle Tank",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 47,
+  "type": "Heavy Armour",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 48,
+  "type": "Light Armour",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 49,
+  "type": "Battle Tank",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 50,
+  "type": "Heavy Armour",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 51,
+  "type": "Air Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 52,
+  "type": "Heavy Armour",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 53,
+  "type": "HQ",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 54,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 55,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 56,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 57,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 58,
+  "type": "Vanguard",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 59,
+  "type": "Air Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 60,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1094
+  ],
+  "description": "Dedicated transport Storm Eagles"
+ },
+ {
+  "id": 61,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1095
+  ],
+  "description": "Dedicated transport Thunderhawks"
+ },
+ {
+  "id": 62,
+  "type": "Vanguard",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   2,
+   3,
+   1046
+  ],
+  "description": "Rapid Reaction Force"
+ },
+ {
+  "id": 63,
+  "type": "Light Armour",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 64,
+  "type": "Air Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 65,
+  "type": "Vanguard",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 66,
+  "type": "HQ",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 67,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 68,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 69,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 70,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 71,
+  "type": "Air Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 72,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1037
+  ],
+  "description": "Dedicated transport Drop Pods"
+ },
+ {
+  "id": 73,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1035
+  ],
+  "description": "Dedicated transport Dreadnought Drop Pods"
+ },
+ {
+  "id": 74,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1029
+  ],
+  "description": "Legion Terminators"
+ },
+ {
+  "id": 75,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1029,
+   1032,
+   1015
+  ]
+ },
+ {
+  "id": 76,
+  "type": "Battle Tank",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 77,
+  "type": "Air Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 78,
+  "type": "Heavy Armour",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 79,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1043
+  ],
+  "description": "Dedicated transport Spartans"
+ },
+ {
+  "id": 80,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1039
+  ],
+  "description": "Dedicated transport Land Raiders"
+ },
+ {
+  "id": 81,
+  "type": "HQ",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 82,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 83,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 84,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 85,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 86,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1045
+  ],
+  "description": "Dedicated transport Termites"
+ },
+ {
+  "id": 87,
+  "type": "HQ",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 88,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1010,
+   15
+  ],
+  "description": "Brethren of Iron"
+ },
+ {
+  "id": 89,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1010,
+   15
+  ],
+  "description": "Brethren of Iron"
+ },
+ {
+  "id": 90,
+  "type": "Bastion",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   24
+  ],
+  "description": "Brethren of Iron"
+ },
+ {
+  "id": 91,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   19,
+   20,
+   21
+  ],
+  "description": "Brethren of Iron"
+ },
+ {
+  "id": 92,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   19,
+   20,
+   21
+  ],
+  "description": "Brethren of Iron"
+ },
+ {
+  "id": 93,
+  "type": "Vanguard",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   22,
+   23
+  ],
+  "description": "Brethren of Iron"
+ },
+ {
+  "id": 94,
+  "type": "HQ",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1007
+  ],
+  "description": "Saturnine Command"
+ },
+ {
+  "id": 95,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1027
+  ],
+  "description": "Saturnine Terminators"
+ },
+ {
+  "id": 96,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1027
+  ],
+  "description": "Saturnine Terminators"
+ },
+ {
+  "id": 97,
+  "type": "Bastion",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1085
+  ],
+  "description": "Saturnine Dreadnought"
+ },
+ {
+  "id": 98,
+  "type": "Heavy Armour",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 99,
+  "type": "Heavy Armour",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 100,
+  "type": "Air Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 101,
+  "type": "HQ",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 102,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 103,
+  "type": "Bastion",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1087,
+   1083
+  ],
+  "description": "Araknae/Tarantulas"
+ },
+ {
+  "id": 104,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 105,
+  "type": "Artillery",
+  "faction": "Legiones Astartes",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 106,
+  "type": "Bastion",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1087,
+   1083
+  ],
+  "description": "Araknae/Tarantulas"
+ },
+ {
+  "id": 107,
+  "type": "Battle Tank",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1062
+  ],
+  "description": "Legion Sicaran Squadron"
+ },
+ {
+  "id": 108,
+  "type": "Battle Tank",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1058
+  ],
+  "description": "Legion Sicaran Squadron"
+ },
+ {
+  "id": 109,
+  "type": "Light Armour",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1053
+  ],
+  "description": "Legion Sabre Squadron"
+ },
+ {
+  "id": 110,
+  "type": "Battle Tank",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1062
+  ],
+  "description": "Legion Sicaran Squadron"
+ },
+ {
+  "id": 111,
+  "type": "Light Armour",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1053
+  ],
+  "description": "Legion Sabre Squadron"
+ },
+ {
+  "id": 112,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1030
+  ],
+  "description": "Legion Terminator Detachment"
+ },
+ {
+  "id": 113,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1044
+  ],
+  "description": "Legion Spartan Detachment"
+ },
+ {
+  "id": 114,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1030
+  ],
+  "description": "Legion Terminator Detachment"
+ },
+ {
+  "id": 115,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1044
+  ],
+  "description": "Legion Spartan Detachment"
+ },
+ {
+  "id": 116,
+  "type": "Heavy Armour",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1074
+  ],
+  "description": "Legion Kratos Squadron"
+ },
+ {
+  "id": 117,
+  "type": "Battle Tank",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1060
+  ],
+  "description": "Legion Sicaran Punisher Squadron"
+ },
+ {
+  "id": 118,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1023
+  ],
+  "description": "Legion Plasma Gun Support Detachment"
+ },
+ {
+  "id": 119,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1040
+  ],
+  "description": "Legion Land Raider Detachment"
+ },
+ {
+  "id": 120,
+  "type": "Light Armour",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1054
+  ],
+  "description": "Legion Sabre Squadron"
+ },
+ {
+  "id": 121,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1023
+  ],
+  "description": "Legion Plasma Gun Support Detachment"
+ },
+ {
+  "id": 122,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1040
+  ],
+  "description": "Legion Land Raider Detachment"
+ },
+ {
+  "id": 123,
+  "type": "HQ",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1000
+  ],
+  "description": "Legion Command Detachment"
+ },
+ {
+  "id": 124,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1020
+  ],
+  "description": "Legion Missile Launcher Support Detachment"
+ },
+ {
+  "id": 125,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1031
+  ],
+  "description": "Legion Terminator Detachment"
+ },
+ {
+  "id": 126,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1012
+  ],
+  "description": "Terminator Dedicated Spartans"
+ },
+ {
+  "id": 127,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1020
+  ],
+  "description": "Legion Missile Launcher Support Detachment"
+ },
+ {
+  "id": 128,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1025
+  ],
+  "description": "Legion Rapier Battery"
+ },
+ {
+  "id": 129,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1031
+  ],
+  "description": "Legion Terminator Detachment"
+ },
+ {
+  "id": 130,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1012
+  ],
+  "description": "Terminator Dedicated Spartans"
+ },
+ {
+  "id": 131,
+  "type": "Vanguard",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1051
+  ],
+  "description": "Legion Scimitar Jetbike Squadron"
+ },
+ {
+  "id": 132,
+  "type": "Vanguard",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1048
+  ],
+  "description": "Legion Land Speeder Squadron"
+ },
+ {
+  "id": 133,
+  "type": "Vanguard",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1047
+  ],
+  "description": "Legion Javelin Squadron"
+ },
+ {
+  "id": 134,
+  "type": "Vanguard",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1050
+  ],
+  "description": "Legion Outrider Squadron"
+ },
+ {
+  "id": 135,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1011
+  ],
+  "description": "Legion Tactical Detachment"
+ },
+ {
+  "id": 136,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1093
+  ],
+  "description": "Rhino Dedicated Transports"
+ },
+ {
+  "id": 137,
+  "type": "Light Armour",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1053
+  ],
+  "description": "Legion Sabre Squadron"
+ },
+ {
+  "id": 138,
+  "type": "HQ",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1001
+  ],
+  "description": "Legion Command Detachment"
+ },
+ {
+  "id": 139,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1092
+  ],
+  "description": "Legion Command Rhino"
+ },
+ {
+  "id": 140,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1011
+  ],
+  "description": "Legion Tactical Detachment"
+ },
+ {
+  "id": 141,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1093
+  ],
+  "description": "Rhino Dedicated Transports"
+ },
+ {
+  "id": 142,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1024
+  ],
+  "description": "Legion Plasma Gun Support Detachment"
+ },
+ {
+  "id": 143,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1093
+  ],
+  "description": "Rhino Dedicated Transports with havocs"
+ },
+ {
+  "id": 144,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1019
+  ],
+  "description": "Legion Missile Launcher Support Detachment"
+ },
+ {
+  "id": 145,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1093
+  ],
+  "description": "Rhino Dedicated Transports"
+ },
+ {
+  "id": 146,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1014
+  ],
+  "description": "Legion Assault Detachment"
+ },
+ {
+  "id": 147,
+  "type": "HQ",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1002
+  ],
+  "description": "Legion Command Detachment"
+ },
+ {
+  "id": 148,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1040
+  ],
+  "description": "Command Land Raider"
+ },
+ {
+  "id": 149,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1011
+  ],
+  "description": "Legion Tactical Detachment"
+ },
+ {
+  "id": 150,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1040
+  ],
+  "description": "Land Raider Dedicated Transports"
+ },
+ {
+  "id": 151,
+  "type": "Battle Tank",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1064
+  ],
+  "description": "Legion Vindicator Squadron"
+ },
+ {
+  "id": 152,
+  "type": "Artillery",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1082
+  ],
+  "description": "Legion Whirlwind Squadron"
+ },
+ {
+  "id": 153,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1031
+  ],
+  "description": "Legion Terminator Detachment"
+ },
+ {
+  "id": 154,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1040
+  ],
+  "description": "Land Raider Dedicated Transports"
+ },
+ {
+  "id": 155,
+  "type": "Battle Tank",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1064
+  ],
+  "description": "Legion Vindicator Squadron"
+ },
+ {
+  "id": 156,
+  "type": "HQ",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1001
+  ],
+  "description": "Legion Command Detachment"
+ },
+ {
+  "id": 157,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1038
+  ],
+  "description": "Legion Command Drop Pod"
+ },
+ {
+  "id": 158,
+  "type": "Core",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1011
+  ],
+  "description": "Legion Tactical Detachment"
+ },
+ {
+  "id": 159,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1038
+  ],
+  "description": "Drop pods"
+ },
+ {
+  "id": 160,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1041
+  ],
+  "description": "Legion Palisade Drop Pod"
+ },
+ {
+  "id": 161,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1033
+  ],
+  "description": "Leviathan Siege Dreadnought Talon"
+ },
+ {
+  "id": 162,
+  "type": "Dedicated",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1036
+  ],
+  "description": "Dreadnought Drop Pods"
+ },
+ {
+  "id": 163,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1016
+  ],
+  "description": "Legion Contemptor Dreadnought Talon"
+ },
+ {
+  "id": 164,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1041
+  ],
+  "description": "Legion Palisade Drop Pod"
+ },
+ {
+  "id": 165,
+  "type": "HQ",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1008
+  ],
+  "description": "Saturnine command"
+ },
+ {
+  "id": 166,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1028
+  ],
+  "description": "Saturnine terminators"
+ },
+ {
+  "id": 167,
+  "type": "Heavy Armour",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1077
+  ],
+  "description": "Mastodons"
+ },
+ {
+  "id": 168,
+  "type": "Support",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1028
+  ],
+  "description": "Saturnine terminators"
+ },
+ {
+  "id": 169,
+  "type": "Bastion",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1086
+  ],
+  "description": "Saturnine dreadnoughts"
+ },
+ {
+  "id": 170,
+  "type": "Heavy Armour",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1077
+  ],
+  "description": "Mastodons"
+ },
+ {
+  "id": 171,
+  "type": "HQ",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1005
+  ],
+  "description": "Kratos commander"
+ },
+ {
+  "id": 172,
+  "type": "Heavy Armour",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1075
+  ],
+  "description": "Kratos squadron"
+ },
+ {
+  "id": 173,
+  "type": "Heavy Armour",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1070
+  ],
+  "description": "Fellblade squadron"
+ },
+ {
+  "id": 174,
+  "type": "Heavy Armour",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1068
+  ],
+  "description": "Falchion squadron"
+ },
+ {
+  "id": 175,
+  "type": "Heavy Armour",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1072
+  ],
+  "description": "Glaive squadron"
+ },
+ {
+  "id": 176,
+  "type": "Heavy Armour",
+  "faction": "Legiones Astartes",
+  "restricted": true,
+  "options": [
+   1079
+  ],
+  "description": "Typhon squadron"
+ },
+ {
+  "id": 177,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 178,
+  "type": "Core",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 179,
+  "type": "Support",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 180,
+  "type": "Vanguard",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 181,
+  "type": "Light Armour",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 182,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 183,
+  "type": "Heavy Armour",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 184,
+  "type": "Artillery",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 185,
+  "type": "Air Support",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 186,
+  "type": "Bastion",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 187,
+  "type": "Transport",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 188,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 189,
+  "type": "Core",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1105
+  ],
+  "description": "Lasrifle detachment"
+ },
+ {
+  "id": 190,
+  "type": "Support",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 191,
+  "type": "Transport",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 192,
+  "type": "Support",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 193,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 194,
+  "type": "Core",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 195,
+  "type": "Light Armour",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 196,
+  "type": "Vanguard",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 197,
+  "type": "Artillery",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 198,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 199,
+  "type": "Air Support",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 200,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1104
+  ],
+  "description": "Tank Commander"
+ },
+ {
+  "id": 201,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 202,
+  "type": "Heavy Armour",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 203,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 204,
+  "type": "Heavy Armour",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 205,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 206,
+  "type": "Artillery",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 207,
+  "type": "Air Support",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 208,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 209,
+  "type": "Core",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1110
+  ],
+  "description": "Storm Section"
+ },
+ {
+  "id": 210,
+  "type": "Bastion",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 211,
+  "type": "Support",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 212,
+  "type": "Core",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 213,
+  "type": "Air Support",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 214,
+  "type": "Vanguard",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 215,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 216,
+  "type": "Artillery",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 217,
+  "type": "Air Support",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 218,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 219,
+  "type": "Artillery",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 220,
+  "type": "Support",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 221,
+  "type": "Bastion",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 222,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 223,
+  "type": "Core",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 224,
+  "type": "Support",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 225,
+  "type": "Vanguard",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 226,
+  "type": "Support",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 227,
+  "type": "Air Support",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 228,
+  "type": "Dedicated",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1113
+  ],
+  "description": "Dedicated transport Dracosans"
+ },
+ {
+  "id": 229,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1104
+  ],
+  "description": "Tank Commander"
+ },
+ {
+  "id": 230,
+  "type": "Heavy Armour",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 231,
+  "type": "Heavy Armour",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 232,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1104
+  ],
+  "description": "Tank Commander"
+ },
+ {
+  "id": 233,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1134,
+   1132,
+   1128,
+   1126,
+   1124,
+   1136
+  ],
+  "description": "Leman Russ"
+ },
+ {
+  "id": 234,
+  "type": "Light Armour",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 235,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 236,
+  "type": "Heavy Armour",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 237,
+  "type": "Air Support",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 238,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1104
+  ],
+  "description": "Tank Commander"
+ },
+ {
+  "id": 239,
+  "type": "Heavy Armour",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1145
+  ],
+  "description": "Auxilia Shadowsword"
+ },
+ {
+  "id": 240,
+  "type": "Heavy Armour",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 241,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 242,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1168
+  ],
+  "description": "Tech-Priest Auxilia"
+ },
+ {
+  "id": 243,
+  "type": "Core",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1105,
+   15
+  ],
+  "description": "Iron Cohort"
+ },
+ {
+  "id": 244,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 245,
+  "type": "Core",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1105,
+   15
+  ],
+  "description": "Iron Cohort"
+ },
+ {
+  "id": 246,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   19,
+   20,
+   21
+  ],
+  "description": "Iron Cohort"
+ },
+ {
+  "id": 247,
+  "type": "Bastion",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   24
+  ],
+  "description": "Iron Cohort"
+ },
+ {
+  "id": 248,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   19,
+   20,
+   21
+  ],
+  "description": "Iron Cohort"
+ },
+ {
+  "id": 249,
+  "type": "Vanguard",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   22,
+   23
+  ],
+  "description": "Iron Cohort"
+ },
+ {
+  "id": 250,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1137
+  ],
+  "description": "Leman Russ Vanquisher Squadron"
+ },
+ {
+  "id": 251,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1125
+  ],
+  "description": "Leman Russ Annihilator Squadron"
+ },
+ {
+  "id": 252,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1129
+  ],
+  "description": "Leman Russ Executioner Squadron"
+ },
+ {
+  "id": 253,
+  "type": "Vanguard",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1118
+  ],
+  "description": "Auxilia Aethon Heavy Sentinel Patrol"
+ },
+ {
+  "id": 254,
+  "type": "Heavy Armour",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1150
+  ],
+  "description": "Auxilia Stormsword Squadron"
+ },
+ {
+  "id": 255,
+  "type": "Artillery",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1152
+  ],
+  "description": "Auxilia Basilisk Battery"
+ },
+ {
+  "id": 256,
+  "type": "Artillery",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1154
+  ],
+  "description": "Auxilia Medusa Battery"
+ },
+ {
+  "id": 257,
+  "type": "Heavy Armour",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1150
+  ],
+  "description": "Auxilia Stormsword Squadron"
+ },
+ {
+  "id": 258,
+  "type": "Artillery",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1152
+  ],
+  "description": "Auxilia Basilisk Battery"
+ },
+ {
+  "id": 259,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1101
+  ],
+  "description": "Legate Commander Detachment"
+ },
+ {
+  "id": 260,
+  "type": "Dedicated",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1115
+  ],
+  "description": "Legate Dracosan Transport"
+ },
+ {
+  "id": 261,
+  "type": "Support",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1111
+  ],
+  "description": "Auxilia Veletaris Storm Section"
+ },
+ {
+  "id": 262,
+  "type": "Dedicated",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1114
+  ],
+  "description": "Dracosan Transports"
+ },
+ {
+  "id": 263,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1101
+  ],
+  "description": "Legate Commander Detachment"
+ },
+ {
+  "id": 264,
+  "type": "Dedicated",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1115
+  ],
+  "description": "Legate Dracosan Transport"
+ },
+ {
+  "id": 265,
+  "type": "Support",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1109
+  ],
+  "description": "Auxilia Ogryn Charonite Section"
+ },
+ {
+  "id": 266,
+  "type": "Dedicated",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1114
+  ],
+  "description": "Dracosan Transports"
+ },
+ {
+  "id": 267,
+  "type": "Support",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1111
+  ],
+  "description": "Auxilia Veletaris Storm Section"
+ },
+ {
+  "id": 268,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1102
+  ],
+  "description": "Legate Commander Detachment"
+ },
+ {
+  "id": 269,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1097
+  ],
+  "description": "Auxilia Tactical Command Detachment"
+ },
+ {
+  "id": 270,
+  "type": "Core",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1106
+  ],
+  "description": "Auxilia Lasrifle Tercio"
+ },
+ {
+  "id": 271,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1097
+  ],
+  "description": "Auxilia Tactical Command Detachment"
+ },
+ {
+  "id": 272,
+  "type": "Bastion",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1156
+  ],
+  "description": "Laser destroyer Rapiers"
+ },
+ {
+  "id": 273,
+  "type": "Bastion",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1156
+  ],
+  "description": "Quad-launcher Rapiers"
+ },
+ {
+  "id": 274,
+  "type": "Bastion",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1156
+  ],
+  "description": "Mole mortar Rapiers"
+ },
+ {
+  "id": 275,
+  "type": "Heavy Armour",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1147
+  ],
+  "description": "Auxilia Stormblade Squadron"
+ },
+ {
+  "id": 276,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1135
+  ],
+  "description": "Leman Russ Strike Squadron"
+ },
+ {
+  "id": 277,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1127
+  ],
+  "description": "Leman Russ Demolisher Squadron"
+ },
+ {
+  "id": 278,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1130
+  ],
+  "description": "Leman Russ Executioner Squadron"
+ },
+ {
+  "id": 279,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1133
+  ],
+  "description": "Leman Russ Exterminator Squadron"
+ },
+ {
+  "id": 280,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1123
+  ],
+  "description": "Auxilia Valdor Squadron"
+ },
+ {
+  "id": 281,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1098
+  ],
+  "description": "Auxilia Tactical Command Detachment"
+ },
+ {
+  "id": 282,
+  "type": "Core",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1106
+  ],
+  "description": "Auxilia Lasrifle Tercio"
+ },
+ {
+  "id": 283,
+  "type": "Support",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1111
+  ],
+  "description": "Auxilia Veletaris Storm Section"
+ },
+ {
+  "id": 284,
+  "type": "Dedicated",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1116
+  ],
+  "description": "Dracosan Transports"
+ },
+ {
+  "id": 285,
+  "type": "Vanguard",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1119
+  ],
+  "description": "Auxilia Aethon Heavy Sentinel Patrol"
+ },
+ {
+  "id": 286,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1098
+  ],
+  "description": "Auxilia Tactical Command Detachment"
+ },
+ {
+  "id": 287,
+  "type": "Core",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1106
+  ],
+  "description": "Auxilia Lasrifle Tercio"
+ },
+ {
+  "id": 288,
+  "type": "Support",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1111
+  ],
+  "description": "Auxilia Veletaris Storm Section"
+ },
+ {
+  "id": 289,
+  "type": "Dedicated",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1116
+  ],
+  "description": "Dracosan Transports"
+ },
+ {
+  "id": 290,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1120
+  ],
+  "description": "Auxilia Malcador Infernus Squadron"
+ },
+ {
+  "id": 291,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1099
+  ],
+  "description": "Auxilia Tactical Command Detachment"
+ },
+ {
+  "id": 292,
+  "type": "Core",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1106
+  ],
+  "description": "Auxilia Lasrifle Tercio"
+ },
+ {
+  "id": 293,
+  "type": "Support",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1156
+  ],
+  "description": "Auxilia Rapier Battery"
+ },
+ {
+  "id": 294,
+  "type": "HQ",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1103
+  ],
+  "description": "Legate Commander Detachment"
+ },
+ {
+  "id": 295,
+  "type": "Support",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1156
+  ],
+  "description": "Auxilia Rapier Battery"
+ },
+ {
+  "id": 296,
+  "type": "Artillery",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1152
+  ],
+  "description": "Auxilia Basilisk Battery"
+ },
+ {
+  "id": 297,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1131
+  ],
+  "description": "Leman Russ Executioners"
+ },
+ {
+  "id": 298,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1135
+  ],
+  "description": "Leman Russ"
+ },
+ {
+  "id": 299,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1141
+  ],
+  "description": "Malcadors"
+ },
+ {
+  "id": 300,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1121
+  ],
+  "description": "Malcador Infernus"
+ },
+ {
+  "id": 301,
+  "type": "Battle Tank",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1139
+  ],
+  "description": "Malcador Annihilators"
+ },
+ {
+  "id": 302,
+  "type": "Heavy Armour",
+  "faction": "Solar Auxillia",
+  "restricted": true,
+  "options": [
+   1148
+  ],
+  "description": "Stormhammers"
+ },
+ {
+  "id": 303,
+  "type": "HQ",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 304,
+  "type": "Core",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 305,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 306,
+  "type": "Vanguard",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 307,
+  "type": "Light Armour",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 308,
+  "type": "Battle Tank",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 309,
+  "type": "Heavy Armour",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 310,
+  "type": "Artillery",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 311,
+  "type": "Air Support",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 312,
+  "type": "Bastion",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 313,
+  "type": "Transport",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 314,
+  "type": "Battle Tank",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 315,
+  "type": "HQ",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1164
+  ],
+  "description": "Cortex Controller"
+ },
+ {
+  "id": 316,
+  "type": "HQ",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 317,
+  "type": "Transport",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 318,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 319,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1168
+  ],
+  "description": "Tech-Priest Auxilia"
+ },
+ {
+  "id": 320,
+  "type": "Battle Tank",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 321,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 322,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 323,
+  "type": "HQ",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 324,
+  "type": "Core",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 325,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1168,
+   19,
+   20,
+   21
+  ],
+  "description": "Legio Cybernetica"
+ },
+ {
+  "id": 326,
+  "type": "HQ",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 327,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1168,
+   19,
+   20,
+   21
+  ],
+  "description": "Legio Cybernetica"
+ },
+ {
+  "id": 328,
+  "type": "Vanguard",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   22,
+   23
+  ],
+  "description": "Legio Cybernetica"
+ },
+ {
+  "id": 329,
+  "type": "Core",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 330,
+  "type": "Transport",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 331,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1168,
+   19,
+   20,
+   21
+  ],
+  "description": "Legio Cybernetica"
+ },
+ {
+  "id": 332,
+  "type": "Vanguard",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   22,
+   23
+  ],
+  "description": "Legio Cybernetica"
+ },
+ {
+  "id": 333,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 334,
+  "type": "HQ",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 335,
+  "type": "Core",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1165
+  ],
+  "description": "Adsecularis Tech-thrall Covenant"
+ },
+ {
+  "id": 336,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 337,
+  "type": "HQ",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 338,
+  "type": "Core",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 339,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 340,
+  "type": "Bastion",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 341,
+  "type": "Vanguard",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 342,
+  "type": "Battle Tank",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 343,
+  "type": "Transport",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 344,
+  "type": "Dedicated",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1170
+  ],
+  "description": "Triaros Armoured Conveyors"
+ },
+ {
+  "id": 345,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 346,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 347,
+  "type": "HQ",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 348,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 349,
+  "type": "Bastion",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 350,
+  "type": "HQ",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 351,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 352,
+  "type": "Bastion",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 353,
+  "type": "Battle Tank",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 354,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 355,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1200,
+   1199
+  ],
+  "description": "Acastus Knight Banner"
+ },
+ {
+  "id": 356,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   19,
+   20,
+   21
+  ],
+  "description": "Itinerant Cybernetica Cohort"
+ },
+ {
+  "id": 357,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   19,
+   20,
+   21
+  ],
+  "description": "Itinerant Cybernetica Cohort"
+ },
+ {
+  "id": 358,
+  "type": "Vanguard",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   22,
+   23
+  ],
+  "description": "Itinerant Cybernetica Cohort"
+ },
+ {
+  "id": 359,
+  "type": "Vanguard",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   22,
+   23
+  ],
+  "description": "Itinerant Cybernetica Cohort"
+ },
+ {
+  "id": 360,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   19,
+   20,
+   21
+  ],
+  "description": "Itinerant Cybernetica Cohort"
+ },
+ {
+  "id": 361,
+  "type": "Vanguard",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   22,
+   23
+  ],
+  "description": "Itinerant Cybernetica Cohort"
+ },
+ {
+  "id": 362,
+  "type": "HQ",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 363,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   17,
+   18
+  ],
+  "description": "Myrmidon Host"
+ },
+ {
+  "id": 364,
+  "type": "HQ",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 365,
+  "type": "Transport",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 366,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   17,
+   18
+  ],
+  "description": "Myrmidon Host"
+ },
+ {
+  "id": 367,
+  "type": "HQ",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1163
+  ],
+  "description": "Archmagos Prime on Abeyant"
+ },
+ {
+  "id": 368,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1167
+  ],
+  "description": "Domitar Battle-automata Maniple"
+ },
+ {
+  "id": 369,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1166
+  ],
+  "description": "Castellax Battle-automata Maniple"
+ },
+ {
+  "id": 370,
+  "type": "Vanguard",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1172
+  ],
+  "description": "Vorax Battle-automata Maniple"
+ },
+ {
+  "id": 371,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1169
+  ],
+  "description": "Tech-Priest Auxilia"
+ },
+ {
+  "id": 372,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1166
+  ],
+  "description": "Castellax Battle-automata Maniple"
+ },
+ {
+  "id": 373,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1167
+  ],
+  "description": "Domitar Battle-automata Maniple"
+ },
+ {
+  "id": 374,
+  "type": "Vanguard",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1172
+  ],
+  "description": "Vorax Battle-automata Maniple"
+ },
+ {
+  "id": 375,
+  "type": "Bastion",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1177
+  ],
+  "description": "Thanatar Siege-automata Maniple"
+ },
+ {
+  "id": 376,
+  "type": "HQ",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 377,
+  "type": "Core",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 378,
+  "type": "Support",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 379,
+  "type": "Vanguard",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 380,
+  "type": "Light Armour",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 381,
+  "type": "Battle Tank",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 382,
+  "type": "Heavy Armour",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 383,
+  "type": "Artillery",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 384,
+  "type": "Air Support",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 385,
+  "type": "Bastion",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 386,
+  "type": "Transport",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 387,
+  "type": "HQ",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 388,
+  "type": "Vanguard",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 389,
+  "type": "Core",
+  "faction": "Dark Mechanicum",
+  "restricted": true,
+  "options": [
+   1184
+  ],
+  "description": "Errax"
+ },
+ {
+  "id": 390,
+  "type": "Core",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 391,
+  "type": "Vanguard",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 392,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1213
+  ],
+  "description": "Warhound"
+ },
+ {
+  "id": 393,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 394,
+  "type": "Heavy Armour",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 395,
+  "type": "Light Armour",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 396,
+  "type": "Battle Tank",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 397,
+  "type": "HQ",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 398,
+  "type": "Heavy Armour",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 399,
+  "type": "Light Armour",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 400,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 401,
+  "type": "HQ",
+  "faction": "Dark Mechanicum",
+  "restricted": true,
+  "options": [
+   1191
+  ],
+  "description": "Harpax Controller Host"
+ },
+ {
+  "id": 402,
+  "type": "Vanguard",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 403,
+  "type": "Light Armour",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 404,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 405,
+  "type": "HQ",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 406,
+  "type": "Support",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 407,
+  "type": "Core",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1165
+  ],
+  "description": "Adsecularis Tech-thrall Covenant"
+ },
+ {
+  "id": 408,
+  "type": "HQ",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 409,
+  "type": "Core",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 410,
+  "type": "Support",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 411,
+  "type": "Vanguard",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 412,
+  "type": "Battle Tank",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 413,
+  "type": "Light Armour",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 414,
+  "type": "Transport",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 415,
+  "type": "Dedicated",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1170
+  ],
+  "description": "Triaros Armoured Conveyors"
+ },
+ {
+  "id": 416,
+  "type": "Battle Tank",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 417,
+  "type": "Heavy Armour",
+  "faction": "Dark Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 418,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 419,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 420,
+  "type": "HQ",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 421,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1168,
+   19,
+   20,
+   21
+  ],
+  "description": "Ironbound Ruinhost"
+ },
+ {
+  "id": 422,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1168,
+   19,
+   20,
+   21
+  ],
+  "description": "Ironbound Ruinhost"
+ },
+ {
+  "id": 423,
+  "type": "Vanguard",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   22,
+   23
+  ],
+  "description": "Ironbound Ruinhost"
+ },
+ {
+  "id": 424,
+  "type": "Bastion",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   24
+  ],
+  "description": "Ironbound Ruinhost"
+ },
+ {
+  "id": 425,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1168,
+   19,
+   20,
+   21
+  ],
+  "description": "Ironbound Ruinhost"
+ },
+ {
+  "id": 426,
+  "type": "Vanguard",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   22,
+   23
+  ],
+  "description": "Ironbound Ruinhost"
+ },
+ {
+  "id": 427,
+  "type": "HQ",
+  "faction": "Dark Mechanicum",
+  "restricted": true,
+  "options": [
+   1181
+  ],
+  "description": "Scintillax 'Cyclops' Noospheric Stalker Network"
+ },
+ {
+  "id": 428,
+  "type": "Core",
+  "faction": "Dark Mechanicum",
+  "restricted": true,
+  "options": [
+   1183
+  ],
+  "description": "Adsecularis Tech-thrall Covenant"
+ },
+ {
+  "id": 429,
+  "type": "Heavy Armour",
+  "faction": "Dark Mechanicum",
+  "restricted": true,
+  "options": [
+   1197
+  ],
+  "description": "Serperos 'Overlord' Heavy Stalker Maniple"
+ },
+ {
+  "id": 430,
+  "type": "Support",
+  "faction": "Dark Mechanicum",
+  "restricted": true,
+  "options": [
+   1188
+  ],
+  "description": "Myrmidon Secutor Host"
+ },
+ {
+  "id": 431,
+  "type": "Dedicated",
+  "faction": "Dark Mechanicum",
+  "restricted": true,
+  "options": [
+   1198
+  ],
+  "description": "Triaros Armoured Conveyor"
+ },
+ {
+  "id": 432,
+  "type": "Core",
+  "faction": "Dark Mechanicum",
+  "restricted": true,
+  "options": [
+   1183
+  ],
+  "description": "Adsecularis Tech-thrall Covenant"
+ },
+ {
+  "id": 433,
+  "type": "Support",
+  "faction": "Dark Mechanicum",
+  "restricted": true,
+  "options": [
+   1188
+  ],
+  "description": "Myrmidon Secutor Host"
+ },
+ {
+  "id": 434,
+  "type": "Heavy Armour",
+  "faction": "Dark Mechanicum",
+  "restricted": true,
+  "options": [
+   1197
+  ],
+  "description": "Serperos 'Overlord' Heavy Stalker Maniple"
+ },
+ {
+  "id": 435,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1215
+  ],
+  "description": "Warlord"
+ },
+ {
+  "id": 436,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1210
+  ],
+  "description": "Reaver"
+ },
+ {
+  "id": 437,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1213
+  ],
+  "description": "Warhound"
+ },
+ {
+  "id": 438,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1210
+  ],
+  "description": "Reaver"
+ },
+ {
+  "id": 439,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 440,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1213
+  ],
+  "description": "Warhound"
+ },
+ {
+  "id": 441,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1209
+  ],
+  "description": "Dire Wolf"
+ },
+ {
+  "id": 442,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 443,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1217,
+   1218
+  ],
+  "description": "Warmaster"
+ },
+ {
+  "id": 444,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1217,
+   1218
+  ],
+  "description": "Warmaster"
+ },
+ {
+  "id": 445,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1215
+  ],
+  "description": "Warlord"
+ },
+ {
+  "id": 446,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1212
+  ],
+  "description": "Warbringer"
+ },
+ {
+  "id": 447,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1212
+  ],
+  "description": "Warbringer"
+ },
+ {
+  "id": 448,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1210
+  ],
+  "description": "Reaver"
+ },
+ {
+  "id": 449,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 450,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1210
+  ],
+  "description": "Reaver"
+ },
+ {
+  "id": 451,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1213
+  ],
+  "description": "Warhound"
+ },
+ {
+  "id": 452,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1210
+  ],
+  "description": "Reaver"
+ },
+ {
+  "id": 453,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1209
+  ],
+  "description": "Dire Wolf"
+ },
+ {
+  "id": 454,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 455,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1210
+  ],
+  "description": "Reaver"
+ },
+ {
+  "id": 456,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1210
+  ],
+  "description": "Reaver"
+ },
+ {
+  "id": 457,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 458,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 459,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   19,
+   20,
+   21
+  ],
+  "description": "Collegia Titanica Support Cohorts"
+ },
+ {
+  "id": 460,
+  "type": "Core",
+  "faction": "Mechanicum",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 461,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 462,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   19,
+   20,
+   21
+  ],
+  "description": "Collegia Titanica Support Cohorts"
+ },
+ {
+  "id": 463,
+  "type": "Bastion",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   24
+  ],
+  "description": "Collegia Titanica Support Cohorts"
+ },
+ {
+  "id": 464,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1211
+  ],
+  "description": "Reaver Battle Titan"
+ },
+ {
+  "id": 465,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1207
+  ],
+  "description": "Questoris Knight Banner"
+ },
+ {
+  "id": 466,
+  "type": "Battle Tank",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1176
+  ],
+  "description": "Krios Venator Squadron"
+ },
+ {
+  "id": 467,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1214
+  ],
+  "description": "Warhound Hunting Pack"
+ },
+ {
+  "id": 468,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1203
+  ],
+  "description": "Cerastus Knight Banner"
+ },
+ {
+  "id": 469,
+  "type": "Vanguard",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   1173
+  ],
+  "description": "Vultarax Stratos-automata Squadron"
+ },
+ {
+  "id": 470,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1206,
+   1208
+  ],
+  "description": "Questoris Knight Banner"
+ },
+ {
+  "id": 471,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1202,
+   1201
+  ],
+  "description": "Cerastus Knight Banner"
+ },
+ {
+  "id": 472,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1202,
+   1201
+  ],
+  "description": "Cerastus Knight Banner"
+ },
+ {
+  "id": 473,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1206,
+   1208
+  ],
+  "description": "Questoris Knight Banner"
+ },
+ {
+  "id": 474,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1204,
+   1205
+  ],
+  "description": "Armiger Knight Banner"
+ },
+ {
+  "id": 475,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1202,
+   1201
+  ],
+  "description": "Cerastus Knight Banner"
+ },
+ {
+  "id": 476,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1204,
+   1205
+  ],
+  "description": "Armiger Knight Banner"
+ },
+ {
+  "id": 477,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1202,
+   1201
+  ],
+  "description": "Cerastus Knight Banner"
+ },
+ {
+  "id": 478,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1204,
+   1205
+  ],
+  "description": "Armiger Knight Banner"
+ },
+ {
+  "id": 479,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1200,
+   1199
+  ],
+  "description": "Acastus Knight Banner"
+ },
+ {
+  "id": 480,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1206,
+   1208
+  ],
+  "description": "Questoris Knight Banner"
+ },
+ {
+  "id": 481,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1206,
+   1208
+  ],
+  "description": "Questoris Knight Banner"
+ },
+ {
+  "id": 482,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1204,
+   1205
+  ],
+  "description": "Armiger Knight Banner"
+ },
+ {
+  "id": 483,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1208
+  ],
+  "description": "Knight Styrix/Magaera"
+ },
+ {
+  "id": 484,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1208
+  ],
+  "description": "Knight Styrix/Magaera"
+ },
+ {
+  "id": 485,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1200,
+   1199
+  ],
+  "description": "Acastus Knight Banner"
+ },
+ {
+  "id": 486,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1202,
+   1201
+  ],
+  "description": "Cerastus Knight Banner"
+ },
+ {
+  "id": 487,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1205
+  ],
+  "description": "Knight Moirax Talon"
+ },
+ {
+  "id": 488,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 489,
+  "type": "Vanguard",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   22,
+   23
+  ],
+  "description": "Knight Household Retainer Cohorts"
+ },
+ {
+  "id": 490,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 491,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": true,
+  "options": [
+   1204,
+   1205
+  ],
+  "description": "Armiger Knight Banner"
+ },
+ {
+  "id": 492,
+  "type": "Vanguard",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   22,
+   23
+  ],
+  "description": "Knight Household Retainer Cohorts"
+ },
+ {
+  "id": 493,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 494,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   19,
+   20,
+   21
+  ],
+  "description": "Knight Household Aegis Cohorts"
+ },
+ {
+  "id": 495,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 496,
+  "type": "Support",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   19,
+   20,
+   21
+  ],
+  "description": "Knight Household Aegis Cohorts"
+ },
+ {
+  "id": 497,
+  "type": "Bastion",
+  "faction": "Mechanicum",
+  "restricted": true,
+  "options": [
+   24
+  ],
+  "description": "Knight Household Aegis Cohorts"
+ },
+ {
+  "id": 498,
+  "type": "Knight",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ },
+ {
+  "id": 499,
+  "type": "Titan",
+  "faction": "Strategic Assets",
+  "restricted": false,
+  "options": []
+ }
+]

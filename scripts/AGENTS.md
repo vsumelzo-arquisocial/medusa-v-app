@@ -1,0 +1,1 @@
+- `admin-bootstrap.ts` is an operator-only setup script for self-managed destinations with runtime secrets; it is an alternative to the first-signup database bootstrap — why: no credentials may be embedded in source.

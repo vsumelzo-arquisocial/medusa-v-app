@@ -1,0 +1,3 @@
+- Planet regions come from `src/data/planet-regions.json` (equirectangular region grid generated from the planet texture, land borders + sea routes); DB `regions.neighbors` is copied from it — why: regions follow the continents of the texture.
+- `warhammer40k/points.json` is parsed from the official Munitorum Field Manual site and mirrored into `wh40k_unit_prices`; regenerate both together — why: points stay traceable to the official source.
+- `warhammer40k/combat-patrols.json` is parsed from the official 10th edition Combat Patrol PDFs (11th edition patrols are app-only); patrol lists are fixed rosters, simulation-only, with only default/optional enhancement and secondary objective choices — why: no invented patrol content.
