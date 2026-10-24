@@ -209,6 +209,61 @@ function GhostShip({
   );
 }
 
+/** Fase del portal disforme sobre una nave: se forma, carga y, al saltar, la engulle. */
+export type PortalStage = "forma" | "carga" | "salta";
+
+function WarpPortal({ size, stage, uid }: { size: number; stage: PortalStage; uid: string }) {
+  const r = size * (stage === "forma" ? 0.75 : stage === "carga" ? 1.05 : 1.3);
+  return (
+    <g pointerEvents="none">
+      <defs>
+        <radialGradient id={`portal-${uid}`}>
+          <stop offset="0" stopColor="#05000a" stopOpacity="0.95" />
+          <stop offset="0.45" stopColor="#3b0764" stopOpacity="0.8" />
+          <stop offset="0.75" stopColor="#a21caf" stopOpacity="0.45" />
+          <stop offset="1" stopColor="#f0abfc" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <g
+        style={{
+          transform: `scale(${r / size})`,
+          transition: "transform 1.8s cubic-bezier(.3,0,.2,1)",
+        }}
+      >
+        <circle r={size} fill={`url(#portal-${uid})`}>
+          <animate
+            attributeName="opacity"
+            values="0.75;1;0.75"
+            dur="1.6s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        {[0.95, 0.72, 0.5].map((k, i) => (
+          <g key={k}>
+            <ellipse
+              rx={size * k}
+              ry={size * k * 0.82}
+              fill="none"
+              stroke={i === 0 ? "#f0abfc" : "#c084fc"}
+              strokeWidth={i === 0 ? 1.6 : 1}
+              strokeDasharray={`${size * 0.5} ${size * 0.25}`}
+              opacity={0.85 - i * 0.2}
+            />
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from={i % 2 ? "360" : "0"}
+              to={i % 2 ? "0" : "360"}
+              dur={`${2.4 + i}s`}
+              repeatCount="indefinite"
+            />
+          </g>
+        ))}
+      </g>
+    </g>
+  );
+}
+
 function RealShip({
   at,
   deg,
@@ -218,6 +273,7 @@ function RealShip({
   label,
   color,
   uid,
+  portal,
 }: {
   at: P;
   deg: number;
@@ -227,11 +283,24 @@ function RealShip({
   label: string;
   color: string;
   uid: string;
+  portal?: PortalStage | undefined;
 }) {
+  const gone = portal === "salta";
   return (
     <g transform={`translate(${at.x} ${at.y})`}>
-      <g transform={`rotate(${deg})`}>
-        <TopDownShip fleet={fleet} size={size} power={power} uid={uid} />
+      {portal && <WarpPortal size={size} stage={portal} uid={uid} />}
+      <g
+        style={{
+          transform: gone ? "scale(0) rotate(200deg)" : "scale(1)",
+          opacity: gone ? 0 : 1,
+          transition: gone
+            ? "transform 1.6s cubic-bezier(.6,0,.9,.4) 1.2s, opacity 1.6s ease-in 1.2s"
+            : "none",
+        }}
+      >
+        <g transform={`rotate(${deg})`}>
+          <TopDownShip fleet={fleet} size={size} power={portal ? 0 : power} uid={uid} />
+        </g>
       </g>
       <text
         y={-size / 2 - 5}
@@ -263,6 +332,8 @@ export function TacticalMap({
   selected = 0,
   fitPoints,
   motion,
+  portals,
+  ownUpTo,
   onFx,
   onProjection,
   caption,
@@ -277,9 +348,13 @@ export function TacticalMap({
   /** Puntos extra para el encuadre (p. ej. todo el recorrido de la repetición). */
   fitPoints?: Vec[] | undefined;
   motion?: Motion | null | undefined;
+  /** Portal disforme abierto sobre cada nave. */
+  portals?: { own?: PortalStage | undefined; foe?: PortalStage | undefined } | undefined;
+  /** Rondas de nuestra trayectoria ya decididas (las demás no se dibujan). */
+  ownUpTo?: number | undefined;
   onFx?: (fx: FxEngine | null) => void;
   onProjection?: (p: Projection) => void;
-  caption?: string;
+  caption?: string | undefined;
 }) {
   const fitKey = [own.pos, foe.pos, ...(fitPoints ?? [])]
     .map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`)
@@ -444,7 +519,9 @@ export function TacticalMap({
                 d={curvePath(
                   [
                     { pos: own.pos, heading: own.heading },
-                    ...steps.map((x) => ({ pos: x.own.pos, heading: x.own.heading })),
+                    ...steps
+                      .slice(0, ownUpTo ?? steps.length)
+                      .map((x) => ({ pos: x.own.pos, heading: x.own.heading })),
                   ],
                   proj,
                 )}
@@ -470,13 +547,15 @@ export function TacticalMap({
               />
               {steps.map((x, i) => (
                 <g key={i}>
-                  <GhostShip
-                    at={proj.pt(x.own.pos)}
-                    deg={x.own.heading * 45}
-                    color="#7dd3fc"
-                    n={i + 1}
-                    active={i === selected}
-                  />
+                  {i < (ownUpTo ?? steps.length) && (
+                    <GhostShip
+                      at={proj.pt(x.own.pos)}
+                      deg={x.own.heading * 45}
+                      color="#7dd3fc"
+                      n={i + 1}
+                      active={i === selected}
+                    />
+                  )}
                   <GhostShip
                     at={proj.pt(x.foe.pos)}
                     deg={x.foe.heading * 45}
@@ -486,7 +565,7 @@ export function TacticalMap({
                   />
                 </g>
               ))}
-              {sel && (
+              {sel && selected < (ownUpTo ?? steps.length) && (
                 <g>
                   {sel.ourHit > 0.4 && (
                     <>
@@ -540,6 +619,7 @@ export function TacticalMap({
             label={foeLabel}
             color="#fca5a5"
             uid="foe"
+            portal={portals?.foe}
           />
           <RealShip
             at={ownP}
@@ -550,6 +630,7 @@ export function TacticalMap({
             label={ownLabel}
             color="#7dd3fc"
             uid="own"
+            portal={portals?.own}
           />
         </svg>
         {onFx && (

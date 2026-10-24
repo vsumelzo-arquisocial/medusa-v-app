@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { FleetId } from "@/lib/ship-identity";
-import { FLEET_PROFILES, PHASES_PER_BLOCK, SECOND } from "@/lib/naval3/factions";
+import { FLEET_PROFILES, SECOND } from "@/lib/naval3/factions";
 
 const KEY = "naval3-tutorial-v1";
 
@@ -27,7 +27,7 @@ function steps(fleet: FleetId): Step[] {
     {
       target: null,
       title: `${v.lord}, bienvenido al puente`,
-      text: `Soy vuestro ${v.title}. En un minuto os enseño a mandar esta nave. Un duelo se juega en bloques de ${PHASES_PER_BLOCK} rondas: los dos capitanes dais las órdenes a la vez, sin ver las del otro, y luego se resuelven juntas.`,
+      text: `Soy vuestro ${v.title}. En un minuto os enseño a mandar esta nave. Los dos capitanes dais las órdenes a la vez, sin ver las del otro, y luego se resuelven juntas: de una en una (más fluido) o de tres en tres (más rápido), según elijáis al empezar.`,
     },
     {
       target: "mapa",
@@ -43,12 +43,12 @@ function steps(fleet: FleetId): Step[] {
     {
       target: "radar",
       title: "El radar del puente",
-      text: "Lo mismo, pero visto desde vuestra nave, con la proa siempre arriba. Os dice de un vistazo si el enemigo os queda a proa, a babor, a estribor o a popa, y el número de cada cuña es el daño de esas armas a esa distancia.",
+      text: "Visto desde vuestra nave, con la proa siempre arriba. El eco verde es el enemigo: se ilumina al pasar el barrido. Abajo os dice dónde está, cuánto daño le hacen nuestras baterías esa ronda y cuánto nos hace él.",
     },
     {
       target: "posturas",
-      title: "Elegid una postura",
-      text: "Al abordaje, Nuestra distancia o Resistir. Yo relleno las tres rondas con la mejor opción para esa postura. Si no tenéis claro qué hacer, empezad por aquí.",
+      title: "Mi sugerencia",
+      text: "Las órdenes empiezan vacías. Si queréis que decida yo, pulsad Al abordaje, Nuestra distancia o Resistir y relleno las órdenes por vos; luego podéis cambiar lo que queráis.",
       needsPlan: true,
     },
     {
@@ -60,7 +60,7 @@ function steps(fleet: FleetId): Step[] {
     {
       target: "accion",
       title: "Acción",
-      text: `Disparar usa las armas cuyo arco cubre al enemigo (vuestra flota pega fuerte con ${p.prowName} en la proa y ${p.broadsideName} en los costados). Torpedos solo salen por la proa. Escudos frena andanadas; Evasión, torpedos y embestidas. Embestir exige tenerlo delante. Saltar os saca del duelo.`,
+      text: `Disparar usa las armas cuyo arco cubre al enemigo (vuestra flota pega fuerte con ${p.prowName} en la proa y ${p.broadsideName} en los costados). Torpedos solo salen por la proa. Escudos frena andanadas; Evasión, torpedos y embestidas. Embestir exige tenerlo delante. Saltar abre un portal: esa ronda y la siguiente quedáis quietos y sin defensas, y después saltáis.`,
       needsPlan: true,
     },
     {
@@ -77,7 +77,7 @@ function steps(fleet: FleetId): Step[] {
     {
       target: "salto",
       title: "Red de seguridad",
-      text: "Si la nave llega a 0 de casco, estalla y vuestro perfil se reinicia por completo. Fijad un salto de emergencia: si el casco baja de ese umbral, saltaré por vos aunque no lo hayáis ordenado.",
+      text: "Si la nave llega a 0 de casco, estalla y vuestro perfil se reinicia por completo. Fijad un salto automático: si el casco baja de ese umbral, declararé el salto por vos (tarda dos rondas).",
       needsPlan: true,
     },
     {

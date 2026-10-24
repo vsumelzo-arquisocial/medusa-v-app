@@ -63,6 +63,8 @@ export interface SideState {
   torpedoesLoaded: boolean;
   torpedoesInFlight: number;
   boarding: number;
+  /** Salto disforme en curso: 0 nada · 1 declarado (ronda de aguante) · 2 listo para saltar. */
+  warpCharge?: number;
 }
 
 export type Side = "attacker" | "defender";
@@ -74,7 +76,12 @@ export interface DuelEnd {
   jumped: Side | null;
 }
 
+/** Rondas por bloque: 1 (de una en una, ambos conectados) o 3 (de tres en tres). */
+export type DuelMode = 1 | 3;
+
 export interface DuelState {
+  /** Rondas por bloque; sin definir = aún por decidir (se juega a 3). */
+  mode?: DuelMode;
   /** Banda de distancia actual (derivada de las posiciones). */
   range: Range;
   phase: number;
@@ -101,7 +108,13 @@ export interface SidePhaseLog {
   torpedoesDodged: number;
   instantTorpedoes: boolean;
   ram: null | { hit: boolean; dealt: number; selfDamage: number };
-  warp: null | { chance: number; success: boolean; damage: number };
+  /** Salto: «declara» (ronda 1), «carga» (ronda de aguante) y «salta» (al empezar la siguiente). */
+  warp: null | {
+    chance: number;
+    success: boolean;
+    damage: number;
+    stage?: "declara" | "carga" | "salta";
+  };
   repaired: number;
   regen: number;
   hullAfter: number;

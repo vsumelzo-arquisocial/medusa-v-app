@@ -138,40 +138,36 @@ export function phaseCues(opts: {
     });
   }
 
-  // 2. Saltos
+  // 2. Saltos en dos tiempos: declara → aguanta → salta por el portal
   for (const s of [me, foe] as const) {
     const w = e[s].warp;
     if (!w) continue;
-    at(
-      0.5,
-      () => {
-        fx()?.warp(posOf(s, false), w.success, 0);
-        play(w.success ? "salto_disforme" : "salto_fallido", { pan: s === me ? 0 : pan(false) });
-      },
-      {
+    const stage = w.stage ?? (w.success ? "salta" : "declara");
+    if (stage === "salta")
+      at(
+        0.5,
+        () => {
+          fx()?.warp(posOf(s, false), true, 0.9);
+          play("salto_disforme", { pan: s === me ? 0 : pan(false) });
+        },
+        {
+          side: s,
+          tone: tone(s, true),
+          text:
+            s === me
+              ? "¡Cruzamos el portal! Estamos a salvo en el disforme."
+              : `${names[s]} cruza el portal y desaparece.`,
+        },
+      );
+    else
+      at(0.4, () => play(stage === "declara" ? "aviso" : "radar_ping", { gain: 0.6 }), {
         side: s,
-        tone: "neutral",
-        text: `${names[s]} abre una brecha disforme… (${w.chance} % de éxito)`,
-      },
-    );
-    at(
-      2.0,
-      undefined,
-      w.success
-        ? {
-            side: s,
-            tone: tone(s, true),
-            text:
-              s === me
-                ? "¡Hemos atravesado la brecha! Estamos a salvo en el disforme."
-                : `${names[s]} desaparece en el disforme.`,
-          }
-        : {
-            side: s,
-            tone: tone(s, false),
-            text: `¡El salto de ${names[s]} falla! La disformidad le hace −${w.damage}.`,
-          },
-    );
+        tone: stage === "declara" ? "neutral" : tone(s, false),
+        text:
+          stage === "declara"
+            ? `${names[s]} declara el salto: se abre el portal.`
+            : `${names[s]} aguanta en modo salto, sin defensas.`,
+      });
   }
   if (L.warp?.success || F.warp?.success) return cues.sort((a, b) => a.t - b.t);
 

@@ -58,18 +58,25 @@ export function narratePhase(e: PhaseEvent, me: Side, names: Record<Side, string
   for (const s of sides) {
     const w = e[s].warp;
     if (!w) continue;
+    const stage = w.stage ?? (w.success ? "salta" : "declara");
     lines.push(
-      w.success
+      stage === "salta"
         ? {
             side: s,
             tone: tone(s, true),
-            text: `¡${names[s]} abre una brecha y salta al disforme! (${w.chance} % de éxito)`,
+            text: `¡${names[s]} cruza el portal y desaparece en el disforme!`,
           }
-        : {
-            side: s,
-            tone: tone(s, false),
-            text: `El salto de ${names[s]} falla (${w.chance} %): los peligros de la disformidad le hacen −${w.damage}.`,
-          },
+        : stage === "carga"
+          ? {
+              side: s,
+              tone: tone(s, false),
+              text: `${names[s]} aguanta quieto en modo salto, sin defensas.`,
+            }
+          : {
+              side: s,
+              tone: "neutral",
+              text: `${names[s]} declara el salto: el portal empieza a abrirse.`,
+            },
     );
   }
   if (sides.some((s) => e[s].warp?.success)) return lines;

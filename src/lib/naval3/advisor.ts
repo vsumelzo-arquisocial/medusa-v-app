@@ -2,7 +2,7 @@
  * El Segundo al mando: lee la geometría (distancia, arcos, rumbos), propone planes y avisa de errores.
  * La interfaz (consejos) y la IA (bot) usan las mismas reglas.
  */
-import { FLEET_PROFILES, PHASES_PER_BLOCK, SECOND, TORPEDO_DAMAGE } from "./factions";
+import { FLEET_PROFILES, SECOND, TORPEDO_DAMAGE } from "./factions";
 import { MANEUVERS, maneuverMove } from "./maneuvers";
 import {
   bandOf,
@@ -17,7 +17,9 @@ import {
   relBearing,
   stats,
   unitsFor,
-  warpChance,
+  blockRounds,
+  inWarp,
+  warpPlan,
   type Rng,
 } from "./engine";
 import {
@@ -178,7 +180,7 @@ export function suggestPlan(input: DuelState, side: Side, stance: Stance, rng?: 
   let loaded = own.torpedoesLoaded;
   let foeInFlight = foe.torpedoesInFlight > 0;
   const phases: PhasePlan[] = [];
-  for (let i = 0; i < PHASES_PER_BLOCK; i++) {
+  for (let i = 0; i < blockRounds(state); i++) {
     // ¿Embestida posible ahora?
     const prowNow = Math.abs(relBearing(own, foe.pos));
     const ramStep = simulateStep(own, foe, { speed: 2, turn: 0, action: "embestir" }, FOE_DEFAULT);
@@ -244,16 +246,15 @@ export function briefing(input: DuelState, side: Side): Advice[] {
   const theirs = bestRange(foe, own);
   const out: Advice[] = [];
   const pct = own.hull / own.maxHull;
-  const chance = warpChance(own);
   if (pct <= 0.2)
     out.push({
       tone: "danger",
-      text: `¡${voice.lord}, el casco se parte! ¡Salte al disforme, por favor, es nuestra última oportunidad! (${chance} % de éxito)`,
+      text: `¡${voice.lord}, el casco se parte! ¡Declarad el salto ya: tarda dos rondas!`,
     });
   else if (pct <= 0.35)
     out.push({
       tone: "danger",
-      text: `${voice.lord}, no aguantaremos mucho más. Os ruego que consideréis el salto disforme: ${chance} % de éxito ahora, y cada impacto lo empeora.`,
+      text: `${voice.lord}, no aguantaremos mucho más. Considerad el salto: dos rondas quietos y salvamos la nave.`,
     });
   const d = dist(own.pos, foe.pos);
   const rel = relBearing(own, foe.pos);
@@ -338,7 +339,7 @@ export function phaseAdvice(
   if (p.action === "saltar")
     return {
       tone: "warn",
-      text: `Saltamos al disforme: ${warpChance(own)} % de éxito con el casco actual. Perdemos el duelo, salvamos la nave.`,
+      text: "Salto: esta ronda y la siguiente quietos y sin defensas; luego saltamos. Perdemos el duelo, salvamos la nave.",
     };
   if (p.action === "torpedos" && !loaded)
     return { tone: "danger", text: "Tubos vacíos: esta orden se convertirá en recarga." };
@@ -473,7 +474,7 @@ export function blockDebrief(events: PhaseEvent[], side: Side, input: DuelState)
   if (pct <= 0.35)
     notes.push({
       tone: "danger",
-      text: `${voice.lord}, el casco está al ${Math.round(pct * 100)} %. Si el próximo bloque va mal, saltad al disforme (${warpChance(own)} % de éxito) o fijad un salto de emergencia.`,
+      text: `${voice.lord}, el casco está al ${Math.round(pct * 100)} %. Si el próximo bloque va mal, declarad el salto (tarda dos rondas) o fijad un salto automático.`,
     });
   if (sternHits)
     notes.push({
@@ -510,6 +511,7 @@ export function blockDebrief(events: PhaseEvent[], side: Side, input: DuelState)
 export function likelyPlan(state: DuelState, side: Side): BlockPlan {
   const s = normalizeState(state);
   const own = s[side];
+  if (inWarp(own)) return warpPlan(blockRounds(s));
   const foe = s[other(side)];
   const pct = own.hull / own.maxHull;
   const stance: Stance = pct < 0.3 ? "defensiva" : bestRange(own, foe) === 0 ? "asalto" : "optima";

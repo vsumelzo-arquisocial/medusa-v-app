@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import type { FleetId } from "@/lib/ship-identity";
 import { MANEUVERS } from "@/lib/naval3/maneuvers";
-import { ACTION_INFO, FLEET_PROFILES, PHASES_PER_BLOCK, SECOND } from "@/lib/naval3/factions";
+import { ACTION_INFO, FLEET_PROFILES, SECOND } from "@/lib/naval3/factions";
 
 const SECTIONS = [
   "Lo básico",
@@ -59,9 +59,9 @@ export function DuelHelp({ fleet }: { fleet: FleetId }) {
               <>
                 <p>
                   Un duelo enfrenta a dos naves capitales. Se juega en{" "}
-                  <b>bloques de {PHASES_PER_BLOCK} rondas</b>: cada uno da sus órdenes a ciegas y,
-                  cuando los dos confirmáis, se resuelve el bloque entero y podéis verlo en el
-                  radar.
+                  <b>rondas de una en una o bloques de tres</b> (lo elegís al empezar): cada uno da
+                  sus órdenes a ciegas y, cuando los dos confirmáis, se resuelve el bloque entero y
+                  podéis verlo en el radar.
                 </p>
                 <p>
                   Si los dos estáis conectados no hay espera. Si no, cada bloque tiene un plazo de

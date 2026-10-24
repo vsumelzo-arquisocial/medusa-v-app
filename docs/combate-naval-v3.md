@@ -95,3 +95,14 @@ Código: `src/lib/naval3/` (motor, Segundo, narración, servidor), `src/componen
 - **Decisión tras cada bloque:** al terminar la repetición aparecen dos botones: «Planificar siguiente asalto» (abre las órdenes y muestra en el mapa las guías de pronóstico) o «Saltar al disforme» (pide confirmación; si el salto sale bien se pierde el duelo pero se salva la nave).
 - **Radar simplificado:** el radar del puente queda como guía rápida: dónde está el enemigo, qué arco le apunta, el daño que hacemos y recibimos, y qué arco convendría ponerle.
 - **Música:** «Aproximación» y «Combate» van incluidas en la app (`public/sfx/musica/`) y suenan igual para todos; sin subidas ni ajustes.
+
+## Actualización: modos de combate, presencia, voz y salto en dos tiempos
+
+- **Modo de combate:** al empezar, cada jugador elige *de una en una* (más fluido, 15 min por ronda) o *de tres en tres* (más rápido y con más azar, 24 h por bloque). Solo se juega de una en una si los dos lo eligen; si alguien no elige antes del contacto, tres en tres. En una en una, si vence el plazo nadie pierde: el duelo pasa a tres en tres. Cualquiera puede pasar a tres en tres con un botón. Se guarda en `naval_raids.attacker_mode/defender_mode` y `duel_state.mode`.
+- **Rival en línea:** presencia en tiempo real (canal `duel:<id>` de Supabase Realtime) y avisos instantáneos al fijar órdenes, cambiar de modo o mandar un audio.
+- **Mensajes de voz:** uno por jugador y ronda, máximo 10 s. Bucket privado `voz` + tabla `naval_voice`; se borran al escucharlos y, si nadie los escucha, a las 24 h (limpieza en `duelTick`).
+- **Órdenes vacías al empezar:** el Primer Oficial da su sugerencia y tres posturas; al pulsar una, decide las órdenes por ti.
+- **Salto en dos tiempos:** declaras el salto (la nave para), aguantas una ronda en modo salto sin órdenes ni defensas, y al empezar la siguiente saltas (siempre sale bien). Un portal disforme se abre sobre la nave en el mapa y la engulle al saltar. Las naves en modo salto quedan listas automáticamente.
+- **Radar guía:** el enemigo es un eco verde con su silueta que se ilumina al pasar el barrido; abajo, daño que hacen nuestras baterías esa ronda y daño que recibimos.
+- **Esquema de armas:** la nave vista desde arriba con sus arcos y distancias; pestañas Baterías / Torpedos / Embestida y botón para ver el del rival.
+- Migración: `20261025000000_naval_mode_voice.sql`.

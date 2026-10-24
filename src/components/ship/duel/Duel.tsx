@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   Flame,
   GraduationCap,
@@ -25,8 +26,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { FLEETS, type FleetId } from "@/lib/ship-identity";
-import { ACTION_INFO, FLEET_PROFILES, PHASES_PER_BLOCK, SECOND } from "@/lib/naval3/factions";
-import { mainArc, normalizeState, other, warpChance } from "@/lib/naval3/engine";
+import { ACTION_INFO, FLEET_PROFILES, SECOND } from "@/lib/naval3/factions";
+import { blockRounds, inWarp, mainArc, normalizeState, other, warpPlan } from "@/lib/naval3/engine";
 import {
   STANCES,
   blockDebrief,
@@ -40,20 +41,21 @@ import {
   type PathStep,
   type Stance,
 } from "@/lib/naval3/advisor";
-import { MANEUVERS, maneuverMove, maneuverOf } from "@/lib/naval3/maneuvers";
+import { MANEUVERS, maneuverMove, maneuverOf, type ManeuverId } from "@/lib/naval3/maneuvers";
 import { endLine, narratePhase, type Line } from "@/lib/naval3/narrate";
 import {
   RANGE_NAMES,
   type Action,
   type BlockPlan,
   type DuelEnd,
+  type DuelMode,
   type DuelState,
   type PhaseEvent,
   type PhasePlan,
   type Side,
   type SideState,
 } from "@/lib/naval3/types";
-import { submitDuelPlan } from "@/lib/naval3.functions";
+import { chooseDuelMode, submitDuelPlan, switchDuelToThree } from "@/lib/naval3.functions";
 import {
   audioReady,
   play,
@@ -64,7 +66,10 @@ import {
   unlockAudio,
 } from "@/lib/sfx/engine";
 import { Radar, geoOf, type Geo } from "./Radar";
-import { TacticalMap, poseAt, type Motion, type Projection } from "./TacticalMap";
+import { TacticalMap, poseAt, type Motion, type PortalStage, type Projection } from "./TacticalMap";
+import { ShipSchematic } from "./ShipSchematic";
+import { VoiceComms } from "./VoiceComms";
+import { useDuelLink } from "./live";
 import type { FxEngine } from "./fx";
 import { MOVE_AT, PHASE_SECONDS, phaseCues } from "./stage";
 import { SoundControls } from "./SoundControls";
@@ -81,6 +86,8 @@ export interface DuelRaid {
   attacker_ready: boolean;
   defender_ready: boolean;
   deadline: string;
+  attacker_mode?: number | null;
+  defender_mode?: number | null;
   duel_state?: DuelState | null;
   report: { v3_events?: DuelEventRow[]; v3_end?: DuelEnd } | null;
 }
@@ -169,71 +176,135 @@ function HullBar({
   );
 }
 
-function Second({
+/** Sugerencia del Primer Oficial: lo esencial de la situación y tres posturas que rellenan las órdenes. */
+function FirstOfficer({
   state,
   side,
-  onJump,
+  stance,
+  onSuggest,
 }: {
   state: DuelState;
   side: Side;
-  onJump?: (() => void) | undefined;
+  stance: Stance | null;
+  onSuggest?: ((s: Stance) => void) | undefined;
 }) {
   const own = state[side];
   const voice = SECOND[own.fleet];
-  const advice = briefing(state, side);
+  const [more, setMore] = useState(false);
+  const rank = { danger: 0, warn: 1, good: 2, info: 3 } as const;
+  const advice = [...briefing(state, side)].sort((a, b) => rank[a.tone] - rank[b.tone]);
+  const shown = more ? advice : advice.slice(0, 2);
   const pleading = own.hull / own.maxHull <= 0.35;
   return (
     <section
       data-tour="segundo"
-      aria-label={voice.title}
+      aria-label={`Sugerencia del ${voice.title}`}
       className={`rounded border p-3 ${pleading ? "border-red-500 bg-red-950/30" : "border-primary/40 bg-accent/30"}`}
     >
-      <p className="mb-2 text-xs uppercase tracking-[0.2em] text-primary">{voice.title}</p>
-      <ul className="space-y-1.5">
-        {advice.map((a, i) => (
+      <p className="mb-2 text-xs uppercase tracking-[0.2em] text-primary">
+        Sugerencia del {voice.title}
+      </p>
+      <ul className="space-y-1">
+        {shown.map((a, i) => (
           <li key={i} className={`border-l-2 pl-2 text-sm ${TONE[a.tone]}`}>
             {a.text}
           </li>
         ))}
       </ul>
-      {pleading && onJump && (
-        <Button
-          variant="destructive"
-          className="mt-3 h-auto w-full whitespace-normal py-3 motion-safe:animate-pulse"
-          onClick={onJump}
+      {advice.length > 2 && (
+        <button
+          type="button"
+          className="mt-1 text-xs text-muted-foreground underline"
+          onClick={() => setMore((m) => !m)}
         >
-          <Sparkles />
-          Saltar al disforme en la primera ronda ({warpChance(own)} %)
-        </Button>
+          {more ? "Menos" : `Más (${advice.length - 2})`}
+        </button>
+      )}
+      {onSuggest && (
+        <div data-tour="posturas" className="mt-3">
+          <p className="mb-1 text-[11px] text-muted-foreground">
+            Pulsa una y decido las órdenes por ti:
+          </p>
+          <div className="grid grid-cols-3 gap-1.5">
+            {(Object.keys(STANCES) as Stance[]).map((s) => (
+              <Button
+                key={s}
+                variant="outline"
+                size="sm"
+                aria-pressed={stance === s}
+                title={STANCES[s].text}
+                className={`h-auto whitespace-normal px-1 py-2 text-xs ${stance === s ? "border-primary bg-accent text-primary" : ""}`}
+                onClick={() => {
+                  play("click");
+                  onSuggest(s);
+                }}
+              >
+                {STANCES[s].label}
+              </Button>
+            ))}
+          </div>
+        </div>
       )}
     </section>
   );
 }
 
-function defaultStance(state: DuelState, side: Side): Stance {
-  return state[side].hull / state[side].maxHull < 0.35 ? "defensiva" : "optima";
+/** Órdenes de una ronda aún sin decidir (null) o decididas. */
+interface DraftRound {
+  m: ManeuverId | null;
+  a: Action | null;
 }
 
-/** Convierte un plan del Segundo a maniobras de la interfaz (velocidad + giro numérico). */
-function normalizePlan(plan: BlockPlan, own: SideState): BlockPlan {
+const emptyDraft = (n: number): DraftRound[] =>
+  Array.from({ length: n }, () => ({ m: null, a: null }));
+
+/** Ronda bloqueada porque una anterior declara el salto (la nave queda en modo salto). */
+const warpLocked = (d: DraftRound[], i: number) => d.slice(0, i).some((r) => r.a === "saltar");
+
+/** Borrador → plan del motor (lo no decidido se rellena con «recto + disparar» solo para el pronóstico). */
+function draftToPlan(d: DraftRound[], own: SideState, emergencyJump: number): BlockPlan {
   return {
-    ...plan,
-    phases: plan.phases.map((p) => {
-      const m =
-        p.action === "embestir" ? "avante_toda" : p.action === "saltar" ? "parar" : maneuverOf(p);
-      return { ...maneuverMove(m, own), action: p.action };
+    emergencyJump,
+    phases: d.map((r, i) => {
+      if (r.a === "saltar" || warpLocked(d, i))
+        return { ...maneuverMove("parar", own), action: "saltar" as const };
+      if (r.a === "embestir")
+        return { ...maneuverMove("avante_toda", own), action: "embestir" as const };
+      return { ...maneuverMove(r.m ?? "recto", own), action: r.a ?? "fuego" };
     }),
   };
 }
 
-/** Planificador: 3 rondas de maniobra + acción con pronóstico de cada una. */
+/** Plan del Segundo → borrador completo. */
+function planToDraft(plan: BlockPlan, n: number): DraftRound[] {
+  return plan.phases.slice(0, n).map((p) => ({
+    m: p.action === "embestir" ? "avante_toda" : p.action === "saltar" ? "parar" : maneuverOf(p),
+    a: p.action,
+  }));
+}
+
+const roundReady = (d: DraftRound[], i: number) =>
+  warpLocked(d, i) || d[i]!.a === "saltar" || d[i]!.a === "embestir" || (!!d[i]!.m && !!d[i]!.a);
+
+/** Rondas iniciales con trayectoria decidida (para dibujarla en el mapa). */
+const decidedPath = (d: DraftRound[]) => {
+  let k = 0;
+  while (
+    k < d.length &&
+    (d[k]!.m || d[k]!.a === "saltar" || d[k]!.a === "embestir" || warpLocked(d, k))
+  )
+    k++;
+  return k;
+};
+
+/** Planificador: maniobra + acción por ronda, con el pronóstico de cada una. */
 function Planner({
   state,
   side,
-  plan,
-  setPlan,
-  stance,
-  setStance,
+  draft,
+  setDraft,
+  emergencyJump,
+  setEmergencyJump,
   selected,
   setSelected,
   steps,
@@ -243,10 +314,10 @@ function Planner({
 }: {
   state: DuelState;
   side: Side;
-  plan: BlockPlan;
-  setPlan: (f: (p: BlockPlan) => BlockPlan) => void;
-  stance: Stance;
-  setStance: (s: Stance) => void;
+  draft: DraftRound[];
+  setDraft: (f: (d: DraftRound[]) => DraftRound[]) => void;
+  emergencyJump: number;
+  setEmergencyJump: (v: number) => void;
   selected: number;
   setSelected: (i: number) => void;
   steps: PathStep[];
@@ -255,24 +326,25 @@ function Planner({
   onSubmit: (plan: BlockPlan) => Promise<void>;
 }) {
   const own = state[side];
-  const voice = SECOND[own.fleet];
+  const single = draft.length === 1;
   const [sending, setSending] = useState(false);
-  const setPhase = (i: number, patch: Partial<PhasePlan>) => {
+  const setRound = (i: number, patch: Partial<DraftRound>) => {
     play("click");
     setSelected(i);
-    setPlan((p) => ({ ...p, phases: p.phases.map((x, k) => (k === i ? { ...x, ...patch } : x)) }));
+    setDraft((d) => d.map((x, k) => (k === i ? { ...x, ...patch } : x)));
   };
+  const missing = draft.findIndex((_, i) => !roundReady(draft, i));
   async function send() {
     if (
-      plan.phases.some((p) => p.action === "saltar") &&
+      draft.some((r) => r.a === "saltar") &&
       !confirm(
-        "Hay un salto disforme en el plan. Si sale bien, pierdes el duelo pero salvas la nave. ¿Confirmar?",
+        "Salto disforme: esta ronda y la siguiente la nave queda quieta y sin defensas; después salta. Pierdes el duelo pero salvas la nave. ¿Confirmar?",
       )
     )
       return;
     setSending(true);
     try {
-      await onSubmit(plan);
+      await onSubmit(draftToPlan(draft, own, emergencyJump));
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "No se pudieron fijar las órdenes");
     } finally {
@@ -281,165 +353,137 @@ function Planner({
   }
   return (
     <section aria-label={`Órdenes del bloque ${block}`} className="space-y-3">
-      <div data-tour="posturas">
-        <p className="text-sm">
-          <span className="text-primary">{voice.title}:</span> «{voice.lord}, ¿cómo encaramos las
-          próximas {PHASES_PER_BLOCK} rondas?»
-        </p>
-        <div className="mt-2 grid grid-cols-3 gap-1.5">
-          {(Object.keys(STANCES) as Stance[]).map((s) => (
-            <Button
-              key={s}
-              variant="outline"
-              aria-pressed={stance === s}
-              className={`h-auto flex-col whitespace-normal px-2 py-2 text-xs ${stance === s ? "border-primary bg-accent text-primary" : ""}`}
-              onClick={() => {
-                play("click");
-                setStance(s);
-                setPlan((pl) => ({
-                  ...normalizePlan(suggestPlan(state, side, s), own),
-                  emergencyJump: pl.emergencyJump,
-                }));
-              }}
-            >
-              <span className="font-semibold">{STANCES[s].label}</span>
-              <span className="text-[10px] text-muted-foreground">{STANCES[s].text}</span>
-            </Button>
-          ))}
-        </div>
-        <p className="mt-1 text-[11px] text-muted-foreground">
-          El Segundo rellena las rondas; cambia lo que quieras y mira el mapa: tu nave prevista en
-          azul (1, 2, 3) y lo más probable del enemigo en rojo discontinuo.
-        </p>
-      </div>
-      <div data-tour="rondas" className="grid gap-2 lg:grid-cols-3">
-        {plan.phases.map((p, i) => {
+      <div data-tour="rondas" className={`grid gap-2 ${single ? "" : "lg:grid-cols-3"}`}>
+        {draft.map((r, i) => {
           const st = steps[i]!;
-          const adv = phaseAdvice(state, side, plan.phases, i, steps);
-          const m = maneuverOf(p);
-          const lock = p.action === "embestir" || p.action === "saltar";
+          const locked = warpLocked(draft, i);
+          const moveLock = locked || r.a === "embestir" || r.a === "saltar";
           return (
             <div
               key={i}
               role="group"
-              aria-label={`Ronda ${i + 1}`}
+              aria-label={single ? "Órdenes de la ronda" : `Ronda ${i + 1}`}
               onClick={() => setSelected(i)}
-              className={`cursor-pointer space-y-1.5 rounded border p-2 ${i === selected ? "border-primary bg-accent/20" : "border-border"}`}
+              className={`cursor-pointer space-y-1.5 rounded border p-2 ${i === selected && !single ? "border-primary bg-accent/20" : "border-border"} ${locked ? "opacity-70" : ""}`}
             >
-              <div className="flex items-baseline justify-between gap-1">
-                <span className="text-sm font-semibold text-primary">Ronda {i + 1}</span>
-                <span className="text-[11px] text-muted-foreground">
-                  {RANGE_NAMES[st.band]} · {st.distance.toFixed(0)} u
-                </span>
-              </div>
-              <div data-tour={i === 0 ? "maniobra" : undefined}>
-                <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
-                  Maniobra
+              {!single && (
+                <div className="flex items-baseline justify-between gap-1">
+                  <span className="text-sm font-semibold text-primary">Ronda {i + 1}</span>
+                  <span className="text-[11px] text-muted-foreground">
+                    {RANGE_NAMES[st.band]} · {st.distance.toFixed(0)} u
+                  </span>
+                </div>
+              )}
+              {locked ? (
+                <p className="rounded border border-fuchsia-500/60 bg-fuchsia-950/30 p-2 text-center text-sm text-fuchsia-200">
+                  Modo salto: sin órdenes
                 </p>
-                <div className="grid grid-cols-7 gap-0.5">
-                  {MANEUVERS.map((mv) => (
-                    <button
-                      key={mv.id}
-                      type="button"
-                      title={`${mv.name}: ${mv.text}`}
-                      aria-label={mv.name}
-                      aria-pressed={m === mv.id}
-                      disabled={lock}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setPhase(i, { ...maneuverMove(mv.id, own) });
-                      }}
-                      className={`flex h-9 items-center justify-center rounded border text-lg leading-none disabled:opacity-40 ${m === mv.id ? (mv.id === "avante_toda" ? "border-orange-400 bg-orange-500/20 text-orange-200" : "border-sky-400 bg-sky-500/20 text-sky-100") : "border-border text-muted-foreground hover:text-foreground"}`}
+              ) : (
+                <>
+                  <div data-tour={i === 0 ? "maniobra" : undefined}>
+                    <div className="grid grid-cols-7 gap-0.5">
+                      {MANEUVERS.map((mv) => (
+                        <button
+                          key={mv.id}
+                          type="button"
+                          title={`${mv.name}: ${mv.text}`}
+                          aria-label={mv.name}
+                          aria-pressed={r.m === mv.id}
+                          disabled={moveLock}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setRound(i, { m: mv.id });
+                          }}
+                          className={`flex items-center justify-center rounded border leading-none disabled:opacity-40 ${single ? "h-12 text-2xl" : "h-9 text-lg"} ${r.m === mv.id ? (mv.id === "avante_toda" ? "border-orange-400 bg-orange-500/20 text-orange-200" : "border-sky-400 bg-sky-500/20 text-sky-100") : "border-border text-muted-foreground hover:text-foreground"}`}
+                        >
+                          {mv.glyph}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div data-tour={i === 0 ? "accion" : undefined}>
+                    <div
+                      className={`grid gap-0.5 ${single ? "grid-cols-4 sm:grid-cols-8" : "grid-cols-4"}`}
                     >
-                      {mv.glyph}
-                    </button>
-                  ))}
-                </div>
-                <p className="mt-0.5 text-[10px] text-sky-200">
-                  {MANEUVERS.find((x) => x.id === m)!.name}
-                </p>
-              </div>
-              <div data-tour={i === 0 ? "accion" : undefined}>
-                <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Acción</p>
-                <div className="grid grid-cols-4 gap-0.5">
-                  {ACTIONS.map((a) => {
-                    const Icon = ACTION_ICON[a];
-                    const on = p.action === a;
-                    return (
-                      <button
-                        key={a}
-                        type="button"
-                        title={ACTION_INFO[a]!.text}
-                        aria-pressed={on}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setPhase(
-                            i,
-                            a === "embestir"
-                              ? { action: a, ...maneuverMove("avante_toda", own) }
-                              : a === "saltar"
-                                ? { action: a, ...maneuverMove("parar", own) }
-                                : { action: a },
-                          );
-                        }}
-                        className={`flex min-w-0 flex-col items-center gap-0.5 rounded border px-0.5 py-1 text-[9px] ${on ? (a === "saltar" ? "border-fuchsia-400 bg-fuchsia-500/20 text-fuchsia-200" : "border-primary bg-accent text-primary") : "border-border text-muted-foreground hover:text-foreground"}`}
-                      >
-                        <Icon className="size-3.5" />
-                        <span className="truncate">{ACTION_INFO[a]!.short}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-              <div
-                data-tour={i === 0 ? "pronostico" : undefined}
-                className="rounded bg-black/30 px-2 py-1 text-[11px]"
-              >
-                <p>
-                  Enemigo {sideName(st.rel)} · nos ve {sideName(st.relFoe)}
-                </p>
-                <p>
-                  <span className="text-sky-300">Les hacemos ~{st.ourHit.toFixed(1)}</span> ·{" "}
-                  <span className="text-red-300">nos hacen ~{st.theirHit.toFixed(1)}</span>
-                </p>
-              </div>
-              {adv && <p className={`border-l-2 pl-2 text-[11px] ${TONE[adv.tone]}`}>{adv.text}</p>}
+                      {ACTIONS.map((a) => {
+                        const Icon = ACTION_ICON[a];
+                        const on = r.a === a;
+                        return (
+                          <button
+                            key={a}
+                            type="button"
+                            title={ACTION_INFO[a]!.text}
+                            aria-label={ACTION_INFO[a]!.short}
+                            aria-pressed={on}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setRound(
+                                i,
+                                a === "embestir"
+                                  ? { a, m: "avante_toda" }
+                                  : a === "saltar"
+                                    ? { a, m: "parar" }
+                                    : { a },
+                              );
+                            }}
+                            className={`flex min-w-0 flex-col items-center gap-0.5 rounded border px-0.5 py-1 text-[9px] ${on ? (a === "saltar" ? "border-fuchsia-400 bg-fuchsia-500/20 text-fuchsia-200" : "border-primary bg-accent text-primary") : "border-border text-muted-foreground hover:text-foreground"}`}
+                          >
+                            <Icon className={single ? "size-5" : "size-3.5"} />
+                            <span className="truncate">{ACTION_INFO[a]!.short}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  {!single && (
+                    <p
+                      data-tour={i === 0 ? "pronostico" : undefined}
+                      className="rounded bg-black/30 px-2 py-1 text-[11px]"
+                    >
+                      <span className="text-sky-300">−{st.ourHit.toFixed(1)}</span> ·{" "}
+                      <span className="text-red-300">−{st.theirHit.toFixed(1)}</span> · enemigo{" "}
+                      {sideName(st.rel)}
+                    </p>
+                  )}
+                </>
+              )}
             </div>
           );
         })}
       </div>
-      <div data-tour="salto" className="rounded border border-border p-2">
-        <label className="flex flex-wrap items-center justify-between gap-2 text-sm">
-          <span>Salto de emergencia si el casco baja de</span>
-          <select
-            className="rounded border border-border bg-background px-2 py-1 text-sm"
-            value={plan.emergencyJump}
-            onChange={(e) => setPlan((pl) => ({ ...pl, emergencyJump: Number(e.target.value) }))}
-          >
-            {[0, 20, 30, 40, 50].map((v) => (
-              <option key={v} value={v}>
-                {v ? `${v} %` : "Nunca"}
-              </option>
-            ))}
-          </select>
-        </label>
-        <p className="mt-1 text-xs text-muted-foreground">
-          «Si las cosas se tuercen a mitad del bloque, saltaré por vos.» Con el casco al 25 % el
-          salto tendría un {warpChance({ ...own, hull: Math.ceil(own.maxHull * 0.25) })} % de éxito.{" "}
-          {plan.emergencyJump === 0 && (
-            <span className="text-amber-300">
-              Sin red: si la nave cae a 0, se pierde todo el perfil.
-            </span>
-          )}
-        </p>
+      <div
+        data-tour="salto"
+        className="flex flex-wrap items-center justify-between gap-2 rounded border border-border p-2 text-sm"
+      >
+        <span>Salto automático si el casco baja de</span>
+        <select
+          className="rounded border border-border bg-background px-2 py-1 text-sm"
+          value={emergencyJump}
+          onChange={(e) => setEmergencyJump(Number(e.target.value))}
+        >
+          {[0, 20, 30, 40, 50].map((v) => (
+            <option key={v} value={v}>
+              {v ? `${v} %` : "Nunca"}
+            </option>
+          ))}
+        </select>
+        {emergencyJump === 0 && (
+          <span className="w-full text-xs text-amber-300">
+            Sin red: si la nave cae a 0, se pierde todo el perfil.
+          </span>
+        )}
       </div>
       <Button
         data-tour="confirmar"
         className="h-auto w-full whitespace-normal py-3"
-        disabled={sending}
+        disabled={sending || missing >= 0}
         onClick={() => void send()}
       >
-        {submitLabel ?? `Fijar órdenes del bloque ${block}`}
+        {missing >= 0
+          ? single
+            ? "Elige maniobra y acción"
+            : `Faltan órdenes en la ronda ${missing + 1}`
+          : (submitLabel ?? (single ? "Fijar orden" : `Fijar órdenes del bloque ${block}`))}
       </Button>
     </section>
   );
@@ -799,21 +843,6 @@ function LiveLog({ lines, empty }: { lines: LogLine[]; empty: string }) {
   );
 }
 
-function DebriefPanel({ d, title }: { d: Debrief; title: string }) {
-  return (
-    <section aria-label={title} className="rounded border border-amber-500/50 bg-amber-950/10 p-3">
-      <p className="mb-1 text-xs uppercase tracking-[0.2em] text-amber-300">{title}</p>
-      <ul className="space-y-1">
-        {d.notes.map((n, i) => (
-          <li key={i} className={`border-l-2 pl-2 text-sm ${TONE[n.tone]}`}>
-            {n.text}
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
-
 const debriefLines = (d: Debrief | null, title: string): (Line & { who: "informe" })[] =>
   d
     ? [
@@ -865,12 +894,14 @@ function DecisionGate({
   state,
   side,
   foeName,
+  single,
   onContinue,
   onJump,
 }: {
   state: DuelState;
   side: Side;
   foeName: string;
+  single: boolean;
   onContinue: () => void;
   onJump: () => Promise<void>;
 }) {
@@ -879,30 +910,29 @@ function DecisionGate({
   const voice = SECOND[own.fleet];
   const [confirming, setConfirming] = useState(false);
   const [busy, setBusy] = useState(false);
-  const chance = warpChance(own);
   const ownPct = Math.round((own.hull / own.maxHull) * 100);
   const foePct = Math.round((foe.hull / foe.maxHull) * 100);
   const advice =
     ownPct <= 30 && foePct > ownPct
-      ? `${voice.lord}, el casco no aguantará mucho más. Yo saltaría.`
+      ? "El casco no aguantará mucho más. Yo saltaría."
       : foePct < ownPct
-        ? `${voice.lord}, ${foeName} está peor que nosotros. Es el momento de rematar.`
-        : `${voice.lord}, la batalla sigue abierta. Planifiquemos el siguiente asalto.`;
+        ? `${foeName} está peor que nosotros. A rematar.`
+        : "La batalla sigue abierta.";
   return (
     <section
       aria-label="Decisión tras el bloque"
-      className="space-y-3 rounded border border-amber-500/60 bg-amber-950/10 p-3"
+      className="space-y-2 rounded border border-amber-500/60 bg-amber-950/10 p-3"
     >
       <p className="text-sm">
         <span className="text-primary">{voice.title}:</span> «{advice}»
-      </p>
-      <p className="text-xs text-muted-foreground">
-        Casco: tu nave {ownPct} % · {foeName} {foePct} %
+        <span className="ml-2 text-xs text-muted-foreground">
+          Tú {ownPct} % · {foeName} {foePct} %
+        </span>
       </p>
       {!confirming ? (
         <div className="grid gap-2 sm:grid-cols-2">
           <Button size="lg" onClick={onContinue}>
-            Planificar siguiente asalto
+            {single ? "Planificar siguiente ronda" : "Planificar siguiente asalto"}
           </Button>
           <Button
             size="lg"
@@ -913,14 +943,14 @@ function DecisionGate({
               setConfirming(true);
             }}
           >
-            Saltar al disforme ({chance} %)
+            <Sparkles /> Saltar al disforme
           </Button>
         </div>
       ) : (
         <div role="alertdialog" aria-label="Confirmar salto" className="space-y-2">
           <p className="text-sm text-fuchsia-200">
-            Si el salto sale bien ({chance} % con el casco actual) pierdes el duelo pero salvas la
-            nave. Si falla, la disformidad os daña y el combate sigue.
+            Se abre el portal: esta ronda y la siguiente la nave queda quieta y sin defensas (el
+            enemigo puede seguir disparando). Después saltas: pierdes el duelo pero salvas la nave.
           </p>
           <div className="grid gap-2 sm:grid-cols-2">
             <Button
@@ -932,7 +962,7 @@ function DecisionGate({
                 setBusy(false);
               }}
             >
-              {busy ? "Abriendo la brecha…" : "Confirmar salto"}
+              {busy ? "Abriendo el portal…" : "Declarar el salto"}
             </Button>
             <Button variant="outline" disabled={busy} onClick={() => setConfirming(false)}>
               Volver
@@ -941,6 +971,97 @@ function DecisionGate({
         </div>
       )}
     </section>
+  );
+}
+
+/** Elección del modo de combate al iniciar el duelo. */
+export function ModePicker({
+  mine,
+  theirs,
+  peerName,
+  online,
+  onChoose,
+}: {
+  mine: DuelMode | null;
+  theirs: DuelMode | null;
+  peerName: string;
+  online: boolean | null;
+  onChoose: (m: DuelMode) => Promise<void>;
+}) {
+  const [busy, setBusy] = useState(false);
+  const opts: { m: DuelMode; title: string; text: string }[] = [
+    {
+      m: 1,
+      title: "De una en una",
+      text: "Más fluido e intuitivo: decides cada ronda viendo lo que acaba de pasar. Para cuando los dos estáis conectados (15 min por ronda).",
+    },
+    {
+      m: 3,
+      title: "De tres en tres",
+      text: "Más rápido y con más azar: das tres rondas de órdenes a ciegas. Para cuando estáis a otras cosas (24 h por bloque).",
+    },
+  ];
+  return (
+    <section
+      aria-label="Modo de combate"
+      className="space-y-2 rounded border border-amber-500/60 p-3"
+    >
+      <p className="text-sm text-primary">¿Cómo queréis combatir?</p>
+      <p className="text-xs text-muted-foreground">
+        {online
+          ? `${peerName} está conectado ahora: de una en una es buena opción.`
+          : online === false
+            ? `${peerName} no está conectado: mejor de tres en tres.`
+            : "Comprobando si tu rival está conectado…"}{" "}
+        Solo se juega de una en una si los dos lo elegís.
+      </p>
+      <div className="grid gap-2 sm:grid-cols-2">
+        {opts.map((o) => (
+          <button
+            key={o.m}
+            type="button"
+            disabled={busy || mine !== null}
+            aria-pressed={mine === o.m}
+            onClick={async () => {
+              setBusy(true);
+              try {
+                await onChoose(o.m);
+              } catch (e) {
+                toast.error(e instanceof Error ? e.message : "No se pudo elegir el modo");
+              } finally {
+                setBusy(false);
+              }
+            }}
+            className={`rounded border p-3 text-left disabled:cursor-default ${mine === o.m ? "border-primary bg-accent" : "border-border hover:border-primary/60"} ${mine !== null && mine !== o.m ? "opacity-50" : ""}`}
+          >
+            <span className="block font-semibold text-primary">{o.title}</span>
+            <span className="mt-1 block text-xs text-muted-foreground">{o.text}</span>
+            {theirs === o.m && (
+              <span className="mt-1 block text-xs text-amber-200">{peerName} ha elegido esta</span>
+            )}
+          </button>
+        ))}
+      </div>
+      {mine !== null && (
+        <p role="status" className="text-xs text-amber-200">
+          {theirs === null ? `Esperando a que ${peerName} elija…` : "Modo decidido."}
+        </p>
+      )}
+    </section>
+  );
+}
+
+/** Indicador de si el rival está conectado ahora mismo. */
+export function PresenceBadge({ online, name }: { online: boolean | null; name: string }) {
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-xs ${online ? "border-emerald-500/60 text-emerald-200" : "border-border text-muted-foreground"}`}
+    >
+      <span
+        className={`size-2 rounded-full ${online ? "bg-emerald-400 motion-safe:animate-pulse" : "bg-zinc-500"}`}
+      />
+      {name} {online ? "en línea" : online === false ? "desconectado" : "…"}
+    </span>
   );
 }
 
@@ -969,13 +1090,29 @@ export interface DuelBoardProps {
   end?: DuelEnd | null;
   epilogueTitle: string;
   footer?: ReactNode;
+  /** Cabecera extra (presencia del rival). */
+  badge?: ReactNode;
+  /** Sustituye a las órdenes (p. ej. la elección de modo). */
+  gate?: ReactNode;
+  /** Bajo el registro (mensajes de voz). */
+  comms?: ReactNode;
 }
+
+const STAGE_PORTAL: Record<"declara" | "carga" | "salta", PortalStage> = {
+  declara: "forma",
+  carga: "carga",
+  salta: "salta",
+};
+const chargePortal = (s: SideState): PortalStage | undefined =>
+  (s.warpCharge ?? 0) >= 2 ? "carga" : (s.warpCharge ?? 0) === 1 ? "forma" : undefined;
 
 export function DuelBoard(p: DuelBoardProps) {
   const { state, side, foeName } = p;
   const foeSide = other(side);
   const own = state[side];
   const foe = state[foeSide];
+  const rounds = blockRounds(state);
+  const single = rounds === 1;
   const names = useMemo(
     () => ({ [side]: "Tu nave", [foeSide]: foeName }) as Record<Side, string>,
     [side, foeSide, foeName],
@@ -1003,26 +1140,28 @@ export function DuelBoard(p: DuelBoardProps) {
     names,
     epilogue,
   });
-  const [stance, setStance] = useState<Stance>(() => defaultStance(state, side));
-  const [plan, setPlanState] = useState<BlockPlan>(() =>
-    normalizePlan(suggestPlan(state, side, defaultStance(state, side)), own),
-  );
-  const setPlan = useCallback((f: (p: BlockPlan) => BlockPlan) => setPlanState(f), []);
+  const [stance, setStance] = useState<Stance | null>(null);
+  const [draft, setDraftState] = useState<DraftRound[]>(() => emptyDraft(rounds));
+  const setDraft = useCallback((f: (d: DraftRound[]) => DraftRound[]) => {
+    setStance(null);
+    setDraftState(f);
+  }, []);
+  const [emergencyJump, setEmergencyJump] = useState(30);
   const [selected, setSelected] = useState(0);
   const [tour, setTour] = useState(false);
   /** Tras ver un bloque: ¿seguimos combatiendo o saltamos? (antes del primer bloque no se pregunta) */
   const [decided, setDecided] = useState(p.replayEvents.length === 0);
   useEffect(() => setDecided(p.replayEvents.length === 0), [p.block, p.replayEvents.length]);
   useEffect(() => {
-    setPlanState(normalizePlan(suggestPlan(state, side, defaultStance(state, side)), state[side]));
-    setStance(defaultStance(state, side));
+    setDraftState(emptyDraft(rounds));
+    setStance(null);
     setSelected(0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [p.block, state.phase]);
+  }, [p.block, state.phase, rounds]);
+  const plan = useMemo(() => draftToPlan(draft, own, emergencyJump), [draft, own, emergencyJump]);
   const fc = useMemo(() => forecast(state, side, plan.phases), [state, side, plan]);
   const planningFit = useMemo(
-    () => [...reachable(own, 2).flat(), ...reachable(foe, 2).flat()],
-    [own, foe],
+    () => [...reachable(own, single ? 1 : 2).flat(), ...reachable(foe, single ? 1 : 2).flat()],
+    [own, foe, single],
   );
   useBattleAmbience(p.status, p.storageKey);
   useEffect(() => {
@@ -1051,11 +1190,32 @@ export function DuelBoard(p: DuelBoardProps) {
     if (p.canPlan && !tutorialSeen()) setTour(true);
   }, [p.canPlan]);
   const frame = replay.frame;
-  const needDecision = p.canPlan && !!p.onSubmit && !decided && p.status !== "pendiente";
-  const showPlan = p.canPlan && !frame && !needDecision;
+  const over = !!state.finished || p.status === "terminado";
+  const warping = inWarp(own) && !over;
+  const needDecision =
+    p.canPlan && !!p.onSubmit && !decided && p.status !== "pendiente" && !warping && !p.gate;
+  const showPlan = p.canPlan && !frame && !needDecision && !warping && !p.gate;
   const shownPhase = replay.idx >= 0 ? p.replayEvents[replay.idx] : null;
   const last = fc.steps[fc.steps.length - 1];
   const selStep = fc.steps[selected];
+  const ownUpTo = decidedPath(draft);
+  const planReady = draft.every((_, i) => roundReady(draft, i));
+  const portals = shownPhase
+    ? {
+        own: shownPhase[side].warp?.stage ? STAGE_PORTAL[shownPhase[side].warp!.stage!] : undefined,
+        foe: shownPhase[foeSide].warp?.stage
+          ? STAGE_PORTAL[shownPhase[foeSide].warp!.stage!]
+          : undefined,
+      }
+    : frame
+      ? undefined
+      : { own: chargePortal(own), foe: chargePortal(foe) };
+  const jumpPlan = (): BlockPlan =>
+    draftToPlan(
+      draft.map((r, k) => (k === 0 ? { m: "parar", a: "saltar" } : r)),
+      own,
+      emergencyJump,
+    );
   return (
     <article
       className="space-y-4 rounded border border-destructive/70 p-3 sm:p-4"
@@ -1064,13 +1224,15 @@ export function DuelBoard(p: DuelBoardProps) {
       <header className="flex flex-wrap items-start justify-between gap-2">
         <div>
           <h3 className="text-lg text-primary">{p.title}</h3>
-          <p className="text-xs text-muted-foreground">
-            {FLEETS[foe.fleet].name} · {FLEET_PROFILES[foe.fleet].trait}
+          <p className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+            {FLEETS[foe.fleet].name}
+            {state.mode && <span>· {single ? "de una en una" : "de tres en tres"}</span>}
+            {p.badge}
           </p>
         </div>
         <div className="flex flex-wrap gap-1">
-          <Button size="sm" variant="outline" onClick={() => setTour(true)}>
-            <GraduationCap /> Tutorial
+          <Button size="sm" variant="outline" onClick={() => setTour(true)} aria-label="Tutorial">
+            <GraduationCap />
           </Button>
           <DuelHelp fleet={own.fleet} />
           <SoundControls />
@@ -1082,14 +1244,14 @@ export function DuelBoard(p: DuelBoardProps) {
           hull={shownPhase ? shownPhase[side].hullAfter : own.hull}
           max={own.maxHull}
           mine
-          projected={showPlan ? last?.ownHull : undefined}
+          projected={showPlan && planReady ? last?.ownHull : undefined}
         />
         <HullBar
           label={foeName}
           hull={shownPhase ? shownPhase[foeSide].hullAfter : foe.hull}
           max={foe.maxHull}
           mine={false}
-          projected={showPlan ? last?.foeHull : undefined}
+          projected={showPlan && planReady ? last?.foeHull : undefined}
         />
       </div>
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
@@ -1102,7 +1264,9 @@ export function DuelBoard(p: DuelBoardProps) {
               steps={showPlan ? fc.steps : undefined}
               envelope={showPlan ? fc.envelope : undefined}
               selected={selected}
+              ownUpTo={ownUpTo}
               motion={replay.motion}
+              portals={portals}
               fitPoints={
                 showPlan ? planningFit : replay.fitPoints.length ? replay.fitPoints : undefined
               }
@@ -1112,8 +1276,8 @@ export function DuelBoard(p: DuelBoardProps) {
                 shownPhase
                   ? `Repetición · ronda ${replay.idx + 1} de ${p.replayEvents.length}`
                   : showPlan
-                    ? `Ronda ${selected + 1}: azul = dónde acabará tu nave · rojo discontinuo = lo más probable del enemigo · nube roja = adónde podría ir`
-                    : "Mapa táctico (norte arriba)"
+                    ? "Azul: tu ruta · rojo: lo más probable del enemigo"
+                    : undefined
               }
             />
           </div>
@@ -1126,6 +1290,7 @@ export function DuelBoard(p: DuelBoardProps) {
               empty={`Pulsa «${p.replayLabel}» para revivir lo ocurrido.`}
             />
           )}
+          {p.comms}
         </div>
         <div className="space-y-3">
           <div data-tour="radar">
@@ -1139,31 +1304,28 @@ export function DuelBoard(p: DuelBoardProps) {
               torpedoesIn={frame ? 0 : foe.torpedoesInFlight}
               compact
               simple
+              ourDamage={showPlan && selStep ? selStep.ourHit : undefined}
+              theirDamage={showPlan && selStep ? selStep.theirHit : undefined}
               caption={
-                frame
-                  ? "Puente de mando"
-                  : showPlan && selStep
-                    ? `Puente al final de la ronda ${selected + 1}: enemigo ${sideName(selStep.rel)} a ${selStep.distance.toFixed(0)} u`
-                    : "Puente de mando"
+                showPlan && !single && selStep ? `Al final de la ronda ${selected + 1}` : undefined
               }
             />
           </div>
-          {debrief && !replay.playing && p.replayEvents.length > 0 && (
-            <DebriefPanel d={debrief} title={p.epilogueTitle} />
-          )}
-          {p.status !== "terminado" && (
-            <Second
+          {!over && (
+            <FirstOfficer
               state={state}
               side={side}
-              onJump={
-                p.canPlan
-                  ? () =>
-                      setPlan((pl) => ({
-                        ...pl,
-                        phases: pl.phases.map((x, k) =>
-                          k === 0 ? { ...maneuverMove("parar", own), action: "saltar" } : x,
+              stance={stance}
+              onSuggest={
+                showPlan
+                  ? (s) => {
+                      setDraftState(
+                        planToDraft(suggestPlan(state, side, s), rounds).map((r) =>
+                          r.a === "embestir" || r.a === "saltar" ? r : { ...r },
                         ),
-                      }))
+                      );
+                      setStance(s);
+                    }
                   : undefined
               }
             />
@@ -1173,13 +1335,36 @@ export function DuelBoard(p: DuelBoardProps) {
       {p.infoText && <p className="text-xs text-muted-foreground">{p.infoText}</p>}
       {replay.playing ? (
         <p role="status" className="rounded border border-amber-500/50 p-3 text-sm text-amber-200">
-          Reproduciendo lo ocurrido… Cuando termine podrás dar las órdenes del siguiente bloque.
+          Reproduciendo lo ocurrido…
+        </p>
+      ) : p.gate ? (
+        p.gate
+      ) : warping && p.status !== "terminado" ? (
+        <p
+          role="status"
+          className="rounded border border-fuchsia-500/60 bg-fuchsia-950/30 p-3 text-sm text-fuchsia-200"
+        >
+          <Sparkles className="mr-1 inline size-4" />
+          Modo salto: el portal se está abriendo. La nave aguanta quieta y sin órdenes;{" "}
+          {(own.warpCharge ?? 0) >= 2
+            ? "saltará al empezar la siguiente ronda."
+            : "queda una ronda de aguante."}
+          {p.status === "practica" && p.onSubmit && (
+            <Button
+              size="sm"
+              className="mt-2 w-full"
+              onClick={() => void p.onSubmit?.(warpPlan(rounds))}
+            >
+              Siguiente ronda
+            </Button>
+          )}
         </p>
       ) : needDecision && p.onSubmit ? (
         <DecisionGate
           state={state}
           side={side}
           foeName={foeName}
+          single={single}
           onContinue={() => {
             play("click");
             replay.exit();
@@ -1191,27 +1376,21 @@ export function DuelBoard(p: DuelBoardProps) {
             );
           }}
           onJump={async () => {
-            const jump: BlockPlan = {
-              ...plan,
-              phases: plan.phases.map((x, k) =>
-                k === 0 ? { ...maneuverMove("parar", own), action: "saltar" } : x,
-              ),
-            };
             try {
-              await p.onSubmit?.(jump);
+              await p.onSubmit?.(jumpPlan());
             } catch (e) {
               toast.error(e instanceof Error ? e.message : "No se pudo ordenar el salto");
             }
           }}
         />
-      ) : p.canPlan && p.onSubmit ? (
+      ) : showPlan && p.onSubmit ? (
         <Planner
           state={state}
           side={side}
-          plan={plan}
-          setPlan={setPlan}
-          stance={stance}
-          setStance={setStance}
+          draft={draft}
+          setDraft={setDraft}
+          emergencyJump={emergencyJump}
+          setEmergencyJump={setEmergencyJump}
           selected={selected}
           setSelected={setSelected}
           steps={fc.steps as unknown as PathStep[]}
@@ -1226,6 +1405,7 @@ export function DuelBoard(p: DuelBoardProps) {
           </p>
         )
       )}
+      {!over && <ShipSchematic own={own} foe={foe} foeName={foeName} />}
       {p.footer}
       {tour && <Tutorial fleet={own.fleet} canPlan={p.canPlan} onClose={() => setTour(false)} />}
     </article>
@@ -1258,44 +1438,101 @@ export function DuelCard({
     () => events.filter((e) => e.block === raid.block_number - 1),
     [events, raid.block_number],
   );
+  const foeName = name(foeId);
+  const qc = useQueryClient();
+  const link = useDuelLink(raid.id, uid, foeId, (s) => {
+    if (s === "voice") void qc.invalidateQueries({ queryKey: ["naval-voice", raid.id] });
+    else onChanged();
+  });
   if (!state)
     return (
       <article className="rounded border border-destructive p-4 text-sm">
-        Contacto con {name(foeId)} · preparando el duelo…
+        Contacto con {foeName} · preparando el duelo…
       </article>
     );
   const myReady = side === "attacker" ? raid.attacker_ready : raid.defender_ready;
   const foeReady = side === "attacker" ? raid.defender_ready : raid.attacker_ready;
   const approaching = raid.status === "pendiente";
-  const foeName = name(foeId);
+  const asMode = (v: number | null | undefined) => (v === 1 || v === 3 ? v : null);
+  const mineMode = asMode(side === "attacker" ? raid.attacker_mode : raid.defender_mode);
+  const theirMode = asMode(side === "attacker" ? raid.defender_mode : raid.attacker_mode);
+  const single = state.mode === 1;
+  const gate = !state.mode ? (
+    <ModePicker
+      mine={mineMode}
+      theirs={theirMode}
+      peerName={foeName}
+      online={link.online}
+      onChoose={async (mode) => {
+        await chooseDuelMode({ data: { raidId: raid.id, mode } });
+        link.send("mode");
+        onChanged();
+      }}
+    />
+  ) : undefined;
+  const unit = single ? "ronda" : "bloque";
   return (
     <DuelBoard
       title={`${side === "attacker" ? "Ofensiva contra" : "Atacado por"} ${foeName}`}
       state={state}
       side={side}
       foeName={foeName}
+      badge={<PresenceBadge online={link.online} name={foeName} />}
+      gate={gate}
       replayEvents={lastBlock}
       replayStart={state}
-      replayLabel={`Ver bloque ${raid.block_number - 1}`}
+      replayLabel={single ? "Ver ronda" : `Ver bloque ${raid.block_number - 1}`}
       status={approaching ? "pendiente" : "enfrentado"}
       block={raid.block_number}
       canPlan={!myReady}
       infoText={
-        myReady
+        myReady || !state.mode
           ? undefined
           : approaching
-            ? `En aproximación: ya puedes fijar el primer bloque. Contacto en ${remaining(raid.deadline)}.`
-            : `Plazo ${remaining(raid.deadline)}. ${foeReady ? `${foeName} ya ha dado sus órdenes.` : ""} Si no das órdenes a tiempo, pierdes el duelo.`
+            ? `En aproximación: contacto en ${remaining(raid.deadline)}.`
+            : `Plazo ${remaining(raid.deadline)}.${foeReady ? ` ${foeName} ya ha dado sus órdenes.` : ""}${single ? " Si nadie responde a tiempo, se pasa a tres en tres." : " Si no das órdenes a tiempo, pierdes el duelo."}`
       }
-      waitingText={`Órdenes del bloque ${raid.block_number} fijadas. ${approaching ? `El combate empieza al llegar (${remaining(raid.deadline)}).` : foeReady ? "Resolviendo…" : `Esperando a ${foeName} · plazo ${remaining(raid.deadline)}. Si no responde, pierde el duelo.`}`}
+      waitingText={`Órdenes fijadas. ${approaching ? `El combate empieza al llegar (${remaining(raid.deadline)}).` : foeReady ? "Resolviendo…" : `Esperando a ${foeName} · ${remaining(raid.deadline)}.`}`}
       onSubmit={async (plan) => {
         await submitDuelPlan({ data: { raidId: raid.id, block: raid.block_number, plan } });
+        link.send("orders");
         toast.success("Órdenes fijadas");
         onChanged();
       }}
       storageKey={raid.id}
       autoplay
-      epilogueTitle={`Informe del bloque ${raid.block_number - 1}`}
+      epilogueTitle={`Informe ${single ? "de la ronda" : `del bloque ${raid.block_number - 1}`}`}
+      comms={
+        <VoiceComms
+          raidId={raid.id}
+          uid={uid}
+          peerId={foeId}
+          peerName={foeName}
+          block={raid.block_number}
+          onSent={() => link.send("voice")}
+        />
+      }
+      footer={
+        single && !approaching ? (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={async () => {
+              if (!confirm(`¿Pasar a tres en tres? Se descartan las órdenes de esta ${unit}.`))
+                return;
+              try {
+                await switchDuelToThree({ data: { raidId: raid.id } });
+                link.send("mode");
+                onChanged();
+              } catch (e) {
+                toast.error(e instanceof Error ? e.message : "No se pudo cambiar el modo");
+              }
+            }}
+          >
+            Pasar a tres en tres
+          </Button>
+        ) : undefined
+      }
     />
   );
 }
@@ -1376,8 +1613,9 @@ export function DuelRules({ fleet }: { fleet: FleetId }) {
       <summary className="cursor-pointer text-primary">Cómo funciona el combate naval</summary>
       <ul className="mt-2 list-disc space-y-1 pl-5 text-muted-foreground">
         <li>
-          Duelo entre naves capitales en bloques de {PHASES_PER_BLOCK} rondas: los dos dais las
-          órdenes a ciegas y se resuelve en cuanto ambos confirmáis (máximo 24 h).
+          Al empezar, cada uno elige <b>de una en una</b> (fluido, ambos conectados, 15 min por
+          ronda) o <b>de tres en tres</b> (rápido, a ciegas, 24 h por bloque). De una en una solo si
+          los dos lo elegís.
         </li>
         <li>
           Cada ronda eliges una <b>maniobra</b> (recto, virar 45°, giro cerrado de 90°, avante toda
@@ -1395,7 +1633,8 @@ export function DuelRules({ fleet }: { fleet: FleetId }) {
         </li>
         <li>
           Se pierde si <b>la nave estalla</b> (casco a 0: el perfil se reinicia por completo) o si{" "}
-          <b>saltas al disforme</b> (pierdes el duelo, salvas la nave).
+          <b>saltas al disforme</b> (pierdes el duelo, salvas la nave). El salto tarda: declaras,
+          aguantas una ronda quieto y sin defensas, y luego saltas.
         </li>
         <li>
           ¿Primera vez? Prueba un <b>simulacro contra la IA</b>: sin riesgo y sin esperas.

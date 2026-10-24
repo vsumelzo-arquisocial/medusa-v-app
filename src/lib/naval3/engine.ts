@@ -394,7 +394,8 @@ export function resolveBlock(
     defender: belowThreshold(s.defender, defenderPlan.emergencyJump),
   };
 
-  for (let i = 0; i < PHASES_PER_BLOCK && !s.finished; i++) {
+  const rounds = blockRounds(s);
+  for (let i = 0; i < rounds && !s.finished; i++) {
     const rangeBefore = s.range;
     const before = {
       attacker: { pos: { ...s.attacker.pos }, heading: s.attacker.heading },
@@ -407,7 +408,14 @@ export function resolveBlock(
     for (const side of SIDES) {
       const plan = { ...(plans[side].phases[i] ?? DEFAULT_PHASE) };
       let forced: string | null = null;
-      if (emergency[side] && plan.action !== "saltar") {
+      const charge = s[side].warpCharge ?? 0;
+      if (charge > 0) {
+        plan.action = "saltar";
+        forced =
+          charge === 1
+            ? "Modo salto: la nave aguanta quieta mientras cargan los motores disformes."
+            : null;
+      } else if (emergency[side] && plan.action !== "saltar") {
         plan.action = "saltar";
         forced = "Salto de emergencia: el casco bajó del umbral fijado.";
       } else if (plan.action === "torpedos" && !s[side].torpedoesLoaded) {
@@ -443,18 +451,15 @@ export function resolveBlock(
       break;
     }
 
-    // 2. Salto disforme
+    // 2. Salto disforme en dos tiempos: se declara, se aguanta una ronda quieto y sin defensas, y se salta.
     const jumped: Side[] = [];
     for (const side of SIDES) {
       if (logs[side].action !== "saltar") continue;
-      const chance = warpChance(s[side]);
-      const success = rng() * 100 < chance;
-      const damage = success ? 0 : 2 + Math.floor(rng() * 5);
-      logs[side].warp = { chance, success, damage };
-      if (success) jumped.push(side);
-      else dmg[side] += damage;
+      const charge = s[side].warpCharge ?? 0;
+      const stage = charge >= 2 ? "salta" : charge === 1 ? "carga" : "declara";
+      logs[side].warp = { chance: 100, success: stage === "salta", damage: 0, stage };
+      if (stage === "salta") jumped.push(side);
     }
-    applyDamage(s, dmg);
     if (jumped.length) {
       s.finished = {
         winner: jumped.length === 2 ? "empate" : jumped[0] === "attacker" ? "defensor" : "atacante",
@@ -595,6 +600,7 @@ export function resolveBlock(
       s[side].hull = Math.min(s[side].maxHull, s[side].hull + own.regen);
       logs[side].regen = s[side].hull - mid;
       emergency[side] = belowThreshold(s[side], plans[side].emergencyJump);
+      if (logs[side].warp) s[side].warpCharge = (s[side].warpCharge ?? 0) + 1;
     }
 
     closePhase(s, logs, events, rangeBefore, before);
@@ -610,6 +616,28 @@ export function resolveBlock(
     }
   }
   return { state: s, events };
+}
+
+/** Rondas que se juegan en cada bloque según el modo del duelo. */
+export function blockRounds(s: Pick<DuelState, "mode">): number {
+  return s.mode === 1 ? 1 : PHASES_PER_BLOCK;
+}
+
+/** ¿Está la nave en modo salto (sin poder dar órdenes)? */
+export function inWarp(s: SideState): boolean {
+  return (s.warpCharge ?? 0) > 0;
+}
+
+/** Plan forzado para una nave en modo salto. */
+export function warpPlan(rounds: number): BlockPlan {
+  return {
+    phases: Array.from({ length: rounds }, () => ({
+      speed: 0,
+      turn: 0,
+      action: "saltar" as const,
+    })),
+    emergencyJump: 0,
+  };
 }
 
 function belowThreshold(s: SideState, pct: number) {

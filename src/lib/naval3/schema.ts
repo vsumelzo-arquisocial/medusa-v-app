@@ -26,6 +26,6 @@ export const phasePlanSchema = z.object({
 });
 
 export const blockPlanSchema = z.object({
-  phases: z.array(phasePlanSchema).length(PHASES_PER_BLOCK),
+  phases: z.array(phasePlanSchema).min(1).max(PHASES_PER_BLOCK),
   emergencyJump: z.number().int().min(0).max(60),
 });

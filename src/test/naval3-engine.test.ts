@@ -124,13 +124,32 @@ describe("combate naval v3 con rumbo y arcos", () => {
 
   it("el salto disforme termina el duelo y pierde quien salta", () => {
     const s = newDuel(newSide("daemons", {}, 28, 28), newSide("tau", {}, 22, 22));
-    const { state } = resolveBlock(s, hold("saltar"), hold("fuego"), seeded(5));
+    const { state, events } = resolveBlock(s, hold("saltar"), hold("fuego"), seeded(5));
+    // Declara, aguanta una ronda quieto y salta al empezar la tercera.
+    expect(events.map((e) => e.attacker.warp?.stage)).toEqual(["declara", "carga", "salta"]);
+    expect(events[1]!.attacker.speed).toBe(0);
     expect(state.finished).toMatchObject({
       reason: "salto",
       winner: "defensor",
       jumped: "attacker",
     });
     expect(warpChance(s.attacker)).toBe(100);
+  });
+
+  it("en modo de una en una el salto se completa en tres bloques y no admite órdenes", () => {
+    let s: DuelState = {
+      ...newDuel(newSide("imperium", {}, 30, 30), newSide("tau", {}, 22, 22)),
+      mode: 1,
+    };
+    let r = resolveBlock(s, hold("saltar"), hold("fuego", 0), seeded(8));
+    expect(r.events).toHaveLength(1);
+    expect(r.state.attacker.warpCharge).toBe(1);
+    s = r.state;
+    r = resolveBlock(s, hold("torpedos", 2), hold("fuego", 0), seeded(9));
+    expect(r.events[0]!.attacker.action).toBe("saltar");
+    expect(r.events[0]!.attacker.speed).toBe(0);
+    r = resolveBlock(r.state, hold("fuego"), hold("fuego", 0), seeded(10));
+    expect(r.state.finished?.reason).toBe("salto");
   });
 
   it("salto de emergencia al bajar del umbral", () => {

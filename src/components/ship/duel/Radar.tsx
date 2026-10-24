@@ -80,6 +80,8 @@ export function Radar({
   onFx,
   compact = false,
   simple = false,
+  ourDamage,
+  theirDamage,
 }: {
   own: SideState;
   foe: SideState;
@@ -93,11 +95,14 @@ export function Radar({
   approaching?: boolean;
   torpedoesOut?: number;
   torpedoesIn?: number;
-  caption?: string;
+  caption?: string | undefined;
   onFx?: (fx: FxEngine | null) => void;
   compact?: boolean;
   /** Vista guía: solo lo esencial (dónde está el enemigo, qué arco le apunta y el consejo). */
   simple?: boolean;
+  /** Daño previsto de nuestras baterías / del enemigo en la ronda (si no, el de la posición actual). */
+  ourDamage?: number | undefined;
+  theirDamage?: number | undefined;
 }) {
   const g = geo ?? geoOf(own, foe);
   const band: Range = bandOf(g.distance);
@@ -125,7 +130,30 @@ export function Radar({
   const facing = WEDGES.find(inWedge) ?? WEDGES[0];
   const ourNow = ours.find((w) => w.arc === facing.arc)?.v ?? 0;
   const best = [...ours].sort((a, b) => b.v - a.v)[0]!;
-  const theirNow = rawFire(foe, g.relFoe, band).value;
+  const theirNow = theirDamage ?? rawFire(foe, g.relFoe, band).value;
+  const ourShown = ourDamage ?? ourNow;
+  // Barrido del auspex: el eco del enemigo se ilumina al pasar el haz y se va apagando.
+  const sweepRef = useRef<SVGGElement>(null);
+  const echoRef = useRef<SVGGElement>(null);
+  const relRef = useRef(g.rel);
+  relRef.current = g.rel;
+  useEffect(() => {
+    let raf = 0;
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const tick = () => {
+      const ang = reduce ? 0 : ((performance.now() / 6000) * 360) % 360;
+      sweepRef.current?.setAttribute("transform", `rotate(${ang} 160 160)`);
+      if (echoRef.current) {
+        const lead = (ang + 90) % 360;
+        const since = (((lead - relRef.current) % 360) + 360) % 360;
+        const v = reduce ? 0.9 : 0.38 + 0.62 * Math.exp(-since / 70);
+        echoRef.current.style.opacity = v.toFixed(3);
+      }
+      if (!reduce) raf = requestAnimationFrame(tick);
+    };
+    tick();
+    return () => cancelAnimationFrame(raf);
+  }, []);
   return (
     <figure className={`mx-auto w-full ${compact ? "max-w-[300px]" : "max-w-[440px]"}`}>
       <div className="relative">
@@ -184,10 +212,7 @@ export function Radar({
                 />
               </g>
             ))}
-            <g
-              style={{ transformOrigin: "160px 160px" }}
-              className="motion-safe:animate-[spin_6s_linear_infinite]"
-            >
+            <g ref={sweepRef}>
               <path d="M160 160 L312 160 A152 152 0 0 0 290 82 Z" fill="url(#sweep)" />
             </g>
             {!simple &&
@@ -329,7 +354,6 @@ export function Radar({
               transition: "transform 2600ms cubic-bezier(.45,0,.55,1)",
             }}
           >
-            {simple && <circle r="11" className="fill-red-500/20 motion-safe:animate-ping" />}
             <g
               style={{
                 transform: `rotate(${g.foeHeading}deg)`,
@@ -348,15 +372,33 @@ export function Radar({
                     />
                   ) : null,
                 )}
-              <path
-                d={SHIP}
-                className="fill-red-500"
-                stroke="white"
-                strokeOpacity="0.7"
-                strokeWidth="0.8"
-              />
+              {simple ? (
+                <g ref={echoRef}>
+                  <path d={SHIP} transform="scale(1.6)" fill="#4ade80" opacity="0.25" />
+                  <path
+                    d={SHIP}
+                    transform="scale(1.25)"
+                    fill="#86efac"
+                    stroke="#dcfce7"
+                    strokeWidth="0.6"
+                    style={{ filter: "drop-shadow(0 0 4px #4ade80)" }}
+                  />
+                </g>
+              ) : (
+                <path
+                  d={SHIP}
+                  className="fill-red-500"
+                  stroke="white"
+                  strokeOpacity="0.7"
+                  strokeWidth="0.8"
+                />
+              )}
             </g>
-            <text y="-16" textAnchor="middle" className="fill-red-200 text-[10px]">
+            <text
+              y="-16"
+              textAnchor="middle"
+              className={`${simple ? "fill-emerald-200" : "fill-red-200"} text-[10px]`}
+            >
               {foeLabel}
             </text>
           </g>
@@ -392,24 +434,26 @@ export function Radar({
             </dd>
           </div>
           <div className="rounded border border-sky-500/40 p-1">
-            <dt className="text-muted-foreground">Le apuntamos</dt>
+            <dt className="text-muted-foreground">Le hacemos</dt>
             <dd
-              className={`font-semibold ${ourNow >= theirNow ? "text-emerald-300" : "text-sky-200"}`}
+              className={`text-base font-bold ${ourShown >= theirNow ? "text-emerald-300" : "text-sky-200"}`}
             >
-              {ourNow.toFixed(0)} de daño
+              −{ourShown.toFixed(ourDamage !== undefined ? 1 : 0)}
             </dd>
           </div>
           <div className="rounded border border-red-500/40 p-1">
-            <dt className="text-muted-foreground">Nos apunta</dt>
-            <dd className={`font-semibold ${theirNow > ourNow ? "text-red-300" : "text-red-200"}`}>
-              {theirNow.toFixed(0)} de daño
+            <dt className="text-muted-foreground">Nos hacen</dt>
+            <dd
+              className={`text-base font-bold ${theirNow > ourShown ? "text-red-300" : "text-red-200"}`}
+            >
+              −{theirNow.toFixed(theirDamage !== undefined ? 1 : 0)}
             </dd>
           </div>
           {best.arc !== facing.arc && best.v > ourNow && (
             <p className="col-span-3 text-amber-200">
-              Guía: poned al enemigo a{" "}
-              {best.arc === "proa" ? "proa" : best.arc === "popa" ? "popa" : best.arc} (
-              {best.v.toFixed(0)} de daño).
+              Mejor con el enemigo a{" "}
+              {best.arc === "proa" ? "proa" : best.arc === "popa" ? "popa" : best.arc} (−
+              {best.v.toFixed(0)})
             </p>
           )}
         </dl>

@@ -6,7 +6,7 @@ import { FLEET_PROFILES } from "@/lib/naval3/factions";
 import { newDuel, newSide, resolveBlock, type Rng } from "@/lib/naval3/engine";
 import { botPlan } from "@/lib/naval3/advisor";
 import { endLine } from "@/lib/naval3/narrate";
-import type { BlockPlan, DuelState, ModuleLevels } from "@/lib/naval3/types";
+import type { BlockPlan, DuelMode, DuelState, ModuleLevels } from "@/lib/naval3/types";
 import { DuelBoard, type DuelEventRow } from "./Duel";
 
 const rng: Rng = () => Math.random();
@@ -48,12 +48,16 @@ export function PracticeDuel({
     events: DuelEventRow[];
     block: number;
   } | null>(null);
+  const [mode, setMode] = useState<DuelMode>(1);
   const begin = (f: FleetId) => {
-    const s = newDuel(
-      newSide(fleet, modules, maxHull, maxHull),
-      newSide(f, {}, BASE_HULL[f], BASE_HULL[f]),
-      rng,
-    );
+    const s: DuelState = {
+      ...newDuel(
+        newSide(fleet, modules, maxHull, maxHull),
+        newSide(f, {}, BASE_HULL[f], BASE_HULL[f]),
+        rng,
+      ),
+      mode,
+    };
     setDuel({ id: Math.random().toString(36).slice(2), state: s, start: s, events: [], block: 1 });
   };
   const lastEvents = useMemo(
@@ -87,6 +91,26 @@ export function PracticeDuel({
             ))}
           </select>
         </label>
+        <div className="grid gap-2 sm:grid-cols-2" role="radiogroup" aria-label="Modo">
+          {(
+            [
+              [1, "De una en una", "Más fluido: decides cada ronda viendo lo que pasa."],
+              [3, "De tres en tres", "Más rápido y con más azar: tres rondas a ciegas."],
+            ] as const
+          ).map(([m, t, d]) => (
+            <button
+              key={m}
+              type="button"
+              role="radio"
+              aria-checked={mode === m}
+              onClick={() => setMode(m)}
+              className={`rounded border p-2 text-left text-sm ${mode === m ? "border-primary bg-accent" : "border-border"}`}
+            >
+              <span className="block font-semibold text-primary">{t}</span>
+              <span className="text-xs text-muted-foreground">{d}</span>
+            </button>
+          ))}
+        </div>
         <Button onClick={() => begin(foeFleet)}>Empezar simulacro</Button>
       </section>
     );
@@ -100,7 +124,7 @@ export function PracticeDuel({
       foeName={foeName}
       replayEvents={lastEvents}
       replayStart={duel.start}
-      replayLabel={`Ver bloque ${duel.block - 1}`}
+      replayLabel={duel.state.mode === 1 ? "Ver ronda" : `Ver bloque ${duel.block - 1}`}
       status="practica"
       block={duel.block}
       canPlan={!end}
@@ -123,7 +147,9 @@ export function PracticeDuel({
       storageKey={`simulacro-${duel.id}`}
       autoplay
       end={end}
-      epilogueTitle={`Informe del bloque ${duel.block - 1}`}
+      epilogueTitle={
+        duel.state.mode === 1 ? "Informe de la ronda" : `Informe del bloque ${duel.block - 1}`
+      }
       footer={
         <div className="flex flex-wrap gap-2">
           <Button variant="outline" size="sm" onClick={() => begin(foeFleet)}>
