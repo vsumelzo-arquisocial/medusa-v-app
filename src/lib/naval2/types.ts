@@ -94,8 +94,20 @@ export interface SideRoundLog {
   order: SpecialOrder | null;
   orderPassed: boolean | null;
   flank: boolean;
-  fired: { batteries: number; lances: number; torpedoesLaunched: number; boarding: number; ram: number };
-  received: { absorbed: number; saved: number; hull: number; escortsLost: number; torpedoesIntercepted: number };
+  fired: {
+    batteries: number;
+    lances: number;
+    torpedoesLaunched: number;
+    boarding: number;
+    ram: number;
+  };
+  received: {
+    absorbed: number;
+    saved: number;
+    hull: number;
+    escortsLost: number;
+    torpedoesIntercepted: number;
+  };
   newCrits: Crit[];
   repaired: Crit[];
   hullAfter: number;

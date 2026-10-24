@@ -62,26 +62,41 @@ export function effectiveStats(s: SideState) {
   return {
     speed: p.speed + (m.motores_plasma >= 2 ? 1 : 0),
     // Generador de escudos: +1 a niveles 1 y 3 (+1 solo a nivel 2-3 en flotas sin escudos de vacío).
-    shields: s.crits.includes("escudos") ? 0 : Math.max(0, p.shields + (p.shields > 0 ? Math.ceil(m.camara_escudos / 2) : Math.floor(m.camara_escudos / 2)) - (s.shieldsOverloaded ? 1 : 0)),
+    shields: s.crits.includes("escudos")
+      ? 0
+      : Math.max(
+          0,
+          p.shields +
+            (p.shields > 0 ? Math.ceil(m.camara_escudos / 2) : Math.floor(m.camara_escudos / 2)) -
+            (s.shieldsOverloaded ? 1 : 0),
+        ),
     armourFront: p.armourFront,
     armourSide: p.armourSide,
     batteries: p.batteries + 2 * m.baterias,
     lances: s.crits.includes("lanza") ? 0 : p.lances + m.lanza_proa,
     torpedoes: p.torpedoes,
-    turrets: p.turrets + s.escorts.filter((e) => e.type === "piquetes").reduce((n, e) => n + e.ships, 0),
+    turrets:
+      p.turrets + s.escorts.filter((e) => e.type === "piquetes").reduce((n, e) => n + e.ships, 0),
     boarding: p.boarding + m.cubierta_abordaje,
     frontReduction: m.blindaje_proa,
   };
 }
 
-export function newSide(fleet: FleetId, modules: ModuleLevels, hull: number, maxHull: number, escorts: Squadron[] = []): SideState {
+export function newSide(
+  fleet: FleetId,
+  modules: ModuleLevels,
+  hull: number,
+  maxHull: number,
+  escorts: Squadron[] = [],
+): SideState {
   return {
     fleet,
     modules,
     hull,
     maxHull,
     crits: [],
-    torpedoesLoaded: FLEET_PROFILES[fleet].torpedoes > 0 || escorts.some((e) => e.type === "destructores"),
+    torpedoesLoaded:
+      FLEET_PROFILES[fleet].torpedoes > 0 || escorts.some((e) => e.type === "destructores"),
     torpedoesInFlight: 0,
     shieldsOverloaded: false,
     escorts: escorts.map((e) => ({ ...e })),
@@ -94,7 +109,13 @@ export function newSide(fleet: FleetId, modules: ModuleLevels, hull: number, max
 
 /** Estado inicial: empieza en Lejos; la infiltración genestealer aplica su crítico. */
 export function newDuel(attacker: SideState, defender: SideState, rng: Rng): DuelState {
-  const duel: DuelState = { range: 3, round: 0, attacker: clone(attacker), defender: clone(defender), finished: null };
+  const duel: DuelState = {
+    range: 3,
+    round: 0,
+    attacker: clone(attacker),
+    defender: clone(defender),
+    finished: null,
+  };
   for (const [own, foe] of [
     [duel.attacker, duel.defender],
     [duel.defender, duel.attacker],
@@ -134,7 +155,16 @@ interface Intent {
 }
 
 function decide(s: SideState, plan: RoundPlan, rng: Rng): Intent {
-  const it: Intent = { plan, passed: null, maneuver: plan.maneuver, halfBatteries: false, halfAll: false, reroll: false, brace: false, faction: false };
+  const it: Intent = {
+    plan,
+    passed: null,
+    maneuver: plan.maneuver,
+    halfBatteries: false,
+    halfAll: false,
+    reroll: false,
+    brace: false,
+    faction: false,
+  };
   if (plan.order) {
     const ld = leadership(s);
     let ok = d6(rng) + d6(rng) <= ld;
@@ -200,7 +230,14 @@ interface Volley {
   escortBatteryHits: number;
 }
 
-function step(duel: DuelState, planA: RoundPlan, planD: RoundPlan, doctrineA: BlockPlan["doctrine"], doctrineD: BlockPlan["doctrine"], rng: Rng): RoundEvent {
+function step(
+  duel: DuelState,
+  planA: RoundPlan,
+  planD: RoundPlan,
+  doctrineA: BlockPlan["doctrine"],
+  doctrineD: BlockPlan["doctrine"],
+  rng: Rng,
+): RoundEvent {
   const A = duel.attacker;
   const D = duel.defender;
   duel.round += 1;
@@ -220,12 +257,19 @@ function step(duel: DuelState, planA: RoundPlan, planD: RoundPlan, doctrineA: Bl
     [A, iA],
     [D, iD],
   ] as const) {
-    if (it.faction && own.fleet === "aeldari") it.maneuver = reactiveManeuver(duel.range, it.plan.preferredRange ?? FLEET_PROFILES.aeldari.idealRange);
+    if (it.faction && own.fleet === "aeldari")
+      it.maneuver = reactiveManeuver(
+        duel.range,
+        it.plan.preferredRange ?? FLEET_PROFILES.aeldari.idealRange,
+      );
   }
   const sA = effectiveStats(A);
   const sD = effectiveStats(D);
   const mult = (s: SideState, it: Intent) =>
-    (it.passed && it.plan.order === "avante_toda" && !s.crits.includes("motores")) || (it.faction && s.fleet === "orks") ? 2 : 1;
+    (it.passed && it.plan.order === "avante_toda" && !s.crits.includes("motores")) ||
+    (it.faction && s.fleet === "orks")
+      ? 2
+      : 1;
   let mA = moveOf(iA.maneuver) * mult(A, iA);
   let mD = moveOf(iD.maneuver) * mult(D, iD);
   if (mA !== 0 && mD !== 0 && Math.sign(mA) !== Math.sign(mD)) {
@@ -245,7 +289,8 @@ function step(duel: DuelState, planA: RoundPlan, planD: RoundPlan, doctrineA: Bl
   ] as const) {
     if (!it.faction) continue;
     const want = it.plan.preferredRange ?? FLEET_PROFILES[own.fleet].idealRange;
-    if (own.fleet === "necrons") range = clampRange(range + Math.max(-2, Math.min(2, want - range)));
+    if (own.fleet === "necrons")
+      range = clampRange(range + Math.max(-2, Math.min(2, want - range)));
     if (own.fleet === "daemons") {
       range = want;
       own.usedOncePerDuel = true;
@@ -254,17 +299,32 @@ function step(duel: DuelState, planA: RoundPlan, planD: RoundPlan, doctrineA: Bl
   duel.range = range;
 
   // ── Flanco ──
-  const flank = (own: Intent, foe: Intent, ownDoctrine: BlockPlan["doctrine"], ownSide: SideState) => {
+  const flank = (
+    own: Intent,
+    foe: Intent,
+    ownDoctrine: BlockPlan["doctrine"],
+    ownSide: SideState,
+  ) => {
     const foeEvades = foe.maneuver === "flanquear" || foe.maneuver === "romper";
     if (own.passed && own.plan.order === "nuevo_rumbo") return true;
     if (own.maneuver === "flanquear" && !foeEvades) return true;
-    return ownDoctrine === "flanqueo" && ownSide.escorts.some((e) => e.ships > 0) && foe.maneuver !== "flanquear";
+    return (
+      ownDoctrine === "flanqueo" &&
+      ownSide.escorts.some((e) => e.ships > 0) &&
+      foe.maneuver !== "flanquear"
+    );
   };
   logA.flank = flank(iA, iD, doctrineA, A);
   logD.flank = flank(iD, iA, doctrineD, D);
 
   // ── Torpedos en vuelo (lanzados la ronda anterior) ──
-  const torpedoHits = (incoming: number, target: SideState, tgtStats: ReturnType<typeof effectiveStats>, guided: boolean, log: SideRoundLog) => {
+  const torpedoHits = (
+    incoming: number,
+    target: SideState,
+    tgtStats: ReturnType<typeof effectiveStats>,
+    guided: boolean,
+    log: SideRoundLog,
+  ) => {
     const turrets = Math.max(0, tgtStats.turrets - (guided ? 1 : 0));
     const shot = roll(rng, turrets, 4).hits;
     const left = Math.max(0, incoming - shot);
@@ -277,13 +337,32 @@ function step(duel: DuelState, planA: RoundPlan, planD: RoundPlan, doctrineA: Bl
   D.torpedoesInFlight = 0;
 
   // ── Fuego (simultáneo) ──
-  const volley = (own: SideState, it: Intent, st: ReturnType<typeof effectiveStats>, foe: SideState, foeStats: ReturnType<typeof effectiveStats>, ownFlank: boolean, doctrine: BlockPlan["doctrine"], log: SideRoundLog): Volley => {
-    const v: Volley = { batteryHits: 0, batterySixes: 0, lanceHits: 0, lanceSixes: 0, boardingHits: 0, boardingSixes: 0, ram: 0, escortBatteryHits: 0 };
+  const volley = (
+    own: SideState,
+    it: Intent,
+    st: ReturnType<typeof effectiveStats>,
+    foe: SideState,
+    foeStats: ReturnType<typeof effectiveStats>,
+    ownFlank: boolean,
+    doctrine: BlockPlan["doctrine"],
+    log: SideRoundLog,
+  ): Volley => {
+    const v: Volley = {
+      batteryHits: 0,
+      batterySixes: 0,
+      lanceHits: 0,
+      lanceSixes: 0,
+      boardingHits: 0,
+      boardingSixes: 0,
+      ram: 0,
+      escortBatteryHits: 0,
+    };
     // Manifestación demoníaca: no se puede apuntar en su primera ronda.
     if (firstRound && foe.fleet === "daemons") return v;
     const allMult = it.halfAll ? 0.5 : 1;
     // Baterías
-    let bat = own.fleet === "orks" ? d6(rng) + d6(rng) + 1 + 2 * own.modules.baterias : st.batteries;
+    let bat =
+      own.fleet === "orks" ? d6(rng) + d6(rng) + 1 + 2 * own.modules.baterias : st.batteries;
     if (range === 3) bat /= 2;
     if (ownFlank) bat *= 1.5;
     if (it.halfBatteries) bat /= 2;
@@ -308,7 +387,11 @@ function step(duel: DuelState, planA: RoundPlan, planD: RoundPlan, doctrineA: Bl
     }
     // Torpedos: se lanzan en Cerca–Media si están cargados
     if ((range === 1 || range === 2) && own.torpedoesLoaded && !it.halfAll) {
-      const salvo = st.torpedoes + own.escorts.filter((e) => e.type === "destructores").reduce((n, e) => n + e.ships * ESCORT_PROFILES.destructores.torpedoes, 0);
+      const salvo =
+        st.torpedoes +
+        own.escorts
+          .filter((e) => e.type === "destructores")
+          .reduce((n, e) => n + e.ships * ESCORT_PROFILES.destructores.torpedoes, 0);
       if (salvo > 0) {
         own.torpedoesInFlight = salvo;
         own.torpedoesLoaded = false;
@@ -316,13 +399,19 @@ function step(duel: DuelState, planA: RoundPlan, planD: RoundPlan, doctrineA: Bl
       }
     }
     // Abordaje: Contacto (o Cerca con la orden de tiránidos / drukhari)
-    const reach = range === 0 || (range === 1 && it.faction && (own.fleet === "tyranids" || own.fleet === "drukhari"));
+    const reach =
+      range === 0 ||
+      (range === 1 && it.faction && (own.fleet === "tyranids" || own.fleet === "drukhari"));
     if (reach) {
       let dice = st.boarding;
       if (it.faction && own.fleet === "genestealer" && foe.hull < foe.maxHull) dice *= 2;
       dice *= allMult;
       const atk = roll(rng, dice, 4);
-      const defDice = foeStats.boarding + foe.escorts.filter((e) => e.type === "piquetes").reduce((n, e) => n + e.ships * ESCORT_PROFILES.piquetes.boarding, 0);
+      const defDice =
+        foeStats.boarding +
+        foe.escorts
+          .filter((e) => e.type === "piquetes")
+          .reduce((n, e) => n + e.ships * ESCORT_PROFILES.piquetes.boarding, 0);
       const def = roll(rng, defDice, 5);
       // Cada impacto neto de abordaje causa 2 de daño: las tropas arrasan cubiertas enteras.
       v.boardingHits = Math.max(0, atk.hits - def.hits) * 2;
@@ -330,14 +419,21 @@ function step(duel: DuelState, planA: RoundPlan, planD: RoundPlan, doctrineA: Bl
       log.fired.boarding = v.boardingHits;
     }
     // Embestida
-    const ramming = range === 0 && it.maneuver === "acercarse" && ((it.passed && it.plan.order === "avante_toda") || (it.faction && (own.fleet === "orks" || own.fleet === "imperium")));
+    const ramming =
+      range === 0 &&
+      it.maneuver === "acercarse" &&
+      ((it.passed && it.plan.order === "avante_toda") ||
+        (it.faction && (own.fleet === "orks" || own.fleet === "imperium")));
     if (ramming) {
-      v.ram = d6(rng) + Math.floor(own.hull / 10) + (it.faction && own.fleet === "imperium" ? 3 : 0);
+      v.ram =
+        d6(rng) + Math.floor(own.hull / 10) + (it.faction && own.fleet === "imperium" ? 3 : 0);
       log.fired.ram = v.ram;
     }
     // Escoltas en ataque
     if (doctrine === "ataque") {
-      const dice = own.escorts.reduce((n, e) => n + e.ships * ESCORT_PROFILES[e.type].batteries, 0) * (range === 3 ? 0.5 : 1);
+      const dice =
+        own.escorts.reduce((n, e) => n + e.ships * ESCORT_PROFILES[e.type].batteries, 0) *
+        (range === 3 ? 0.5 : 1);
       v.escortBatteryHits = roll(rng, dice, armour).hits;
     }
     return v;
@@ -346,7 +442,17 @@ function step(duel: DuelState, planA: RoundPlan, planD: RoundPlan, doctrineA: Bl
   const vD = volley(D, iD, sD, A, sA, logD.flank, doctrineD, logD);
 
   // ── Daño recibido ──
-  const receive = (tgt: SideState, it: Intent, st: ReturnType<typeof effectiveStats>, v: Volley, torp: { hits: number; sixes: number }, flanked: boolean, attackerTarget: RoundPlan["target"], doctrine: BlockPlan["doctrine"], log: SideRoundLog) => {
+  const receive = (
+    tgt: SideState,
+    it: Intent,
+    st: ReturnType<typeof effectiveStats>,
+    v: Volley,
+    torp: { hits: number; sixes: number },
+    flanked: boolean,
+    attackerTarget: RoundPlan["target"],
+    doctrine: BlockPlan["doctrine"],
+    log: SideRoundLog,
+  ) => {
     // Ranged: baterías (+escoltas), lanzas y torpedos
     let batteryHits = v.batteryHits + v.escortBatteryHits;
     if (tgt.fleet === "votann") batteryHits = Math.max(0, batteryHits - 1);
@@ -412,7 +518,12 @@ function step(duel: DuelState, planA: RoundPlan, planD: RoundPlan, doctrineA: Bl
     log.received.saved = saved;
     log.received.hull = hullDamage;
     // Críticos: un 6 natural que llega al casco (máx. 2 por ronda)
-    const critRolls = Math.min(2, Math.min(sixes, Math.max(0, ranged)) + (boarding > 0 ? Math.min(1, v.boardingSixes) : 0) + (v.ram > 0 ? 1 : 0));
+    const critRolls = Math.min(
+      2,
+      Math.min(sixes, Math.max(0, ranged)) +
+        (boarding > 0 ? Math.min(1, v.boardingSixes) : 0) +
+        (v.ram > 0 ? 1 : 0),
+    );
     for (let i = 0; i < critRolls; i++) {
       const c = CRITS[d6(rng) - 1]!;
       if (!tgt.crits.includes(c)) {
@@ -439,11 +550,15 @@ function step(duel: DuelState, planA: RoundPlan, planD: RoundPlan, doctrineA: Bl
     if (it.passed && it.plan.order === "control_danos") {
       const n = s.modules.forja >= 2 ? 2 : 1;
       const fixable = s.crits.filter((c) => c !== "escudos");
-      const fixed = [...(fixable.includes("incendio") ? ["incendio" as Crit] : []), ...fixable.filter((c) => c !== "incendio")].slice(0, n);
+      const fixed = [
+        ...(fixable.includes("incendio") ? ["incendio" as Crit] : []),
+        ...fixable.filter((c) => c !== "incendio"),
+      ].slice(0, n);
       s.crits = s.crits.filter((c) => !fixed.includes(c));
       log.repaired.push(...fixed);
     }
-    if ((s === A ? shieldCritAtStart.A : shieldCritAtStart.D)) s.crits = s.crits.filter((c) => c !== "escudos");
+    if (s === A ? shieldCritAtStart.A : shieldCritAtStart.D)
+      s.crits = s.crits.filter((c) => c !== "escudos");
     if (s.crits.includes("incendio")) s.hull = Math.max(0, s.hull - 1);
     if (s.fleet === "necrons" && s.hull > 0 && d6(rng) >= 4) {
       const c = s.crits.find((x) => x !== "escudos");
@@ -459,7 +574,10 @@ function step(duel: DuelState, planA: RoundPlan, planD: RoundPlan, doctrineA: Bl
 
   // ── Fin del duelo ──
   if (A.hull <= 0 || D.hull <= 0) {
-    duel.finished = { winner: A.hull <= 0 && D.hull <= 0 ? "empate" : D.hull <= 0 ? "atacante" : "defensor", reason: "casco" };
+    duel.finished = {
+      winner: A.hull <= 0 && D.hull <= 0 ? "empate" : D.hull <= 0 ? "atacante" : "defensor",
+      reason: "casco",
+    };
   } else if (A.disengage >= 2) {
     duel.finished = { winner: "defensor", reason: "retirada" };
   } else if (D.disengage >= 2) {
@@ -482,5 +600,6 @@ export function resolveBlock(state: DuelState, planA: BlockPlan, planD: BlockPla
   return { state: duel, events };
 }
 
-export const sideOf = (duel: DuelState, side: Side) => (side === "attacker" ? duel.attacker : duel.defender);
+export const sideOf = (duel: DuelState, side: Side) =>
+  side === "attacker" ? duel.attacker : duel.defender;
 export { SHIPS_PER_SQUADRON };

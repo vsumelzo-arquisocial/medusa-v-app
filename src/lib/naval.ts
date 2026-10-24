@@ -66,6 +66,8 @@ export const OBJECTIVE_LABEL: Record<string, string> = {
   abordaje: "Abordaje y saqueo: tropas en la cubierta enemiga",
   saqueo: "Saqueo de las bodegas enemigas",
   defensa: "Defensa resistida: el asaltante se retira",
+  retirada_contacto: "Retirada: rompió el contacto y abandonó el combate",
+  anulado_v2: "Anulado por la llegada del nuevo sistema de combate (créditos devueltos)",
 };
 
 export type RaidRound = { round: number; block?: number; a_order: NavalOrder; d_order: NavalOrder; a_hits: number; d_hits: number; a_sixes?: number; d_sixes?: number; a_heal?: number; d_heal?: number; a_hull: number; d_hull: number };
@@ -89,6 +91,6 @@ export const RAID_ERR: Record<string, string> = {
   'not repaired': 'Repara primero el módulo averiado',
   "no ship": "Ambos jugadores necesitan nave", daily: "Ya lanzaste un asalto en las últimas 24 h", returning: "Tu nave aún regresa de la ofensiva abortada", "not pending": "Esa ofensiva ya no se puede abortar",
   protected: "Esa nave está en el warp: protegida durante 48 h desde el final del combate", credits: "Créditos insuficientes",
-  locked: "El plan ya está fijado", "not damaged": "El módulo no necesita reparación",
+  locked: "El plan ya está fijado", 'escort slots': 'Ya tienes tres escuadrones de escoltas', full: 'El escuadrón ya está completo', "not damaged": "El módulo no necesita reparación",
 };
 export const raidError = (m: string) => RAID_ERR[Object.keys(RAID_ERR).find((k) => m.includes(k)) ?? ""] ?? "Operación rechazada";

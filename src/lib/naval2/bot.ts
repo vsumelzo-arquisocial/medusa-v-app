@@ -2,7 +2,16 @@
 import type { FleetId } from "@/lib/ship-identity";
 import { FLEET_PROFILES, ROUNDS_PER_BLOCK } from "./factions";
 import { effectiveStats, type Rng } from "./engine";
-import type { BlockPlan, DuelState, Maneuver, Range, RoundPlan, Side, SideState, SpecialOrder } from "./types";
+import type {
+  BlockPlan,
+  DuelState,
+  Maneuver,
+  Range,
+  RoundPlan,
+  Side,
+  SideState,
+  SpecialOrder,
+} from "./types";
 
 function factionOrderUseful(fleet: FleetId, range: Range, want: Range, s: SideState): boolean {
   switch (fleet) {
@@ -45,10 +54,15 @@ export function botPlan(duel: DuelState, side: Side, rng: Rng, epsilon = 0.15): 
   const hasTorps = profile.torpedoes > 0 || own.escorts.some((e) => e.type === "destructores");
 
   for (let i = 0; i < ROUNDS_PER_BLOCK; i++) {
-    let maneuver: Maneuver = range > want ? "acercarse" : range < want ? "romper" : rng() < 0.7 ? "flanquear" : "mantener";
-    if (rng() < epsilon) maneuver = (["acercarse", "mantener", "flanquear", "romper"] as const)[Math.floor(rng() * 4)]!;
+    let maneuver: Maneuver =
+      range > want ? "acercarse" : range < want ? "romper" : rng() < 0.7 ? "flanquear" : "mantener";
+    if (rng() < epsilon)
+      maneuver = (["acercarse", "mantener", "flanquear", "romper"] as const)[
+        Math.floor(rng() * 4)
+      ]!;
     let order: SpecialOrder | null = null;
-    if (own.crits.some((c) => c === "incendio" || c === "motores" || c === "baterias") && i === 0) order = "control_danos";
+    if (own.crits.some((c) => c === "incendio" || c === "motores" || c === "baterias") && i === 0)
+      order = "control_danos";
     else if (hasTorps && !loaded && own.fleet !== "tau") order = "recargar";
     else if (factionOrderUseful(own.fleet, range, want, own)) order = "faccion";
     else if (own.hull < own.maxHull * 0.25 && range <= 1 && rng() < 0.3) order = "prepararse";
