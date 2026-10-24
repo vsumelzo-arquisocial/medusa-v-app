@@ -1,19 +1,19 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import { blockPlanSchema } from "@/lib/naval2/schema";
-import type { BlockPlan } from "@/lib/naval2/types";
+import { blockPlanSchema } from "@/lib/naval3/schema";
+import type { BlockPlan } from "@/lib/naval3/types";
 
-/** Procesa los duelos navales v2 pendientes (se llama al consultar el mando naval). */
+/** Procesa los duelos navales pendientes (se llama al consultar el mando naval). */
 export const duelTick = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async () => {
-    const { processDueDuels } = await import("@/lib/naval2/server");
+    const { processDueDuels } = await import("@/lib/naval3/server");
     await processDueDuels();
     return { ok: true };
   });
 
-/** Fija las órdenes de un bloque del duelo v2. */
+/** Fija las órdenes de un bloque de 5 fases. */
 export const submitDuelPlan = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(
@@ -24,7 +24,7 @@ export const submitDuelPlan = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data, context }) => {
-    const { submitPlan } = await import("@/lib/naval2/server");
+    const { submitPlan } = await import("@/lib/naval3/server");
     await submitPlan(context.userId, data.raidId, data.block, data.plan as BlockPlan);
     return { ok: true };
   });

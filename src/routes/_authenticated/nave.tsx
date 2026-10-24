@@ -5,7 +5,6 @@ import { Pencil, Wrench, Boxes, Shield, Radio, Command, Hammer, Trash2 } from "l
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { CommandShell } from "@/components/CommandShell";
-import { EscortYard } from "@/components/ship/EscortYard";
 import { Button } from "@/components/ui/button";
 import { profileQuery } from "@/lib/profile";
 import { shipQuery } from "@/lib/ship-queries";
@@ -380,7 +379,6 @@ function Nave() {
                 )}
               </div>
             </section>
-            <EscortYard disabled={busy || data.status.busy} />
             <ShipWorkQueue
               jobs={data.queue}
               identity={identity}

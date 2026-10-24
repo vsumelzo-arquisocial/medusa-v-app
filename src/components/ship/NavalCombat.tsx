@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import {
+  OBJECTIVE_LABEL,
   ORDERS,
   beats,
   hullPercentage,
@@ -22,10 +23,12 @@ import { Shield, Swords, Save, ArrowRight, LogOut, Play, Volume2 } from "lucide-
 import { ShipExterior } from "@/components/ship/ShipExterior";
 import { NavalCombatReport } from "@/components/ship/NavalCombatReport";
 import { campaignQuery } from "@/lib/campaign-queries";
-import { DuelCard, DuelLogDialog, DuelRules, type DuelEvent } from "@/components/ship/DuelV2";
-import { duelTick } from "@/lib/naval2.functions";
-import { FLEET_PROFILES } from "@/lib/naval2/factions";
-import type { DuelState } from "@/lib/naval2/types";
+import { DuelArchiveDialog, DuelCard, DuelRules, type DuelRaid } from "@/components/ship/duel/Duel";
+import { duelTick } from "@/lib/naval3.functions";
+import { FLEET_PROFILES } from "@/lib/naval3/factions";
+import { newSide } from "@/lib/naval3/engine";
+import { bestRange } from "@/lib/naval3/advisor";
+import { RANGE_NAMES, type DuelState, type ModuleLevels } from "@/lib/naval3/types";
 import { bodyName, formatDuration, travelSeconds } from "@/lib/system";
 
 const DEFAULT: NavalOrder[] = ["escudos", "fuego", "abordaje", "fuego", "escudos"];
@@ -345,8 +348,9 @@ export function NavalCommand() {
       <section className="border-b border-border pb-6">
         <h2 className="mb-2 text-xl text-primary">Lanzar ofensiva</h2>
         <p className="mb-4 text-xs text-muted-foreground">
-          Preparación {RAID_COST} cr · 24 h de aproximación más el viaje hasta su planeta (te quedas
-          allí al terminar) · una ofensiva diaria · protección warp 48 h tras terminar
+          Preparación {RAID_COST} cr · el combate empieza al llegar a su planeta (durante el viaje
+          ya podéis dar las órdenes del primer bloque) · una ofensiva diaria · protección warp 48 h
+          para el defensor tras terminar
         </p>
         <div className="mb-5 grid grid-cols-2 gap-2 sm:grid-cols-3">
           {data.players
@@ -407,26 +411,42 @@ export function NavalCommand() {
               );
             })}
         </div>
-        {target && (
-          <section
-            aria-label="Regla racial de la nave enemiga"
-            className="mb-5 border-l-2 border-primary bg-accent/40 p-4"
-          >
-            <h3 className="text-sm font-semibold text-primary">
-              {name(target)} · {playerFleet(target).name}
-            </h3>
-            <p className="mt-2 text-xs text-muted-foreground">Regla de flota</p>
-            <p className="mt-1 text-sm">
-              {FLEET_PROFILES[fleetId(undefined, player(target)?.army_faction)].passive}
-            </p>
-            <p className="mt-1 text-sm">
-              <span className="text-primary">
-                {FLEET_PROFILES[fleetId(undefined, player(target)?.army_faction)].orderName}:
-              </span>{" "}
-              {FLEET_PROFILES[fleetId(undefined, player(target)?.army_faction)].orderText}
-            </p>
-          </section>
-        )}
+        {target &&
+          (() => {
+            const foeFleet = fleetId(undefined, player(target)?.army_faction);
+            const fp = FLEET_PROFILES[foeFleet];
+            const mods = Object.fromEntries(
+              data.mods.map((m) => [m.module, m.damaged ? 0 : m.level]),
+            ) as Partial<ModuleLevels>;
+            const me = newSide(
+              identity,
+              mods,
+              ownShip?.hull_hp ?? fleet.hull,
+              ownStatus?.max_hull ?? fleet.hull,
+            );
+            const foe = newSide(foeFleet, {}, 1, 1);
+            return (
+              <section
+                aria-label="Informe de la nave enemiga"
+                className="mb-5 border-l-2 border-primary bg-accent/40 p-4"
+              >
+                <h3 className="text-sm font-semibold text-primary">
+                  {name(target)} · {playerFleet(target).name}
+                </h3>
+                <p className="mt-1 text-sm">
+                  <span className="text-primary">{fp.trait}:</span> {fp.traitText}
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Velocidad {fp.speed} (tú {FLEET_PROFILES[identity].speed}) · esquiva {fp.dodge} %
+                  · {fp.torpedoes} {fp.torpedoName} por salva
+                </p>
+                <p className="mt-2 text-sm">
+                  Segundo al mando: «Les haremos más daño en {RANGE_NAMES[bestRange(me, foe)]};
+                  ellos querrán llevarnos a {RANGE_NAMES[bestRange(foe, me)]}.»
+                </p>
+              </section>
+            );
+          })()}
         <Button
           variant="destructive"
           className="mt-4 h-auto w-full whitespace-normal py-4"
@@ -434,7 +454,7 @@ export function NavalCommand() {
           onClick={() => {
             if (confirm(`¿Lanzar ofensiva contra ${name(target)} por 100 créditos?`))
               void act(
-                () => supabase.rpc("declare_raid2" as never, { _defender: target } as never),
+                () => supabase.rpc("declare_raid3" as never, { _defender: target } as never),
                 "Ofensiva lanzada",
               );
           }}
@@ -449,31 +469,27 @@ export function NavalCommand() {
           <p className="text-sm text-muted-foreground">Sin enfrentamientos activos.</p>
         )}
         <div className="space-y-6">
-          {active.map((r) => (
-            <DuelCard
-              key={`${r.id}-${r.block_number}`}
-              raid={{
-                ...r,
-                duel_state: r.duel_state ?? null,
-                report: r.report as { v2_events?: DuelEvent[] },
-              }}
-              uid={data.uid}
-              names={name}
-              images={playerImage}
-              remaining={remaining}
-              onWithdraw={() => {
-                if (
-                  confirm(
-                    "¿Retirada warp? Pierdes el duelo y entregas créditos no protegidos al vencedor. Conservas la nave.",
-                  )
-                )
-                  void act(
-                    () => supabase.rpc("naval_withdraw", { _raid: r.id }),
-                    "Retirada warp completada",
-                  );
-              }}
-            />
-          ))}
+          {active.map((r) =>
+            r.engine_version !== 3 ? (
+              <p
+                key={r.id}
+                className="rounded border border-border p-3 text-sm text-muted-foreground"
+              >
+                Duelo del sistema anterior contra{" "}
+                {name(r.attacker_id === data.uid ? r.defender_id : r.attacker_id)}: se anulará con
+                la actualización y se devolverán los créditos.
+              </p>
+            ) : (
+              <DuelCard
+                key={r.id}
+                raid={r as unknown as DuelRaid}
+                uid={data.uid}
+                name={name}
+                remaining={remaining}
+                onChanged={refresh}
+              />
+            ),
+          )}
         </div>
       </section>
       <section className="border-t border-border pt-5">
@@ -504,7 +520,11 @@ export function NavalCommand() {
                     {r.resolved_at ? new Date(r.resolved_at).toLocaleString("es-ES") : ""}
                   </p>
                 </div>
-                <Button variant="outline" onClick={() => setReplay(r.id)}>
+                <Button
+                  variant="outline"
+                  disabled={r.engine_version === 2 || r.status === "anulado"}
+                  onClick={() => setReplay(r.id)}
+                >
                   <Play />
                   Ver combate
                 </Button>
@@ -516,17 +536,16 @@ export function NavalCommand() {
       <Button asChild variant="outline" className="w-full">
         <Link to="/nave">Sistemas y reparaciones →</Link>
       </Button>
-      {replayRaid && archivedReplay && replayRaid.engine_version === 2 && (
-        <DuelLogDialog
-          open
+      {replayRaid && archivedReplay && replayRaid.engine_version === 3 && (
+        <DuelArchiveDialog
+          raid={replayRaid as unknown as DuelRaid}
+          uid={data.uid}
+          name={name}
           onClose={() => setReplay(null)}
-          events={(replayRaid.report as { v2_events?: DuelEvent[] }).v2_events ?? []}
-          attackerName={name(replayRaid.attacker_id)}
-          defenderName={name(replayRaid.defender_id)}
-          summary={`${replayRaid.winner === "empate" ? "Empate" : replayRaid.winner === "atacante" ? `Vence ${name(replayRaid.attacker_id)}` : `Vence ${name(replayRaid.defender_id)}`} · botín ${replayRaid.loot} cr`}
+          summary={`${replayRaid.winner === "empate" ? "Empate" : replayRaid.winner === "atacante" ? `Vence ${name(replayRaid.attacker_id)}` : `Vence ${name(replayRaid.defender_id)}`} · ${OBJECTIVE_LABEL[replayRaid.report?.objective ?? ""] ?? ""} · botín ${replayRaid.loot} cr`}
         />
       )}
-      {replayRaid && archivedReplay && replayRaid.engine_version !== 2 && (
+      {replayRaid && archivedReplay && (replayRaid.engine_version ?? 1) === 1 && (
         <NavalCombatReport
           report={replayRaid.report}
           winner={replayRaid.winner}
