@@ -20,7 +20,7 @@ import { profileQuery } from "@/lib/profile";
 import { BattleReplay, TrajectoryView } from "@/components/ship/NavalScenes";
 import { sfx } from "@/lib/naval-audio";
 import { Shield, Swords, Save, ArrowRight, LogOut, Play, Volume2 } from "lucide-react";
-import { ShipHologram } from "@/components/ship/ShipHologram";
+import { ShipExterior } from "@/components/ship/ShipExterior";
 import { NavalCombatReport } from "@/components/ship/NavalCombatReport";
 import { campaignQuery } from "@/lib/campaign-queries";
 import { DuelArchiveDialog, DuelCard, DuelRules, type DuelRaid } from "@/components/ship/duel/Duel";
@@ -315,7 +315,7 @@ export function NavalCommand() {
     <div className={`${fleet.theme} space-y-7`}>
       {ownShip && (
         <>
-          <ShipHologram
+          <ShipExterior
             image={fleet.image}
             name={ownShip.name}
             hull={ownShip.hull_hp ?? fleet.hull}
