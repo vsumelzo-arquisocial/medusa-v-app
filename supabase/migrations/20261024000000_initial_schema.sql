@@ -3820,1117 +3820,6 @@ ALTER TABLE ONLY drizzle.__drizzle_migrations ALTER COLUMN id SET DEFAULT nextva
 
 
 --
--- Name: __drizzle_migrations_id_seq; Type: SEQUENCE SET; Schema: drizzle; Owner: -
---
-
-SELECT pg_catalog.setval('drizzle.__drizzle_migrations_id_seq', 28, true);
-
-
---
--- Name: build_queue_sequence_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.build_queue_sequence_seq', 9, true);
-
-
---
--- Name: __drizzle_migrations __drizzle_migrations_pkey; Type: CONSTRAINT; Schema: drizzle; Owner: -
---
-
-ALTER TABLE ONLY drizzle.__drizzle_migrations
-    ADD CONSTRAINT __drizzle_migrations_pkey PRIMARY KEY (id);
-
-
---
--- Name: admin_bootstrap_state admin_bootstrap_state_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.admin_bootstrap_state
-    ADD CONSTRAINT admin_bootstrap_state_pkey PRIMARY KEY (id);
-
-
---
--- Name: army_lists army_lists_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.army_lists
-    ADD CONSTRAINT army_lists_pkey PRIMARY KEY (id);
-
-
---
--- Name: battle_records battle_records_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.battle_records
-    ADD CONSTRAINT battle_records_pkey PRIMARY KEY (game_id, user_id);
-
-
---
--- Name: build_queue build_queue_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.build_queue
-    ADD CONSTRAINT build_queue_pkey PRIMARY KEY (id);
-
-
---
--- Name: campaign campaign_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.campaign
-    ADD CONSTRAINT campaign_pkey PRIMARY KEY (id);
-
-
---
--- Name: celestial_bodies celestial_bodies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.celestial_bodies
-    ADD CONSTRAINT celestial_bodies_pkey PRIMARY KEY (id);
-
-
---
--- Name: collection_items collection_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.collection_items
-    ADD CONSTRAINT collection_items_pkey PRIMARY KEY (user_id, unit_id);
-
-
---
--- Name: engine_damage engine_damage_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.engine_damage
-    ADD CONSTRAINT engine_damage_pkey PRIMARY KEY (id);
-
-
---
--- Name: game_exclusions game_exclusions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.game_exclusions
-    ADD CONSTRAINT game_exclusions_pkey PRIMARY KEY (game_id, user_id);
-
-
---
--- Name: games games_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.games
-    ADD CONSTRAINT games_pkey PRIMARY KEY (id);
-
-
---
--- Name: honours honours_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.honours
-    ADD CONSTRAINT honours_pkey PRIMARY KEY (id);
-
-
---
--- Name: lost_engines lost_engines_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.lost_engines
-    ADD CONSTRAINT lost_engines_pkey PRIMARY KEY (id);
-
-
---
--- Name: module_types module_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.module_types
-    ADD CONSTRAINT module_types_pkey PRIMARY KEY (id);
-
-
---
--- Name: naval_private_plans naval_private_plans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.naval_private_plans
-    ADD CONSTRAINT naval_private_plans_pkey PRIMARY KEY (raid_id);
-
-
---
--- Name: naval_raids naval_raids_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.naval_raids
-    ADD CONSTRAINT naval_raids_pkey PRIMARY KEY (id);
-
-
---
--- Name: naval_stances naval_stances_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.naval_stances
-    ADD CONSTRAINT naval_stances_pkey PRIMARY KEY (user_id);
-
-
---
--- Name: pod_bay pod_bay_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.pod_bay
-    ADD CONSTRAINT pod_bay_pkey PRIMARY KEY (user_id, unit_id);
-
-
---
--- Name: profiles profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.profiles
-    ADD CONSTRAINT profiles_pkey PRIMARY KEY (id);
-
-
---
--- Name: recruit_orders recruit_orders_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.recruit_orders
-    ADD CONSTRAINT recruit_orders_pkey PRIMARY KEY (id);
-
-
---
--- Name: region_attacks region_attacks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.region_attacks
-    ADD CONSTRAINT region_attacks_pkey PRIMARY KEY (id);
-
-
---
--- Name: regions regions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.regions
-    ADD CONSTRAINT regions_pkey PRIMARY KEY (id);
-
-
---
--- Name: scenarios scenarios_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.scenarios
-    ADD CONSTRAINT scenarios_pkey PRIMARY KEY (id);
-
-
---
--- Name: ship_modules ship_modules_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.ship_modules
-    ADD CONSTRAINT ship_modules_pkey PRIMARY KEY (user_id, module);
-
-
---
--- Name: ship_supports ship_supports_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.ship_supports
-    ADD CONSTRAINT ship_supports_pkey PRIMARY KEY (user_id);
-
-
---
--- Name: ship_travel_private ship_travel_private_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.ship_travel_private
-    ADD CONSTRAINT ship_travel_private_pkey PRIMARY KEY (user_id);
-
-
---
--- Name: ships ships_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.ships
-    ADD CONSTRAINT ships_pkey PRIMARY KEY (user_id);
-
-
---
--- Name: unit_catalog unit_catalog_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.unit_catalog
-    ADD CONSTRAINT unit_catalog_pkey PRIMARY KEY (unit_id);
-
-
---
--- Name: user_roles user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.user_roles
-    ADD CONSTRAINT user_roles_pkey PRIMARY KEY (id);
-
-
---
--- Name: user_roles user_roles_user_id_role_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.user_roles
-    ADD CONSTRAINT user_roles_user_id_role_key UNIQUE (user_id, role);
-
-
---
--- Name: veteran_battles veteran_battles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.veteran_battles
-    ADD CONSTRAINT veteran_battles_pkey PRIMARY KEY (id);
-
-
---
--- Name: veterans veterans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.veterans
-    ADD CONSTRAINT veterans_pkey PRIMARY KEY (id);
-
-
---
--- Name: wh40k_recruits wh40k_recruits_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.wh40k_recruits
-    ADD CONSTRAINT wh40k_recruits_pkey PRIMARY KEY (user_id, faction, unit_name, models);
-
-
---
--- Name: wh40k_squad_history wh40k_squad_history_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.wh40k_squad_history
-    ADD CONSTRAINT wh40k_squad_history_pkey PRIMARY KEY (id);
-
-
---
--- Name: wh40k_squads wh40k_squads_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.wh40k_squads
-    ADD CONSTRAINT wh40k_squads_pkey PRIMARY KEY (id);
-
-
---
--- Name: wh40k_unit_prices wh40k_unit_prices_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.wh40k_unit_prices
-    ADD CONSTRAINT wh40k_unit_prices_pkey PRIMARY KEY (faction, unit_name, models);
-
-
---
--- Name: naval_active_participants_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX naval_active_participants_idx ON public.naval_raids USING btree (status, deadline);
-
-
---
--- Name: naval_raids_pending; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX naval_raids_pending ON public.naval_raids USING btree (status, deadline);
-
-
---
--- Name: region_attacks_one_active; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX region_attacks_one_active ON public.region_attacks USING btree (attacker_id) WHERE (resolved_at IS NULL);
-
-
---
--- Name: region_attacks_one_per_region; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX region_attacks_one_per_region ON public.region_attacks USING btree (region_id) WHERE (resolved_at IS NULL);
-
-
---
--- Name: regions_body_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX regions_body_idx ON public.regions USING btree (body_id);
-
-
---
--- Name: ship_job_order; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX ship_job_order ON public.build_queue USING btree (user_id, created_at, sequence);
-
-
---
--- Name: ship_one_active_job; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX ship_one_active_job ON public.build_queue USING btree (user_id) WHERE (started_at IS NOT NULL);
-
-
---
--- Name: veterans_user_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX veterans_user_idx ON public.veterans USING btree (user_id, unit_id);
-
-
---
--- Name: wh40k_squad_history_squad_id_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX wh40k_squad_history_squad_id_idx ON public.wh40k_squad_history USING btree (squad_id);
-
-
---
--- Name: wh40k_squads_user_id_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX wh40k_squads_user_id_idx ON public.wh40k_squads USING btree (user_id);
-
-
---
--- Name: profiles cleanup_deleted_player; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER cleanup_deleted_player AFTER DELETE ON public.profiles FOR EACH ROW EXECUTE FUNCTION public.cleanup_deleted_player();
-
-
---
--- Name: profiles cleanup_wh40k_squads; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER cleanup_wh40k_squads BEFORE DELETE ON public.profiles FOR EACH ROW EXECUTE FUNCTION public.cleanup_wh40k_squads();
-
-
---
--- Name: games conquest_lists_only; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER conquest_lists_only BEFORE INSERT OR UPDATE OF creator_list_id, opponent_list_id ON public.games FOR EACH ROW EXECUTE FUNCTION public.conquest_lists_only();
-
-
---
--- Name: games games_protect_conquest; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER games_protect_conquest BEFORE INSERT OR UPDATE ON public.games FOR EACH ROW EXECUTE FUNCTION public.protect_conquest_game();
-
-
---
--- Name: ship_modules guard_naval_module_work; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER guard_naval_module_work BEFORE INSERT OR DELETE OR UPDATE ON public.ship_modules FOR EACH ROW EXECUTE FUNCTION public.ship_module_guard();
-
-
---
--- Name: build_queue guard_naval_queue; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER guard_naval_queue BEFORE INSERT OR DELETE ON public.build_queue FOR EACH ROW EXECUTE FUNCTION public.ship_work_guard();
-
-
---
--- Name: games no_simulated_40k_lists_in_games; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER no_simulated_40k_lists_in_games BEFORE INSERT OR UPDATE ON public.games FOR EACH ROW EXECUTE FUNCTION public.no_simulated_40k_lists_in_games();
-
-
---
--- Name: profiles profiles_protect; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER profiles_protect BEFORE UPDATE ON public.profiles FOR EACH ROW EXECUTE FUNCTION public.protect_profile();
-
-
---
--- Name: profiles profiles_validate_army_identity; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER profiles_validate_army_identity BEFORE INSERT OR UPDATE ON public.profiles FOR EACH ROW EXECUTE FUNCTION public.validate_army_identity();
-
-
---
--- Name: army_lists validate_40k_list; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER validate_40k_list BEFORE INSERT OR UPDATE ON public.army_lists FOR EACH ROW EXECUTE FUNCTION public.validate_40k_list();
-
-
---
--- Name: wh40k_squads wh40k_squads_sync; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER wh40k_squads_sync AFTER INSERT OR DELETE OR UPDATE ON public.wh40k_squads FOR EACH ROW EXECUTE FUNCTION public.wh40k_sync_recruits();
-
-
---
--- Name: build_queue build_queue_module_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.build_queue
-    ADD CONSTRAINT build_queue_module_fkey FOREIGN KEY (module) REFERENCES public.module_types(id);
-
-
---
--- Name: celestial_bodies celestial_bodies_parent_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.celestial_bodies
-    ADD CONSTRAINT celestial_bodies_parent_id_fkey FOREIGN KEY (parent_id) REFERENCES public.celestial_bodies(id);
-
-
---
--- Name: game_exclusions game_exclusions_game_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.game_exclusions
-    ADD CONSTRAINT game_exclusions_game_id_fkey FOREIGN KEY (game_id) REFERENCES public.games(id) ON DELETE CASCADE;
-
-
---
--- Name: games games_scenario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.games
-    ADD CONSTRAINT games_scenario_id_fkey FOREIGN KEY (scenario_id) REFERENCES public.scenarios(id) ON DELETE SET NULL;
-
-
---
--- Name: naval_private_plans naval_private_plans_raid_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.naval_private_plans
-    ADD CONSTRAINT naval_private_plans_raid_id_fkey FOREIGN KEY (raid_id) REFERENCES public.naval_raids(id) ON DELETE CASCADE;
-
-
---
--- Name: profiles profiles_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.profiles
-    ADD CONSTRAINT profiles_id_fkey FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE;
-
-
---
--- Name: recruit_orders recruit_orders_unit_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.recruit_orders
-    ADD CONSTRAINT recruit_orders_unit_id_fkey FOREIGN KEY (unit_id) REFERENCES public.unit_catalog(unit_id);
-
-
---
--- Name: region_attacks region_attacks_region_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.region_attacks
-    ADD CONSTRAINT region_attacks_region_id_fkey FOREIGN KEY (region_id) REFERENCES public.regions(id);
-
-
---
--- Name: regions regions_body_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.regions
-    ADD CONSTRAINT regions_body_id_fkey FOREIGN KEY (body_id) REFERENCES public.celestial_bodies(id);
-
-
---
--- Name: regions regions_scenario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.regions
-    ADD CONSTRAINT regions_scenario_id_fkey FOREIGN KEY (scenario_id) REFERENCES public.scenarios(id);
-
-
---
--- Name: ship_modules ship_modules_module_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.ship_modules
-    ADD CONSTRAINT ship_modules_module_fkey FOREIGN KEY (module) REFERENCES public.module_types(id);
-
-
---
--- Name: ship_travel_private ship_travel_private_destination_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.ship_travel_private
-    ADD CONSTRAINT ship_travel_private_destination_fkey FOREIGN KEY (destination) REFERENCES public.celestial_bodies(id);
-
-
---
--- Name: ship_travel_private ship_travel_private_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.ship_travel_private
-    ADD CONSTRAINT ship_travel_private_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.ships(user_id) ON DELETE CASCADE;
-
-
---
--- Name: ships ships_body_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.ships
-    ADD CONSTRAINT ships_body_id_fkey FOREIGN KEY (body_id) REFERENCES public.celestial_bodies(id);
-
-
---
--- Name: ships ships_travel_from_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.ships
-    ADD CONSTRAINT ships_travel_from_fkey FOREIGN KEY (travel_from) REFERENCES public.celestial_bodies(id);
-
-
---
--- Name: user_roles user_roles_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.user_roles
-    ADD CONSTRAINT user_roles_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE;
-
-
---
--- Name: veteran_battles veteran_battles_veteran_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.veteran_battles
-    ADD CONSTRAINT veteran_battles_veteran_id_fkey FOREIGN KEY (veteran_id) REFERENCES public.veterans(id) ON DELETE CASCADE;
-
-
---
--- Name: unit_catalog admin catalog; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "admin catalog" ON public.unit_catalog TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role)) WITH CHECK (public.has_role(auth.uid(), 'admin'::public.app_role));
-
-
---
--- Name: regions admin edits regions; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "admin edits regions" ON public.regions FOR UPDATE TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role)) WITH CHECK (public.has_role(auth.uid(), 'admin'::public.app_role));
-
-
---
--- Name: module_types admin write module types; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "admin write module types" ON public.module_types TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role)) WITH CHECK (public.has_role(auth.uid(), 'admin'::public.app_role));
-
-
---
--- Name: scenarios admin write scenarios; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "admin write scenarios" ON public.scenarios TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role)) WITH CHECK (public.has_role(auth.uid(), 'admin'::public.app_role));
-
-
---
--- Name: admin_bootstrap_state; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.admin_bootstrap_state ENABLE ROW LEVEL SECURITY;
-
---
--- Name: collection_items admins read collections; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "admins read collections" ON public.collection_items FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role));
-
-
---
--- Name: engine_damage admins read engine damage; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "admins read engine damage" ON public.engine_damage FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role));
-
-
---
--- Name: lost_engines admins read lost engines; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "admins read lost engines" ON public.lost_engines FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role));
-
-
---
--- Name: profiles admins read profiles; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "admins read profiles" ON public.profiles FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role));
-
-
---
--- Name: ship_supports admins read supports; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "admins read supports" ON public.ship_supports FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role));
-
-
---
--- Name: army_lists; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.army_lists ENABLE ROW LEVEL SECURITY;
-
---
--- Name: battle_records; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.battle_records ENABLE ROW LEVEL SECURITY;
-
---
--- Name: build_queue; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.build_queue ENABLE ROW LEVEL SECURITY;
-
---
--- Name: campaign; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.campaign ENABLE ROW LEVEL SECURITY;
-
---
--- Name: celestial_bodies; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.celestial_bodies ENABLE ROW LEVEL SECURITY;
-
---
--- Name: honours club reads honours; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "club reads honours" ON public.honours FOR SELECT TO authenticated USING (true);
-
-
---
--- Name: battle_records club reads records; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "club reads records" ON public.battle_records FOR SELECT TO authenticated USING (true);
-
-
---
--- Name: veteran_battles club reads veteran battles; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "club reads veteran battles" ON public.veteran_battles FOR SELECT TO authenticated USING (true);
-
-
---
--- Name: veterans club reads veterans; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "club reads veterans" ON public.veterans FOR SELECT TO authenticated USING (true);
-
-
---
--- Name: collection_items; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.collection_items ENABLE ROW LEVEL SECURITY;
-
---
--- Name: games create games; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "create games" ON public.games FOR INSERT TO authenticated WITH CHECK (((creator_id = auth.uid()) AND (status = 'abierta'::text)));
-
-
---
--- Name: games creator deletes; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "creator deletes" ON public.games FOR DELETE TO authenticated USING (((creator_id = auth.uid()) AND (status <> 'aceptada'::text)));
-
-
---
--- Name: game_exclusions creator manages exclusions; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "creator manages exclusions" ON public.game_exclusions TO authenticated USING (public.is_game_creator(game_id, auth.uid())) WITH CHECK (public.is_game_creator(game_id, auth.uid()));
-
-
---
--- Name: games creator updates; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "creator updates" ON public.games FOR UPDATE TO authenticated USING ((creator_id = auth.uid())) WITH CHECK ((creator_id = auth.uid()));
-
-
---
--- Name: engine_damage; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.engine_damage ENABLE ROW LEVEL SECURITY;
-
---
--- Name: game_exclusions; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.game_exclusions ENABLE ROW LEVEL SECURITY;
-
---
--- Name: games; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.games ENABLE ROW LEVEL SECURITY;
-
---
--- Name: honours; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.honours ENABLE ROW LEVEL SECURITY;
-
---
--- Name: lost_engines; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.lost_engines ENABLE ROW LEVEL SECURITY;
-
---
--- Name: module_types; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.module_types ENABLE ROW LEVEL SECURITY;
-
---
--- Name: naval_private_plans; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.naval_private_plans ENABLE ROW LEVEL SECURITY;
-
---
--- Name: naval_raids; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.naval_raids ENABLE ROW LEVEL SECURITY;
-
---
--- Name: naval_stances; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.naval_stances ENABLE ROW LEVEL SECURITY;
-
---
--- Name: collection_items own collection read; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "own collection read" ON public.collection_items FOR SELECT TO authenticated USING ((auth.uid() = user_id));
-
-
---
--- Name: engine_damage own engine damage; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "own engine damage" ON public.engine_damage FOR SELECT TO authenticated USING ((auth.uid() = user_id));
-
-
---
--- Name: wh40k_squad_history own history; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "own history" ON public.wh40k_squad_history FOR SELECT TO authenticated USING ((auth.uid() = user_id));
-
-
---
--- Name: army_lists own lists; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "own lists" ON public.army_lists TO authenticated USING ((auth.uid() = user_id)) WITH CHECK ((auth.uid() = user_id));
-
-
---
--- Name: lost_engines own lost engines; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "own lost engines" ON public.lost_engines FOR SELECT TO authenticated USING ((auth.uid() = user_id));
-
-
---
--- Name: ship_modules own modules; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "own modules" ON public.ship_modules FOR SELECT TO authenticated USING ((auth.uid() = user_id));
-
-
---
--- Name: recruit_orders own orders; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "own orders" ON public.recruit_orders FOR SELECT TO authenticated USING ((auth.uid() = user_id));
-
-
---
--- Name: pod_bay own pod bay; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "own pod bay" ON public.pod_bay FOR SELECT TO authenticated USING ((auth.uid() = user_id));
-
-
---
--- Name: profiles own profile insert; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "own profile insert" ON public.profiles FOR INSERT TO authenticated WITH CHECK ((auth.uid() = id));
-
-
---
--- Name: profiles own profile read; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "own profile read" ON public.profiles FOR SELECT TO authenticated USING ((auth.uid() = id));
-
-
---
--- Name: profiles own profile update; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "own profile update" ON public.profiles FOR UPDATE TO authenticated USING ((auth.uid() = id)) WITH CHECK ((auth.uid() = id));
-
-
---
--- Name: build_queue own queue; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "own queue" ON public.build_queue FOR SELECT TO authenticated USING ((auth.uid() = user_id));
-
-
---
--- Name: wh40k_recruits own recruits; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "own recruits" ON public.wh40k_recruits FOR SELECT TO authenticated USING ((auth.uid() = user_id));
-
-
---
--- Name: user_roles own roles read; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "own roles read" ON public.user_roles FOR SELECT TO authenticated USING ((auth.uid() = user_id));
-
-
---
--- Name: wh40k_squads own squads; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "own squads" ON public.wh40k_squads FOR SELECT TO authenticated USING ((auth.uid() = user_id));
-
-
---
--- Name: naval_stances own stance; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "own stance" ON public.naval_stances FOR SELECT TO authenticated USING ((auth.uid() = user_id));
-
-
---
--- Name: ship_supports own supports; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "own supports" ON public.ship_supports FOR SELECT TO authenticated USING ((auth.uid() = user_id));
-
-
---
--- Name: ship_travel_private own travel; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "own travel" ON public.ship_travel_private FOR SELECT TO authenticated USING ((auth.uid() = user_id));
-
-
---
--- Name: naval_raids participants read raids; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "participants read raids" ON public.naval_raids FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role));
-
-
---
--- Name: pod_bay; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.pod_bay ENABLE ROW LEVEL SECURITY;
-
---
--- Name: wh40k_unit_prices prices readable; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "prices readable" ON public.wh40k_unit_prices FOR SELECT TO authenticated USING (true);
-
-
---
--- Name: profiles; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
-
---
--- Name: region_attacks read attacks; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "read attacks" ON public.region_attacks FOR SELECT TO authenticated USING (true);
-
-
---
--- Name: celestial_bodies read bodies; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "read bodies" ON public.celestial_bodies FOR SELECT TO authenticated USING (true);
-
-
---
--- Name: campaign read campaign; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "read campaign" ON public.campaign FOR SELECT TO authenticated USING (true);
-
-
---
--- Name: unit_catalog read catalog; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "read catalog" ON public.unit_catalog FOR SELECT TO authenticated USING (true);
-
-
---
--- Name: module_types read module types; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "read module types" ON public.module_types FOR SELECT TO authenticated USING (true);
-
-
---
--- Name: regions read regions; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "read regions" ON public.regions FOR SELECT TO authenticated USING (true);
-
-
---
--- Name: scenarios read scenarios; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "read scenarios" ON public.scenarios FOR SELECT TO authenticated USING (true);
-
-
---
--- Name: ships read ships; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "read ships" ON public.ships FOR SELECT TO authenticated USING (true);
-
-
---
--- Name: recruit_orders; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.recruit_orders ENABLE ROW LEVEL SECURITY;
-
---
--- Name: region_attacks; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.region_attacks ENABLE ROW LEVEL SECURITY;
-
---
--- Name: regions; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.regions ENABLE ROW LEVEL SECURITY;
-
---
--- Name: scenarios; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.scenarios ENABLE ROW LEVEL SECURITY;
-
---
--- Name: games see games; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "see games" ON public.games FOR SELECT TO authenticated USING (((auth.uid() = creator_id) OR (auth.uid() = opponent_id) OR (auth.uid() = creator_ally_id) OR (auth.uid() = opponent_ally_id) OR ((status = 'abierta'::text) AND (NOT public.is_excluded(id, auth.uid())))));
-
-
---
--- Name: ship_modules; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.ship_modules ENABLE ROW LEVEL SECURITY;
-
---
--- Name: ship_supports; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.ship_supports ENABLE ROW LEVEL SECURITY;
-
---
--- Name: ship_travel_private; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.ship_travel_private ENABLE ROW LEVEL SECURITY;
-
---
--- Name: ships; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.ships ENABLE ROW LEVEL SECURITY;
-
---
--- Name: unit_catalog; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.unit_catalog ENABLE ROW LEVEL SECURITY;
-
---
--- Name: user_roles; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.user_roles ENABLE ROW LEVEL SECURITY;
-
---
--- Name: veteran_battles; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.veteran_battles ENABLE ROW LEVEL SECURITY;
-
---
--- Name: veterans; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.veterans ENABLE ROW LEVEL SECURITY;
-
---
--- Name: wh40k_recruits; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.wh40k_recruits ENABLE ROW LEVEL SECURITY;
-
---
--- Name: wh40k_squad_history; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.wh40k_squad_history ENABLE ROW LEVEL SECURITY;
-
---
--- Name: wh40k_squads; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.wh40k_squads ENABLE ROW LEVEL SECURITY;
-
---
--- Name: wh40k_unit_prices; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.wh40k_unit_prices ENABLE ROW LEVEL SECURITY;
-
---
 -- Name: FUNCTION achievement_stats(); Type: ACL; Schema: public; Owner: -
 --
 
@@ -6642,63 +5531,1163 @@ GRANT ALL ON TABLE public.wh40k_unit_prices TO service_role;
 
 
 --
+-- PostgreSQL database dump complete
+--
+
+
+--
+-- PostgreSQL database dump
+--
+
+
+-- Dumped from database version 17.11
+-- Dumped by pg_dump version 18.6 (Debian 18.6-3)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+--
+-- Name: __drizzle_migrations __drizzle_migrations_pkey; Type: CONSTRAINT; Schema: drizzle; Owner: -
+--
+
+ALTER TABLE ONLY drizzle.__drizzle_migrations
+    ADD CONSTRAINT __drizzle_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: admin_bootstrap_state admin_bootstrap_state_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.admin_bootstrap_state
+    ADD CONSTRAINT admin_bootstrap_state_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: army_lists army_lists_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.army_lists
+    ADD CONSTRAINT army_lists_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: battle_records battle_records_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.battle_records
+    ADD CONSTRAINT battle_records_pkey PRIMARY KEY (game_id, user_id);
+
+
+--
+-- Name: build_queue build_queue_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.build_queue
+    ADD CONSTRAINT build_queue_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: campaign campaign_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.campaign
+    ADD CONSTRAINT campaign_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: celestial_bodies celestial_bodies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.celestial_bodies
+    ADD CONSTRAINT celestial_bodies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: collection_items collection_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.collection_items
+    ADD CONSTRAINT collection_items_pkey PRIMARY KEY (user_id, unit_id);
+
+
+--
+-- Name: engine_damage engine_damage_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.engine_damage
+    ADD CONSTRAINT engine_damage_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: game_exclusions game_exclusions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.game_exclusions
+    ADD CONSTRAINT game_exclusions_pkey PRIMARY KEY (game_id, user_id);
+
+
+--
+-- Name: games games_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.games
+    ADD CONSTRAINT games_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: honours honours_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.honours
+    ADD CONSTRAINT honours_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: lost_engines lost_engines_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lost_engines
+    ADD CONSTRAINT lost_engines_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: module_types module_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.module_types
+    ADD CONSTRAINT module_types_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: naval_private_plans naval_private_plans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.naval_private_plans
+    ADD CONSTRAINT naval_private_plans_pkey PRIMARY KEY (raid_id);
+
+
+--
+-- Name: naval_raids naval_raids_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.naval_raids
+    ADD CONSTRAINT naval_raids_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: naval_stances naval_stances_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.naval_stances
+    ADD CONSTRAINT naval_stances_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: pod_bay pod_bay_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pod_bay
+    ADD CONSTRAINT pod_bay_pkey PRIMARY KEY (user_id, unit_id);
+
+
+--
+-- Name: profiles profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.profiles
+    ADD CONSTRAINT profiles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recruit_orders recruit_orders_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.recruit_orders
+    ADD CONSTRAINT recruit_orders_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: region_attacks region_attacks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.region_attacks
+    ADD CONSTRAINT region_attacks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: regions regions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.regions
+    ADD CONSTRAINT regions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: scenarios scenarios_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.scenarios
+    ADD CONSTRAINT scenarios_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ship_modules ship_modules_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ship_modules
+    ADD CONSTRAINT ship_modules_pkey PRIMARY KEY (user_id, module);
+
+
+--
+-- Name: ship_supports ship_supports_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ship_supports
+    ADD CONSTRAINT ship_supports_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: ship_travel_private ship_travel_private_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ship_travel_private
+    ADD CONSTRAINT ship_travel_private_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: ships ships_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ships
+    ADD CONSTRAINT ships_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: unit_catalog unit_catalog_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.unit_catalog
+    ADD CONSTRAINT unit_catalog_pkey PRIMARY KEY (unit_id);
+
+
+--
+-- Name: user_roles user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_roles
+    ADD CONSTRAINT user_roles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_roles user_roles_user_id_role_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_roles
+    ADD CONSTRAINT user_roles_user_id_role_key UNIQUE (user_id, role);
+
+
+--
+-- Name: veteran_battles veteran_battles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.veteran_battles
+    ADD CONSTRAINT veteran_battles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: veterans veterans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.veterans
+    ADD CONSTRAINT veterans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: wh40k_recruits wh40k_recruits_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.wh40k_recruits
+    ADD CONSTRAINT wh40k_recruits_pkey PRIMARY KEY (user_id, faction, unit_name, models);
+
+
+--
+-- Name: wh40k_squad_history wh40k_squad_history_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.wh40k_squad_history
+    ADD CONSTRAINT wh40k_squad_history_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: wh40k_squads wh40k_squads_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.wh40k_squads
+    ADD CONSTRAINT wh40k_squads_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: wh40k_unit_prices wh40k_unit_prices_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.wh40k_unit_prices
+    ADD CONSTRAINT wh40k_unit_prices_pkey PRIMARY KEY (faction, unit_name, models);
+
+
+--
+-- Name: naval_active_participants_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX naval_active_participants_idx ON public.naval_raids USING btree (status, deadline);
+
+
+--
+-- Name: naval_raids_pending; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX naval_raids_pending ON public.naval_raids USING btree (status, deadline);
+
+
+--
+-- Name: region_attacks_one_active; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX region_attacks_one_active ON public.region_attacks USING btree (attacker_id) WHERE (resolved_at IS NULL);
+
+
+--
+-- Name: region_attacks_one_per_region; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX region_attacks_one_per_region ON public.region_attacks USING btree (region_id) WHERE (resolved_at IS NULL);
+
+
+--
+-- Name: regions_body_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX regions_body_idx ON public.regions USING btree (body_id);
+
+
+--
+-- Name: ship_job_order; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX ship_job_order ON public.build_queue USING btree (user_id, created_at, sequence);
+
+
+--
+-- Name: ship_one_active_job; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX ship_one_active_job ON public.build_queue USING btree (user_id) WHERE (started_at IS NOT NULL);
+
+
+--
+-- Name: veterans_user_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX veterans_user_idx ON public.veterans USING btree (user_id, unit_id);
+
+
+--
+-- Name: wh40k_squad_history_squad_id_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX wh40k_squad_history_squad_id_idx ON public.wh40k_squad_history USING btree (squad_id);
+
+
+--
+-- Name: wh40k_squads_user_id_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX wh40k_squads_user_id_idx ON public.wh40k_squads USING btree (user_id);
+
+
+--
+-- Name: profiles cleanup_deleted_player; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER cleanup_deleted_player AFTER DELETE ON public.profiles FOR EACH ROW EXECUTE FUNCTION public.cleanup_deleted_player();
+
+
+--
+-- Name: profiles cleanup_wh40k_squads; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER cleanup_wh40k_squads BEFORE DELETE ON public.profiles FOR EACH ROW EXECUTE FUNCTION public.cleanup_wh40k_squads();
+
+
+--
+-- Name: games conquest_lists_only; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER conquest_lists_only BEFORE INSERT OR UPDATE OF creator_list_id, opponent_list_id ON public.games FOR EACH ROW EXECUTE FUNCTION public.conquest_lists_only();
+
+
+--
+-- Name: games games_protect_conquest; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER games_protect_conquest BEFORE INSERT OR UPDATE ON public.games FOR EACH ROW EXECUTE FUNCTION public.protect_conquest_game();
+
+
+--
+-- Name: ship_modules guard_naval_module_work; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER guard_naval_module_work BEFORE INSERT OR DELETE OR UPDATE ON public.ship_modules FOR EACH ROW EXECUTE FUNCTION public.ship_module_guard();
+
+
+--
+-- Name: build_queue guard_naval_queue; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER guard_naval_queue BEFORE INSERT OR DELETE ON public.build_queue FOR EACH ROW EXECUTE FUNCTION public.ship_work_guard();
+
+
+--
+-- Name: games no_simulated_40k_lists_in_games; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER no_simulated_40k_lists_in_games BEFORE INSERT OR UPDATE ON public.games FOR EACH ROW EXECUTE FUNCTION public.no_simulated_40k_lists_in_games();
+
+
+--
+-- Name: profiles profiles_protect; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER profiles_protect BEFORE UPDATE ON public.profiles FOR EACH ROW EXECUTE FUNCTION public.protect_profile();
+
+
+--
+-- Name: profiles profiles_validate_army_identity; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER profiles_validate_army_identity BEFORE INSERT OR UPDATE ON public.profiles FOR EACH ROW EXECUTE FUNCTION public.validate_army_identity();
+
+
+--
+-- Name: army_lists validate_40k_list; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER validate_40k_list BEFORE INSERT OR UPDATE ON public.army_lists FOR EACH ROW EXECUTE FUNCTION public.validate_40k_list();
+
+
+--
+-- Name: wh40k_squads wh40k_squads_sync; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER wh40k_squads_sync AFTER INSERT OR DELETE OR UPDATE ON public.wh40k_squads FOR EACH ROW EXECUTE FUNCTION public.wh40k_sync_recruits();
+
+
+--
+-- Name: build_queue build_queue_module_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.build_queue
+    ADD CONSTRAINT build_queue_module_fkey FOREIGN KEY (module) REFERENCES public.module_types(id);
+
+
+--
+-- Name: celestial_bodies celestial_bodies_parent_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.celestial_bodies
+    ADD CONSTRAINT celestial_bodies_parent_id_fkey FOREIGN KEY (parent_id) REFERENCES public.celestial_bodies(id);
+
+
+--
+-- Name: game_exclusions game_exclusions_game_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.game_exclusions
+    ADD CONSTRAINT game_exclusions_game_id_fkey FOREIGN KEY (game_id) REFERENCES public.games(id) ON DELETE CASCADE;
+
+
+--
+-- Name: games games_scenario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.games
+    ADD CONSTRAINT games_scenario_id_fkey FOREIGN KEY (scenario_id) REFERENCES public.scenarios(id) ON DELETE SET NULL;
+
+
+--
+-- Name: naval_private_plans naval_private_plans_raid_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.naval_private_plans
+    ADD CONSTRAINT naval_private_plans_raid_id_fkey FOREIGN KEY (raid_id) REFERENCES public.naval_raids(id) ON DELETE CASCADE;
+
+
+--
+-- Name: profiles profiles_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.profiles
+    ADD CONSTRAINT profiles_id_fkey FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: recruit_orders recruit_orders_unit_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.recruit_orders
+    ADD CONSTRAINT recruit_orders_unit_id_fkey FOREIGN KEY (unit_id) REFERENCES public.unit_catalog(unit_id);
+
+
+--
+-- Name: region_attacks region_attacks_region_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.region_attacks
+    ADD CONSTRAINT region_attacks_region_id_fkey FOREIGN KEY (region_id) REFERENCES public.regions(id);
+
+
+--
+-- Name: regions regions_body_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.regions
+    ADD CONSTRAINT regions_body_id_fkey FOREIGN KEY (body_id) REFERENCES public.celestial_bodies(id);
+
+
+--
+-- Name: regions regions_scenario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.regions
+    ADD CONSTRAINT regions_scenario_id_fkey FOREIGN KEY (scenario_id) REFERENCES public.scenarios(id);
+
+
+--
+-- Name: ship_modules ship_modules_module_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ship_modules
+    ADD CONSTRAINT ship_modules_module_fkey FOREIGN KEY (module) REFERENCES public.module_types(id);
+
+
+--
+-- Name: ship_travel_private ship_travel_private_destination_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ship_travel_private
+    ADD CONSTRAINT ship_travel_private_destination_fkey FOREIGN KEY (destination) REFERENCES public.celestial_bodies(id);
+
+
+--
+-- Name: ship_travel_private ship_travel_private_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ship_travel_private
+    ADD CONSTRAINT ship_travel_private_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.ships(user_id) ON DELETE CASCADE;
+
+
+--
+-- Name: ships ships_body_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ships
+    ADD CONSTRAINT ships_body_id_fkey FOREIGN KEY (body_id) REFERENCES public.celestial_bodies(id);
+
+
+--
+-- Name: ships ships_travel_from_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ships
+    ADD CONSTRAINT ships_travel_from_fkey FOREIGN KEY (travel_from) REFERENCES public.celestial_bodies(id);
+
+
+--
+-- Name: user_roles user_roles_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_roles
+    ADD CONSTRAINT user_roles_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: veteran_battles veteran_battles_veteran_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.veteran_battles
+    ADD CONSTRAINT veteran_battles_veteran_id_fkey FOREIGN KEY (veteran_id) REFERENCES public.veterans(id) ON DELETE CASCADE;
+
+
+--
+-- Name: unit_catalog admin catalog; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "admin catalog" ON public.unit_catalog TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role)) WITH CHECK (public.has_role(auth.uid(), 'admin'::public.app_role));
+
+
+--
+-- Name: regions admin edits regions; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "admin edits regions" ON public.regions FOR UPDATE TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role)) WITH CHECK (public.has_role(auth.uid(), 'admin'::public.app_role));
+
+
+--
+-- Name: module_types admin write module types; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "admin write module types" ON public.module_types TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role)) WITH CHECK (public.has_role(auth.uid(), 'admin'::public.app_role));
+
+
+--
+-- Name: scenarios admin write scenarios; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "admin write scenarios" ON public.scenarios TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role)) WITH CHECK (public.has_role(auth.uid(), 'admin'::public.app_role));
+
+
+--
+-- Name: admin_bootstrap_state; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.admin_bootstrap_state ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: collection_items admins read collections; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "admins read collections" ON public.collection_items FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role));
+
+
+--
+-- Name: engine_damage admins read engine damage; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "admins read engine damage" ON public.engine_damage FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role));
+
+
+--
+-- Name: lost_engines admins read lost engines; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "admins read lost engines" ON public.lost_engines FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role));
+
+
+--
+-- Name: profiles admins read profiles; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "admins read profiles" ON public.profiles FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role));
+
+
+--
+-- Name: ship_supports admins read supports; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "admins read supports" ON public.ship_supports FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role));
+
+
+--
+-- Name: army_lists; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.army_lists ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: battle_records; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.battle_records ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: build_queue; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.build_queue ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: campaign; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.campaign ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: celestial_bodies; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.celestial_bodies ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: honours club reads honours; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "club reads honours" ON public.honours FOR SELECT TO authenticated USING (true);
+
+
+--
+-- Name: battle_records club reads records; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "club reads records" ON public.battle_records FOR SELECT TO authenticated USING (true);
+
+
+--
+-- Name: veteran_battles club reads veteran battles; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "club reads veteran battles" ON public.veteran_battles FOR SELECT TO authenticated USING (true);
+
+
+--
+-- Name: veterans club reads veterans; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "club reads veterans" ON public.veterans FOR SELECT TO authenticated USING (true);
+
+
+--
+-- Name: collection_items; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.collection_items ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: games create games; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "create games" ON public.games FOR INSERT TO authenticated WITH CHECK (((creator_id = auth.uid()) AND (status = 'abierta'::text)));
+
+
+--
+-- Name: games creator deletes; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "creator deletes" ON public.games FOR DELETE TO authenticated USING (((creator_id = auth.uid()) AND (status <> 'aceptada'::text)));
+
+
+--
+-- Name: game_exclusions creator manages exclusions; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "creator manages exclusions" ON public.game_exclusions TO authenticated USING (public.is_game_creator(game_id, auth.uid())) WITH CHECK (public.is_game_creator(game_id, auth.uid()));
+
+
+--
+-- Name: games creator updates; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "creator updates" ON public.games FOR UPDATE TO authenticated USING ((creator_id = auth.uid())) WITH CHECK ((creator_id = auth.uid()));
+
+
+--
+-- Name: engine_damage; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.engine_damage ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: game_exclusions; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.game_exclusions ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: games; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.games ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: honours; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.honours ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: lost_engines; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.lost_engines ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: module_types; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.module_types ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: naval_private_plans; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.naval_private_plans ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: naval_raids; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.naval_raids ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: naval_stances; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.naval_stances ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: collection_items own collection read; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "own collection read" ON public.collection_items FOR SELECT TO authenticated USING ((auth.uid() = user_id));
+
+
+--
+-- Name: engine_damage own engine damage; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "own engine damage" ON public.engine_damage FOR SELECT TO authenticated USING ((auth.uid() = user_id));
+
+
+--
+-- Name: wh40k_squad_history own history; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "own history" ON public.wh40k_squad_history FOR SELECT TO authenticated USING ((auth.uid() = user_id));
+
+
+--
+-- Name: army_lists own lists; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "own lists" ON public.army_lists TO authenticated USING ((auth.uid() = user_id)) WITH CHECK ((auth.uid() = user_id));
+
+
+--
+-- Name: lost_engines own lost engines; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "own lost engines" ON public.lost_engines FOR SELECT TO authenticated USING ((auth.uid() = user_id));
+
+
+--
+-- Name: ship_modules own modules; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "own modules" ON public.ship_modules FOR SELECT TO authenticated USING ((auth.uid() = user_id));
+
+
+--
+-- Name: recruit_orders own orders; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "own orders" ON public.recruit_orders FOR SELECT TO authenticated USING ((auth.uid() = user_id));
+
+
+--
+-- Name: pod_bay own pod bay; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "own pod bay" ON public.pod_bay FOR SELECT TO authenticated USING ((auth.uid() = user_id));
+
+
+--
+-- Name: profiles own profile insert; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "own profile insert" ON public.profiles FOR INSERT TO authenticated WITH CHECK ((auth.uid() = id));
+
+
+--
+-- Name: profiles own profile read; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "own profile read" ON public.profiles FOR SELECT TO authenticated USING ((auth.uid() = id));
+
+
+--
+-- Name: profiles own profile update; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "own profile update" ON public.profiles FOR UPDATE TO authenticated USING ((auth.uid() = id)) WITH CHECK ((auth.uid() = id));
+
+
+--
+-- Name: build_queue own queue; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "own queue" ON public.build_queue FOR SELECT TO authenticated USING ((auth.uid() = user_id));
+
+
+--
+-- Name: wh40k_recruits own recruits; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "own recruits" ON public.wh40k_recruits FOR SELECT TO authenticated USING ((auth.uid() = user_id));
+
+
+--
+-- Name: user_roles own roles read; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "own roles read" ON public.user_roles FOR SELECT TO authenticated USING ((auth.uid() = user_id));
+
+
+--
+-- Name: wh40k_squads own squads; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "own squads" ON public.wh40k_squads FOR SELECT TO authenticated USING ((auth.uid() = user_id));
+
+
+--
+-- Name: naval_stances own stance; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "own stance" ON public.naval_stances FOR SELECT TO authenticated USING ((auth.uid() = user_id));
+
+
+--
+-- Name: ship_supports own supports; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "own supports" ON public.ship_supports FOR SELECT TO authenticated USING ((auth.uid() = user_id));
+
+
+--
+-- Name: ship_travel_private own travel; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "own travel" ON public.ship_travel_private FOR SELECT TO authenticated USING ((auth.uid() = user_id));
+
+
+--
+-- Name: naval_raids participants read raids; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "participants read raids" ON public.naval_raids FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'::public.app_role));
+
+
+--
+-- Name: pod_bay; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.pod_bay ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: wh40k_unit_prices prices readable; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "prices readable" ON public.wh40k_unit_prices FOR SELECT TO authenticated USING (true);
+
+
+--
+-- Name: profiles; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: region_attacks read attacks; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "read attacks" ON public.region_attacks FOR SELECT TO authenticated USING (true);
+
+
+--
+-- Name: celestial_bodies read bodies; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "read bodies" ON public.celestial_bodies FOR SELECT TO authenticated USING (true);
+
+
+--
+-- Name: campaign read campaign; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "read campaign" ON public.campaign FOR SELECT TO authenticated USING (true);
+
+
+--
+-- Name: unit_catalog read catalog; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "read catalog" ON public.unit_catalog FOR SELECT TO authenticated USING (true);
+
+
+--
+-- Name: module_types read module types; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "read module types" ON public.module_types FOR SELECT TO authenticated USING (true);
+
+
+--
+-- Name: regions read regions; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "read regions" ON public.regions FOR SELECT TO authenticated USING (true);
+
+
+--
+-- Name: scenarios read scenarios; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "read scenarios" ON public.scenarios FOR SELECT TO authenticated USING (true);
+
+
+--
+-- Name: ships read ships; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "read ships" ON public.ships FOR SELECT TO authenticated USING (true);
+
+
+--
+-- Name: recruit_orders; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.recruit_orders ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: region_attacks; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.region_attacks ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: regions; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.regions ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: scenarios; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.scenarios ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: games see games; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "see games" ON public.games FOR SELECT TO authenticated USING (((auth.uid() = creator_id) OR (auth.uid() = opponent_id) OR (auth.uid() = creator_ally_id) OR (auth.uid() = opponent_ally_id) OR ((status = 'abierta'::text) AND (NOT public.is_excluded(id, auth.uid())))));
+
+
+--
+-- Name: ship_modules; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.ship_modules ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: ship_supports; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.ship_supports ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: ship_travel_private; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.ship_travel_private ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: ships; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.ships ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: unit_catalog; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.unit_catalog ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: user_roles; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.user_roles ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: veteran_battles; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.veteran_battles ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: veterans; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.veterans ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: wh40k_recruits; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.wh40k_recruits ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: wh40k_squad_history; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.wh40k_squad_history ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: wh40k_squads; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.wh40k_squads ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: wh40k_unit_prices; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.wh40k_unit_prices ENABLE ROW LEVEL SECURITY;
+
+--
 -- Name: DEFAULT PRIVILEGES FOR SEQUENCES; Type: DEFAULT ACL; Schema: public; Owner: -
 --
 
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT ALL ON SEQUENCES TO postgres;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT ALL ON SEQUENCES TO anon;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT ALL ON SEQUENCES TO authenticated;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT ALL ON SEQUENCES TO service_role;
 
 
 --
 -- Name: DEFAULT PRIVILEGES FOR SEQUENCES; Type: DEFAULT ACL; Schema: public; Owner: -
 --
 
-ALTER DEFAULT PRIVILEGES FOR ROLE supabase_admin IN SCHEMA public GRANT ALL ON SEQUENCES TO postgres;
-ALTER DEFAULT PRIVILEGES FOR ROLE supabase_admin IN SCHEMA public GRANT ALL ON SEQUENCES TO anon;
-ALTER DEFAULT PRIVILEGES FOR ROLE supabase_admin IN SCHEMA public GRANT ALL ON SEQUENCES TO authenticated;
-ALTER DEFAULT PRIVILEGES FOR ROLE supabase_admin IN SCHEMA public GRANT ALL ON SEQUENCES TO service_role;
 
 
 --
 -- Name: DEFAULT PRIVILEGES FOR FUNCTIONS; Type: DEFAULT ACL; Schema: public; Owner: -
 --
 
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT ALL ON FUNCTIONS TO postgres;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT ALL ON FUNCTIONS TO anon;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT ALL ON FUNCTIONS TO authenticated;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT ALL ON FUNCTIONS TO service_role;
 
 
 --
 -- Name: DEFAULT PRIVILEGES FOR FUNCTIONS; Type: DEFAULT ACL; Schema: public; Owner: -
 --
 
-ALTER DEFAULT PRIVILEGES FOR ROLE supabase_admin IN SCHEMA public GRANT ALL ON FUNCTIONS TO postgres;
-ALTER DEFAULT PRIVILEGES FOR ROLE supabase_admin IN SCHEMA public GRANT ALL ON FUNCTIONS TO anon;
-ALTER DEFAULT PRIVILEGES FOR ROLE supabase_admin IN SCHEMA public GRANT ALL ON FUNCTIONS TO authenticated;
-ALTER DEFAULT PRIVILEGES FOR ROLE supabase_admin IN SCHEMA public GRANT ALL ON FUNCTIONS TO service_role;
 
 
 --
 -- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: public; Owner: -
 --
 
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT ALL ON TABLES TO postgres;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT ALL ON TABLES TO anon;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT ALL ON TABLES TO authenticated;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT ALL ON TABLES TO service_role;
 
 
 --
 -- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: public; Owner: -
 --
 
-ALTER DEFAULT PRIVILEGES FOR ROLE supabase_admin IN SCHEMA public GRANT ALL ON TABLES TO postgres;
-ALTER DEFAULT PRIVILEGES FOR ROLE supabase_admin IN SCHEMA public GRANT ALL ON TABLES TO anon;
-ALTER DEFAULT PRIVILEGES FOR ROLE supabase_admin IN SCHEMA public GRANT ALL ON TABLES TO authenticated;
-ALTER DEFAULT PRIVILEGES FOR ROLE supabase_admin IN SCHEMA public GRANT ALL ON TABLES TO service_role;
 
 
 --
@@ -6707,5 +6696,4 @@ ALTER DEFAULT PRIVILEGES FOR ROLE supabase_admin IN SCHEMA public GRANT ALL ON T
 
 
 
--- Trigger de alta de usuarios (auth.users -> public.handle_new_user)
 CREATE TRIGGER on_auth_user_created AFTER INSERT ON auth.users FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();

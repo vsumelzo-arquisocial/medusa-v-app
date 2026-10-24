@@ -35,5 +35,6 @@ dist-ssr
 .env
 .env.*
 !.env.example
+!.env.production
 *.backup
 *.backup.zip

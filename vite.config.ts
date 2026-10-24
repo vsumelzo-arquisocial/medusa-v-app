@@ -33,7 +33,22 @@ export default defineConfig(({ command, mode }) => {
         server: { entry: "server" },
         importProtection: { behavior: "error", client: { files: ["**/server/**"], specifiers: ["server-only"] } },
       }),
-      ...(command === "build" ? [nitro({ preset: "cloudflare-module", cloudflare: { nodeCompat: true, deployConfig: true } })] : []),
+      ...(command === "build" ? [nitro({
+        preset: "cloudflare-module",
+        compatibilityDate: "2026-10-01",
+        cloudflare: {
+          nodeCompat: true,
+          deployConfig: true,
+          wrangler: {
+            name: "medusa-v",
+            // Valores públicos (también van en el cliente). La clave secreta se define como Secret en Cloudflare.
+            vars: {
+              SUPABASE_URL: "https://wrldlvrqboznwvydetrw.supabase.co",
+              SUPABASE_PUBLISHABLE_KEY: "sb_publishable_64DR8K0abKzBO5gjEHFfjw_1Ud4edNl",
+            },
+          },
+        },
+      })] : []),
       viteReact(),
     ],
   };
