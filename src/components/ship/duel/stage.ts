@@ -86,8 +86,9 @@ export function phaseCues(opts: {
     cues.push({ t, ...(run ? { run } : {}), ...(line ? { line } : {}) });
   const tone = (actor: Side, good: boolean): Line["tone"] =>
     (actor === me) === good ? "good" : "bad";
-  const pBefore = pt(foe, false);
-  const pAfter = pt(foe, true);
+  // Posiciones evaluadas en el momento de cada efecto: las naves se mueven de forma continua.
+  const pBefore = () => pt(foe, false);
+  const pAfter = () => pt(foe, true);
   const posOf = (s: Side, moved: boolean) => pt(s, moved);
   /** El sonido viene del lado del enemigo (estribor = derecha). */
   const pan = (moved: boolean) => Math.sin(((moved ? after : before).rel * Math.PI) / 180) * 0.8;
@@ -110,10 +111,10 @@ export function phaseCues(opts: {
     const n = l.instantTorpedoes ? 0 : l.torpedoesHit + l.torpedoesDodged;
     if (!n) continue;
     const target = other(s);
-    const shooter = posOf(s, false);
-    const to = posOf(target, false);
-    const from = { x: (shooter.x * 3 + to.x * 2) / 5, y: (shooter.y * 3 + to.y * 2) / 5 };
     at(0.2, () => {
+      const shooter = posOf(s, false);
+      const to = posOf(target, false);
+      const from = { x: (shooter.x * 3 + to.x * 2) / 5, y: (shooter.y * 3 + to.y * 2) / 5 };
       fx()?.torpedoes(from, to, l.torpedoesHit, l.torpedoesDodged, 0, 1.2);
       if (l.torpedoesDodged) {
         fx()?.jink(to, 0.9);
@@ -174,7 +175,7 @@ export function phaseCues(opts: {
   }
   if (L.warp?.success || F.warp?.success) return cues.sort((a, b) => a.t - b.t);
 
-  // 3. Maniobra (el radar anima las posiciones a partir de MOVE_AT)
+  // 3. Maniobra (las naves se desplazan durante toda la ronda)
   at(
     MOVE_AT,
     () => {
@@ -183,11 +184,11 @@ export function phaseCues(opts: {
         play("avante_toda");
       }
       if (F.speed === 2) {
-        fx()?.engines(pBefore, (F.heading * Math.PI) / 4, true, 0);
+        fx()?.engines(pBefore(), (F.heading * Math.PI) / 4, true, 0);
         play("avante_toda", { pan: pan(false), gain: 0.6 });
       }
       if (L.action === "escudos") fx()?.shieldBubble(pt(me, true), 0.6);
-      if (F.action === "escudos") fx()?.shieldBubble(pAfter, 1.2);
+      if (F.action === "escudos") fx()?.shieldBubble(pAfter(), 1.2);
     },
     {
       side: null,
@@ -200,10 +201,10 @@ export function phaseCues(opts: {
   for (const s of [me, foe] as const) {
     const r = e[s].ram;
     if (!r) continue;
-    const mid = { x: (pt(me, true).x + pAfter.x) / 2, y: (pt(me, true).y + pAfter.y) / 2 };
     at(
       2.9,
       () => {
+        const mid = { x: (pt(me, true).x + pAfter().x) / 2, y: (pt(me, true).y + pAfter().y) / 2 };
         if (r.hit) {
           fx()?.ram(mid, 0);
           fx()?.text(posOf(other(s), true), `−${r.dealt}`, s === me ? GREEN : RED, 0.2, 14);
@@ -229,12 +230,17 @@ export function phaseCues(opts: {
   const shoot = (s: Side) => {
     const l = e[s];
     const target = other(s);
-    const from = posOf(s, true);
-    const to = posOf(target, true);
+    let from = posOf(s, true);
+    let to = posOf(target, true);
+    const aim = () => {
+      from = posOf(s, true);
+      to = posOf(target, true);
+    };
     const color = s === me ? OWN : FOE;
     const p = pan(true);
     if (l.action === "torpedos") {
       at(3.1, () => {
+        aim();
         play("torpedo_lanzamiento", { pan: p });
         if (l.instantTorpedoes) {
           fx()?.torpedoes(from, to, l.torpedoesHit, l.torpedoesDodged, 0, 0.6);
@@ -277,6 +283,7 @@ export function phaseCues(opts: {
     const side = l.arcs.some((a) => a !== "proa");
     const lance = prow && isLance(fleets[s]);
     at(3.1, () => {
+      aim();
       if (lance) {
         fx()?.lance(from, to, color, 0, shots > 0);
         play("lanza", { pan: p });
@@ -298,6 +305,7 @@ export function phaseCues(opts: {
     at(
       hitT,
       () => {
+        aim();
         if (l.shieldsAbsorbed > 0) {
           fx()?.shield(to, from, 0, e[target].action === "escudos");
           fx()?.text({ x: to.x, y: to.y + 24 }, `ESCUDOS ${l.shieldsAbsorbed}`, BLUE, 0.1, 9);

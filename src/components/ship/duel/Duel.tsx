@@ -64,7 +64,7 @@ import {
   unlockAudio,
 } from "@/lib/sfx/engine";
 import { Radar, geoOf, type Geo } from "./Radar";
-import { TacticalMap, type Projection } from "./TacticalMap";
+import { TacticalMap, poseAt, type Motion, type Projection } from "./TacticalMap";
 import type { FxEngine } from "./fx";
 import { MOVE_AT, PHASE_SECONDS, phaseCues } from "./stage";
 import { SoundControls } from "./SoundControls";
@@ -499,6 +499,12 @@ function useReplay(opts: {
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(1);
   const [log, setLog] = useState<LogLine[]>([]);
+  const [motion, setMotionState] = useState<Motion | null>(null);
+  const motionRef = useRef<Motion | null>(null);
+  const setMotion = (m: Motion | null) => {
+    motionRef.current = m;
+    setMotionState(m);
+  };
   const timers = useRef<number[]>([]);
   const lineId = useRef(0);
   const foe = other(me);
@@ -550,6 +556,20 @@ function useReplay(opts: {
     const k = 1000 / spd;
     const last = i === events.length - 1;
     const g = geos[i];
+    // Las naves recorren su trayectoria de forma continua durante toda la ronda
+    const m: Motion = {
+      own: {
+        from: { pos: g.ownBefore.pos, heading: g.ownBefore.heading },
+        to: { pos: g.own.pos, heading: g.own.heading },
+      },
+      foe: {
+        from: { pos: g.foeBefore.pos, heading: g.foeBefore.heading },
+        to: { pos: g.foe.pos, heading: g.foe.heading },
+      },
+      start: performance.now(),
+      dur: PHASE_SECONDS * k,
+    };
+    setMotion(m);
     const cues = phaseCues({
       e: events[i],
       me,
@@ -561,9 +581,10 @@ function useReplay(opts: {
       end,
       last,
       maxHull: { attacker: start.attacker.maxHull, defender: start.defender.maxHull },
-      pt: (s, mv) => {
+      pt: (s) => {
         const p = proj.current;
-        const w = s === me ? (mv ? g.own.pos : g.ownBefore.pos) : mv ? g.foe.pos : g.foeBefore.pos;
+        const t = Math.min(1, Math.max(0, (performance.now() - m.start) / m.dur));
+        const w = poseAt(s === me ? m.own : m.foe, t).pos;
         return p ? p.pt(w) : { x: 200, y: 150 };
       },
     });
@@ -595,6 +616,7 @@ function useReplay(opts: {
     speed,
     log,
     fitPoints,
+    motion,
     frame:
       idx >= 0 && geos[idx]
         ? {
@@ -612,6 +634,7 @@ function useReplay(opts: {
     },
     pause: () => {
       clear();
+      setMotion(null);
       setPlaying(false);
       setMoved(true);
     },
@@ -628,6 +651,7 @@ function useReplay(opts: {
     skip: () => {
       clear();
       fx.current?.clear();
+      setMotion(null);
       setPlaying(false);
       setIdx(-1);
       setMoved(true);
@@ -640,6 +664,7 @@ function useReplay(opts: {
     },
     exit: () => {
       clear();
+      setMotion(null);
       fx.current?.clear();
       setPlaying(false);
       setIdx(-1);
@@ -835,6 +860,90 @@ function useBattleAmbience(status: string | null, key: string) {
   useEffect(() => () => stopAllLoops(), []);
 }
 
+/** Al terminar cada bloque: seguir combatiendo o saltar al disforme. */
+function DecisionGate({
+  state,
+  side,
+  foeName,
+  onContinue,
+  onJump,
+}: {
+  state: DuelState;
+  side: Side;
+  foeName: string;
+  onContinue: () => void;
+  onJump: () => Promise<void>;
+}) {
+  const own = state[side];
+  const foe = state[other(side)];
+  const voice = SECOND[own.fleet];
+  const [confirming, setConfirming] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const chance = warpChance(own);
+  const ownPct = Math.round((own.hull / own.maxHull) * 100);
+  const foePct = Math.round((foe.hull / foe.maxHull) * 100);
+  const advice =
+    ownPct <= 30 && foePct > ownPct
+      ? `${voice.lord}, el casco no aguantará mucho más. Yo saltaría.`
+      : foePct < ownPct
+        ? `${voice.lord}, ${foeName} está peor que nosotros. Es el momento de rematar.`
+        : `${voice.lord}, la batalla sigue abierta. Planifiquemos el siguiente asalto.`;
+  return (
+    <section
+      aria-label="Decisión tras el bloque"
+      className="space-y-3 rounded border border-amber-500/60 bg-amber-950/10 p-3"
+    >
+      <p className="text-sm">
+        <span className="text-primary">{voice.title}:</span> «{advice}»
+      </p>
+      <p className="text-xs text-muted-foreground">
+        Casco: tu nave {ownPct} % · {foeName} {foePct} %
+      </p>
+      {!confirming ? (
+        <div className="grid gap-2 sm:grid-cols-2">
+          <Button size="lg" onClick={onContinue}>
+            Planificar siguiente asalto
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+            className="border-fuchsia-500/70 text-fuchsia-200"
+            onClick={() => {
+              play("click");
+              setConfirming(true);
+            }}
+          >
+            Saltar al disforme ({chance} %)
+          </Button>
+        </div>
+      ) : (
+        <div role="alertdialog" aria-label="Confirmar salto" className="space-y-2">
+          <p className="text-sm text-fuchsia-200">
+            Si el salto sale bien ({chance} % con el casco actual) pierdes el duelo pero salvas la
+            nave. Si falla, la disformidad os daña y el combate sigue.
+          </p>
+          <div className="grid gap-2 sm:grid-cols-2">
+            <Button
+              variant="destructive"
+              disabled={busy}
+              onClick={async () => {
+                setBusy(true);
+                await onJump();
+                setBusy(false);
+              }}
+            >
+              {busy ? "Abriendo la brecha…" : "Confirmar salto"}
+            </Button>
+            <Button variant="outline" disabled={busy} onClick={() => setConfirming(false)}>
+              Volver
+            </Button>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
 // ───────────── Tablero del duelo (duelos reales, simulacros y archivo) ─────────────
 
 export interface DuelBoardProps {
@@ -901,6 +1010,9 @@ export function DuelBoard(p: DuelBoardProps) {
   const setPlan = useCallback((f: (p: BlockPlan) => BlockPlan) => setPlanState(f), []);
   const [selected, setSelected] = useState(0);
   const [tour, setTour] = useState(false);
+  /** Tras ver un bloque: ¿seguimos combatiendo o saltamos? (antes del primer bloque no se pregunta) */
+  const [decided, setDecided] = useState(p.replayEvents.length === 0);
+  useEffect(() => setDecided(p.replayEvents.length === 0), [p.block, p.replayEvents.length]);
   useEffect(() => {
     setPlanState(normalizePlan(suggestPlan(state, side, defaultStance(state, side)), state[side]));
     setStance(defaultStance(state, side));
@@ -939,7 +1051,8 @@ export function DuelBoard(p: DuelBoardProps) {
     if (p.canPlan && !tutorialSeen()) setTour(true);
   }, [p.canPlan]);
   const frame = replay.frame;
-  const showPlan = p.canPlan && !frame;
+  const needDecision = p.canPlan && !!p.onSubmit && !decided && p.status !== "pendiente";
+  const showPlan = p.canPlan && !frame && !needDecision;
   const shownPhase = replay.idx >= 0 ? p.replayEvents[replay.idx] : null;
   const last = fc.steps[fc.steps.length - 1];
   const selStep = fc.steps[selected];
@@ -989,6 +1102,7 @@ export function DuelBoard(p: DuelBoardProps) {
               steps={showPlan ? fc.steps : undefined}
               envelope={showPlan ? fc.envelope : undefined}
               selected={selected}
+              motion={replay.motion}
               fitPoints={
                 showPlan ? planningFit : replay.fitPoints.length ? replay.fitPoints : undefined
               }
@@ -1024,6 +1138,7 @@ export function DuelBoard(p: DuelBoardProps) {
               torpedoesOut={frame ? 0 : own.torpedoesInFlight}
               torpedoesIn={frame ? 0 : foe.torpedoesInFlight}
               compact
+              simple
               caption={
                 frame
                   ? "Puente de mando"
@@ -1060,6 +1175,35 @@ export function DuelBoard(p: DuelBoardProps) {
         <p role="status" className="rounded border border-amber-500/50 p-3 text-sm text-amber-200">
           Reproduciendo lo ocurrido… Cuando termine podrás dar las órdenes del siguiente bloque.
         </p>
+      ) : needDecision && p.onSubmit ? (
+        <DecisionGate
+          state={state}
+          side={side}
+          foeName={foeName}
+          onContinue={() => {
+            play("click");
+            replay.exit();
+            setSelected(0);
+            setDecided(true);
+            window.setTimeout(
+              () => mapBox.current?.scrollIntoView({ behavior: "smooth", block: "start" }),
+              60,
+            );
+          }}
+          onJump={async () => {
+            const jump: BlockPlan = {
+              ...plan,
+              phases: plan.phases.map((x, k) =>
+                k === 0 ? { ...maneuverMove("parar", own), action: "saltar" } : x,
+              ),
+            };
+            try {
+              await p.onSubmit?.(jump);
+            } catch (e) {
+              toast.error(e instanceof Error ? e.message : "No se pudo ordenar el salto");
+            }
+          }}
+        />
       ) : p.canPlan && p.onSubmit ? (
         <Planner
           state={state}

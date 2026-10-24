@@ -87,3 +87,11 @@ chaos vs drukhari          30%
 ```
 
 Código: `src/lib/naval3/` (motor, Segundo, narración, servidor), `src/components/ship/duel/` (Duel, Radar, fx, stage, SoundControls), `src/lib/sfx/`, simuladores `scripts/naval3-sim.ts` y `scripts/naval3-one.ts`.
+
+## Actualización: naves vistas desde arriba, movimiento continuo y decisión tras cada bloque
+
+- **Mapa táctico realista:** cada flota se dibuja como una nave vista desde arriba (`TopDownShip.tsx`, ilustración vectorial por facción con motores que brillan según la velocidad). Si se dispone de imágenes reales cenitales por flota, se pueden sustituir en ese componente.
+- **Movimiento fluido:** durante la repetición las naves recorren una curva suave (la misma que dibuja el pronóstico) a lo largo de toda la ronda, y las rondas se encadenan sin paradas. Los disparos salen de la posición real de la nave en ese instante.
+- **Decisión tras cada bloque:** al terminar la repetición aparecen dos botones: «Planificar siguiente asalto» (abre las órdenes y muestra en el mapa las guías de pronóstico) o «Saltar al disforme» (pide confirmación; si el salto sale bien se pierde el duelo pero se salva la nave).
+- **Radar simplificado:** el radar del puente queda como guía rápida: dónde está el enemigo, qué arco le apunta, el daño que hacemos y recibimos, y qué arco convendría ponerle.
+- **Música de campaña:** «Aproximación» y «Combate» se guardan en el bucket privado `musica` de Supabase (solo lectura para usuarios aprobados, subida solo para administradores). No están en el repositorio público. Migración: `20261024060000_music_storage.sql`.

@@ -1,4 +1,13 @@
 import { useEffect, useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { profileQuery } from "@/lib/profile";
+import {
+  MUSIC_FILES,
+  campaignMusicExists,
+  installCampaignMusic,
+  uploadCampaignMusic,
+} from "@/lib/sfx/campaign-music";
 import { Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +30,9 @@ const LAYERS: { id: Layer; label: string }[] = [
 
 /** Silencio y volumen por capas (se recuerda en este navegador). */
 export function SoundControls() {
+  const { data: profile } = useQuery(profileQuery);
+  const isAdmin = !!profile?.isAdmin;
+  useEffect(() => installCampaignMusic(), []);
   const [s, setS] = useState<AudioSettings>(getAudioSettings);
   const [open, setOpen] = useState(false);
 
@@ -76,8 +88,9 @@ export function SoundControls() {
             <MusicPicker slot="musica_tension" label="Aproximación" open={open} />
             <MusicPicker slot="musica_combate" label="Combate" open={open} />
             <p className="text-[10px] text-muted-foreground">
-              Se guarda en tu navegador; no se sube a la app ni la oye nadie más.
+              Se guarda en tu navegador y sustituye a la de la campaña solo para ti.
             </p>
+            {isAdmin && <CampaignMusicAdmin />}
           </div>
         </div>
       )}
@@ -126,6 +139,63 @@ function MusicPicker({ slot, label, open }: { slot: MusicSlot; label: string; op
           </Button>
         )}
       </div>
+    </div>
+  );
+}
+
+/** Administradores: música de la campaña para todos los jugadores aprobados (bucket privado). */
+function CampaignMusicAdmin() {
+  return (
+    <div className="space-y-2 border-t border-amber-500/40 pt-2">
+      <p className="text-amber-300">Música de la campaña (para todos los jugadores aprobados)</p>
+      <CampaignSlot slot="musica_tension" label="Aproximación" />
+      <CampaignSlot slot="musica_combate" label="Combate" />
+    </div>
+  );
+}
+
+function CampaignSlot({ slot, label }: { slot: MusicSlot; label: string }) {
+  const [has, setHas] = useState<boolean | null>(null);
+  const [busy, setBusy] = useState(false);
+  const input = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    void campaignMusicExists(slot).then(setHas);
+  }, [slot]);
+  return (
+    <div>
+      <p>
+        {label}:{" "}
+        <span className="text-primary">
+          {has ? MUSIC_FILES[slot] : has === false ? "sin subir" : "…"}
+        </span>
+      </p>
+      <input
+        ref={input}
+        type="file"
+        accept="audio/*"
+        className="hidden"
+        onChange={(e) => {
+          const f = e.target.files?.[0];
+          if (!f) return;
+          setBusy(true);
+          uploadCampaignMusic(slot, f)
+            .then(() => {
+              setHas(true);
+              toast.success(`Música de ${label.toLowerCase()} subida`);
+            })
+            .catch((err: Error) => toast.error(`No se pudo subir: ${err.message}`))
+            .finally(() => setBusy(false));
+        }}
+      />
+      <Button
+        size="sm"
+        variant="outline"
+        className="mt-0.5 h-7 px-2 text-[11px]"
+        disabled={busy}
+        onClick={() => input.current?.click()}
+      >
+        {busy ? "Subiendo…" : has ? "Reemplazar" : "Subir"}
+      </Button>
     </div>
   );
 }

@@ -79,6 +79,7 @@ export function Radar({
   caption,
   onFx,
   compact = false,
+  simple = false,
 }: {
   own: SideState;
   foe: SideState;
@@ -95,6 +96,8 @@ export function Radar({
   caption?: string;
   onFx?: (fx: FxEngine | null) => void;
   compact?: boolean;
+  /** Vista guía: solo lo esencial (dónde está el enemigo, qué arco le apunta y el consejo). */
+  simple?: boolean;
 }) {
   const g = geo ?? geoOf(own, foe);
   const band: Range = bandOf(g.distance);
@@ -116,6 +119,13 @@ export function Radar({
   const ours = WEDGES.map((w) => ({ ...w, v: rawFire(own, w.mid, band).value }));
   const theirs = WEDGES.map((w) => ({ ...w, v: rawFire(foe, w.mid, band).value }));
   const gp = ghost ? radarPoint(ghost.rel, ghost.distance) : null;
+  const relN = (((g.rel % 360) + 540) % 360) - 180;
+  const inWedge = (w: (typeof WEDGES)[number]) =>
+    w.arc === "popa" ? Math.abs(relN) >= 135 : relN >= w.from && relN < w.to;
+  const facing = WEDGES.find(inWedge) ?? WEDGES[0];
+  const ourNow = ours.find((w) => w.arc === facing.arc)?.v ?? 0;
+  const best = [...ours].sort((a, b) => b.v - a.v)[0]!;
+  const theirNow = rawFire(foe, g.relFoe, band).value;
   return (
     <figure className={`mx-auto w-full ${compact ? "max-w-[300px]" : "max-w-[440px]"}`}>
       <div className="relative">
@@ -142,7 +152,13 @@ export function Radar({
               key={w.arc}
               d={wedgePath(160, 160, 148, w.from, w.to)}
               className="fill-sky-400"
-              fillOpacity={Math.min(0.32, w.v / 22)}
+              fillOpacity={
+                simple
+                  ? !approaching && w.arc === facing.arc
+                    ? 0.38
+                    : 0.06
+                  : Math.min(0.32, w.v / 22)
+              }
             />
           ))}
           <g className="text-primary">
@@ -174,17 +190,18 @@ export function Radar({
             >
               <path d="M160 160 L312 160 A152 152 0 0 0 290 82 Z" fill="url(#sweep)" />
             </g>
-            {[0, 1, 2, 3].map((r) => (
-              <text
-                key={r}
-                x={160 + 4}
-                y={160 - EDGE_R[r]! + 10}
-                className="fill-current text-[8px] uppercase tracking-widest"
-                opacity={0.6}
-              >
-                {RANGE_NAMES[r]}
-              </text>
-            ))}
+            {!simple &&
+              [0, 1, 2, 3].map((r) => (
+                <text
+                  key={r}
+                  x={160 + 4}
+                  y={160 - EDGE_R[r]! + 10}
+                  className="fill-current text-[8px] uppercase tracking-widest"
+                  opacity={0.6}
+                >
+                  {RANGE_NAMES[r]}
+                </text>
+              ))}
             {/* Brújula: norte del sistema */}
             <g transform={`rotate(${-own.heading * 45} 160 160)`}>
               <text
@@ -221,7 +238,7 @@ export function Radar({
           </g>
           {/* Potencia de nuestras armas por arco */}
           {ours.map((w) =>
-            w.v > 0 ? (
+            w.v > 0 && !simple ? (
               <text
                 key={w.arc}
                 x={160 + 40 * Math.sin((w.mid * Math.PI) / 180)}
@@ -263,7 +280,7 @@ export function Radar({
               );
             })}
           {/* Pronóstico de las rondas */}
-          {ghosts && ghosts.length > 0 && (
+          {!simple && ghosts && ghosts.length > 0 && (
             <g>
               <polyline
                 points={[foeP, ...ghosts.map((x) => radarPoint(x.rel, x.distance))]
@@ -309,16 +326,18 @@ export function Radar({
           <g
             style={{
               transform: `translate(${foeP.x}px, ${foeP.y}px)`,
-              transition: "transform 1100ms cubic-bezier(.4,0,.2,1)",
+              transition: "transform 2600ms cubic-bezier(.45,0,.55,1)",
             }}
           >
+            {simple && <circle r="11" className="fill-red-500/20 motion-safe:animate-ping" />}
             <g
               style={{
                 transform: `rotate(${g.foeHeading}deg)`,
-                transition: "transform 1100ms cubic-bezier(.4,0,.2,1)",
+                transition: "transform 2600ms cubic-bezier(.45,0,.55,1)",
               }}
             >
               {!approaching &&
+                !simple &&
                 theirs.map((w) =>
                   w.v > 0 ? (
                     <path
@@ -359,6 +378,42 @@ export function Radar({
           />
         )}
       </div>
+      {simple && !approaching && (
+        <dl className="mt-2 grid grid-cols-3 gap-1 text-center text-[11px]">
+          <div className="rounded border border-primary/30 p-1">
+            <dt className="text-muted-foreground">Enemigo</dt>
+            <dd className="font-semibold text-red-200">
+              {facing.arc === "proa"
+                ? "a proa"
+                : facing.arc === "popa"
+                  ? "a popa"
+                  : `a ${facing.arc}`}{" "}
+              · {RANGE_NAMES[band]}
+            </dd>
+          </div>
+          <div className="rounded border border-sky-500/40 p-1">
+            <dt className="text-muted-foreground">Le apuntamos</dt>
+            <dd
+              className={`font-semibold ${ourNow >= theirNow ? "text-emerald-300" : "text-sky-200"}`}
+            >
+              {ourNow.toFixed(0)} de daño
+            </dd>
+          </div>
+          <div className="rounded border border-red-500/40 p-1">
+            <dt className="text-muted-foreground">Nos apunta</dt>
+            <dd className={`font-semibold ${theirNow > ourNow ? "text-red-300" : "text-red-200"}`}>
+              {theirNow.toFixed(0)} de daño
+            </dd>
+          </div>
+          {best.arc !== facing.arc && best.v > ourNow && (
+            <p className="col-span-3 text-amber-200">
+              Guía: poned al enemigo a{" "}
+              {best.arc === "proa" ? "proa" : best.arc === "popa" ? "popa" : best.arc} (
+              {best.v.toFixed(0)} de daño).
+            </p>
+          )}
+        </dl>
+      )}
       {caption && (
         <figcaption className="mt-1 text-center text-xs text-muted-foreground">
           {caption}

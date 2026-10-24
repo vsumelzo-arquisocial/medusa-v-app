@@ -171,7 +171,7 @@ export function startLoop(id: LoopId, fade = 1.5) {
     loops.set(id, { src: [], gain });
     const source =
       id === "musica_combate" || id === "musica_tension"
-        ? loadCustomMusic(id).then((c) => c ?? buffer(file))
+        ? loadCustomMusic(id).then(async (c) => c ?? (await remoteMusic(id)) ?? buffer(file))
         : buffer(file);
     void source.then((b) => {
       const entry = loops.get(id);
@@ -381,6 +381,38 @@ export async function customMusicName(slot: MusicSlot = "musica_combate"): Promi
 export async function setCustomMusic(file: File | null, slot: MusicSlot = "musica_combate") {
   await idbSet(slot, file ? { name: file.name, blob: file } : undefined);
   customMusic.delete(slot);
+  if (loops.has(slot)) {
+    stopLoop(slot, 0.5);
+    setTimeout(() => startLoop(slot, 1.5), 700);
+  }
+}
+
+// ───────────── Música de la campaña (almacenamiento privado del servidor) ─────────────
+
+type RemoteResolver = (slot: MusicSlot) => Promise<string | null>;
+let remoteResolver: RemoteResolver | null = null;
+const remoteCache = new Map<MusicSlot, Promise<AudioBuffer | null>>();
+
+/** La app indica cómo obtener la URL (firmada) de la música de la campaña. */
+export function setRemoteMusicResolver(fn: RemoteResolver) {
+  remoteResolver = fn;
+}
+
+function remoteMusic(slot: MusicSlot): Promise<AudioBuffer | null> {
+  if (!remoteResolver) return Promise.resolve(null);
+  let p = remoteCache.get(slot);
+  if (!p) {
+    p = remoteResolver(slot)
+      .then((url) => (url ? buffer(url) : null))
+      .catch(() => null);
+    remoteCache.set(slot, p);
+  }
+  return p;
+}
+
+/** Tras subir música nueva: olvidar la caché y reiniciar el bucle si suena. */
+export function refreshRemoteMusic(slot: MusicSlot) {
+  remoteCache.delete(slot);
   if (loops.has(slot)) {
     stopLoop(slot, 0.5);
     setTimeout(() => startLoop(slot, 1.5), 700);
