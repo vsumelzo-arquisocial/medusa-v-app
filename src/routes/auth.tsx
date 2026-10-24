@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -99,6 +99,9 @@ function AuthPage() {
             </Button>
           )}
         </Panel>
+        <Button asChild variant="outline" className="w-full uppercase tracking-widest">
+          <Link to="/dashboard">Entrar al dashboard</Link>
+        </Button>
         <p className="text-center text-xs text-muted-foreground">&gt; Las cuentas nuevas deben ser aprobadas por un administrador del club.</p>
       </div>
     </main>

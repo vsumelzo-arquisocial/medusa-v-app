@@ -344,3 +344,9 @@ html[data-fleet] h1,html[data-fleet] h2,html[data-fleet] h3 { letter-spacing:0; 
 .orbit-holo-path .orbit-holo__body { animation: orbit-holo-flip 40s steps(1) infinite; }
 @keyframes orbit-holo-flip { 0% { transform: scaleX(1) } 50% { transform: scaleX(-1) } }
 @media (prefers-reduced-motion: reduce) { .orbit-holo-path { animation: none; left: 82%; top: 62%; transform: translate(-50%, -50%); } }
+
+/* ───── Dashboard de televisor ───── */
+.dash-fade { animation: dash-fade 1.2s ease-out; }
+@keyframes dash-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.dash .dash-tool { opacity: .25; transition: opacity .3s; }
+.dash:hover .dash-tool, .dash .dash-tool:focus-visible { opacity: 1; }
