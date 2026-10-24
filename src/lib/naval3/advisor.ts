@@ -1,38 +1,63 @@
 /**
- * El Segundo al mando: analiza distancias, propone planes y avisa de errores.
- * Lo usan la interfaz (consejos) y la IA (bot) con las mismas reglas.
+ * El Segundo al mando: lee la geometría (distancia, arcos, rumbos), propone planes y avisa de errores.
+ * La interfaz (consejos) y la IA (bot) usan las mismas reglas.
  */
 import { FLEET_PROFILES, PHASES_PER_BLOCK, SECOND, TORPEDO_DAMAGE } from "./factions";
-import { absorbed, fireDodgeFactor, nextRange, other, stats, warpChance, type Rng } from "./engine";
 import {
+  bandOf,
+  dist,
+  expectedHit,
+  legalize,
+  mainArc,
+  moveBoth,
+  normalizeState,
+  other,
+  rawFire,
+  relBearing,
+  stats,
+  unitsFor,
+  warpChance,
+  type Rng,
+} from "./engine";
+import {
+  ARC_NAMES,
   RANGE_NAMES,
   type Action,
+  type Arc,
   type BlockPlan,
   type DuelState,
-  type Move,
   type PhasePlan,
   type Range,
   type Side,
   type SideState,
+  type Speed,
+  type Turn,
+  type Helm,
 } from "./types";
 
 export type Stance = "asalto" | "optima" | "defensiva";
 
 export const STANCES: Record<Stance, { label: string; text: string }> = {
-  asalto: { label: "Al abordaje", text: "Cerrar distancia, embestir y luchar cuerpo a cuerpo." },
-  optima: {
-    label: "Nuestra distancia",
-    text: "Buscar la banda donde les hacemos más daño del que recibimos.",
-  },
-  defensiva: { label: "Resistir", text: "Alejarnos, esquivar sus salvas y reparar. Ganar tiempo." },
+  asalto: { label: "Al abordaje", text: "Forzar motores, cerrar distancia y embestir." },
+  optima: { label: "Nuestra distancia", text: "Buscar la banda y el arco donde les superamos." },
+  defensiva: { label: "Resistir", text: "Alejarnos, no darles la popa, esquivar y reparar." },
 };
 
-/** Daño neto esperado que hace `a` a `b` en una distancia (disparo tras escudos). */
-export function expectedFire(a: SideState, b: SideState, r: Range): number {
-  let raw = stats(a).fire[r];
-  if (b.fleet === "aeldari" && r >= 2) raw *= 0.7;
-  raw *= fireDodgeFactor(b.fleet);
-  return Math.round((raw - absorbed(raw, stats(b).shields)) * 10) / 10;
+const ARCS_BY_GROUP: { arc: Arc; label: string }[] = [
+  { arc: "proa", label: "proa" },
+  { arc: "estribor", label: "costados" },
+  { arc: "popa", label: "popa" },
+];
+
+/** Mejor daño posible en cada banda (eligiendo el mejor arco), contra un blanco sin modificadores. */
+function bestFire(s: SideState, band: Range): { value: number; arc: Arc } {
+  let best = { value: 0, arc: "proa" as Arc };
+  for (const g of ARCS_BY_GROUP) {
+    const rel = g.arc === "proa" ? 0 : g.arc === "popa" ? 180 : 90;
+    const v = rawFire(s, rel, band).value;
+    if (v > best.value) best = { value: v, arc: g.arc };
+  }
+  return best;
 }
 
 export interface RangeRead {
@@ -40,13 +65,17 @@ export interface RangeRead {
   ours: number;
   theirs: number;
   edge: number;
+  ourArc: Arc;
+  theirArc: Arc;
 }
 
 export function rangeTable(own: SideState, foe: SideState): RangeRead[] {
   return ([0, 1, 2, 3] as Range[]).map((r) => {
-    const ours = expectedFire(own, foe, r);
-    const theirs = expectedFire(foe, own, r);
-    return { range: r, ours, theirs, edge: ours - theirs };
+    const o = bestFire(own, r);
+    const t = bestFire(foe, r);
+    const ours = Math.round(o.value * 10) / 10;
+    const theirs = Math.round(t.value * 10) / 10;
+    return { range: r, ours, theirs, edge: ours - theirs, ourArc: o.arc, theirArc: t.arc };
   });
 }
 
@@ -56,62 +85,133 @@ export function bestRange(own: SideState, foe: SideState): Range {
     .range;
 }
 
-const toward = (from: Range, to: Range): Move => (to < from ? -1 : to > from ? 1 : 0);
+export const arcLabel = (a: Arc) => (a === "babor" || a === "estribor" ? "costado" : a);
 
-/** Distancias previstas del plan si el rival busca su distancia ideal. */
-export function predictRanges(state: DuelState, side: Side, plan: PhasePlan[]): Range[] {
-  const own = state[side];
-  const foe = state[other(side)];
-  const foeWant = bestRange(foe, own);
-  const os = stats(own).speed;
-  const fs = stats(foe).speed;
-  let r = state.range;
+export interface PathStep {
+  band: Range;
+  distance: number;
+  /** Ángulo del enemigo respecto a nuestra proa (positivo: estribor). */
+  rel: number;
+  /** Ángulo nuestro respecto a su proa. */
+  relFoe: number;
+  ourHit: number;
+  theirHit: number;
+  own: SideState;
+  foe: SideState;
+  minD: number;
+  /** El rival no ha decidido aún: se supone que mantiene rumbo a avante. */
+}
+
+const FOE_DEFAULT = { speed: 1 as Speed, turn: 0 as Turn };
+
+/** Recorrido previsto del plan si el rival mantiene rumbo a avante. */
+export function predictPath(input: DuelState, side: Side, plan: PhasePlan[]): PathStep[] {
+  const state = normalizeState(input);
+  let own = structuredClone(state[side]);
+  let foe = structuredClone(state[other(side)]);
   return plan.map((p) => {
-    const m: Move = p.action === "embestir" ? -1 : p.move;
-    const fm = toward(r, foeWant);
-    r = side === "attacker" ? nextRange(r, m, os, fm, fs) : nextRange(r, fm, fs, m, os);
-    if (p.action === "embestir" && r <= 1) r = 0;
-    return r;
+    const step = simulateStep(own, foe, p, FOE_DEFAULT);
+    own = step.own;
+    foe = step.foe;
+    return step;
   });
 }
 
+function simulateStep(
+  own0: SideState,
+  foe0: SideState,
+  p: PhasePlan,
+  foeMove: { speed: Speed; turn: Turn },
+): PathStep {
+  const own = structuredClone(own0);
+  const foe = structuredClone(foe0);
+  const legal = legalize(own, p, foe.pos);
+  const minD = moveBoth(own, foe, legal, foeMove);
+  const d = dist(own.pos, foe.pos);
+  const band = bandOf(d);
+  let ourHit = expectedHit(own, foe, band);
+  if (legal.speed === 2) ourHit *= 0.5;
+  return {
+    band,
+    distance: d,
+    rel: relBearing(own, foe.pos),
+    relFoe: relBearing(foe, own.pos),
+    ourHit,
+    theirHit: expectedHit(foe, own, band),
+    own,
+    foe,
+    minD,
+  };
+}
+
+/** Órdenes de timón que el Segundo considera (intenciones: robustas aunque el rival maniobre). */
+function candidates(): { speed: Speed; turn: Helm }[] {
+  const out: { speed: Speed; turn: Helm }[] = [{ speed: 2, turn: 0 }];
+  for (const speed of [1, 0] as Speed[])
+    for (const turn of ["encarar", "costado", "huir", 0] as Helm[]) out.push({ speed, turn });
+  return out;
+}
+
+function score(step: PathStep, stance: Stance, own: SideState, want: Range): number {
+  const hullPct = own.hull / own.maxHull;
+  const danger = stance === "defensiva" ? 1.6 : hullPct < 0.4 ? 1.3 : 1;
+  let v = step.ourHit - danger * step.theirHit;
+  if (stance === "asalto") v -= 0.6 * step.distance;
+  else if (stance === "defensiva") v += 0.25 * step.distance;
+  else v -= 0.3 * Math.abs(step.band - want);
+  return v;
+}
+
 /** Plan sugerido por el Segundo para una postura. */
-export function suggestPlan(state: DuelState, side: Side, stance: Stance, rng?: Rng): BlockPlan {
-  const own = state[side];
-  const foe = state[other(side)];
-  const os = stats(own).speed;
-  const fs = stats(foe).speed;
-  const foeWant = bestRange(foe, own);
-  const want: Range = stance === "asalto" ? 0 : stance === "defensiva" ? 3 : bestRange(own, foe);
-  const ramStrong = stats(own).ram >= stats(own).fire[0];
-  let r = state.range;
+export function suggestPlan(input: DuelState, side: Side, stance: Stance, rng?: Rng): BlockPlan {
+  const state = normalizeState(input);
+  let own = structuredClone(state[side]);
+  let foe = structuredClone(state[other(side)]);
+  const want = bestRange(own, foe);
+  const ramStrong = stats(own).ram >= 6;
   let loaded = own.torpedoesLoaded;
   let foeInFlight = foe.torpedoesInFlight > 0;
-  let hull = own.hull;
   const phases: PhasePlan[] = [];
   for (let i = 0; i < PHASES_PER_BLOCK; i++) {
-    // Elige la maniobra que, previendo al rival, nos deja más cerca de la distancia deseada.
-    const fm = toward(r, foeWant);
-    const land = (m: Move) =>
-      side === "attacker" ? nextRange(r, m, os, fm, fs) : nextRange(r, fm, fs, m, os);
-    let move: Move = ([0, -1, 1] as Move[]).reduce((best, m) =>
-      Math.abs(land(m) - want) < Math.abs(land(best) - want) ? m : best,
-    );
-    if (rng && rng() < 0.12) move = (Math.floor(rng() * 3) - 1) as Move;
-    const after = land(move);
-    let action: Action;
-    if (foeInFlight && (stance === "defensiva" || hull < own.maxHull * 0.4)) action = "evasion";
-    else if (stance === "defensiva" && hull < own.maxHull * 0.7 && after >= 2) action = "reparar";
-    else if (after <= 1 && stance === "asalto" && ramStrong && i % 2 === 0) action = "embestir";
-    else if (loaded && (after >= 2 || stance === "asalto")) action = "torpedos";
-    else if (!loaded && expectedFire(own, foe, after) <= 3) action = "recargar";
-    else action = "fuego";
-    if (action === "torpedos") loaded = false;
-    if (action === "recargar") loaded = true;
-    if (action === "reparar") hull += stats(own).repair;
+    // ¿Embestida posible ahora?
+    const prowNow = Math.abs(relBearing(own, foe.pos));
+    const ramStep = simulateStep(own, foe, { speed: 2, turn: 0, action: "embestir" }, FOE_DEFAULT);
+    const canRam = prowNow <= 45 && ramStep.minD <= 2;
+    let chosen: PhasePlan;
+    let step: PathStep;
+    if (
+      canRam &&
+      (stance === "asalto" || (ramStrong && stance === "optima" && own.hull > foe.hull))
+    ) {
+      chosen = { speed: 2, turn: 0, action: "embestir" };
+      step = ramStep;
+    } else {
+      let best: { move: { speed: Speed; turn: Helm }; step: PathStep; v: number } | null = null;
+      for (const move of candidates()) {
+        const st = simulateStep(own, foe, { ...move, action: "fuego" }, FOE_DEFAULT);
+        let v = score(st, stance, own, want);
+        if (rng) v += (rng() - 0.5) * 1.2;
+        if (!best || v > best.v) best = { move, step: st, v };
+      }
+      step = best!.step;
+      let action: Action;
+      const prowAfter = Math.abs(step.rel);
+      if (foeInFlight && (stance === "defensiva" || own.hull < own.maxHull * 0.4))
+        action = "evasion";
+      else if (stance === "defensiva" && own.hull < own.maxHull * 0.7 && step.theirHit < 1.5)
+        action = "reparar";
+      else if (loaded && prowAfter <= 40 && step.band >= 1) action = "torpedos";
+      else if (!loaded && stats(own).torpedoes > 0 && step.ourHit <= 2) action = "recargar";
+      else action = "fuego";
+      chosen = { ...best!.move, action };
+    }
+    if (chosen.action === "torpedos") loaded = false;
+    if (chosen.action === "recargar") loaded = true;
+    if (chosen.action === "reparar") own.hull = Math.min(own.maxHull, own.hull + stats(own).repair);
     foeInFlight = false;
-    phases.push({ move: action === "embestir" ? -1 : move, action });
-    r = action === "embestir" && after <= 1 ? 0 : after;
+    phases.push(chosen);
+    own = { ...step.own, hull: own.hull, torpedoesLoaded: loaded };
+    foe = step.foe;
   }
   return { phases, emergencyJump: 30 };
 }
@@ -121,8 +221,14 @@ export interface Advice {
   text: string;
 }
 
+const sideName = (rel: number) => {
+  const a = mainArc(rel);
+  return a === "proa" ? "a proa" : a === "popa" ? "a popa" : `a ${ARC_NAMES[a]}`;
+};
+
 /** Valoración general antes de planificar. */
-export function briefing(state: DuelState, side: Side): Advice[] {
+export function briefing(input: DuelState, side: Side): Advice[] {
+  const state = normalizeState(input);
   const own = state[side];
   const foe = state[other(side)];
   const voice = SECOND[own.fleet];
@@ -142,25 +248,51 @@ export function briefing(state: DuelState, side: Side): Advice[] {
       tone: "danger",
       text: `${voice.lord}, no aguantaremos mucho más. Os ruego que consideréis el salto disforme: ${chance} % de éxito ahora, y cada impacto lo empeora.`,
     });
+  const d = dist(own.pos, foe.pos);
+  const rel = relBearing(own, foe.pos);
+  const relFoe = relBearing(foe, own.pos);
   out.push({
     tone: "info",
-    text: `Somos más eficaces en ${RANGE_NAMES[ours]} (${t[ours]!.ours} de daño contra ${t[ours]!.theirs}). Ellos prefieren ${RANGE_NAMES[theirs]}.`,
+    text: `Contacto ${sideName(rel)}, a ${d.toFixed(1)} u (${RANGE_NAMES[bandOf(d)]}). Nosotros estamos ${sideName(relFoe)} de ellos.`,
   });
-  const os = stats(own).speed;
-  const fs = stats(foe).speed;
   out.push({
-    tone: os > fs ? "good" : os < fs ? "warn" : "info",
-    text:
-      os > fs
-        ? "Somos más rápidos: si tiramos en sentidos opuestos, decidimos nosotros la distancia."
-        : os < fs
-          ? "Son más rápidos: si ellos quieren alejarse o acercarse, no podremos impedirlo."
-          : "Misma velocidad: si tiramos en sentidos opuestos, la distancia no cambia.",
+    tone: "info",
+    text: `Donde más les superamos: ${arcLabel(t[ours]!.ourArc)} en ${RANGE_NAMES[ours]} (${t[ours]!.ours} contra ${t[ours]!.theirs}). Ellos querrán usar su ${arcLabel(t[theirs]!.theirArc)} en ${RANGE_NAMES[theirs]}.`,
+  });
+  const theirArc = mainArc(relFoe);
+  if (theirArc !== "popa" && t[bandOf(d)]!.theirArc === arcLabelToArc(theirArc))
+    out.push({
+      tone: "warn",
+      text: `Estamos en su ${arcLabel(theirArc)}, justo donde más pegan. Cambiemos de rumbo.`,
+    });
+  if (theirArc === "popa")
+    out.push({
+      tone: "good",
+      text: "¡Estamos a su popa! Sus motores están expuestos: cada impacto cuenta más.",
+    });
+  if (mainArc(rel) === "popa")
+    out.push({
+      tone: "danger",
+      text: "Les damos la popa: nuestros motores reciben más daño. ¡Hay que virar!",
+    });
+  const os = unitsFor(own, 1);
+  const ob = unitsFor(own, 2);
+  const fs = unitsFor(foe, 1);
+  const fb = unitsFor(foe, 2);
+  out.push({
+    tone: ob > fb ? "good" : ob < fb ? "warn" : "info",
+    text: `Velocidad: ${os} u/fase (avante toda ${ob}); ellos ${fs} (${fb}). ${
+      ob > fb
+        ? "Podemos darles caza o escapar si forzamos motores."
+        : ob < fb
+          ? "Si deciden huir o perseguirnos, no podremos impedirlo."
+          : "Igualados: la distancia la decide quien fuerce motores."
+    } Giramos ${stats(own).agility * 45}° por fase (${Math.min(2, stats(own).agility + 1) * 45}° parados).`,
   });
   if (foe.torpedoesInFlight)
     out.push({
       tone: "warn",
-      text: `¡${foe.torpedoesInFlight} torpedos enemigos en vuelo! Impactarán en la primera fase. Evasión o alejarse ayuda a esquivarlos.`,
+      text: `¡${foe.torpedoesInFlight} torpedos enemigos en vuelo! Impactarán en la primera fase. Evasión o avante toda ayudan a esquivarlos.`,
     });
   if (!own.torpedoesLoaded)
     out.push({
@@ -172,24 +304,30 @@ export function briefing(state: DuelState, side: Side): Advice[] {
   return out;
 }
 
+function arcLabelToArc(a: Arc): Arc {
+  return a === "babor" ? "estribor" : a;
+}
+
 /** Comentario del Segundo para una fase concreta del plan. */
 export function phaseAdvice(
-  state: DuelState,
+  input: DuelState,
   side: Side,
   plan: PhasePlan[],
   i: number,
-  ranges: Range[],
+  path: PathStep[],
 ): Advice | null {
+  const state = normalizeState(input);
   const own = state[side];
-  const foe = state[other(side)];
   const p = plan[i]!;
-  const r = ranges[i]!;
+  const step = path[i]!;
+  const before = i === 0 ? null : path[i - 1]!;
+  const ownBefore = before?.own ?? own;
+  const foeBefore = before?.foe ?? state[other(side)];
   let loaded = own.torpedoesLoaded;
   for (let k = 0; k < i; k++) {
     if (plan[k]!.action === "torpedos" && loaded) loaded = false;
     else if (plan[k]!.action === "torpedos" || plan[k]!.action === "recargar") loaded = true;
   }
-  const t = rangeTable(own, foe)[r]!;
   if (p.action === "saltar")
     return {
       tone: "warn",
@@ -197,43 +335,63 @@ export function phaseAdvice(
     };
   if (p.action === "torpedos" && !loaded)
     return { tone: "danger", text: "Tubos vacíos: esta orden se convertirá en recarga." };
-  if (p.action === "embestir" && r > 1)
+  if (p.action === "torpedos" && Math.abs(step.rel) > 45)
     return {
       tone: "danger",
-      text: `Probablemente estaremos en ${RANGE_NAMES[r]}: no llegaremos a embestir.`,
+      text: `El enemigo quedará ${sideName(step.rel)}: los tubos solo apuntan a proa. Gira hacia él antes de lanzar.`,
     };
-  if (p.action === "embestir")
+  if (p.action === "embestir") {
+    const prow = Math.abs(relBearing({ ...ownBefore, heading: ownBefore.heading }, foeBefore.pos));
+    if (prow > 45)
+      return {
+        tone: "danger",
+        text: "No le tenemos a proa: la embestida es imposible. Gira primero.",
+      };
+    if (step.minD > 2)
+      return {
+        tone: "danger",
+        text: `Ni a avante toda le alcanzamos (quedaremos a ${step.distance.toFixed(1)} u).`,
+      };
     return {
       tone: "good",
-      text: `Embestida: ~${stats(own).ram} de daño si no esquivan (${FLEET_PROFILES[foe.fleet].dodge} % de esquiva).`,
+      text: `¡Embestida! ~${stats(own).ram} de daño si no esquivan (${FLEET_PROFILES[foeBefore.fleet].dodge} % de esquiva).`,
     };
+  }
   if (p.action === "torpedos")
-    return r <= 1
+    return step.band <= 1
       ? {
           tone: "good",
-          text: `Salva a quemarropa: impacto inmediato y les cuesta esquivar. Hasta ${stats(own).torpedoes * TORPEDO_DAMAGE} de daño.`,
+          text: `Salva a quemarropa por la proa: impacto inmediato. Hasta ${stats(own).torpedoes * TORPEDO_DAMAGE} de daño.`,
         }
       : {
           tone: "info",
-          text: `Salva de ${stats(own).torpedoes}: impactará en la fase siguiente. Si esquivan o se alejan, fallarán más.`,
+          text: `Salva de ${stats(own).torpedoes} por la proa: impactará en la fase siguiente.`,
         };
   if (p.action === "reparar" && own.hull >= own.maxHull)
     return { tone: "warn", text: "El casco está intacto: reparar no sirve de nada ahora." };
+  if (mainArc(step.rel) === "popa" && step.theirHit > 1)
+    return { tone: "danger", text: "Les daremos la popa: nuestros motores quedarán expuestos." };
+  if (p.speed === 2 && (p.action === "fuego" || p.action === "recargar"))
+    return {
+      tone: "info",
+      text: `Avante toda: ${unitsFor(own, 2)} u de golpe, sin girar y con el fuego a la mitad (${step.ourHit.toFixed(1)}).`,
+    };
   if (p.action === "fuego" || p.action === "recargar") {
-    if (t.ours <= 1)
+    const arcs = arcLabel(mainArc(step.rel));
+    if (step.ourHit < 1)
       return {
         tone: "danger",
-        text: `En ${RANGE_NAMES[r]} nuestras baterías apenas les hacen nada (${t.ours}).`,
+        text: `Con el enemigo ${sideName(step.rel)} en ${RANGE_NAMES[step.band]}, nuestras armas de ${arcs} apenas le hacen nada.`,
       };
-    if (t.edge < -2)
+    if (step.theirHit - step.ourHit > 2)
       return {
         tone: "warn",
-        text: `En ${RANGE_NAMES[r]} ellos nos hacen más daño (${t.theirs}) que nosotros a ellos (${t.ours}).`,
+        text: `Ellos nos harán más daño (${step.theirHit.toFixed(1)}) que nosotros con la ${arcs} (${step.ourHit.toFixed(1)}).`,
       };
-    if (t.edge > 1)
+    if (step.ourHit - step.theirHit > 1)
       return {
         tone: "good",
-        text: `En ${RANGE_NAMES[r]} les superamos: ${t.ours} contra ${t.theirs}.`,
+        text: `Buena posición: disparamos con la ${arcs} (${step.ourHit.toFixed(1)}) y ellos solo ${step.theirHit.toFixed(1)}.`,
       };
   }
   return null;
@@ -241,11 +399,12 @@ export function phaseAdvice(
 
 /** IA: elige postura según la situación y la ejecuta con algo de ruido. */
 export function botPlan(state: DuelState, side: Side, rng: Rng, noise = true): BlockPlan {
-  const own = state[side];
-  const foe = state[other(side)];
+  const s = normalizeState(state);
+  const own = s[side];
+  const foe = s[other(side)];
   const pct = own.hull / own.maxHull;
   const ours = bestRange(own, foe);
   const stance: Stance = pct < 0.3 && rng() < 0.5 ? "defensiva" : ours === 0 ? "asalto" : "optima";
-  const plan = suggestPlan(state, side, stance, noise ? rng : undefined);
+  const plan = suggestPlan(s, side, stance, noise ? rng : undefined);
   return { ...plan, emergencyJump: pct < 0.5 ? 25 : 20 };
 }

@@ -1,26 +1,43 @@
 import type { FleetId } from "@/lib/ship-identity";
 
-/** Atributos de combate de la nave capital de cada flota (docs/combate-naval-v3.md). */
+/** Daño por distancia: [Contacto, Cerca, Media, Lejos]. */
+export type RangeTable = [number, number, number, number];
+
+/**
+ * Nave capital de cada flota (docs/combate-naval-v3.md).
+ * Armas por arco al estilo Battlefleet Gothic: proa, costados (babor y estribor) y popa.
+ */
 export interface FleetProfile {
+  /** Velocidad en unidades por fase a "avante". */
   speed: number;
-  /** Daño base del disparo en cada distancia: [Contacto, Cerca, Media, Lejos]. */
-  fire: [number, number, number, number];
-  /** Daño de disparo que absorben los escudos cada fase. */
+  /** Giros de 45° permitidos por fase (1 = 45°, 2 = 90°). */
+  agility: number;
+  /** Unidades extra con "avante toda". */
+  burn: number;
+  prow: RangeTable;
+  prowName: string;
+  broadside: RangeTable;
+  broadsideName: string;
+  /** Multiplicador de todo el disparo recibido (campos de sombras). */
+  fireReduction?: number;
+  /** Armas de popa (casi nadie las tiene). */
+  stern: RangeTable;
+  /** Las armas disparan en todos los arcos (necrones). */
+  allArcs?: boolean;
   shields: number;
+  /** Multiplicador del daño recibido por la proa (proas blindadas, deflectores). */
+  prowArmour: number;
+  /** Multiplicador del daño recibido por la popa (motores expuestos). */
+  sternWeakness: number;
   /** Probabilidad base (%) de esquivar cada torpedo y una embestida. */
   dodge: number;
-  /** Torpedos por salva (cada uno hace TORPEDO_DAMAGE). */
+  /** Torpedos por salva (por la proa). */
   torpedoes: number;
   torpedoName: string;
-  /** Daño base de una embestida. */
   ram: number;
-  /** Fracción del daño de embestida que sufre quien embiste. */
   ramRecoil: number;
-  /** Modificador (puntos %) a la probabilidad de salto disforme. */
   warp: number;
-  /** Casco que regenera al final de cada fase. */
   regen: number;
-  /** Varianza del disparo: el daño se multiplica por 1 ± varianza. */
   variance: number;
   trait: string;
   traitText: string;
@@ -30,28 +47,50 @@ export const TORPEDO_DAMAGE = 2;
 export const PHASES_PER_BLOCK = 5;
 export const MAX_BLOCKS = 4;
 export const EVASION_BONUS = 30;
-export const START_RANGE = 3;
+/** Distancia inicial y máxima (unidades). Bandas: Contacto < 2 ≤ Cerca < 5 ≤ Media < 9 ≤ Lejos. */
+export const START_DISTANCE = 12;
+export const MAX_DISTANCE = 15;
+export const BAND_EDGES = [2, 5, 9] as const;
+
+const Z: RangeTable = [0, 0, 0, 0];
 
 export const FLEET_PROFILES: Record<FleetId, FleetProfile> = {
   imperium: {
-    speed: 2,
-    fire: [5, 5, 4, 2],
+    speed: 3,
+    agility: 1,
+    burn: 3,
+    prow: [3, 4, 3, 3],
+    prowName: "lanza de proa y torpedos",
+    broadside: [4, 4, 2, 1],
+    broadsideName: "baterías de macrocañones",
+    stern: Z,
     shields: 1,
+    prowArmour: 0.7,
+    sternWeakness: 1.4,
     dodge: 15,
     torpedoes: 4,
     torpedoName: "torpedos de plasma",
-    ram: 7,
-    ramRecoil: 0.4,
+    ram: 8,
+    ramRecoil: 0.3,
     warp: 0,
     regen: 0,
     variance: 0.3,
-    trait: "Proa de asalto",
-    traitText: "Sus embestidas son devastadoras y lleva la salva de torpedos más pesada.",
+    trait: "Proa blindada",
+    traitText:
+      "Proa acorazada (−30 % de daño por delante), lanza y torpedos de proa y macrocañones en los costados: ataca de frente y remata de costado.",
   },
   chaos: {
-    speed: 3,
-    fire: [3, 4, 4, 4],
+    speed: 4,
+    agility: 1,
+    burn: 3,
+    prow: [2, 2, 2, 2],
+    prowName: "cañones de proa",
+    broadside: [4, 5, 5, 4],
+    broadsideName: "lanzas y baterías de largo alcance",
+    stern: Z,
     shields: 1,
+    prowArmour: 1,
+    sternWeakness: 1.4,
     dodge: 20,
     torpedoes: 3,
     torpedoName: "torpedos infernales",
@@ -60,29 +99,45 @@ export const FLEET_PROFILES: Record<FleetId, FleetProfile> = {
     warp: 5,
     regen: 0,
     variance: 0.3,
-    trait: "Lanzas de largo alcance",
-    traitText: "Golpea igual de fuerte en Media y Lejos; prefiere mantener la distancia.",
+    trait: "Andanadas de largo alcance",
+    traitText: "Rápidos y letales de costado a gran distancia; su proa apenas muerde.",
   },
   tau: {
-    speed: 2,
-    fire: [2, 3, 5, 7],
+    speed: 3,
+    agility: 1,
+    burn: 2,
+    prow: [2, 3, 5, 6],
+    prowName: "cañones de riel y misiles",
+    broadside: [1, 2, 2, 2],
+    broadsideName: "torretas de defensa",
+    stern: Z,
     shields: 2,
+    prowArmour: 0.65,
+    sternWeakness: 1.5,
     dodge: 20,
-    torpedoes: 3,
+    torpedoes: 4,
     torpedoName: "misiles buscadores",
     ram: 2,
     ramRecoil: 0.5,
     warp: -10,
     regen: 0,
     variance: 0.25,
-    trait: "Misiles buscadores",
+    trait: "Deflector frontal",
     traitText:
-      "Sus misiles reducen a la mitad la esquiva del rival. Letal de lejos, frágil de cerca.",
+      "Todo su poder está en la proa: misiles que reducen a la mitad la esquiva del rival, cañones de riel letales de lejos y un deflector frontal. Sus costados y su popa son débiles.",
   },
   aeldari: {
-    speed: 4,
-    fire: [2, 4, 4, 3],
+    speed: 5,
+    agility: 2,
+    burn: 2,
+    prow: [3, 5, 5, 3],
+    prowName: "lanzas púlsar",
+    broadside: [2, 2, 2, 1],
+    broadsideName: "baterías de pulsos",
+    stern: Z,
     shields: 0,
+    prowArmour: 1,
+    sternWeakness: 1.3,
     dodge: 35,
     torpedoes: 3,
     torpedoName: "torpedos espectrales",
@@ -91,16 +146,25 @@ export const FLEET_PROFILES: Record<FleetId, FleetProfile> = {
     warp: 10,
     regen: 0,
     variance: 0.3,
-    trait: "Campos holográficos",
+    trait: "Velas solares",
     traitText:
-      "Reciben un 30 % menos de disparo en Media y Lejos y esquivan casi la mitad de los torpedos.",
+      "Las más rápidas y ágiles: giran 90° por fase. Campos holográficos (−30 % de disparo en Media y Lejos). Atacan por la proa.",
   },
   drukhari: {
-    speed: 4,
-    fire: [8, 6, 3, 1],
-    shields: 0,
+    speed: 5,
+    agility: 2,
+    burn: 2,
+    prow: [10, 7, 4, 1],
+    prowName: "lanzas oscuras",
+    broadside: [3, 3, 1, 0],
+    broadsideName: "cañones de astillas",
+    stern: Z,
+    fireReduction: 0.65,
+    shields: 1,
+    prowArmour: 1,
+    sternWeakness: 1.3,
     dodge: 50,
-    torpedoes: 2,
+    torpedoes: 4,
     torpedoName: "torpedos de oscuridad",
     ram: 3,
     ramRecoil: 0.5,
@@ -108,60 +172,95 @@ export const FLEET_PROFILES: Record<FleetId, FleetProfile> = {
     regen: 0,
     variance: 0.3,
     trait: "Incursión esclavista",
-    traitText: "Muy rápidos y esquivos; su daño en Contacto cuenta doble para el botín.",
+    traitText:
+      "Rapidísimas, muy esquivas y con campos de sombras (−35 % de disparo recibido), letales en Contacto por la proa. Su daño en Contacto cuenta doble para el botín.",
   },
   orks: {
-    speed: 2,
-    fire: [7, 5, 2, 1],
+    speed: 3,
+    agility: 1,
+    burn: 4,
+    prow: [8, 5, 2, 1],
+    prowName: "kañonez de proa",
+    broadside: [6, 4, 2, 0],
+    broadsideName: "baterías de dakka",
+    stern: Z,
     shields: 1,
+    prowArmour: 0.8,
+    sternWeakness: 1.4,
     dodge: 10,
     torpedoes: 4,
     torpedoName: "rokas-torpedo",
-    ram: 10,
+    ram: 12,
     ramRecoil: 0.25,
     warp: -10,
     regen: 0,
     variance: 0.7,
     trait: "¡Más dakka!",
     traitText:
-      "Daño muy irregular, la mitad de sus torpedos puede fallar sola. Sus embestidas parten naves.",
+      "Motores brutales (avante toda +4): persiguen a cualquiera. Daño irregular, la mitad de sus torpedos falla sola y sus embestidas parten naves.",
   },
   necrons: {
-    speed: 1,
-    fire: [6, 6, 5, 4],
+    speed: 2,
+    agility: 1,
+    burn: 2,
+    prow: [4, 3, 2, 2],
+    prowName: "arcos de partículas",
+    broadside: [4, 3, 2, 2],
+    broadsideName: "arcos de partículas",
+    stern: [4, 3, 2, 2],
+    allArcs: true,
     shields: 0,
+    prowArmour: 1,
+    sternWeakness: 1,
     dodge: 10,
-    torpedoes: 2,
+    torpedoes: 3,
     torpedoName: "esferas de partículas",
-    ram: 5,
+    ram: 6,
     ramRecoil: 0.4,
     warp: 10,
     regen: 1,
     variance: 0.2,
     trait: "Reanimación",
-    traitText: "Regenera 1 de casco cada fase. Lenta: no puede elegir la distancia.",
+    traitText:
+      "Disparan en todas direcciones y regeneran 1 de casco por fase. Lentas: no eligen la distancia.",
   },
   tyranids: {
-    speed: 2,
-    fire: [5, 4, 2, 1],
+    speed: 3,
+    agility: 1,
+    burn: 3,
+    prow: [6, 4, 2, 0],
+    prowName: "lanzas de bioplasma",
+    broadside: [4, 3, 1, 0],
+    broadsideName: "espinas ácidas",
+    stern: Z,
     shields: 0,
+    prowArmour: 0.8,
+    sternWeakness: 1.3,
     dodge: 10,
-    torpedoes: 3,
+    torpedoes: 4,
     torpedoName: "esporas de bioplasma",
-    ram: 6,
+    ram: 7,
     ramRecoil: 0.25,
     warp: -10,
     regen: 1,
     variance: 0.35,
     trait: "Bioregeneración",
-    traitText: "Regenera 1 de casco por fase y embiste con fuerza brutal.",
+    traitText: "Regeneran 1 de casco por fase y embisten con fuerza brutal. Inútiles a distancia.",
   },
   daemons: {
-    speed: 3,
-    fire: [6, 5, 4, 2],
+    speed: 4,
+    agility: 2,
+    burn: 2,
+    prow: [7, 5, 3, 1],
+    prowName: "fauces disformes",
+    broadside: [5, 5, 3, 2],
+    broadsideName: "baterías infernales",
+    stern: Z,
     shields: 1,
-    dodge: 30,
-    torpedoes: 2,
+    prowArmour: 1,
+    sternWeakness: 1.3,
+    dodge: 35,
+    torpedoes: 3,
     torpedoName: "descargas disformes",
     ram: 5,
     ramRecoil: 0.5,
@@ -169,14 +268,22 @@ export const FLEET_PROFILES: Record<FleetId, FleetProfile> = {
     regen: 0,
     variance: 0.4,
     trait: "Hijos de la disformidad",
-    traitText: "Su salto disforme nunca falla.",
+    traitText: "Ágiles, peligrosas por todos los flancos, y su salto disforme nunca falla.",
   },
   votann: {
-    speed: 1,
-    fire: [4, 4, 4, 4],
-    shields: 3,
+    speed: 2,
+    agility: 1,
+    burn: 2,
+    prow: [3, 3, 3, 3],
+    prowName: "lanzas de haces",
+    broadside: [2, 3, 2, 2],
+    broadsideName: "baterías magnéticas",
+    stern: [0, 1, 1, 0],
+    shields: 1,
+    prowArmour: 0.8,
+    sternWeakness: 1.2,
     dodge: 10,
-    torpedoes: 3,
+    torpedoes: 4,
     torpedoName: "misiles de vacío",
     ram: 6,
     ramRecoil: 0.3,
@@ -184,22 +291,32 @@ export const FLEET_PROFILES: Record<FleetId, FleetProfile> = {
     regen: 0,
     variance: 0.2,
     trait: "Blindaje de vacío",
-    traitText: "Los escudos más gruesos del sector. Lenta y fiable.",
+    traitText:
+      "Escudos gruesos, armas en todos los arcos (incluso popa) y popa reforzada. Lenta y fiable.",
   },
   genestealer: {
-    speed: 2,
-    fire: [6, 5, 3, 2],
+    speed: 3,
+    agility: 1,
+    burn: 3,
+    prow: [3, 3, 2, 1],
+    prowName: "taladro y torpedos de minería",
+    broadside: [6, 5, 4, 1],
+    broadsideName: "baterías recuperadas",
+    stern: Z,
     shields: 1,
+    prowArmour: 1,
+    sternWeakness: 1.4,
     dodge: 20,
-    torpedoes: 3,
+    torpedoes: 4,
     torpedoName: "torpedos de minería",
-    ram: 6,
+    ram: 7,
     ramRecoil: 0.35,
     warp: 0,
     regen: 0,
     variance: 0.3,
     trait: "Infiltración",
-    traitText: "Sus agentes sabotean: el rival empieza el duelo con 3 de casco menos.",
+    traitText:
+      "Cascos mineros con baterías en los costados. Sus agentes sabotean: el rival empieza el duelo con 3 de casco menos.",
   },
 };
 
@@ -211,7 +328,7 @@ export const SECOND: Record<FleetId, { title: string; lord: string }> = {
   aeldari: { title: "Timonel vidente", lord: "Autarca" },
   drukhari: { title: "Sibarita de cubierta", lord: "Arconte" },
   orks: { title: "Kontramaestre Gretchin", lord: "Jefe" },
-  necrons: { title: "Criptecnólogo", lord: "Mi señor fáraon" },
+  necrons: { title: "Criptecnólogo", lord: "Mi señor faraón" },
   tyranids: { title: "Nódulo sináptico", lord: "Mente Enjambre" },
   daemons: { title: "Heraldo", lord: "Señor" },
   votann: { title: "Kâhl de guerra", lord: "Señor" },
@@ -222,17 +339,17 @@ export const ACTION_INFO: Record<string, { name: string; short: string; text: st
   fuego: {
     name: "Fuego",
     short: "Disparar",
-    text: "Dispara todas las baterías. El daño depende de la distancia.",
+    text: "Disparan las armas cuyo arco cubre al enemigo (proa, costado o popa). El daño depende de la distancia.",
   },
   torpedos: {
     name: "Torpedos",
-    short: "Lanzar",
-    text: "Lanza la salva. Impacta en la fase siguiente (de cerca, al instante). El rival puede esquivarlos.",
+    short: "Torpedos",
+    text: "Salva por la proa: el enemigo debe estar delante. Impacta en la fase siguiente (de cerca, al instante) y puede esquivarse.",
   },
   recargar: {
     name: "Recargar",
     short: "Recargar",
-    text: "Recarga los tubos de torpedos y dispara a media potencia.",
+    text: "Recarga los tubos y dispara a media potencia.",
   },
   evasion: {
     name: "Evasión",
@@ -242,7 +359,7 @@ export const ACTION_INFO: Record<string, { name: string; short: string; text: st
   embestir: {
     name: "Embestir",
     short: "Embestir",
-    text: "Solo si acabas en Cerca o Contacto. Choca contra el rival: gran daño, algo para ti. Puede esquivarse.",
+    text: "Avante toda en línea recta. Si el enemigo está delante y llegas a Contacto, choca: gran daño, algo para ti.",
   },
   reparar: {
     name: "Reparar",
@@ -255,3 +372,17 @@ export const ACTION_INFO: Record<string, { name: string; short: string; text: st
     text: "Huye al instante. Pierdes el duelo pero salvas la nave. Puede fallar y dañarte.",
   },
 };
+
+export const SPEED_INFO = [
+  {
+    name: "Parar máquinas",
+    short: "Parar",
+    text: "Casi inmóvil, pero puede girar 45° más de lo normal.",
+  },
+  { name: "Avante", short: "Avante", text: "Velocidad de crucero." },
+  {
+    name: "Avante toda",
+    short: "Avante toda",
+    text: "Fuerza los motores: mucha más velocidad, pero no puede girar y dispara a media potencia.",
+  },
+] as const;

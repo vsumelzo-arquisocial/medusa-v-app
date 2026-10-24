@@ -1,16 +1,21 @@
 /**
- * Sonido del motor de salto.
- * Pendiente: diseñar un sonido realista (encendido del reactor + alarma, y el salto al warp).
- * Los componentes ya llaman a estas funciones en el momento exacto; basta con implementarlas aquí.
+ * Sonido del motor de salto, a través de la biblioteca de sonido (src/lib/sfx).
+ * Cuando lleguen las grabaciones reales basta con añadirlas a los huecos
+ * "reactor_encendido", "reactor", "alarma" y "salto_disforme".
  */
+import { play, startLoop, stopLoop } from "@/lib/sfx/engine";
+
 export function playReactorIgnition(): void {
-  /* pendiente */
+  play("reactor_encendido");
+  play("alarma", { delay: 0.2 });
+  startLoop("reactor", 2);
 }
 
 export function playWarpJump(): void {
-  /* pendiente */
+  stopLoop("reactor", 0.6);
+  play("salto_disforme");
 }
 
 export function stopJumpAudio(): void {
-  /* pendiente */
+  stopLoop("reactor", 0.4);
 }

@@ -30,7 +30,7 @@ for (const a of fleets)
   for (const d of fleets) {
     let w = 0;
     for (let i = 0; i < N; i++) {
-      let s = newDuel(newSide(a, {}, HULL[a], HULL[a]), newSide(d, {}, HULL[d], HULL[d]));
+      let s = newDuel(newSide(a, {}, HULL[a], HULL[a]), newSide(d, {}, HULL[d], HULL[d]), rng);
       while (!s.finished) {
         s = resolveBlock(s, botPlan(s, "attacker", rng), botPlan(s, "defender", rng), rng).state;
         blocks++;

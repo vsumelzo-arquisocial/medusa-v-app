@@ -8,7 +8,30 @@ export interface Line {
   text: string;
 }
 
-const MOVE = { [-1]: "se acerca", 0: "mantiene rumbo", 1: "se aleja" } as const;
+const SPEED = ["casi parada", "a avante", "a avante toda"] as const;
+
+function maneuver(l: SidePhaseLog): string {
+  const turn =
+    l.turn === 0
+      ? "mantiene rumbo"
+      : `vira ${Math.abs(l.turn) * 45}° a ${l.turn < 0 ? "babor" : "estribor"}`;
+  const intent =
+    l.helm === "encarar"
+      ? " para encararle"
+      : l.helm === "costado"
+        ? " para presentar el costado"
+        : l.helm === "huir"
+          ? " para alejarse"
+          : "";
+  return `${turn}${l.turn !== 0 ? intent : ""} ${SPEED[l.speed]}`;
+}
+
+const ARC_TXT: Record<string, string> = {
+  proa: "la proa",
+  estribor: "el costado de estribor",
+  babor: "el costado de babor",
+  popa: "la popa",
+};
 
 /** `me` es el bando del lector: lo bueno para él se marca en verde. */
 export function narratePhase(e: PhaseEvent, me: Side, names: Record<Side, string>): Line[] {
@@ -51,14 +74,14 @@ export function narratePhase(e: PhaseEvent, me: Side, names: Record<Side, string
   }
   if (sides.some((s) => e[s].warp?.success)) return lines;
 
-  const moves = sides.map((s) => `${names[s]} ${MOVE[e[s].move]}`).join(", ");
+  const moves = sides.map((s) => `${names[s]} ${maneuver(e[s])}`).join("; ");
   lines.push({
     side: null,
     tone: "neutral",
     text:
       e.rangeBefore === e.rangeAfter
-        ? `${moves}. La distancia sigue en ${RANGE_NAMES[e.rangeAfter]}.`
-        : `${moves}. La distancia pasa de ${RANGE_NAMES[e.rangeBefore]} a ${RANGE_NAMES[e.rangeAfter]}.`,
+        ? `${moves}. Distancia ${e.distance} u (${RANGE_NAMES[e.rangeAfter]}).`
+        : `${moves}. La distancia pasa de ${RANGE_NAMES[e.rangeBefore]} a ${RANGE_NAMES[e.rangeAfter]} (${e.distance} u).`,
   });
   for (const s of sides) {
     const l = e[s];
@@ -109,7 +132,7 @@ function actionLine(
         {
           side: s,
           tone: tone(s, l.fireDealt > 0),
-          text: `${names[s]} abre fuego: −${l.fireDealt}${l.shieldsAbsorbed ? ` (los escudos paran ${l.shieldsAbsorbed})` : ""}.`,
+          text: `${names[s]} abre fuego${l.arcs.length ? ` con ${l.arcs.map((x) => ARC_TXT[x]).join(" y ")}` : ""}${l.hitArc === "popa" ? " contra su popa expuesta" : l.hitArc === "proa" ? " contra su proa" : ""}: −${l.fireDealt}${l.shieldsAbsorbed ? ` (los escudos paran ${l.shieldsAbsorbed})` : ""}.`,
         },
       ];
     case "recargar":

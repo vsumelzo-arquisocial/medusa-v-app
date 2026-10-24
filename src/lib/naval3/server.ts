@@ -9,6 +9,7 @@
 import type { FleetId } from "@/lib/ship-identity";
 import { newDuel, newSide, resolveBlock, type Rng } from "./engine";
 import { blockPlanSchema } from "./schema";
+import { botPlan } from "./advisor";
 import type { BlockPlan, DuelState, ModuleLevels, PhaseEvent } from "./types";
 
 type Admin = (typeof import("@/integrations/supabase/client.server"))["supabaseAdmin"];
@@ -60,6 +61,7 @@ async function initDuel(db: Admin, raid: RaidRow): Promise<RaidRow> {
   const state = newDuel(
     newSide(a.fleet, a.modules, a.hull, a.max_hull),
     newSide(d.fleet, d.modules, d.hull, d.max_hull),
+    secureRng,
   );
   const { data } = await db
     .from("naval_raids")
@@ -107,9 +109,11 @@ async function resolve(db: Admin, raid: RaidRow) {
     .select("attacker_plan,defender_plan")
     .eq("raid_id", raid.id)
     .maybeSingle();
-  const a = readPlan(plans?.attacker_plan);
-  const d = readPlan(plans?.defender_plan);
-  if (!a || !d) return;
+  // Órdenes guardadas con el formato anterior (antes del rumbo): las completa el Segundo.
+  const a =
+    readPlan(plans?.attacker_plan) ?? botPlan(raid.duel_state, "attacker", secureRng, false);
+  const d =
+    readPlan(plans?.defender_plan) ?? botPlan(raid.duel_state, "defender", secureRng, false);
   const { state, events } = resolveBlock(raid.duel_state, a, d, secureRng);
   const tagged: (PhaseEvent & { block: number })[] = events.map((e) => ({
     ...e,
