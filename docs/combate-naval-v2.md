@@ -31,13 +31,13 @@ Alcance de las armas:
 | Baterías | Cerca–Media (mitad en Lejos) | Tiran contra el blindaje (proa/lateral) |
 | Lanzas | Cerca–Lejos | Impactan a 4+ ignorando el blindaje; los escudos sí las paran |
 | Torpedos | Cerca–Media | Se lanzan una ronda e impactan la siguiente; las torretas los derriban; luego hay que recargar |
-| Abordaje | Solo Contacto | Tropa contra tropa; daña casco, causa críticos y suma botín |
+| Abordaje | Solo Contacto | Tropa contra tropa: cada impacto neto causa 2 de daño, ignora escudos, causa críticos y suma botín |
 | Embestida | Contacto con ¡Avante toda! | Daño según el casco propio; también te dañas |
 
 ## 3. Daño, escudos y críticos
 
 1. **Escudos:** absorben los primeros *E* impactos de cada ronda (lanzas incluidas) y se recargan en la siguiente. Si absorben todos, se marcan como **sobrecargados**: −1 escudo la ronda siguiente.
-2. **Blindaje:** cada dado de batería impacta si iguala o supera el blindaje del lado alcanzado (proa 6+, lateral 5+, popa 4+; cambia por facción).
+2. **Blindaje:** cada dado de batería impacta si iguala o supera el blindaje del lado alcanzado (4+ ligero, 5+ pesado; la proa puede ser más gruesa que los costados).
 3. **Casco:** cada impacto que pasa resta 1. Cada **6 natural** que pasa provoca una tirada de **crítico inmediato**:
 
 | d6 | Crítico | Efecto | Se repara con |
@@ -72,19 +72,19 @@ Atributos de la nave capital: Velocidad (V), Escudos (E), Blindaje proa/lateral 
 
 | Flota | V | E | B | Bat | L | T | Tor | Ab | Casco | Regla pasiva | Orden única |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| Imperium | 2 | 2 | 6+/5+ | 8 | 2 | 6 | 2 | 3 | 30 | **Proa blindada:** −1 impacto recibido de frente | **Carga de proa:** embestida con +3 daño |
-| Caos | 3 | 2 | 5+/5+ | 6 | 4 | 0 | 1 | 4 | 30 | **Fuego a distancia:** lanzas +1 en Lejos | **Marca de los dioses:** repetir el chequeo de Liderazgo |
-| Tau | 2 | 1 | 6+/5+ | 6 | 2 | 8 | 3 | 1 | 22 | **Deflector:** escudo +2 contra impactos de proa | **Sistemas de puntería:** torpedos guiados, ignoran 1 torreta |
-| Aeldari | 4 | 0 | 4+/4+ | 6 | 4 | 4 | 1 | 2 | 24 | **Campos holográficos:** salvación 2+ en Lejos/Media, 4+ en Cerca, ninguna en Contacto | **Velas solares:** decides la maniobra después de ver la del rival (1 vez por bloque) |
-| Drukhari | 4 | 0 | 4+/4+ | 5 | 3 | 3 | 1 | 4 | 22 | **Campos de sombras:** salvación 3+ contra lanzas | **Incursión esclavista:** el abordaje roba +10 % de botín |
-| Orkos | 2 | 1 | 6+/4+ | 10* | 1 | 3 | 1 | 6 | 40 | ***¡Más dakka!*:** baterías 2d6+4 dados (varianza alta) | **¡Embestida!:** embestir sin necesidad de ¡Avante toda! |
-| Necrones | 1 | 0 | 5+/5+ | 6 | 4 | 0 | 2 | 2 | 34 | **Reanimación:** cada ronda 4+: repara 1 casco o 1 crítico | **Salto inercial:** cambias 2 bandas de distancia a voluntad (1 vez por bloque) |
-| Tiránidos | 2 | 0 | 5+/5+ | 4 | 2 | 4 | 3 | 6 | 36 | **Nubes de esporas:** absorben 2 impactos por ronda, como escudos que nunca colapsan | **Tentáculos de abordaje:** abordaje también en Cerca |
-| Demonios | 3 | 1 | 5+/5+ | 6 | 3 | 0 | 1 | 5 | 28 | **Manifestación:** en su primera ronda no se le puede apuntar | **Grieta disforme:** reaparece en cualquier banda (1 vez por duelo) |
-| Votann | 1 | 3 | 6+/6+ | 7 | 2 | 0 | 2 | 3 | 36 | **Blindaje de vacío:** −1 a todo impacto de batería | **Juicio de los ancestros:** fuego concentrado, +2 a la lanza esa ronda |
-| Culto genestealer | 2 | 1 | 5+/4+ | 6 | 1 | 2 | 1 | 5 | 28 | **Infiltración:** el rival empieza el duelo con un crítico aleatorio | **Alzamiento:** el abordaje tira el doble de dados si el rival está dañado |
+| Imperium | 2 | 2 | 5+/4+ | 6 | 2 | 4 | 2 | 3 | 27 | Proa blindada: blindaje 5+ de frente (4+ en los costados) y torpedos pesados. | **Carga de proa:** En Contacto: embestida con +3 de daño. |
+| Caos | 3 | 2 | 4+/4+ | 6 | 4 | 0 | 1 | 4 | 34 | Fuego a distancia: +1 dado de lanza en Lejos. | **Marca de los dioses:** Repite el chequeo de Liderazgo y obtén +2 dados de lanza esta ronda. |
+| Tau | 2 | 1 | 5+/4+ | 6 | 2 | 4 | 3 | 1 | 22 | Deflector: +2 escudos contra impactos de frente. | **Sistemas de puntería:** Torpedos guiados: recargan al instante e ignoran 1 torreta. |
+| Aeldari | 4 | 0 | 4+/4+ | 6 | 4 | 4 | 1 | 2 | 26 | Campos holográficos: contra baterías salvación 2+ en Lejos/Media y 4+ en Cerca; contra lanzas y torpedos 4+; ninguna en Contacto. | **Velas solares:** Elige la maniobra tras ver la del rival para quedar a tu distancia ideal. |
+| Drukhari | 4 | 0 | 4+/4+ | 5 | 3 | 3 | 1 | 5 | 35 | Campos de sombras: salvación 3+ contra todo disparo salvo en Contacto. | **Incursión esclavista:** Abordaje también en Cerca; cada impacto suma botín doble. |
+| Orkos | 2 | 1 | 5+/4+ | 2d6+1 | 1 | 3 | 1 | 5 | 40 | ¡Más dakka!: baterías de 2d6+1 dados (varianza alta). | **¡Embestida!:** Avanza 2 bandas y embiste al llegar a Contacto sin perder fuego. |
+| Necrones | 1 | 0 | 5+/5+ | 6 | 4 | 0 | 2 | 2 | 33 | Reanimación: cada ronda, 4+ repara 1 crítico o 1 de casco. | **Salto inercial:** Cambia hasta 2 bandas de distancia a voluntad. |
+| Tiránidos | 2 | 0 | 4+/4+ | 5 | 2 | 4 | 3 | 6 | 47 | Nubes de esporas: absorben 2 impactos por ronda y nunca colapsan. Instinto: si falla el Liderazgo, repite la maniobra anterior. | **Tentáculos de abordaje:** Abordaje también en Cerca. |
+| Demonios | 3 | 2 | 4+/4+ | 6 | 3 | 0 | 1 | 6 | 24 | Manifestación: en su primera ronda del duelo no se le puede apuntar. | **Grieta disforme:** Reaparece en la banda que quiera (1 vez por duelo). |
+| Votann | 1 | 1 | 5+/5+ | 6 | 2 | 0 | 2 | 3 | 28 | Blindaje de vacío: −1 impacto de batería recibido por ronda. | **Juicio de los ancestros:** Fuego concentrado: +2 dados de lanza que repiten fallos. |
+| Culto genestealer | 2 | 1 | 4+/4+ | 7 | 1 | 2 | 1 | 6 | 42 | Infiltración: el rival empieza el duelo con un crítico aleatorio. | **Alzamiento:** El abordaje tira el doble de dados si el rival está dañado. |
 
-Los módulos de la nave siguen sumando: Baterías (+dados), Cámara de escudos (+E), Lanza de proa (+L), Cubierta de abordaje (+Ab), Motores de plasma (+V, +1 a partir de nivel 2), Blindaje de proa (−impactos de frente), Forja (Control de daños mejorado), Puente y Coro (Liderazgo).
+Los módulos de la nave siguen sumando: Baterías (+2 dados por nivel), Generador de escudos (+1 escudo en niveles 1 y 3; en flotas sin escudos de vacío, +1 a partir de nivel 2), Lanza de proa (+L), Cubierta de abordaje (+Ab), Motores de plasma (+V, +1 a partir de nivel 2), Blindaje de proa (−impactos de frente), Forja (Control de daños mejorado), Puente y Coro (Liderazgo).
 
 ## 6. Escoltas
 
