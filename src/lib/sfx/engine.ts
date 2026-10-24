@@ -170,7 +170,9 @@ export function startLoop(id: LoopId, fade = 1.5) {
     const file = def.files[Math.floor(Math.random() * def.files.length)]!;
     loops.set(id, { src: [], gain });
     const source =
-      id === "musica_combate" ? loadCustomMusic().then((c) => c ?? buffer(file)) : buffer(file);
+      id === "musica_combate" || id === "musica_tension"
+        ? loadCustomMusic(id).then((c) => c ?? buffer(file))
+        : buffer(file);
     void source.then((b) => {
       const entry = loops.get(id);
       if (!b || !entry) return;
@@ -318,7 +320,10 @@ function synth(id: SoundId, a: AudioContext, t: number, dest: AudioNode) {
 
 const DB = "atalaya-audio";
 const STORE = "files";
-let customMusic: AudioBuffer | null | undefined;
+const customMusic = new Map<MusicSlot, AudioBuffer | null>();
+
+/** Huecos de música que el jugador puede sustituir por su propia música. */
+export type MusicSlot = "musica_tension" | "musica_combate";
 
 function db(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
@@ -349,33 +354,35 @@ async function idbSet(key: string, value: unknown) {
   });
 }
 
-async function loadCustomMusic(): Promise<AudioBuffer | null> {
-  if (customMusic !== undefined) return customMusic;
+async function loadCustomMusic(slot: MusicSlot): Promise<AudioBuffer | null> {
+  if (customMusic.has(slot)) return customMusic.get(slot)!;
+  let buf: AudioBuffer | null = null;
   try {
-    const rec = await idbGet<{ name: string; blob: Blob }>("musica_combate");
+    const rec = await idbGet<{ name: string; blob: Blob }>(slot);
     const a = ac();
-    customMusic = rec && a ? await a.decodeAudioData(await rec.blob.arrayBuffer()) : null;
+    buf = rec && a ? await a.decodeAudioData(await rec.blob.arrayBuffer()) : null;
   } catch {
-    customMusic = null;
+    buf = null;
   }
-  return customMusic;
+  customMusic.set(slot, buf);
+  return buf;
 }
 
-/** Nombre del archivo de música propia guardado, si lo hay. */
-export async function customMusicName(): Promise<string | null> {
+/** Nombre del archivo de música propia guardado en un hueco, si lo hay. */
+export async function customMusicName(slot: MusicSlot = "musica_combate"): Promise<string | null> {
   try {
-    return (await idbGet<{ name: string }>("musica_combate"))?.name ?? null;
+    return (await idbGet<{ name: string }>(slot))?.name ?? null;
   } catch {
     return null;
   }
 }
 
-/** Guarda (o quita, con null) la música de combate propia. Se queda en este navegador. */
-export async function setCustomMusic(file: File | null) {
-  await idbSet("musica_combate", file ? { name: file.name, blob: file } : undefined);
-  customMusic = undefined;
-  if (loops.has("musica_combate")) {
-    stopLoop("musica_combate", 0.5);
-    setTimeout(() => startLoop("musica_combate", 1.5), 700);
+/** Guarda (o quita, con null) una música propia. Se queda en este navegador. */
+export async function setCustomMusic(file: File | null, slot: MusicSlot = "musica_combate") {
+  await idbSet(slot, file ? { name: file.name, blob: file } : undefined);
+  customMusic.delete(slot);
+  if (loops.has(slot)) {
+    stopLoop(slot, 0.5);
+    setTimeout(() => startLoop(slot, 1.5), 700);
   }
 }
