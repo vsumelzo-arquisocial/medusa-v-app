@@ -5,6 +5,7 @@ import { profileQuery } from "@/lib/profile";
 import { campaignQuery } from "@/lib/campaign-queries";
 import { ShipTravel } from "@/components/ship/ShipTravel";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { fleetFor } from "@/lib/ship-identity";
 
 export const Route = createFileRoute("/_authenticated/mando")({
   head: () => ({
@@ -26,7 +27,7 @@ function Mando() {
   return (
     <CommandShell>
       <h1 className="mb-4 font-display text-2xl text-primary glow">Mando de la Nave Capital</h1>
-      <ShipTravel uid={prof.user.id} />
+      <ShipTravel uid={prof.user.id} shipImage={fleetFor(prof.profile?.army_race, prof.profile?.army_faction).image} />
       <NavalCommand />
     </CommandShell>
   );

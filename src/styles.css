@@ -254,3 +254,29 @@ html[data-fleet] h1,html[data-fleet] h2,html[data-fleet] h3 { letter-spacing:0; 
 .planet-spin { background-size: 200% 100%; background-repeat: repeat-x; animation: planet-spin 40s linear infinite; }
 .planet-shade { background: radial-gradient(circle at var(--lx, 30%) var(--ly, 30%), transparent 35%, oklch(0 0 0 / 0.75) 80%); }
 @keyframes planet-spin { from { background-position: 0 0; } to { background-position: -200% 0; } }
+
+/* ── Motor de salto (Mando) ── */
+.jump-button { position: relative; overflow: hidden; border: 1px solid var(--primary); background: color-mix(in oklab, var(--primary) 12%, transparent); color: var(--primary); padding: .85rem 1.4rem; font-family: var(--font-display, inherit); font-size: .8rem; letter-spacing: .25em; text-transform: uppercase; box-shadow: var(--glow), inset 0 0 18px color-mix(in oklab, var(--primary) 20%, transparent); clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px); transition: background .2s, color .2s; }
+.jump-button::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, color-mix(in oklab, var(--primary) 35%, transparent) 50%, transparent 70%); transform: translateX(-100%); animation: jump-sheen 3.5s ease-in-out infinite; }
+.jump-button:hover:not(:disabled) { background: var(--primary); color: var(--primary-foreground); }
+.jump-button:disabled { opacity: .7; cursor: wait; }
+.jump-reactor { position: relative; display: inline-block; width: 3rem; height: 3rem; flex: none; border-radius: 9999px; border: 2px dashed color-mix(in oklab, var(--primary) 45%, transparent); }
+.jump-reactor > span { position: absolute; inset: 22%; border-radius: 9999px; background: radial-gradient(circle, color-mix(in oklab, var(--primary) 30%, transparent), transparent 70%); }
+.jump-reactor--igniting { border-color: var(--destructive); animation: reactor-spin 0.6s linear infinite; }
+.jump-reactor--igniting > span { background: radial-gradient(circle, #fff, var(--destructive) 45%, transparent 75%); animation: reactor-charge 2.8s ease-in forwards; }
+.jump-reactor--on { border-color: var(--primary); animation: reactor-spin 4s linear infinite; }
+.jump-reactor--on > span { background: radial-gradient(circle, #fff, var(--primary) 40%, transparent 75%); animation: reactor-pulse 1.6s ease-in-out infinite; }
+.jump-panel--alarm { animation: alarm-strobe .7s steps(1) infinite; }
+.jump-alarm-light { display: inline-block; width: .6rem; height: .6rem; margin-right: .4rem; border-radius: 9999px; background: var(--destructive); box-shadow: 0 0 10px var(--destructive); animation: blink .5s steps(1) infinite; }
+.jump-ignition-bar { height: 4px; background: color-mix(in oklab, var(--destructive) 25%, transparent); }
+.jump-ignition-bar > span { display: block; height: 100%; width: 0; background: var(--destructive); animation: ignition-fill 2.8s linear forwards; }
+@keyframes jump-sheen { 0%, 60% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+@keyframes reactor-spin { to { transform: rotate(360deg); } }
+@keyframes reactor-charge { 0% { transform: scale(.3); opacity: .3; } 100% { transform: scale(1.15); opacity: 1; } }
+@keyframes reactor-pulse { 0%, 100% { transform: scale(.9); opacity: .8; } 50% { transform: scale(1.1); opacity: 1; } }
+@keyframes alarm-strobe { 0%, 100% { box-shadow: inset 0 0 0 transparent; } 50% { box-shadow: inset 0 0 40px color-mix(in oklab, var(--destructive) 45%, transparent); } }
+@keyframes ignition-fill { to { width: 100%; } }
+@media (prefers-reduced-motion: reduce) {
+  .jump-button::after, .jump-reactor--igniting, .jump-reactor--on, .jump-panel--alarm, .jump-alarm-light { animation: none; }
+  .jump-reactor--igniting > span, .jump-reactor--on > span, .jump-ignition-bar > span { animation-duration: .01s; }
+}
