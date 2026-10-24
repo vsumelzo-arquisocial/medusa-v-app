@@ -12,7 +12,7 @@ export type Turn = -2 | -1 | 0 | 1 | 2;
 export type Helm = Turn | "encarar" | "costado" | "huir";
 
 export type Action =
-  "fuego" | "torpedos" | "recargar" | "evasion" | "embestir" | "reparar" | "saltar";
+  "fuego" | "torpedos" | "recargar" | "escudos" | "evasion" | "embestir" | "reparar" | "saltar";
 
 export type Arc = "proa" | "estribor" | "popa" | "babor";
 export const ARC_NAMES: Record<Arc, string> = {

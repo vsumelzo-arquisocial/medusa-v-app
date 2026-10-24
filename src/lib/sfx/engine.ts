@@ -88,6 +88,9 @@ function ac(): AudioContext | null {
   return ctx;
 }
 
+/** El audio ya está desbloqueado (hubo un gesto del usuario). */
+export const audioReady = () => !!ctx && ctx.state === "running";
+
 /** Llamar tras un gesto del usuario (los navegadores bloquean el audio hasta entonces). */
 export function unlockAudio() {
   ac();

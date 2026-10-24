@@ -165,10 +165,13 @@ export function fireDodgeFactor(fleet: FleetId) {
   return 1 - FLEET_PROFILES[fleet].dodge / 200;
 }
 
-/** Los escudos absorben hasta su valor, pero nunca más de la mitad del disparo. */
-export function absorbed(shots: number, shields: number) {
-  return Math.min(shields, Math.floor(shots / 2));
+/** Los escudos absorben hasta su valor, pero nunca más de la mitad del disparo (¾ con escudos al máximo). */
+export function absorbed(shots: number, shields: number, boosted = false) {
+  return Math.min(shields, Math.floor(shots * (boosted ? 0.75 : 0.5)));
 }
+
+/** Escudos al máximo: +3 de escudo. */
+export const SHIELD_BOOST = 3;
 
 /** Daño esperado (tras defensas y escudos) de `a` contra `b` con las posiciones dadas. */
 export function expectedHit(a: SideState, b: SideState, band?: Range): number {
@@ -539,18 +542,20 @@ export function resolveBlock(
         log.forced =
           "El enemigo no está a proa: los tubos no pueden apuntar. Disparamos en su lugar.";
       }
-      if (log.action === "fuego" || log.action === "recargar") {
+      if (log.action === "fuego" || log.action === "recargar" || log.action === "escudos") {
         const p = FLEET_PROFILES[own.fleet];
         const f = rawFire(own, rel, s.range);
         let raw = f.value * (1 - p.variance + rng() * 2 * p.variance);
-        if (log.action === "recargar") raw *= 0.5;
+        if (log.action === "recargar" || log.action === "escudos") raw *= 0.5;
         if (log.speed === 2) raw *= 0.5;
         if (logs[target].action === "evasion") raw *= 0.5;
         raw *= defenceFactor(foe, relFoe);
         if (foe.fleet === "aeldari" && s.range >= 2) raw *= 0.7;
         raw *= fireDodgeFactor(foe.fleet);
         const shots = Math.round(raw);
-        const dealt = shots - absorbed(shots, stats(foe).shields);
+        const boosted = logs[target].action === "escudos";
+        const dealt =
+          shots - absorbed(shots, stats(foe).shields + (boosted ? SHIELD_BOOST : 0), boosted);
         log.arcs = f.arcs;
         log.hitArc = mainArc(relFoe);
         log.fireDealt = dealt;

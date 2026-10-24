@@ -62,3 +62,11 @@ Fuentes: OpenGameArt (busca *explosion spritesheet* con licencia CC0) y los pack
 
 ## Créditos
 Los sonidos actuales vienen de Wikimedia Commons (`public/sfx/CREDITS.md`). Al incorporar los nuevos ampliaré ese fichero con la fuente y la licencia de cada uno.
+
+## Estado (24-10-2026)
+Incorporados desde la carpeta `atalaya-sonidos` (Sonniss GDC 2026 parte 9, ZapSplat y Freesound), procesados con `scripts/build-sfx.py`:
+macrocañón ×4, lanza ×3, lanzamiento de torpedo ×2, impacto de torpedo ×3, impacto en casco ×4, impacto en escudo ×2, explosión grande ×2, embestida ×2, avante toda, salto disforme ×2, salto fallido, alarma ×2, encendido del reactor, braam de inicio de combate ×2, ping de radar, clics, aviso, denegar, registro; bucles de puente ×2 y reactor; música de tensión (dron) y música de combate original (tambores de guerra con booms, braams y drones, 66 ppm, bucle de 58 s).
+
+La banda sonora de Battlefleet Gothic: Armada II **no se usa**: es música comercial con derechos y la app es pública. Para una banda sonora orquestal habría que conseguir pistas con licencia (Pixabay Music, OpenGameArt CC0, o música comprada con licencia para web).
+
+Pendiente de confirmar: la licencia exacta del sonido de Freesound 411572 (radar).

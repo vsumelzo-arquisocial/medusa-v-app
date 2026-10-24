@@ -159,6 +159,14 @@ function actionLine(
               text: `${names[s]} lanza ${l.torpedoesLaunched} torpedos: llegarán en la próxima fase.`,
             },
           ];
+    case "escudos":
+      return [
+        {
+          side: s,
+          tone: "neutral",
+          text: `${names[s]} desvía energía a los escudos y dispara a media potencia: −${l.fireDealt}.`,
+        },
+      ];
     case "evasion":
       return [{ side: s, tone: "neutral", text: `${names[s]} ejecuta maniobras evasivas.` }];
     case "reparar":

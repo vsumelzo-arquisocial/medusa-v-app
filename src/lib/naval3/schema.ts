@@ -13,7 +13,16 @@ export const phasePlanSchema = z.object({
     z.literal("costado"),
     z.literal("huir"),
   ]),
-  action: z.enum(["fuego", "torpedos", "recargar", "evasion", "embestir", "reparar", "saltar"]),
+  action: z.enum([
+    "fuego",
+    "torpedos",
+    "recargar",
+    "escudos",
+    "evasion",
+    "embestir",
+    "reparar",
+    "saltar",
+  ]),
 });
 
 export const blockPlanSchema = z.object({

@@ -351,10 +351,15 @@ export const ACTION_INFO: Record<string, { name: string; short: string; text: st
     short: "Recargar",
     text: "Recarga los tubos y dispara a media potencia.",
   },
+  escudos: {
+    name: "Escudos al máximo",
+    short: "Escudos",
+    text: "Desvía energía a los escudos: +3 de escudo y paran hasta ¾ de cada andanada. Disparas a media potencia. No sirve contra torpedos ni embestidas.",
+  },
   evasion: {
     name: "Evasión",
     short: "Esquivar",
-    text: "+30 % de esquiva contra torpedos y embestidas y recibe la mitad de disparo. No dispara.",
+    text: "Maniobras evasivas: +30 % de esquiva contra torpedos y embestidas y recibe la mitad de disparo. No dispara.",
   },
   embestir: {
     name: "Embestir",

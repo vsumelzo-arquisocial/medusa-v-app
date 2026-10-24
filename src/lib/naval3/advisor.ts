@@ -26,6 +26,7 @@ import {
   type Arc,
   type BlockPlan,
   type DuelState,
+  type PhaseEvent,
   type PhasePlan,
   type Range,
   type Side,
@@ -130,14 +131,19 @@ function simulateStep(
   const d = dist(own.pos, foe.pos);
   const band = bandOf(d);
   let ourHit = expectedHit(own, foe, band);
+  let theirHit = expectedHit(foe, own, band);
   if (legal.speed === 2) ourHit *= 0.5;
+  if (p.action === "escudos" || p.action === "recargar") ourHit *= 0.5;
+  if (p.action === "evasion" || p.action === "reparar" || p.action === "torpedos") ourHit = 0;
+  if (p.action === "escudos") theirHit = Math.max(0, theirHit - 3) * 0.7;
+  if (p.action === "evasion") theirHit *= 0.5;
   return {
     band,
     distance: d,
     rel: relBearing(own, foe.pos),
     relFoe: relBearing(foe, own.pos),
     ourHit,
-    theirHit: expectedHit(foe, own, band),
+    theirHit,
     own,
     foe,
     minD,
@@ -200,6 +206,7 @@ export function suggestPlan(input: DuelState, side: Side, stance: Stance, rng?: 
         action = "evasion";
       else if (stance === "defensiva" && own.hull < own.maxHull * 0.7 && step.theirHit < 1.5)
         action = "reparar";
+      else if (step.theirHit >= 4 && step.theirHit > step.ourHit + 1.5) action = "escudos";
       else if (loaded && prowAfter <= 40 && step.band >= 1) action = "torpedos";
       else if (!loaded && stats(own).torpedoes > 0 && step.ourHit <= 2) action = "recargar";
       else action = "fuego";
@@ -371,6 +378,16 @@ export function phaseAdvice(
     return { tone: "warn", text: "El casco está intacto: reparar no sirve de nada ahora." };
   if (mainArc(step.rel) === "popa" && step.theirHit > 1)
     return { tone: "danger", text: "Les daremos la popa: nuestros motores quedarán expuestos." };
+  if (p.action === "escudos")
+    return {
+      tone: step.theirHit > 1 ? "info" : "good",
+      text: `Escudos al máximo: paramos buena parte de su andanada (recibiríamos ~${step.theirHit.toFixed(1)}) a costa de disparar a la mitad.`,
+    };
+  if (p.action === "evasion")
+    return {
+      tone: "info",
+      text: "Maniobras evasivas: más difícil acertarnos con torpedos o embestirnos, y su fuego nos llega a la mitad. No disparamos.",
+    };
   if (p.speed === 2 && (p.action === "fuego" || p.action === "recargar"))
     return {
       tone: "info",
@@ -407,4 +424,84 @@ export function botPlan(state: DuelState, side: Side, rng: Rng, noise = true): B
   const stance: Stance = pct < 0.3 && rng() < 0.5 ? "defensiva" : ours === 0 ? "asalto" : "optima";
   const plan = suggestPlan(s, side, stance, noise ? rng : undefined);
   return { ...plan, emergencyJump: pct < 0.5 ? 25 : 20 };
+}
+
+export interface Debrief {
+  dealt: number;
+  taken: number;
+  notes: Advice[];
+}
+
+/** Informe del Segundo tras un bloque: balance y recomendaciones para el siguiente. */
+export function blockDebrief(events: PhaseEvent[], side: Side, input: DuelState): Debrief | null {
+  if (!events.length) return null;
+  const state = normalizeState(input);
+  const foe = other(side);
+  const own = state[side];
+  const voice = SECOND[own.fleet];
+  let dealt = 0;
+  let taken = 0;
+  let foeTorpedoes = 0;
+  let foeFire = 0;
+  let sternHits = 0;
+  let wastedTorps = 0;
+  let shieldsUsed = 0;
+  let evaded = 0;
+  for (const e of events) {
+    const L = e[side];
+    const F = e[foe];
+    dealt += L.fireDealt + L.torpedoesHit * TORPEDO_DAMAGE + (L.ram?.hit ? L.ram.dealt : 0);
+    taken +=
+      F.fireDealt +
+      F.torpedoesHit * TORPEDO_DAMAGE +
+      (F.ram?.hit ? F.ram.dealt : 0) +
+      (L.ram?.selfDamage ?? 0) +
+      (L.warp?.damage ?? 0);
+    foeTorpedoes += F.torpedoesHit * TORPEDO_DAMAGE;
+    foeFire += F.fireDealt;
+    if (F.hitArc === "popa" && F.fireDealt > 0) sternHits++;
+    if (L.forced?.includes("tubos") || L.forced?.includes("Tubos")) wastedTorps++;
+    if (L.action === "escudos") shieldsUsed++;
+    if (L.action === "evasion") evaded++;
+  }
+  const notes: Advice[] = [];
+  notes.push({
+    tone: dealt > taken ? "good" : dealt < taken ? "warn" : "info",
+    text: `Balance: les hemos hecho −${dealt} y hemos recibido −${taken}.`,
+  });
+  const pct = own.hull / own.maxHull;
+  if (pct <= 0.35)
+    notes.push({
+      tone: "danger",
+      text: `${voice.lord}, el casco está al ${Math.round(pct * 100)} %. Si el próximo bloque va mal, saltad al disforme (${warpChance(own)} % de éxito) o fijad un salto de emergencia.`,
+    });
+  if (sternHits)
+    notes.push({
+      tone: "warn",
+      text: `Nos han alcanzado ${sternHits} ${sternHits > 1 ? "veces" : "vez"} por la popa. Evitad «Alejarse» si nos tienen a tiro.`,
+    });
+  if (foeTorpedoes >= 4 && evaded === 0)
+    notes.push({
+      tone: "warn",
+      text: `Sus torpedos nos han hecho −${foeTorpedoes}. Cuando veáis torpedos en vuelo, ordenad evasión o avante toda.`,
+    });
+  if (foeFire >= 8 && shieldsUsed === 0)
+    notes.push({
+      tone: "warn",
+      text: `Sus andanadas nos han hecho −${foeFire}. «Escudos al máximo» para las fases en que estemos en su mejor arco.`,
+    });
+  if (wastedTorps)
+    notes.push({
+      tone: "info",
+      text: "Algunas salvas no salieron: el enemigo no estaba a proa. Usad «Encarar» la fase anterior.",
+    });
+  const t = rangeTable(own, state[foe]);
+  const now = bandOf(dist(own.pos, state[foe].pos));
+  const best = bestRange(own, state[foe]);
+  if (now !== best)
+    notes.push({
+      tone: "info",
+      text: `Ahora estamos en ${RANGE_NAMES[now]}; donde más les superamos es ${RANGE_NAMES[best]} con ${arcLabel(t[best]!.ourArc)}.`,
+    });
+  return { dealt, taken, notes };
 }

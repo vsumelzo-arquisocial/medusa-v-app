@@ -12,6 +12,7 @@ import {
   Rocket,
   RotateCcw,
   RotateCw,
+  Shield,
   SkipBack,
   SkipForward,
   Sparkles,
@@ -45,7 +46,9 @@ import {
   phaseAdvice,
   predictPath,
   suggestPlan,
+  blockDebrief,
   type Advice,
+  type Debrief,
   type PathStep,
   type Stance,
 } from "@/lib/naval3/advisor";
@@ -65,10 +68,19 @@ import {
 } from "@/lib/naval3/types";
 import { mainArc } from "@/lib/naval3/engine";
 import { submitDuelPlan } from "@/lib/naval3.functions";
-import { play, preloadAudio, startLoop, stopAllLoops, unlockAudio } from "@/lib/sfx/engine";
+import {
+  audioReady,
+  play,
+  preloadAudio,
+  startLoop,
+  stopAllLoops,
+  stopLoop,
+  unlockAudio,
+} from "@/lib/sfx/engine";
 import { Radar, geoOf, type Geo } from "./Radar";
 import type { FxEngine } from "./fx";
-import { stagePhase } from "./stage";
+import { MOVE_AT, PHASE_SECONDS, phaseCues } from "./stage";
+import { DuelHelp } from "./Help";
 import { SoundControls } from "./SoundControls";
 
 export type DuelEventRow = PhaseEvent & { block: number };
@@ -89,6 +101,7 @@ const ACTION_ICON: Record<Action, LucideIcon> = {
   fuego: Flame,
   torpedos: Rocket,
   recargar: RefreshCw,
+  escudos: Shield,
   evasion: Wind,
   embestir: Zap,
   reparar: Wrench,
@@ -566,33 +579,68 @@ function sideAt(base: SideState, e: PhaseEvent, s: Side): SideState {
   return { ...base, pos: e[s].pos, heading: e[s].heading, hull: e[s].hullAfter };
 }
 
-/** Repetición fase a fase sobre el radar, con efectos y sonido. */
-function useReplay(
+type LogLine = Line & { id: number; who?: "segundo" | "fase" | "informe" | undefined };
+
+/** Frases del registro de unas fases, sin animación (para saltar o retroceder). */
+function staticLines(
   events: DuelEventRow[],
   me: Side,
-  start: DuelState | null,
-  end: DuelEnd | null,
-  fx: React.RefObject<FxEngine | null>,
-) {
+  names: Record<Side, string>,
+  from: number,
+  to: number,
+): Line[] {
+  const out: (Line & { who?: "fase" })[] = [];
+  for (let i = from; i < to; i++) {
+    const e = events[i]!;
+    out.push({
+      side: null,
+      tone: "neutral",
+      text: `Fase ${e.phase} · ${RANGE_NAMES[e.rangeBefore]}`,
+      who: "fase",
+    });
+    out.push(...narratePhase(e, me, names));
+  }
+  return out;
+}
+
+/**
+ * Repetición fase a fase: el radar mueve las naves, los efectos muestran cada disparo de principio
+ * a fin, suena todo con panorama estéreo y el registro se va escribiendo con los comentarios del Segundo.
+ */
+function useReplay(opts: {
+  events: DuelEventRow[];
+  me: Side;
+  start: DuelState | null;
+  end: DuelEnd | null;
+  fx: React.RefObject<FxEngine | null>;
+  names: Record<Side, string>;
+  epilogue: (Line & { who?: "segundo" | "informe" })[];
+}) {
+  const { events, me, start, end, fx, names, epilogue } = opts;
   const [idx, setIdx] = useState(-1);
+  const [moved, setMoved] = useState(true);
   const [playing, setPlaying] = useState(false);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  useEffect(() => {
-    if (!playing) return;
-    if (idx >= events.length - 1) {
-      setPlaying(false);
-      return;
-    }
-    timer.current = setTimeout(() => setIdx((i) => i + 1), idx < 0 ? 300 : 3000);
-    return () => {
-      if (timer.current) clearTimeout(timer.current);
-    };
-  }, [playing, idx, events.length]);
+  const [speed, setSpeed] = useState(1);
+  const [log, setLog] = useState<LogLine[]>([]);
+  const timers = useRef<number[]>([]);
+  const lineId = useRef(0);
   const foe = other(me);
+  const clear = () => {
+    for (const t of timers.current) clearTimeout(t);
+    timers.current = [];
+  };
+  useEffect(() => clear, []);
   const geos = useMemo(() => {
     if (!start) return [];
     const s0 = normalizeState(start);
-    const out: { before: Geo; after: Geo; own: SideState; foe: SideState }[] = [];
+    const out: {
+      before: Geo;
+      after: Geo;
+      own: SideState;
+      foe: SideState;
+      ownBefore: SideState;
+      foeBefore: SideState;
+    }[] = [];
     let prevOwn = s0[me];
     let prevFoe = s0[foe];
     for (const e of events) {
@@ -602,41 +650,114 @@ function useReplay(
       }
       const own = sideAt(prevOwn, e, me);
       const f = sideAt(prevFoe, e, foe);
-      out.push({ before: geoOf(prevOwn, prevFoe), after: geoOf(own, f), own, foe: f });
+      out.push({
+        before: geoOf(prevOwn, prevFoe),
+        after: geoOf(own, f),
+        own,
+        foe: f,
+        ownBefore: prevOwn,
+        foeBefore: prevFoe,
+      });
       prevOwn = own;
       prevFoe = f;
     }
     return out;
   }, [events, start, me, foe]);
-  useEffect(() => {
-    if (idx < 0 || !events[idx] || !geos[idx] || !start) return;
-    stagePhase(
-      events[idx],
+  const push = (lines: (Line & { who?: LogLine["who"] })[]) =>
+    setLog((l) => [...l, ...lines.map((x) => ({ ...x, id: ++lineId.current }))]);
+
+  function runPhase(i: number, auto: boolean, spd: number) {
+    clear();
+    fx.current?.clear();
+    if (fx.current) fx.current.speed = spd;
+    if (!start || !geos[i] || !events[i]) return;
+    setIdx(i);
+    setMoved(false);
+    const k = 1000 / spd;
+    const last = i === events.length - 1;
+    const cues = phaseCues({
+      e: events[i],
       me,
-      { attacker: start.attacker.fleet, defender: start.defender.fleet },
-      geos[idx].before,
-      geos[idx].after,
-      fx.current,
+      fleets: { attacker: start.attacker.fleet, defender: start.defender.fleet },
+      names,
+      before: geos[i].before,
+      after: geos[i].after,
+      fx: () => fx.current,
       end,
-      idx === events.length - 1,
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idx]);
+      last,
+      maxHull: { attacker: start.attacker.maxHull, defender: start.defender.maxHull },
+    });
+    timers.current.push(window.setTimeout(() => setMoved(true), MOVE_AT * k));
+    for (const c of cues)
+      timers.current.push(
+        window.setTimeout(() => {
+          c.run?.();
+          if (c.line) push([c.line]);
+        }, c.t * k),
+      );
+    const tail = (PHASE_SECONDS + (last && end?.reason === "destruida" ? 3 : 0)) * k;
+    if (auto)
+      timers.current.push(
+        window.setTimeout(() => {
+          if (!last) runPhase(i + 1, true, spd);
+          else {
+            setPlaying(false);
+            push(epilogue);
+          }
+        }, tail),
+      );
+    else if (last) timers.current.push(window.setTimeout(() => push(epilogue), tail));
+  }
+
   return {
     idx,
     playing,
-    frame: idx >= 0 ? (geos[idx] ?? null) : null,
+    speed,
+    log,
+    frame:
+      idx >= 0 && geos[idx]
+        ? {
+            geo: moved ? geos[idx].after : geos[idx].before,
+            own: moved ? geos[idx].own : geos[idx].ownBefore,
+            foe: moved ? geos[idx].foe : geos[idx].foeBefore,
+          }
+        : null,
     play: () => {
       unlockAudio();
-      if (idx >= events.length - 1) setIdx(-1);
+      const from = idx < 0 || idx >= events.length - 1 ? 0 : idx + 1;
+      if (from === 0) setLog([]);
       setPlaying(true);
+      runPhase(from, true, speed);
     },
-    pause: () => setPlaying(false),
+    pause: () => {
+      clear();
+      setPlaying(false);
+      setMoved(true);
+    },
     step: (d: number) => {
       unlockAudio();
       setPlaying(false);
-      setIdx((i) => Math.max(-1, Math.min(events.length - 1, i + d)));
+      const target = Math.max(0, Math.min(events.length - 1, idx + d));
+      if (d < 0)
+        setLog(
+          staticLines(events, me, names, 0, target).map((x) => ({ ...x, id: ++lineId.current })),
+        );
+      runPhase(target, false, speed);
     },
+    skip: () => {
+      clear();
+      fx.current?.clear();
+      setPlaying(false);
+      setIdx(events.length - 1);
+      setMoved(true);
+      setLog(
+        [...staticLines(events, me, names, 0, events.length), ...epilogue].map((x) => ({
+          ...x,
+          id: ++lineId.current,
+        })),
+      );
+    },
+    toggleSpeed: () => setSpeed((s) => (s === 1 ? 2 : 1)),
   };
 }
 
@@ -650,13 +771,13 @@ function ReplayControls({
   label: string;
 }) {
   return (
-    <div className="flex items-center justify-center gap-1">
+    <div className="flex flex-wrap items-center justify-center gap-1">
       <Button
         size="icon"
         variant="outline"
         aria-label="Fase anterior"
         onClick={() => r.step(-1)}
-        disabled={r.idx < 0}
+        disabled={r.idx <= 0}
       >
         <SkipBack />
       </Button>
@@ -666,7 +787,7 @@ function ReplayControls({
         </Button>
       ) : (
         <Button size="sm" variant="outline" onClick={r.play} disabled={!total}>
-          <Play /> {label}
+          <Play /> {r.idx >= 0 && r.idx < total - 1 ? "Continuar" : label}
         </Button>
       )}
       <Button
@@ -678,7 +799,84 @@ function ReplayControls({
       >
         <SkipForward />
       </Button>
+      <Button
+        size="sm"
+        variant="outline"
+        aria-label="Velocidad de la repetición"
+        onClick={r.toggleSpeed}
+      >
+        ×{r.speed}
+      </Button>
+      <Button size="sm" variant="ghost" onClick={r.skip} disabled={!total}>
+        Ver todo
+      </Button>
     </div>
+  );
+}
+
+/** Texto que se escribe letra a letra. */
+function Typewriter({ text }: { text: string }) {
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    setN(0);
+    const step = Math.max(1, Math.round(text.length / 45));
+    const t = window.setInterval(
+      () => setN((x) => (x >= text.length ? (clearInterval(t), x) : x + step)),
+      16,
+    );
+    return () => clearInterval(t);
+  }, [text]);
+  return (
+    <>
+      {text.slice(0, n)}
+      {n < text.length && <span className="opacity-60">▌</span>}
+    </>
+  );
+}
+
+/** Registro de combate en directo. */
+function LiveLog({ lines, empty }: { lines: LogLine[]; empty: string }) {
+  const box = useRef<HTMLOListElement>(null);
+  useEffect(() => {
+    box.current?.scrollTo({ top: box.current.scrollHeight, behavior: "smooth" });
+  }, [lines.length]);
+  return (
+    <section aria-label="Registro de combate" className="rounded border border-border bg-black/30">
+      <p className="border-b border-border px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+        Registro de combate
+      </p>
+      <ol
+        ref={box}
+        aria-live="polite"
+        className="max-h-64 space-y-1 overflow-y-auto p-2 font-mono text-xs"
+      >
+        {!lines.length && <li className="text-muted-foreground">{empty}</li>}
+        {lines.map((l, i) => {
+          const latest = i === lines.length - 1;
+          const body = latest ? <Typewriter text={l.text} /> : l.text;
+          if (l.who === "fase")
+            return (
+              <li key={l.id} className="pt-1 text-[10px] uppercase tracking-widest text-primary">
+                ── {body}
+              </li>
+            );
+          if (l.who === "segundo" || l.who === "informe")
+            return (
+              <li
+                key={l.id}
+                className={`border-l-2 pl-2 ${l.tone === "bad" ? "border-red-500 text-red-200" : l.tone === "good" ? "border-emerald-500 text-emerald-200" : "border-amber-400 text-amber-100"}`}
+              >
+                {body}
+              </li>
+            );
+          return (
+            <li key={l.id} className={LINE_TONE[l.tone]}>
+              {body}
+            </li>
+          );
+        })}
+      </ol>
+    </section>
   );
 }
 
@@ -694,24 +892,68 @@ function PhaseLines({ e, me, names }: { e: DuelEventRow; me: Side; names: Record
   );
 }
 
+/** Informe del Segundo tras el último bloque. */
+function DebriefPanel({ d, title }: { d: Debrief; title: string }) {
+  return (
+    <section aria-label={title} className="rounded border border-amber-500/50 bg-amber-950/10 p-3">
+      <p className="mb-1 text-xs uppercase tracking-[0.2em] text-amber-300">{title}</p>
+      <ul className="space-y-1">
+        {d.notes.map((n, i) => (
+          <li key={i} className={`border-l-2 pl-2 text-sm ${TONE[n.tone]}`}>
+            {n.text}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+const debriefLines = (d: Debrief | null, title: string): (Line & { who: "informe" })[] =>
+  d
+    ? [
+        { side: null, tone: "neutral", text: title, who: "informe" },
+        ...d.notes.map((n) => ({
+          side: null,
+          tone: (n.tone === "good"
+            ? "good"
+            : n.tone === "info"
+              ? "neutral"
+              : "bad") as Line["tone"],
+          text: n.text,
+          who: "informe" as const,
+        })),
+      ]
+    : [];
+
 const seenKey = (id: string) => `naval3-seen-${id}`;
 
-/** Ambiente de puente y música mientras el duelo está en pantalla (tras el primer gesto del usuario). */
-function useBattleAmbience(active: boolean) {
+/** Ambiente de puente y música (tensión en la aproximación, combate después). Arranca tras el primer gesto. */
+function useBattleAmbience(status: string | null, raidId: string) {
   useEffect(() => {
-    if (!active) return;
+    if (!status) return;
     preloadAudio();
+    const music = status === "pendiente" ? "musica_tension" : "musica_combate";
     const start = () => {
       unlockAudio();
+      stopLoop(music === "musica_combate" ? "musica_tension" : "musica_combate");
       startLoop("puente");
-      startLoop("musica_combate");
+      startLoop(music, 3);
+      if (status === "enfrentado") {
+        let heard = false;
+        try {
+          heard = localStorage.getItem(`naval3-braam-${raidId}`) === "1";
+          localStorage.setItem(`naval3-braam-${raidId}`, "1");
+        } catch {
+          /* sin almacenamiento */
+        }
+        if (!heard) play("inicio_combate");
+      }
     };
-    window.addEventListener("pointerdown", start, { once: true });
-    return () => {
-      window.removeEventListener("pointerdown", start);
-      stopAllLoops();
-    };
-  }, [active]);
+    if (audioReady()) start();
+    else window.addEventListener("pointerdown", start, { once: true });
+    return () => window.removeEventListener("pointerdown", start);
+  }, [status, raidId]);
+  useEffect(() => () => stopAllLoops(), []);
 }
 
 export function DuelCard({
@@ -739,12 +981,32 @@ export function DuelCard({
     () => events.filter((e) => e.block === raid.block_number - 1),
     [events, raid.block_number],
   );
-  const names = { [side]: "Tu nave", [foeSide]: name(foeId) } as Record<Side, string>;
+  const foeName = name(foeId);
+  const names = useMemo(
+    () => ({ [side]: "Tu nave", [foeSide]: foeName }) as Record<Side, string>,
+    [side, foeSide, foeName],
+  );
+  const debrief = useMemo(
+    () => (state ? blockDebrief(lastBlock, side, state) : null),
+    [lastBlock, side, state],
+  );
+  const epilogue = useMemo(
+    () => debriefLines(debrief, `Informe del bloque ${raid.block_number - 1}`),
+    [debrief, raid.block_number],
+  );
   const fx = useRef<FxEngine | null>(null);
-  const replay = useReplay(lastBlock, side, state, null, fx);
+  const replay = useReplay({
+    events: lastBlock,
+    me: side,
+    start: state,
+    end: null,
+    fx,
+    names,
+    epilogue,
+  });
   const [ghost, setGhost] = useState<Geo | null>(null);
   const [jumpSignal, setJumpSignal] = useState(0);
-  useBattleAmbience(!!state);
+  useBattleAmbience(state ? raid.status : null, raid.id);
   useEffect(() => {
     if (!lastBlock.length) return;
     let seen = 0;
@@ -754,19 +1016,21 @@ export function DuelCard({
       /* sin almacenamiento */
     }
     if (seen < raid.block_number - 1) {
-      replay.play();
+      const t = window.setTimeout(() => replay.play(), 400);
       try {
         localStorage.setItem(seenKey(raid.id), String(raid.block_number - 1));
       } catch {
         /* sin almacenamiento */
       }
+      return () => clearTimeout(t);
     }
+    return undefined;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [raid.id, raid.block_number]);
   if (!state)
     return (
       <article className="rounded border border-destructive p-4 text-sm">
-        Contacto con {name(foeId)} · preparando el duelo…
+        Contacto con {foeName} · preparando el duelo…
       </article>
     );
   const own = state[side];
@@ -779,18 +1043,21 @@ export function DuelCard({
   return (
     <article
       className="space-y-4 rounded border border-destructive/70 p-3 sm:p-4"
-      aria-label={`Duelo contra ${name(foeId)}`}
+      aria-label={`Duelo contra ${foeName}`}
     >
       <header className="flex flex-wrap items-start justify-between gap-2">
         <div>
           <h3 className="text-lg text-primary">
-            {side === "attacker" ? "Ofensiva contra" : "Atacado por"} {name(foeId)}
+            {side === "attacker" ? "Ofensiva contra" : "Atacado por"} {foeName}
           </h3>
           <p className="text-xs text-muted-foreground">
             {FLEETS[foe.fleet].name} · {FLEET_PROFILES[foe.fleet].trait}
           </p>
         </div>
-        <SoundControls />
+        <div className="flex gap-1">
+          <DuelHelp fleet={own.fleet} />
+          <SoundControls />
+        </div>
       </header>
       <div className="grid gap-3 sm:grid-cols-2">
         <HullBar
@@ -800,7 +1067,7 @@ export function DuelCard({
           mine
         />
         <HullBar
-          label={name(foeId)}
+          label={foeName}
           hull={shownPhase ? shownPhase[foeSide].hullAfter : foe.hull}
           max={foe.maxHull}
           mine={false}
@@ -811,24 +1078,12 @@ export function DuelCard({
           <Radar
             own={frame?.own ?? own}
             foe={frame?.foe ?? foe}
-            geo={frame?.after}
+            geo={frame?.geo}
             ghost={frame ? null : ghost}
-            foeLabel={name(foeId)}
+            foeLabel={foeName}
             approaching={approaching && !frame}
-            torpedoesOut={
-              frame
-                ? shownPhase && !shownPhase[side].instantTorpedoes
-                  ? shownPhase[side].torpedoesLaunched
-                  : 0
-                : own.torpedoesInFlight
-            }
-            torpedoesIn={
-              frame
-                ? shownPhase && !shownPhase[foeSide].instantTorpedoes
-                  ? shownPhase[foeSide].torpedoesLaunched
-                  : 0
-                : foe.torpedoesInFlight
-            }
+            torpedoesOut={frame ? 0 : own.torpedoesInFlight}
+            torpedoesIn={frame ? 0 : foe.torpedoesInFlight}
             onFx={(f) => (fx.current = f)}
             caption={
               shownPhase
@@ -845,13 +1100,17 @@ export function DuelCard({
               label={`Ver bloque ${raid.block_number - 1}`}
             />
           )}
-          {shownPhase && (
-            <div className="rounded border border-border p-2" aria-live="polite">
-              <PhaseLines e={shownPhase} me={side} names={names} />
-            </div>
+          {(lastBlock.length > 0 || replay.log.length > 0) && (
+            <LiveLog
+              lines={replay.log}
+              empty={`Pulsa «Ver bloque ${raid.block_number - 1}» para revivir el último bloque.`}
+            />
           )}
         </div>
         <div className="space-y-3">
+          {debrief && !replay.playing && (
+            <DebriefPanel d={debrief} title={`Informe del bloque ${raid.block_number - 1}`} />
+          )}
           <Second
             state={state}
             side={side}
@@ -864,14 +1123,14 @@ export function DuelCard({
                 ? `El combate empieza al llegar (${remaining(raid.deadline)}).`
                 : foeReady
                   ? "Resolviendo…"
-                  : `Esperando a ${name(foeId)} · plazo ${remaining(raid.deadline)}. Si no responde, pierde el duelo.`}
+                  : `Esperando a ${foeName} · plazo ${remaining(raid.deadline)}. Si no responde, pierde el duelo.`}
             </p>
           ) : (
             <>
               <p className="text-xs text-muted-foreground">
                 {approaching
                   ? `En aproximación: ya puedes fijar el primer bloque. Contacto en ${remaining(raid.deadline)}.`
-                  : `Plazo ${remaining(raid.deadline)}. ${foeReady ? `${name(foeId)} ya ha dado sus órdenes.` : ""} Si no das órdenes a tiempo, pierdes el duelo.`}
+                  : `Plazo ${remaining(raid.deadline)}. ${foeReady ? `${foeName} ya ha dado sus órdenes.` : ""} Si no das órdenes a tiempo, pierdes el duelo.`}
               </p>
               <Planner
                 state={state}
@@ -939,7 +1198,11 @@ export function DuelArchiveDialog({
   const foeId = side === "attacker" ? raid.defender_id : raid.attacker_id;
   const events = useMemo(() => raid.report?.v3_events ?? [], [raid.report]);
   const end = raid.report?.v3_end ?? null;
-  const names = { [side]: "Tu nave", [foeSide]: name(foeId) } as Record<Side, string>;
+  const foeName = name(foeId);
+  const names = useMemo(
+    () => ({ [side]: "Tu nave", [foeSide]: foeName }) as Record<Side, string>,
+    [side, foeSide, foeName],
+  );
   const start = useMemo<DuelState | null>(() => {
     if (!raid.duel_state) return null;
     const s = normalizeState(raid.duel_state);
@@ -953,8 +1216,15 @@ export function DuelArchiveDialog({
     }
     return s;
   }, [raid.duel_state, events]);
+  const epilogue = useMemo(() => {
+    const out: (Line & { who?: "segundo" | "informe" })[] = [];
+    if (end) out.push({ ...endLine(end, side, names), who: "informe" });
+    if (raid.duel_state)
+      out.push(...debriefLines(blockDebrief(events, side, raid.duel_state), "Balance del duelo"));
+    return out;
+  }, [end, side, names, raid.duel_state, events]);
   const fx = useRef<FxEngine | null>(null);
-  const replay = useReplay(events, side, start, end, fx);
+  const replay = useReplay({ events, me: side, start, end, fx, names, epilogue });
   const e = replay.idx >= 0 ? events[replay.idx] : null;
   const frame = replay.frame;
   return (
@@ -967,40 +1237,32 @@ export function DuelArchiveDialog({
         }
       }}
     >
-      <DialogContent className="max-h-[92vh] max-w-3xl overflow-y-auto">
+      <DialogContent className="max-h-[94vh] max-w-4xl overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-primary">Duelo contra {name(foeId)}</DialogTitle>
+          <DialogTitle className="text-primary">Duelo contra {foeName}</DialogTitle>
           <DialogDescription>{summary}</DialogDescription>
         </DialogHeader>
-        <div className="flex justify-end">
+        <div className="flex justify-end gap-1">
+          {start && <DuelHelp fleet={start[side].fleet} />}
           <SoundControls />
         </div>
-        {start && (
-          <Radar
-            own={frame?.own ?? start[side]}
-            foe={frame?.foe ?? start[foeSide]}
-            geo={frame?.after}
-            foeLabel={name(foeId)}
-            onFx={(f) => (fx.current = f)}
-            compact
-            caption={e ? `Bloque ${e.block} · fase ${e.phase}` : `${events.length} fases`}
-          />
-        )}
-        <ReplayControls r={replay} total={events.length} label="Reproducir duelo" />
-        {e && (
-          <div className="rounded border border-border p-2" aria-live="polite">
-            <PhaseLines e={e} me={side} names={names} />
+        <div className="grid gap-3 md:grid-cols-2">
+          <div className="space-y-2">
+            {start && (
+              <Radar
+                own={frame?.own ?? start[side]}
+                foe={frame?.foe ?? start[foeSide]}
+                geo={frame?.geo}
+                foeLabel={foeName}
+                onFx={(f) => (fx.current = f)}
+                compact
+                caption={e ? `Bloque ${e.block} · fase ${e.phase}` : `${events.length} fases`}
+              />
+            )}
+            <ReplayControls r={replay} total={events.length} label="Reproducir duelo" />
           </div>
-        )}
-        {end && (!e || replay.idx === events.length - 1) && (
-          <p className={`text-sm ${LINE_TONE[endLine(end, side, names).tone]}`}>
-            {endLine(end, side, names).text}
-          </p>
-        )}
-        <details className="text-xs">
-          <summary className="cursor-pointer text-muted-foreground">Registro completo</summary>
-          <FullLog events={events} me={side} names={names} />
-        </details>
+          <LiveLog lines={replay.log} empty="Pulsa «Reproducir duelo» o «Ver todo»." />
+        </div>
       </DialogContent>
     </Dialog>
   );
