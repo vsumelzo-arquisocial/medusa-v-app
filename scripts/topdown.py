@@ -7,7 +7,7 @@ Uso: python3 scripts/topdown.py <foto> <flota> [--rot GRADOS]
 - Recorta a la nave y la gira para que el eje largo quede vertical (proa arriba;
   con --rot se corrige a mano: 180 si sale al revés).
 - Simplifica: suaviza el ruido, sube contraste y nitidez y aclara el contorno.
-- Guarda src/assets/topdown/<flota>.png (512 px de largo, fondo transparente).
+- Guarda src/assets/topdown/<flota>.webp (512 px de largo, fondo transparente).
 """
 import argparse
 import math
@@ -97,7 +97,8 @@ def main() -> None:
     s = 512 / max(im.size)
     im = im.resize((max(1, round(im.width * s)), max(1, round(im.height * s))), Image.LANCZOS)
     out = Path(__file__).resolve().parent.parent / "src/assets/topdown" / f"{args.fleet}.png"
-    im.save(out, optimize=True)
+    out = out.with_suffix(".webp")
+    im.save(out, "WEBP", quality=86, method=6)
     print(f"{out} · {im.width}×{im.height}")
 
 
