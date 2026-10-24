@@ -580,6 +580,25 @@ function body(fleet: FleetId, id: string, p: Palette, power: number) {
 }
 
 /** Nave cenital. `power` 0–1 controla la estela de los motores. `size` = eslora en px. */
+/** Fotos cenitales reales (src/assets/topdown/<flota>.png|webp): si existen, sustituyen a la ilustración. */
+const PHOTOS: Partial<Record<FleetId, string>> = Object.fromEntries(
+  Object.entries(
+    import.meta.glob<string>("../../../assets/topdown/*.{png,webp}", {
+      eager: true,
+      query: "?url",
+      import: "default",
+    }),
+  ).map(([path, url]) => [
+    path
+      .split("/")
+      .pop()!
+      .replace(/\.(png|webp)$/, ""),
+    url,
+  ]),
+);
+
+export const hasTopDownPhoto = (fleet: FleetId) => !!PHOTOS[fleet];
+
 export function TopDownShip({
   fleet,
   size,
@@ -591,6 +610,39 @@ export function TopDownShip({
   power?: number;
   uid: string;
 }) {
+  const photo = PHOTOS[fleet];
+  if (photo) {
+    const glow = PAL[fleet].glow;
+    const len = size * (0.12 + power * 0.35);
+    return (
+      <g>
+        <defs>
+          <radialGradient id={`tdp-${uid}`} cx="50%" cy="0%" r="100%">
+            <stop offset="0" stopColor="#fff" stopOpacity={0.95} />
+            <stop offset="0.25" stopColor={glow} stopOpacity={0.8} />
+            <stop offset="1" stopColor={glow} stopOpacity={0} />
+          </radialGradient>
+        </defs>
+        {/* Estela de motores a popa */}
+        <ellipse
+          cx={0}
+          cy={size / 2 + len / 2 - size * 0.04}
+          rx={size * 0.09}
+          ry={len / 2}
+          fill={`url(#tdp-${uid})`}
+        />
+        <image
+          href={photo}
+          x={-size / 2}
+          y={-size / 2}
+          width={size}
+          height={size}
+          preserveAspectRatio="xMidYMid meet"
+          style={{ filter: "drop-shadow(0 2px 3px rgba(0,0,0,.8))" }}
+        />
+      </g>
+    );
+  }
   const p = PAL[fleet];
   const id = `tds-${uid}`;
   const k = size / 48;
