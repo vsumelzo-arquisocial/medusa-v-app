@@ -11,6 +11,8 @@ import { profileQuery } from "@/lib/profile";
 import { BODY_MAPS } from "@/lib/planet";
 import { BODY_TEXTURES } from "@/lib/system-art";
 import { bodyName } from "@/lib/system";
+import { raidsQuery } from "@/components/ship/NavalCombat";
+import { HoloShip, type HoloShipState } from "@/components/bridge/HoloShip";
 
 /**
  * Bridge stage: the full command bridge with a holographic Medusa V
@@ -42,6 +44,23 @@ export function OrbitalView({ shipName, onPlanetClick, race, faction, threats }:
     const al = side(a.attacker_id);
     return { id: a.id, from: from?.id ?? null, to: a.region_id, color: campaignColor(al), traitor: al === "chaos" };
   });
+  const { data: naval } = useQuery(raidsQuery);
+  const uid = prof?.user.id;
+  const myShip = naval?.ships.find((x) => x.user_id === uid);
+  const myStatus = naval?.fleetStatus.find((x) => x.user_id === uid);
+  const shipHull = myShip?.hull_hp ?? null;
+  const shipMax = myStatus?.max_hull ?? fleetFor(race, faction).hull;
+  const now = Date.now();
+  const myRaids = (naval?.raids ?? []).filter((r) => r.attacker_id === uid || r.defender_id === uid);
+  const shipState: HoloShipState = myRaids.some((r) => r.status === "enfrentado")
+    ? "combate"
+    : myRaids.some((r) => r.status === "pendiente")
+      ? "contacto"
+      : myStatus?.warp_until && new Date(myStatus.warp_until).getTime() > now
+        ? "warp"
+        : myShip?.hull_repair_until && new Date(myShip.hull_repair_until).getTime() > now
+          ? "reparando"
+          : "orbita";
   const { compact } = useViewMode();
   const bar = data && !inWarp && <CampaignLegend regions={bodyRegions} players={data.players} />;
   return (
@@ -78,16 +97,9 @@ export function OrbitalView({ shipName, onPlanetClick, race, faction, threats }:
         </div>
         <div className="holo-lines absolute inset-0 rounded-full" />
         <div className="absolute inset-0 rounded-full shadow-[0_0_40px_oklch(0.8_0.2_150/0.6),inset_0_0_30px_oklch(0.85_0.2_150/0.7)] transition group-hover:shadow-[0_0_70px_oklch(0.85_0.22_150/0.9),inset_0_0_40px_oklch(0.9_0.2_150/0.9)]" />
-        <div className="orbit-ring absolute -inset-[18%] rounded-full border border-primary/50">
-          <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
-            <div className="orbit-counter flex flex-col items-center">
-              <div className={`orbit-ship relative ${threats?.naval ? "orbit-ship-hit" : ""}`}>
-                <span className="orbit-ship-engine" aria-hidden />
-                <img src={fleetFor(race,faction).image} alt="" width={768} height={512} className="relative h-14 w-24 object-contain" />
-              </div>
-              <span className="mt-0.5 whitespace-nowrap font-mono text-[9px] uppercase tracking-widest text-primary glow">{shipName ?? "Tu nave"}</span>
-            </div>
-          </div>
+        <div className="orbit-ring absolute -inset-[18%] rounded-full border border-primary/50" />
+        <div className="orbit-holo-path">
+          <HoloShip image={fleetFor(race, faction).image} name={shipName ?? "Tu nave"} hull={shipHull} maxHull={shipMax} state={shipState} />
         </div>
         {!compact && <span className="absolute -bottom-[38%] left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.3em] text-primary opacity-70 group-hover:opacity-100">{bodyName(body)}</span>}
       </button>

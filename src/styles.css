@@ -280,3 +280,67 @@ html[data-fleet] h1,html[data-fleet] h2,html[data-fleet] h3 { letter-spacing:0; 
   .jump-button::after, .jump-reactor--igniting, .jump-reactor--on, .jump-panel--alarm, .jump-alarm-light { animation: none; }
   .jump-reactor--igniting > span, .jump-reactor--on > span, .jump-ignition-bar > span { animation-duration: .01s; }
 }
+
+/* ───── Holograma de la nave en órbita (puente) ───── */
+.orbit-holo { --holo: var(--primary); position: relative; display: flex; flex-direction: column; align-items: center; width: 6.5rem; pointer-events: none; }
+.orbit-holo--red { --holo: oklch(0.68 0.22 25); }
+.orbit-holo--amber { --holo: oklch(0.82 0.16 75); }
+.orbit-holo--warp { --holo: oklch(0.72 0.2 305); }
+.orbit-holo { animation: holo-bob 4s ease-in-out infinite; }
+.orbit-holo__body { position: relative; width: 100%; aspect-ratio: 3 / 2; }
+.orbit-holo__img { position: absolute; inset: 0; -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center;
+  background:
+    linear-gradient(to bottom, transparent 0 40%, color-mix(in oklab, white 55%, transparent) 50%, transparent 60% 100%) 0 -100% / 100% 300% no-repeat,
+    repeating-linear-gradient(to bottom, transparent 0 1px, color-mix(in oklab, black 45%, transparent) 1px 2.5px),
+    linear-gradient(color-mix(in oklab, var(--holo) 85%, white), var(--holo));
+  animation: holo-sweep 3.2s linear infinite, holo-flicker 5s steps(1) infinite; opacity: .9; }
+.orbit-holo__img--glow { filter: blur(4px); opacity: .55; animation: holo-flicker 5s steps(1) infinite; background: var(--holo); }
+.orbit-holo__fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; filter: grayscale(1) brightness(1.3) drop-shadow(0 0 6px var(--holo)); opacity: .7; mix-blend-mode: screen; }
+.orbit-holo__engine { position: absolute; top: 50%; left: 6%; width: 32%; height: 14%; transform: translate(-60%, -50%); border-radius: 9999px; background: radial-gradient(ellipse at right, color-mix(in oklab, var(--holo) 70%, white), transparent 70%); filter: blur(2px); animation: engine-flicker 1.2s infinite; }
+.orbit-holo__shield { position: absolute; inset: -8% -6%; border-radius: 9999px; border: 1px solid color-mix(in oklab, var(--holo) 80%, transparent); box-shadow: 0 0 10px var(--holo), inset 0 0 10px color-mix(in oklab, var(--holo) 50%, transparent); animation: holo-pulse 2.4s ease-in-out infinite; }
+.orbit-holo__base { width: 70%; height: .35rem; margin-top: -.1rem; border-radius: 50%; background: radial-gradient(ellipse, color-mix(in oklab, var(--holo) 80%, transparent), transparent 70%); animation: holo-pulse 2.4s ease-in-out infinite; }
+.orbit-holo__hud { display: flex; flex-direction: column; align-items: center; gap: 1px; margin-top: 1px; font-family: ui-monospace, monospace; text-transform: uppercase; color: var(--holo); text-shadow: 0 0 4px var(--holo); line-height: 1.1; }
+.orbit-holo__name { font-size: 8px; letter-spacing: .15em; white-space: nowrap; }
+.orbit-holo__tag { font-size: 7px; letter-spacing: .12em; white-space: nowrap; opacity: .85; }
+.orbit-holo__hull { display: flex; gap: 1px; }
+.orbit-holo__hull i { display: block; width: 4px; height: 3px; background: color-mix(in oklab, var(--holo) 25%, transparent); }
+.orbit-holo__hull i.on { background: var(--holo); box-shadow: 0 0 3px var(--holo); }
+.orbit-holo--glitch .orbit-holo__img { animation: holo-sweep 3.2s linear infinite, holo-flicker 5s steps(1) infinite, holo-glitch 2.3s steps(1) infinite; }
+@keyframes holo-bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-3px) } }
+@keyframes holo-sweep { to { background-position: 0 200%, 0 0, 0 0; } }
+@keyframes holo-flicker { 0%,100% { opacity: .9 } 31% { opacity: .55 } 32% { opacity: .9 } 64% { opacity: .75 } 65% { opacity: .9 } 88% { opacity: .4 } 89% { opacity: .9 } }
+@keyframes holo-pulse { 0%,100% { opacity: .6 } 50% { opacity: 1 } }
+@keyframes holo-glitch { 0%,100% { clip-path: none } 12% { clip-path: inset(30% 0 40% 0) } 13% { clip-path: none } 57% { clip-path: inset(60% 0 10% 0) } 58% { clip-path: none } }
+@media (prefers-reduced-motion: reduce) { .orbit-holo, .orbit-holo__body, .orbit-holo__img, .orbit-holo__img--glow, .orbit-holo__shield, .orbit-holo__base { animation: none !important; } }
+
+@keyframes orbit-holo-path {
+  0.00% { left: -18.00%; top: 50.00%; transform: translate(-50%, -50%) scale(0.885, 0.885); opacity: 0.70; z-index: 3; }
+  4.17% { left: -15.68%; top: 55.95%; transform: translate(-50%, -50%) scale(0.928, 0.928); opacity: 0.78; z-index: 3; }
+  8.33% { left: -8.89%; top: 61.50%; transform: translate(-50%, -50%) scale(0.968, 0.968); opacity: 0.85; z-index: 3; }
+  12.50% { left: 1.92%; top: 66.26%; transform: translate(-50%, -50%) scale(1.002, 1.002); opacity: 0.91; z-index: 3; }
+  16.67% { left: 16.00%; top: 69.92%; transform: translate(-50%, -50%) scale(1.028, 1.028); opacity: 0.96; z-index: 3; }
+  20.83% { left: 32.40%; top: 72.22%; transform: translate(-50%, -50%) scale(1.044, 1.044); opacity: 0.99; z-index: 3; }
+  25.00% { left: 50.00%; top: 73.00%; transform: translate(-50%, -50%) scale(1.050, 1.050); opacity: 1.00; z-index: 3; }
+  29.17% { left: 67.60%; top: 72.22%; transform: translate(-50%, -50%) scale(1.044, 1.044); opacity: 0.99; z-index: 3; }
+  33.33% { left: 84.00%; top: 69.92%; transform: translate(-50%, -50%) scale(1.028, 1.028); opacity: 0.96; z-index: 3; }
+  37.50% { left: 98.08%; top: 66.26%; transform: translate(-50%, -50%) scale(1.002, 1.002); opacity: 0.91; z-index: 3; }
+  41.67% { left: 108.89%; top: 61.50%; transform: translate(-50%, -50%) scale(0.967, 0.967); opacity: 0.85; z-index: 3; }
+  45.83% { left: 115.68%; top: 55.95%; transform: translate(-50%, -50%) scale(0.928, 0.928); opacity: 0.78; z-index: 3; }
+  50.00% { left: 118.00%; top: 50.00%; transform: translate(-50%, -50%) scale(0.885, 0.885); opacity: 0.70; z-index: 3; }
+  54.17% { left: 115.68%; top: 44.05%; transform: translate(-50%, -50%) scale(0.842, 0.842); opacity: 0.62; z-index: -1; }
+  58.33% { left: 108.89%; top: 38.50%; transform: translate(-50%, -50%) scale(0.802, 0.802); opacity: 0.55; z-index: -1; }
+  62.50% { left: 98.08%; top: 33.74%; transform: translate(-50%, -50%) scale(0.768, 0.768); opacity: 0.49; z-index: -1; }
+  66.67% { left: 84.00%; top: 30.08%; transform: translate(-50%, -50%) scale(0.742, 0.742); opacity: 0.44; z-index: -1; }
+  70.83% { left: 67.60%; top: 27.78%; transform: translate(-50%, -50%) scale(0.726, 0.726); opacity: 0.41; z-index: -1; }
+  75.00% { left: 50.00%; top: 27.00%; transform: translate(-50%, -50%) scale(0.720, 0.720); opacity: 0.40; z-index: -1; }
+  79.17% { left: 32.40%; top: 27.78%; transform: translate(-50%, -50%) scale(0.726, 0.726); opacity: 0.41; z-index: -1; }
+  83.33% { left: 16.00%; top: 30.08%; transform: translate(-50%, -50%) scale(0.742, 0.742); opacity: 0.44; z-index: -1; }
+  87.50% { left: 1.92%; top: 33.74%; transform: translate(-50%, -50%) scale(0.768, 0.768); opacity: 0.49; z-index: -1; }
+  91.67% { left: -8.89%; top: 38.50%; transform: translate(-50%, -50%) scale(0.802, 0.802); opacity: 0.55; z-index: -1; }
+  95.83% { left: -15.68%; top: 44.05%; transform: translate(-50%, -50%) scale(0.842, 0.842); opacity: 0.62; z-index: -1; }
+  100.00% { left: -18.00%; top: 50.00%; transform: translate(-50%, -50%) scale(0.885, 0.885); opacity: 0.70; z-index: -1; }
+}
+.orbit-holo-path { position: absolute; left: 0; top: 50%; animation: orbit-holo-path 40s linear infinite; pointer-events: none; }
+.orbit-holo-path .orbit-holo__body { animation: orbit-holo-flip 40s steps(1) infinite; }
+@keyframes orbit-holo-flip { 0% { transform: scaleX(1) } 50% { transform: scaleX(-1) } }
+@media (prefers-reduced-motion: reduce) { .orbit-holo-path { animation: none; left: 82%; top: 62%; transform: translate(-50%, -50%); } }
