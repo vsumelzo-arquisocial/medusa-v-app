@@ -9,13 +9,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { FleetId } from "@/lib/ship-identity";
-import {
-  ACTION_INFO,
-  FLEET_PROFILES,
-  PHASES_PER_BLOCK,
-  SECOND,
-  SPEED_INFO,
-} from "@/lib/naval3/factions";
+import { MANEUVERS } from "@/lib/naval3/maneuvers";
+import { ACTION_INFO, FLEET_PROFILES, PHASES_PER_BLOCK, SECOND } from "@/lib/naval3/factions";
 
 const SECTIONS = [
   "Lo básico",
@@ -64,7 +59,7 @@ export function DuelHelp({ fleet }: { fleet: FleetId }) {
               <>
                 <p>
                   Un duelo enfrenta a dos naves capitales. Se juega en{" "}
-                  <b>bloques de {PHASES_PER_BLOCK} fases</b>: cada uno da sus órdenes a ciegas y,
+                  <b>bloques de {PHASES_PER_BLOCK} rondas</b>: cada uno da sus órdenes a ciegas y,
                   cuando los dos confirmáis, se resuelve el bloque entero y podéis verlo en el
                   radar.
                 </p>
@@ -75,8 +70,8 @@ export function DuelHelp({ fleet }: { fleet: FleetId }) {
                 </p>
                 <p>
                   El <b>{v.title}</b> te propone un plan completo según la postura que elijas (Al
-                  abordaje, Nuestra distancia o Resistir). Puedes aceptarlo o tocar cualquier fase.
-                  Sus avisos en cada fase te dicen si algo va a salir mal.
+                  abordaje, Nuestra distancia o Resistir). Puedes aceptarlo o tocar cualquier ronda.
+                  Sus avisos en cada ronda te dicen si algo va a salir mal.
                 </p>
                 <p>
                   Tras cada bloque se reproduce lo ocurrido: las naves se mueven, los disparos
@@ -98,8 +93,8 @@ export function DuelHelp({ fleet }: { fleet: FleetId }) {
                   a doler.
                 </p>
                 <p>
-                  La <b>silueta discontinua</b> muestra dónde estará el enemigo en la fase que estás
-                  editando, suponiendo que mantiene el rumbo.
+                  La <b>silueta discontinua</b> muestra dónde estará el enemigo en la ronda que
+                  estás editando, suponiendo que mantiene el rumbo.
                 </p>
                 <p>
                   En la repetición verás las andanadas salir de la nave y llegar al blanco (o pasar
@@ -111,21 +106,19 @@ export function DuelHelp({ fleet }: { fleet: FleetId }) {
             {sec === "Órdenes" && (
               <>
                 <p>
-                  <b>Máquinas</b>:
+                  <b>Maniobra</b> (cómo se mueve la nave en la ronda; mira la silueta azul del mapa
+                  al elegirla):
                 </p>
                 <ul className="list-disc pl-5">
-                  {SPEED_INFO.map((s) => (
-                    <li key={s.name}>
-                      <b>{s.name}</b>: {s.text}
+                  {MANEUVERS.map((m) => (
+                    <li key={m.id}>
+                      <b>
+                        {m.glyph} {m.name}
+                      </b>
+                      : {m.text}
                     </li>
                   ))}
                 </ul>
-                <p>
-                  <b>Timón</b>: <i>Encarar</i> pone la proa hacia el enemigo, <i>Costado</i> le
-                  presenta la andanada, <i>Alejarse</i> le da la espalda y <i>Recto</i> mantiene el
-                  rumbo. Las intenciones se ajustan solas a dónde esté el enemigo cuando llegue la
-                  fase. También puedes girar a mano 45° o 90° a babor (B) o estribor (E).
-                </p>
                 <p>
                   <b>Acciones</b>:
                 </p>
@@ -169,8 +162,8 @@ export function DuelHelp({ fleet }: { fleet: FleetId }) {
                   vuelo.
                 </p>
                 <p>
-                  <b>Torpedos</b>: solo salen por la proa. Llegan en la fase siguiente (de cerca, al
-                  instante) y cada uno puede esquivarse. Después hay que recargar.
+                  <b>Torpedos</b>: solo salen por la proa. Llegan en la ronda siguiente (de cerca,
+                  al instante) y cada uno puede esquivarse. Después hay que recargar.
                 </p>
                 <p>
                   <b>Embestida</b>: avante toda en línea recta contra un enemigo que tengas a proa.
@@ -199,7 +192,7 @@ export function DuelHelp({ fleet }: { fleet: FleetId }) {
                 </p>
                 <p>
                   Con el casco bajo el 35 % tu oficial te suplicará que saltes, con un botón para
-                  hacerlo en la primera fase.
+                  hacerlo en la primera ronda.
                 </p>
               </>
             )}
@@ -210,8 +203,8 @@ export function DuelHelp({ fleet }: { fleet: FleetId }) {
                 </p>
                 <ul className="list-disc pl-5">
                   <li>
-                    Velocidad {p.speed} u/fase (avante toda {p.speed + p.burn}), giro{" "}
-                    {p.agility * 45}° por fase.
+                    Velocidad {p.speed} u/ronda (avante toda {p.speed + p.burn}), giro{" "}
+                    {p.agility * 45}° por ronda.
                   </li>
                   <li>
                     Proa: {p.prowName} [{p.prow.join(" · ")}] (Contacto · Cerca · Media · Lejos).

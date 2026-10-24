@@ -24,6 +24,7 @@ import { ShipExterior } from "@/components/ship/ShipExterior";
 import { NavalCombatReport } from "@/components/ship/NavalCombatReport";
 import { campaignQuery } from "@/lib/campaign-queries";
 import { DuelArchiveDialog, DuelCard, DuelRules, type DuelRaid } from "@/components/ship/duel/Duel";
+import { PracticeDuel } from "@/components/ship/duel/Practice";
 import { duelTick } from "@/lib/naval3.functions";
 import { FLEET_PROFILES } from "@/lib/naval3/factions";
 import { newSide } from "@/lib/naval3/engine";
@@ -340,6 +341,17 @@ export function NavalCommand() {
         </>
       )}
       <DuelRules fleet={identity} />
+      {active.length === 0 && (
+        <PracticeDuel
+          fleet={identity}
+          modules={
+            Object.fromEntries(
+              data.mods.map((m) => [m.module, m.damaged ? 0 : m.level]),
+            ) as Partial<ModuleLevels>
+          }
+          maxHull={ownStatus?.max_hull ?? fleet.hull}
+        />
+      )}
       <section className="border-b border-border pb-6">
         <h2 className="mb-2 text-xl text-primary">Lanzar ofensiva</h2>
         <p className="mb-4 text-xs text-muted-foreground">

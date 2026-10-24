@@ -8,9 +8,9 @@ export type RangeTable = [number, number, number, number];
  * Armas por arco al estilo Battlefleet Gothic: proa, costados (babor y estribor) y popa.
  */
 export interface FleetProfile {
-  /** Velocidad en unidades por fase a "avante". */
+  /** Velocidad en unidades por ronda a "avante". */
   speed: number;
-  /** Giros de 45° permitidos por fase (1 = 45°, 2 = 90°). */
+  /** Giros de 45° permitidos por ronda (1 = 45°, 2 = 90°). */
   agility: number;
   /** Unidades extra con "avante toda". */
   burn: number;
@@ -44,8 +44,8 @@ export interface FleetProfile {
 }
 
 export const TORPEDO_DAMAGE = 2;
-export const PHASES_PER_BLOCK = 5;
-export const MAX_BLOCKS = 4;
+export const PHASES_PER_BLOCK = 3;
+export const MAX_BLOCKS = 6;
 export const EVASION_BONUS = 30;
 /** Distancia inicial y máxima (unidades). Bandas: Contacto < 2 ≤ Cerca < 5 ≤ Media < 9 ≤ Lejos. */
 export const START_DISTANCE = 12;
@@ -106,7 +106,7 @@ export const FLEET_PROFILES: Record<FleetId, FleetProfile> = {
     speed: 3,
     agility: 1,
     burn: 2,
-    prow: [2, 3, 5, 6],
+    prow: [2, 4, 6, 7],
     prowName: "cañones de riel y misiles",
     broadside: [1, 2, 2, 2],
     broadsideName: "torretas de defensa",
@@ -130,11 +130,12 @@ export const FLEET_PROFILES: Record<FleetId, FleetProfile> = {
     speed: 5,
     agility: 2,
     burn: 2,
-    prow: [3, 5, 5, 3],
+    prow: [4, 6, 6, 4],
     prowName: "lanzas púlsar",
     broadside: [2, 2, 2, 1],
     broadsideName: "baterías de pulsos",
     stern: Z,
+    fireReduction: 0.8,
     shields: 0,
     prowArmour: 1,
     sternWeakness: 1.3,
@@ -148,18 +149,18 @@ export const FLEET_PROFILES: Record<FleetId, FleetProfile> = {
     variance: 0.3,
     trait: "Velas solares",
     traitText:
-      "Las más rápidas y ágiles: giran 90° por fase. Campos holográficos (−30 % de disparo en Media y Lejos). Atacan por la proa.",
+      "Las más rápidas y ágiles: giran 90° por ronda. Campos holográficos (−20 % de todo disparo y otro −30 % en Media y Lejos). Atacan por la proa.",
   },
   drukhari: {
     speed: 5,
     agility: 2,
     burn: 2,
-    prow: [10, 7, 4, 1],
+    prow: [12, 9, 5, 2],
     prowName: "lanzas oscuras",
-    broadside: [3, 3, 1, 0],
+    broadside: [4, 3, 1, 0],
     broadsideName: "cañones de astillas",
     stern: Z,
-    fireReduction: 0.65,
+    fireReduction: 0.55,
     shields: 1,
     prowArmour: 1,
     sternWeakness: 1.3,
@@ -173,7 +174,7 @@ export const FLEET_PROFILES: Record<FleetId, FleetProfile> = {
     variance: 0.3,
     trait: "Incursión esclavista",
     traitText:
-      "Rapidísimas, muy esquivas y con campos de sombras (−35 % de disparo recibido), letales en Contacto por la proa. Su daño en Contacto cuenta doble para el botín.",
+      "Rapidísimas, muy esquivas y con campos de sombras (−45 % de disparo recibido), letales en Contacto por la proa. Su daño en Contacto cuenta doble para el botín.",
   },
   orks: {
     speed: 3,
@@ -222,13 +223,13 @@ export const FLEET_PROFILES: Record<FleetId, FleetProfile> = {
     variance: 0.2,
     trait: "Reanimación",
     traitText:
-      "Disparan en todas direcciones y regeneran 1 de casco por fase. Lentas: no eligen la distancia.",
+      "Disparan en todas direcciones y regeneran 1 de casco por ronda. Lentas: no eligen la distancia.",
   },
   tyranids: {
     speed: 3,
     agility: 1,
     burn: 3,
-    prow: [6, 4, 2, 0],
+    prow: [5, 3, 2, 0],
     prowName: "lanzas de bioplasma",
     broadside: [4, 3, 1, 0],
     broadsideName: "espinas ácidas",
@@ -239,13 +240,13 @@ export const FLEET_PROFILES: Record<FleetId, FleetProfile> = {
     dodge: 10,
     torpedoes: 4,
     torpedoName: "esporas de bioplasma",
-    ram: 7,
+    ram: 6,
     ramRecoil: 0.25,
     warp: -10,
     regen: 1,
     variance: 0.35,
     trait: "Bioregeneración",
-    traitText: "Regeneran 1 de casco por fase y embisten con fuerza brutal. Inútiles a distancia.",
+    traitText: "Regeneran 1 de casco por ronda y embisten con fuerza brutal. Inútiles a distancia.",
   },
   daemons: {
     speed: 4,
@@ -344,7 +345,7 @@ export const ACTION_INFO: Record<string, { name: string; short: string; text: st
   torpedos: {
     name: "Torpedos",
     short: "Torpedos",
-    text: "Salva por la proa: el enemigo debe estar delante. Impacta en la fase siguiente (de cerca, al instante) y puede esquivarse.",
+    text: "Salva por la proa: el enemigo debe estar delante. Impacta en la ronda siguiente (de cerca, al instante) y puede esquivarse.",
   },
   recargar: {
     name: "Recargar",

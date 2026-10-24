@@ -1,22 +1,16 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { toast } from "sonner";
 import {
-  ArrowLeftRight,
-  ArrowUp,
-  Crosshair,
   Flame,
-  Gauge,
+  GraduationCap,
   Pause,
   Play,
   RefreshCw,
   Rocket,
-  RotateCcw,
-  RotateCw,
   Shield,
   SkipBack,
   SkipForward,
   Sparkles,
-  Undo2,
   Wind,
   Wrench,
   Zap,
@@ -31,27 +25,22 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { FLEETS, type FleetId } from "@/lib/ship-identity";
-import {
-  ACTION_INFO,
-  FLEET_PROFILES,
-  PHASES_PER_BLOCK,
-  SECOND,
-  SPEED_INFO,
-} from "@/lib/naval3/factions";
-import { bandOf, maxTurn, normalizeState, other, unitsFor, warpChance } from "@/lib/naval3/engine";
+import { ACTION_INFO, FLEET_PROFILES, PHASES_PER_BLOCK, SECOND } from "@/lib/naval3/factions";
+import { mainArc, normalizeState, other, warpChance } from "@/lib/naval3/engine";
 import {
   STANCES,
-  arcLabel,
-  briefing,
-  phaseAdvice,
-  predictPath,
-  suggestPlan,
   blockDebrief,
+  briefing,
+  forecast,
+  phaseAdvice,
+  reachable,
+  suggestPlan,
   type Advice,
   type Debrief,
   type PathStep,
   type Stance,
 } from "@/lib/naval3/advisor";
+import { MANEUVERS, maneuverMove, maneuverOf } from "@/lib/naval3/maneuvers";
 import { endLine, narratePhase, type Line } from "@/lib/naval3/narrate";
 import {
   RANGE_NAMES,
@@ -59,14 +48,11 @@ import {
   type BlockPlan,
   type DuelEnd,
   type DuelState,
-  type Helm,
   type PhaseEvent,
   type PhasePlan,
   type Side,
   type SideState,
-  type Speed,
 } from "@/lib/naval3/types";
-import { mainArc } from "@/lib/naval3/engine";
 import { submitDuelPlan } from "@/lib/naval3.functions";
 import {
   audioReady,
@@ -78,10 +64,12 @@ import {
   unlockAudio,
 } from "@/lib/sfx/engine";
 import { Radar, geoOf, type Geo } from "./Radar";
+import { TacticalMap, type Projection } from "./TacticalMap";
 import type { FxEngine } from "./fx";
 import { MOVE_AT, PHASE_SECONDS, phaseCues } from "./stage";
-import { DuelHelp } from "./Help";
 import { SoundControls } from "./SoundControls";
+import { DuelHelp } from "./Help";
+import { Tutorial, tutorialSeen } from "./Tutorial";
 
 export type DuelEventRow = PhaseEvent & { block: number };
 export interface DuelRaid {
@@ -108,33 +96,6 @@ const ACTION_ICON: Record<Action, LucideIcon> = {
   saltar: Sparkles,
 };
 const ACTIONS = Object.keys(ACTION_ICON) as Action[];
-const HELMS: { helm: Helm; label: string; hint: string; icon: LucideIcon }[] = [
-  {
-    helm: "encarar",
-    label: "Encarar",
-    hint: "Gira para poner la proa hacia el enemigo (nos acerca)",
-    icon: Crosshair,
-  },
-  {
-    helm: "costado",
-    label: "Costado",
-    hint: "Gira para presentarle el costado (andanadas; la distancia apenas cambia)",
-    icon: ArrowLeftRight,
-  },
-  {
-    helm: "huir",
-    label: "Alejarse",
-    hint: "Gira para darle la espalda y alejarte (¡expone la popa!)",
-    icon: Undo2,
-  },
-  { helm: 0, label: "Recto", hint: "Mantiene el rumbo actual", icon: ArrowUp },
-];
-const MANUAL: { helm: Helm; label: string; icon: LucideIcon }[] = [
-  { helm: -2, label: "90°", icon: RotateCcw },
-  { helm: -1, label: "45°", icon: RotateCcw },
-  { helm: 1, label: "45°", icon: RotateCw },
-  { helm: 2, label: "90°", icon: RotateCw },
-];
 const TONE: Record<Advice["tone"], string> = {
   info: "border-border text-foreground",
   good: "border-emerald-500/60 text-emerald-200",
@@ -147,18 +108,29 @@ const LINE_TONE: Record<Line["tone"], string> = {
   bad: "text-red-300",
 };
 
+const sideName = (rel: number) => {
+  const a = mainArc(rel);
+  return a === "proa" ? "a proa" : a === "popa" ? "a popa" : `a ${a}`;
+};
+
 function HullBar({
   label,
   hull,
   max,
   mine,
+  projected,
 }: {
   label: string;
   hull: number;
   max: number;
   mine: boolean;
+  projected?: number | undefined;
 }) {
   const pct = Math.max(0, Math.min(100, (hull / Math.max(1, max)) * 100));
+  const pp =
+    projected !== undefined
+      ? Math.max(0, Math.min(100, (projected / Math.max(1, max)) * 100))
+      : null;
   const color = pct > 60 ? "bg-emerald-500" : pct > 30 ? "bg-amber-500" : "bg-red-500";
   return (
     <div className="min-w-0">
@@ -166,10 +138,16 @@ function HullBar({
         <span className={mine ? "text-sky-300" : "text-red-300"}>{label}</span>
         <span className="tabular-nums">
           {hull}/{max}
+          {projected !== undefined && Math.round(projected) !== hull && (
+            <span className="text-muted-foreground">
+              {" "}
+              → ~{Math.round(projected)} tras el bloque
+            </span>
+          )}
         </span>
       </div>
       <div
-        className="mt-1 h-2 overflow-hidden rounded-full bg-muted"
+        className="relative mt-1 h-2 overflow-hidden rounded-full bg-muted"
         role="progressbar"
         aria-valuenow={hull}
         aria-valuemax={max}
@@ -179,6 +157,13 @@ function HullBar({
           className={`h-full ${color} transition-all duration-700`}
           style={{ width: `${pct}%` }}
         />
+        {pp !== null && pp < pct && (
+          <div
+            className="absolute top-0 h-full bg-white/30 motion-safe:animate-pulse"
+            style={{ left: `${pp}%`, width: `${pct - pp}%` }}
+            title="Daño previsto"
+          />
+        )}
       </div>
     </div>
   );
@@ -199,8 +184,9 @@ function Second({
   const pleading = own.hull / own.maxHull <= 0.35;
   return (
     <section
+      data-tour="segundo"
       aria-label={voice.title}
-      className={`rounded border p-3 ${pleading ? "border-red-500 bg-red-950/30 motion-safe:animate-pulse" : "border-primary/40 bg-accent/30"}`}
+      className={`rounded border p-3 ${pleading ? "border-red-500 bg-red-950/30" : "border-primary/40 bg-accent/30"}`}
     >
       <p className="mb-2 text-xs uppercase tracking-[0.2em] text-primary">{voice.title}</p>
       <ul className="space-y-1.5">
@@ -213,11 +199,11 @@ function Second({
       {pleading && onJump && (
         <Button
           variant="destructive"
-          className="mt-3 h-auto w-full whitespace-normal py-3"
+          className="mt-3 h-auto w-full whitespace-normal py-3 motion-safe:animate-pulse"
           onClick={onJump}
         >
           <Sparkles />
-          Saltar al disforme en la primera fase ({warpChance(own)} %)
+          Saltar al disforme en la primera ronda ({warpChance(own)} %)
         </Button>
       )}
     </section>
@@ -225,103 +211,55 @@ function Second({
 }
 
 function defaultStance(state: DuelState, side: Side): Stance {
-  const own = state[side];
-  if (own.hull / own.maxHull < 0.35) return "defensiva";
-  return "optima";
+  return state[side].hull / state[side].maxHull < 0.35 ? "defensiva" : "optima";
 }
 
-const helmLabel = (h: Helm) =>
-  typeof h === "number"
-    ? h === 0
-      ? "Recto"
-      : `${h < 0 ? "Babor" : "Estribor"} ${Math.abs(h) * 45}°`
-    : HELMS.find((x) => x.helm === h)!.label;
-
-function sideName(rel: number) {
-  const a = mainArc(rel);
-  return a === "proa" ? "a proa" : a === "popa" ? "a popa" : `a ${a}`;
+/** Convierte un plan del Segundo a maniobras de la interfaz (velocidad + giro numérico). */
+function normalizePlan(plan: BlockPlan, own: SideState): BlockPlan {
+  return {
+    ...plan,
+    phases: plan.phases.map((p) => {
+      const m =
+        p.action === "embestir" ? "avante_toda" : p.action === "saltar" ? "parar" : maneuverOf(p);
+      return { ...maneuverMove(m, own), action: p.action };
+    }),
+  };
 }
 
-/** Resumen compacto de una fase prevista. */
-function PhaseChip({
-  i,
-  p,
-  step,
-  active,
-  onSelect,
-  onHover,
-}: {
-  i: number;
-  p: PhasePlan;
-  step: PathStep;
-  active: boolean;
-  onSelect: () => void;
-  onHover: (h: boolean) => void;
-}) {
-  const Icon = ACTION_ICON[p.action];
-  const good = step.ourHit - step.theirHit;
-  return (
-    <button
-      type="button"
-      aria-pressed={active}
-      onClick={onSelect}
-      onMouseEnter={() => onHover(true)}
-      onMouseLeave={() => onHover(false)}
-      className={`flex min-w-0 flex-col items-center gap-0.5 rounded border px-1 py-1.5 text-[10px] ${active ? "border-primary bg-accent text-primary" : "border-border text-muted-foreground"}`}
-    >
-      <span className="font-semibold">Fase {i + 1}</span>
-      <Icon className="size-4" />
-      <span className="truncate">{RANGE_NAMES[step.band]}</span>
-      <span className={good > 0.5 ? "text-emerald-300" : good < -0.5 ? "text-red-300" : ""}>
-        {step.ourHit.toFixed(1)}/{step.theirHit.toFixed(1)}
-      </span>
-    </button>
-  );
-}
-
-/** Planificador de las 5 fases: velocidad, timón y acción, con previsión de posición. */
+/** Planificador: 3 rondas de maniobra + acción con pronóstico de cada una. */
 function Planner({
   state,
   side,
-  raidId,
+  plan,
+  setPlan,
+  stance,
+  setStance,
+  selected,
+  setSelected,
+  steps,
   block,
-  jumpSignal,
-  onGhost,
-  onDone,
+  submitLabel,
+  onSubmit,
 }: {
   state: DuelState;
   side: Side;
-  raidId: string;
+  plan: BlockPlan;
+  setPlan: (f: (p: BlockPlan) => BlockPlan) => void;
+  stance: Stance;
+  setStance: (s: Stance) => void;
+  selected: number;
+  setSelected: (i: number) => void;
+  steps: PathStep[];
   block: number;
-  jumpSignal: number;
-  onGhost: (g: Geo | null) => void;
-  onDone: () => void;
+  submitLabel?: string | undefined;
+  onSubmit: (plan: BlockPlan) => Promise<void>;
 }) {
   const own = state[side];
   const voice = SECOND[own.fleet];
-  const [stance, setStance] = useState<Stance>(() => defaultStance(state, side));
-  const [plan, setPlan] = useState<BlockPlan>(() =>
-    suggestPlan(state, side, defaultStance(state, side)),
-  );
-  const [sel, setSel] = useState(0);
   const [sending, setSending] = useState(false);
-  const path = useMemo(() => predictPath(state, side, plan.phases), [state, side, plan]);
-  useEffect(() => {
-    if (!jumpSignal) return;
-    setPlan((p) => ({
-      ...p,
-      phases: p.phases.map((x, k) => (k === 0 ? { speed: 0, turn: 0, action: "saltar" } : x)),
-    }));
-    setSel(0);
-    toast.warning("Salto disforme fijado en la fase 1. Revisa y confirma las órdenes.");
-  }, [jumpSignal]);
-  useEffect(() => {
-    const st = path[sel];
-    onGhost(st ? geoOf(st.own, st.foe) : null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [path, sel]);
   const setPhase = (i: number, patch: Partial<PhasePlan>) => {
     play("click");
+    setSelected(i);
     setPlan((p) => ({ ...p, phases: p.phases.map((x, k) => (k === i ? { ...x, ...patch } : x)) }));
   };
   async function send() {
@@ -334,28 +272,19 @@ function Planner({
       return;
     setSending(true);
     try {
-      await submitDuelPlan({ data: { raidId, block, plan } });
-      toast.success("Órdenes fijadas");
-      onDone();
+      await onSubmit(plan);
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "No se pudieron fijar las órdenes");
     } finally {
       setSending(false);
     }
   }
-  const p = plan.phases[sel]!;
-  const step = path[sel]!;
-  const prevBand =
-    sel === 0 ? bandOf(geoOf(state[side], state[other(side)]).distance) : path[sel - 1]!.band;
-  const advice = phaseAdvice(state, side, plan.phases, sel, path);
-  const locked = p.action === "embestir" || p.action === "saltar";
-  const cap = maxTurn(own, p.speed);
   return (
     <section aria-label={`Órdenes del bloque ${block}`} className="space-y-3">
-      <div>
+      <div data-tour="posturas">
         <p className="text-sm">
           <span className="text-primary">{voice.title}:</span> «{voice.lord}, ¿cómo encaramos las
-          próximas {PHASES_PER_BLOCK} fases?»
+          próximas {PHASES_PER_BLOCK} rondas?»
         </p>
         <div className="mt-2 grid grid-cols-3 gap-1.5">
           {(Object.keys(STANCES) as Stance[]).map((s) => (
@@ -368,7 +297,7 @@ function Planner({
                 play("click");
                 setStance(s);
                 setPlan((pl) => ({
-                  ...suggestPlan(state, side, s),
+                  ...normalizePlan(suggestPlan(state, side, s), own),
                   emergencyJump: pl.emergencyJump,
                 }));
               }}
@@ -379,166 +308,107 @@ function Planner({
           ))}
         </div>
         <p className="mt-1 text-[11px] text-muted-foreground">
-          El Segundo rellena el plan; toca una fase para cambiarla. Las cifras son daño previsto
-          nuestro/suyo si el enemigo mantiene rumbo.
+          El Segundo rellena las rondas; cambia lo que quieras y mira el mapa: tu nave prevista en
+          azul (1, 2, 3) y lo más probable del enemigo en rojo discontinuo.
         </p>
       </div>
-      <div className="grid grid-cols-5 gap-1">
-        {plan.phases.map((ph, i) => (
-          <PhaseChip
-            key={i}
-            i={i}
-            p={ph}
-            step={path[i]!}
-            active={i === sel}
-            onSelect={() => setSel(i)}
-            onHover={(h) =>
-              onGhost(
-                h
-                  ? geoOf(path[i]!.own, path[i]!.foe)
-                  : path[sel]
-                    ? geoOf(path[sel]!.own, path[sel]!.foe)
-                    : null,
-              )
-            }
-          />
-        ))}
-      </div>
-      <div className="space-y-2 rounded border border-primary/50 p-2">
-        <div className="flex flex-wrap items-baseline justify-between gap-1 text-xs">
-          <span className="font-semibold text-primary">Fase {sel + 1}</span>
-          <span className="text-muted-foreground">
-            {RANGE_NAMES[prevBand]} →{" "}
-            <span className="text-foreground">{RANGE_NAMES[step.band]}</span> (
-            {step.distance.toFixed(1)} u) · enemigo {sideName(step.rel)} · nosotros{" "}
-            {sideName(step.relFoe)} de él
-          </span>
-        </div>
-        <div>
-          <p className="mb-1 flex items-center gap-1 text-[11px] uppercase tracking-wider text-muted-foreground">
-            <Gauge className="size-3" /> Máquinas
-          </p>
-          <div
-            className="grid grid-cols-3 gap-1"
-            role="group"
-            aria-label={`Velocidad de la fase ${sel + 1}`}
-          >
-            {SPEED_INFO.map((sp, k) => (
-              <Button
-                key={k}
-                size="sm"
-                variant="outline"
-                title={sp.text}
-                aria-pressed={p.speed === k}
-                disabled={locked}
-                className={`h-auto flex-col px-1 py-1 text-[11px] ${p.speed === k ? (k === 2 ? "border-orange-400 bg-orange-500/15 text-orange-200" : "border-primary bg-accent text-primary") : ""}`}
-                onClick={() =>
-                  setPhase(sel, { speed: k as Speed, ...(k === 2 ? { turn: 0 } : {}) })
-                }
-              >
-                {sp.short}
-                <span className="text-[9px] text-muted-foreground">
-                  {unitsFor(own, k as Speed)} u/fase
+      <div data-tour="rondas" className="grid gap-2 lg:grid-cols-3">
+        {plan.phases.map((p, i) => {
+          const st = steps[i]!;
+          const adv = phaseAdvice(state, side, plan.phases, i, steps);
+          const m = maneuverOf(p);
+          const lock = p.action === "embestir" || p.action === "saltar";
+          return (
+            <div
+              key={i}
+              role="group"
+              aria-label={`Ronda ${i + 1}`}
+              onClick={() => setSelected(i)}
+              className={`cursor-pointer space-y-1.5 rounded border p-2 ${i === selected ? "border-primary bg-accent/20" : "border-border"}`}
+            >
+              <div className="flex items-baseline justify-between gap-1">
+                <span className="text-sm font-semibold text-primary">Ronda {i + 1}</span>
+                <span className="text-[11px] text-muted-foreground">
+                  {RANGE_NAMES[st.band]} · {st.distance.toFixed(0)} u
                 </span>
-              </Button>
-            ))}
-          </div>
-        </div>
-        <div>
-          <p className="mb-1 text-[11px] uppercase tracking-wider text-muted-foreground">
-            Timón {p.speed === 2 ? "· bloqueado a avante toda" : `· hasta ${cap * 45}°`}
-          </p>
-          <div
-            className="grid grid-cols-4 gap-1"
-            role="group"
-            aria-label={`Timón de la fase ${sel + 1}`}
-          >
-            {HELMS.map((h) => {
-              const Icon = h.icon;
-              const on = p.turn === h.helm;
-              return (
-                <Button
-                  key={String(h.helm)}
-                  size="sm"
-                  variant="outline"
-                  title={h.hint}
-                  aria-pressed={on}
-                  disabled={locked || p.speed === 2}
-                  className={`h-8 px-1 text-[11px] ${on ? "border-primary bg-accent text-primary" : ""}`}
-                  onClick={() => setPhase(sel, { turn: h.helm })}
-                >
-                  <Icon className="size-3.5" />
-                  {h.label}
-                </Button>
-              );
-            })}
-            {MANUAL.map((h) => {
-              const Icon = h.icon;
-              const on = p.turn === h.helm;
-              const n = Math.abs(h.helm as number);
-              return (
-                <Button
-                  key={String(h.helm)}
-                  size="sm"
-                  variant="outline"
-                  title={`${(h.helm as number) < 0 ? "Babor" : "Estribor"} ${n * 45}°`}
-                  aria-pressed={on}
-                  disabled={locked || n > cap}
-                  className={`h-7 px-1 text-[10px] ${on ? "border-primary bg-accent text-primary" : "text-muted-foreground"}`}
-                  onClick={() => setPhase(sel, { turn: h.helm })}
-                >
-                  <Icon className="size-3" />
-                  {(h.helm as number) < 0 ? "B" : "E"} {h.label}
-                </Button>
-              );
-            })}
-          </div>
-        </div>
-        <div>
-          <p className="mb-1 text-[11px] uppercase tracking-wider text-muted-foreground">Acción</p>
-          <div
-            className="grid grid-cols-4 gap-1 sm:grid-cols-7"
-            role="group"
-            aria-label={`Acción de la fase ${sel + 1}`}
-          >
-            {ACTIONS.map((a) => {
-              const Icon = ACTION_ICON[a];
-              const on = p.action === a;
-              return (
-                <Button
-                  key={a}
-                  size="sm"
-                  variant="outline"
-                  title={ACTION_INFO[a]!.text}
-                  aria-pressed={on}
-                  className={`h-auto min-w-0 flex-col gap-0.5 px-0.5 py-1.5 text-[10px] ${on ? (a === "saltar" ? "border-fuchsia-400 bg-fuchsia-500/20 text-fuchsia-200" : "border-primary bg-accent text-primary") : "text-muted-foreground"}`}
-                  onClick={() =>
-                    setPhase(
-                      sel,
-                      a === "embestir"
-                        ? { action: a, speed: 2, turn: 0 }
-                        : a === "saltar"
-                          ? { action: a, speed: 0, turn: 0 }
-                          : { action: a },
-                    )
-                  }
-                >
-                  <Icon className="size-4" />
-                  {ACTION_INFO[a]!.short}
-                </Button>
-              );
-            })}
-          </div>
-        </div>
-        <p className="text-[11px] text-muted-foreground">
-          {SPEED_INFO[p.speed].name} · {helmLabel(p.turn)} · {ACTION_INFO[p.action]!.name}.
-          Disparamos con {arcLabel(mainArc(step.rel))}:{" "}
-          <span className="text-sky-300">{step.ourHit.toFixed(1)}</span> · ellos nos hacen{" "}
-          <span className="text-red-300">{step.theirHit.toFixed(1)}</span>
-        </p>
-        {advice && <p className={`border-l-2 pl-2 text-xs ${TONE[advice.tone]}`}>{advice.text}</p>}
+              </div>
+              <div data-tour={i === 0 ? "maniobra" : undefined}>
+                <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                  Maniobra
+                </p>
+                <div className="grid grid-cols-7 gap-0.5">
+                  {MANEUVERS.map((mv) => (
+                    <button
+                      key={mv.id}
+                      type="button"
+                      title={`${mv.name}: ${mv.text}`}
+                      aria-label={mv.name}
+                      aria-pressed={m === mv.id}
+                      disabled={lock}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setPhase(i, { ...maneuverMove(mv.id, own) });
+                      }}
+                      className={`flex h-9 items-center justify-center rounded border text-lg leading-none disabled:opacity-40 ${m === mv.id ? (mv.id === "avante_toda" ? "border-orange-400 bg-orange-500/20 text-orange-200" : "border-sky-400 bg-sky-500/20 text-sky-100") : "border-border text-muted-foreground hover:text-foreground"}`}
+                    >
+                      {mv.glyph}
+                    </button>
+                  ))}
+                </div>
+                <p className="mt-0.5 text-[10px] text-sky-200">
+                  {MANEUVERS.find((x) => x.id === m)!.name}
+                </p>
+              </div>
+              <div data-tour={i === 0 ? "accion" : undefined}>
+                <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Acción</p>
+                <div className="grid grid-cols-4 gap-0.5">
+                  {ACTIONS.map((a) => {
+                    const Icon = ACTION_ICON[a];
+                    const on = p.action === a;
+                    return (
+                      <button
+                        key={a}
+                        type="button"
+                        title={ACTION_INFO[a]!.text}
+                        aria-pressed={on}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setPhase(
+                            i,
+                            a === "embestir"
+                              ? { action: a, ...maneuverMove("avante_toda", own) }
+                              : a === "saltar"
+                                ? { action: a, ...maneuverMove("parar", own) }
+                                : { action: a },
+                          );
+                        }}
+                        className={`flex min-w-0 flex-col items-center gap-0.5 rounded border px-0.5 py-1 text-[9px] ${on ? (a === "saltar" ? "border-fuchsia-400 bg-fuchsia-500/20 text-fuchsia-200" : "border-primary bg-accent text-primary") : "border-border text-muted-foreground hover:text-foreground"}`}
+                      >
+                        <Icon className="size-3.5" />
+                        <span className="truncate">{ACTION_INFO[a]!.short}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <div
+                data-tour={i === 0 ? "pronostico" : undefined}
+                className="rounded bg-black/30 px-2 py-1 text-[11px]"
+              >
+                <p>
+                  Enemigo {sideName(st.rel)} · nos ve {sideName(st.relFoe)}
+                </p>
+                <p>
+                  <span className="text-sky-300">Les hacemos ~{st.ourHit.toFixed(1)}</span> ·{" "}
+                  <span className="text-red-300">nos hacen ~{st.theirHit.toFixed(1)}</span>
+                </p>
+              </div>
+              {adv && <p className={`border-l-2 pl-2 text-[11px] ${TONE[adv.tone]}`}>{adv.text}</p>}
+            </div>
+          );
+        })}
       </div>
-      <div className="rounded border border-border p-2">
+      <div data-tour="salto" className="rounded border border-border p-2">
         <label className="flex flex-wrap items-center justify-between gap-2 text-sm">
           <span>Salto de emergencia si el casco baja de</span>
           <select
@@ -564,38 +434,39 @@ function Planner({
         </p>
       </div>
       <Button
+        data-tour="confirmar"
         className="h-auto w-full whitespace-normal py-3"
         disabled={sending}
         onClick={() => void send()}
       >
-        Fijar órdenes del bloque {block}
+        {submitLabel ?? `Fijar órdenes del bloque ${block}`}
       </Button>
     </section>
   );
 }
 
-/** Estado reconstruido de cada nave tras una fase (para el radar de la repetición). */
+// ───────────── Repetición ─────────────
+
 function sideAt(base: SideState, e: PhaseEvent, s: Side): SideState {
   return { ...base, pos: e[s].pos, heading: e[s].heading, hull: e[s].hullAfter };
 }
 
 type LogLine = Line & { id: number; who?: "segundo" | "fase" | "informe" | undefined };
 
-/** Frases del registro de unas fases, sin animación (para saltar o retroceder). */
 function staticLines(
   events: DuelEventRow[],
   me: Side,
   names: Record<Side, string>,
   from: number,
   to: number,
-): Line[] {
+): (Line & { who?: "fase" })[] {
   const out: (Line & { who?: "fase" })[] = [];
   for (let i = from; i < to; i++) {
     const e = events[i]!;
     out.push({
       side: null,
       tone: "neutral",
-      text: `Fase ${e.phase} · ${RANGE_NAMES[e.rangeBefore]}`,
+      text: `Ronda ${e.phase} · ${RANGE_NAMES[e.rangeBefore]}`,
       who: "fase",
     });
     out.push(...narratePhase(e, me, names));
@@ -603,20 +474,26 @@ function staticLines(
   return out;
 }
 
-/**
- * Repetición fase a fase: el radar mueve las naves, los efectos muestran cada disparo de principio
- * a fin, suena todo con panorama estéreo y el registro se va escribiendo con los comentarios del Segundo.
- */
+interface Geos {
+  before: Geo;
+  after: Geo;
+  own: SideState;
+  foe: SideState;
+  ownBefore: SideState;
+  foeBefore: SideState;
+}
+
 function useReplay(opts: {
   events: DuelEventRow[];
   me: Side;
   start: DuelState | null;
   end: DuelEnd | null;
   fx: React.RefObject<FxEngine | null>;
+  proj: React.RefObject<Projection | null>;
   names: Record<Side, string>;
   epilogue: (Line & { who?: "segundo" | "informe" })[];
 }) {
-  const { events, me, start, end, fx, names, epilogue } = opts;
+  const { events, me, start, end, fx, proj, names, epilogue } = opts;
   const [idx, setIdx] = useState(-1);
   const [moved, setMoved] = useState(true);
   const [playing, setPlaying] = useState(false);
@@ -631,16 +508,9 @@ function useReplay(opts: {
   };
   useEffect(() => clear, []);
   const geos = useMemo(() => {
-    if (!start) return [];
+    if (!start) return [] as Geos[];
     const s0 = normalizeState(start);
-    const out: {
-      before: Geo;
-      after: Geo;
-      own: SideState;
-      foe: SideState;
-      ownBefore: SideState;
-      foeBefore: SideState;
-    }[] = [];
+    const out: Geos[] = [];
     let prevOwn = s0[me];
     let prevFoe = s0[foe];
     for (const e of events) {
@@ -663,6 +533,10 @@ function useReplay(opts: {
     }
     return out;
   }, [events, start, me, foe]);
+  const fitPoints = useMemo(
+    () => geos.flatMap((g) => [g.own.pos, g.foe.pos, g.ownBefore.pos, g.foeBefore.pos]),
+    [geos],
+  );
   const push = (lines: (Line & { who?: LogLine["who"] })[]) =>
     setLog((l) => [...l, ...lines.map((x) => ({ ...x, id: ++lineId.current }))]);
 
@@ -675,17 +549,23 @@ function useReplay(opts: {
     setMoved(false);
     const k = 1000 / spd;
     const last = i === events.length - 1;
+    const g = geos[i];
     const cues = phaseCues({
       e: events[i],
       me,
       fleets: { attacker: start.attacker.fleet, defender: start.defender.fleet },
       names,
-      before: geos[i].before,
-      after: geos[i].after,
+      before: g.before,
+      after: g.after,
       fx: () => fx.current,
       end,
       last,
       maxHull: { attacker: start.attacker.maxHull, defender: start.defender.maxHull },
+      pt: (s, mv) => {
+        const p = proj.current;
+        const w = s === me ? (mv ? g.own.pos : g.ownBefore.pos) : mv ? g.foe.pos : g.foeBefore.pos;
+        return p ? p.pt(w) : { x: 200, y: 150 };
+      },
     });
     timers.current.push(window.setTimeout(() => setMoved(true), MOVE_AT * k));
     for (const c of cues)
@@ -714,6 +594,7 @@ function useReplay(opts: {
     playing,
     speed,
     log,
+    fitPoints,
     frame:
       idx >= 0 && geos[idx]
         ? {
@@ -748,7 +629,7 @@ function useReplay(opts: {
       clear();
       fx.current?.clear();
       setPlaying(false);
-      setIdx(events.length - 1);
+      setIdx(-1);
       setMoved(true);
       setLog(
         [...staticLines(events, me, names, 0, events.length), ...epilogue].map((x) => ({
@@ -756,6 +637,13 @@ function useReplay(opts: {
           id: ++lineId.current,
         })),
       );
+    },
+    exit: () => {
+      clear();
+      fx.current?.clear();
+      setPlaying(false);
+      setIdx(-1);
+      setMoved(true);
     },
     toggleSpeed: () => setSpeed((s) => (s === 1 ? 2 : 1)),
   };
@@ -775,7 +663,7 @@ function ReplayControls({
       <Button
         size="icon"
         variant="outline"
-        aria-label="Fase anterior"
+        aria-label="Ronda anterior"
         onClick={() => r.step(-1)}
         disabled={r.idx <= 0}
       >
@@ -793,7 +681,7 @@ function ReplayControls({
       <Button
         size="icon"
         variant="outline"
-        aria-label="Fase siguiente"
+        aria-label="Ronda siguiente"
         onClick={() => r.step(1)}
         disabled={r.idx >= total - 1}
       >
@@ -810,11 +698,15 @@ function ReplayControls({
       <Button size="sm" variant="ghost" onClick={r.skip} disabled={!total}>
         Ver todo
       </Button>
+      {r.idx >= 0 && !r.playing && (
+        <Button size="sm" variant="ghost" onClick={r.exit}>
+          Volver al plan
+        </Button>
+      )}
     </div>
   );
 }
 
-/** Texto que se escribe letra a letra. */
 function Typewriter({ text }: { text: string }) {
   const [n, setN] = useState(0);
   useEffect(() => {
@@ -834,26 +726,28 @@ function Typewriter({ text }: { text: string }) {
   );
 }
 
-/** Registro de combate en directo. */
 function LiveLog({ lines, empty }: { lines: LogLine[]; empty: string }) {
   const box = useRef<HTMLOListElement>(null);
   useEffect(() => {
     box.current?.scrollTo({ top: box.current.scrollHeight, behavior: "smooth" });
   }, [lines.length]);
   return (
-    <section aria-label="Registro de combate" className="rounded border border-border bg-black/30">
+    <section
+      data-tour="registro"
+      aria-label="Registro de combate"
+      className="rounded border border-border bg-black/30"
+    >
       <p className="border-b border-border px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
         Registro de combate
       </p>
       <ol
         ref={box}
         aria-live="polite"
-        className="max-h-64 space-y-1 overflow-y-auto p-2 font-mono text-xs"
+        className="max-h-56 space-y-1 overflow-y-auto p-2 font-mono text-xs"
       >
         {!lines.length && <li className="text-muted-foreground">{empty}</li>}
         {lines.map((l, i) => {
-          const latest = i === lines.length - 1;
-          const body = latest ? <Typewriter text={l.text} /> : l.text;
+          const body = i === lines.length - 1 ? <Typewriter text={l.text} /> : l.text;
           if (l.who === "fase")
             return (
               <li key={l.id} className="pt-1 text-[10px] uppercase tracking-widest text-primary">
@@ -880,19 +774,6 @@ function LiveLog({ lines, empty }: { lines: LogLine[]; empty: string }) {
   );
 }
 
-function PhaseLines({ e, me, names }: { e: DuelEventRow; me: Side; names: Record<Side, string> }) {
-  return (
-    <ul className="space-y-0.5">
-      {narratePhase(e, me, names).map((l, i) => (
-        <li key={i} className={`text-xs ${LINE_TONE[l.tone]}`}>
-          {l.text}
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-/** Informe del Segundo tras el último bloque. */
 function DebriefPanel({ d, title }: { d: Debrief; title: string }) {
   return (
     <section aria-label={title} className="rounded border border-amber-500/50 bg-amber-950/10 p-3">
@@ -925,12 +806,10 @@ const debriefLines = (d: Debrief | null, title: string): (Line & { who: "informe
       ]
     : [];
 
-const seenKey = (id: string) => `naval3-seen-${id}`;
-
 /** Ambiente de puente y música (tensión en la aproximación, combate después). Arranca tras el primer gesto. */
-function useBattleAmbience(status: string | null, raidId: string) {
+function useBattleAmbience(status: string | null, key: string) {
   useEffect(() => {
-    if (!status) return;
+    if (!status || status === "terminado") return;
     preloadAudio();
     const music = status === "pendiente" ? "musica_tension" : "musica_combate";
     const start = () => {
@@ -938,11 +817,11 @@ function useBattleAmbience(status: string | null, raidId: string) {
       stopLoop(music === "musica_combate" ? "musica_tension" : "musica_combate");
       startLoop("puente");
       startLoop(music, 3);
-      if (status === "enfrentado") {
+      if (status !== "pendiente") {
         let heard = false;
         try {
-          heard = localStorage.getItem(`naval3-braam-${raidId}`) === "1";
-          localStorage.setItem(`naval3-braam-${raidId}`, "1");
+          heard = localStorage.getItem(`naval3-braam-${key}`) === "1";
+          localStorage.setItem(`naval3-braam-${key}`, "1");
         } catch {
           /* sin almacenamiento */
         }
@@ -952,9 +831,264 @@ function useBattleAmbience(status: string | null, raidId: string) {
     if (audioReady()) start();
     else window.addEventListener("pointerdown", start, { once: true });
     return () => window.removeEventListener("pointerdown", start);
-  }, [status, raidId]);
+  }, [status, key]);
   useEffect(() => () => stopAllLoops(), []);
 }
+
+// ───────────── Tablero del duelo (duelos reales, simulacros y archivo) ─────────────
+
+export interface DuelBoardProps {
+  title: ReactNode;
+  state: DuelState;
+  side: Side;
+  foeName: string;
+  /** Rondas a reproducir (el último bloque, o todo el duelo en el archivo). */
+  replayEvents: DuelEventRow[];
+  /** Estado al empezar la repetición. */
+  replayStart: DuelState;
+  replayLabel: string;
+  status: "pendiente" | "enfrentado" | "practica" | "terminado";
+  block: number;
+  canPlan: boolean;
+  waitingText?: string | undefined;
+  infoText?: string | undefined;
+  submitLabel?: string | undefined;
+  onSubmit?: ((plan: BlockPlan) => Promise<void>) | undefined;
+  /** Clave para no repetir la reproducción automática. */
+  storageKey: string;
+  autoplay?: boolean;
+  end?: DuelEnd | null;
+  epilogueTitle: string;
+  footer?: ReactNode;
+}
+
+export function DuelBoard(p: DuelBoardProps) {
+  const { state, side, foeName } = p;
+  const foeSide = other(side);
+  const own = state[side];
+  const foe = state[foeSide];
+  const names = useMemo(
+    () => ({ [side]: "Tu nave", [foeSide]: foeName }) as Record<Side, string>,
+    [side, foeSide, foeName],
+  );
+  const debrief = useMemo(
+    () => blockDebrief(p.replayEvents, side, state),
+    [p.replayEvents, side, state],
+  );
+  const epilogue = useMemo(() => {
+    const out: (Line & { who?: "segundo" | "informe" })[] = [];
+    if (p.end) out.push({ ...endLine(p.end, side, names), who: "informe" });
+    out.push(...debriefLines(debrief, p.epilogueTitle));
+    return out;
+  }, [p.end, side, names, debrief, p.epilogueTitle]);
+  const fx = useRef<FxEngine | null>(null);
+  const proj = useRef<Projection | null>(null);
+  const mapBox = useRef<HTMLDivElement>(null);
+  const replay = useReplay({
+    events: p.replayEvents,
+    me: side,
+    start: p.replayStart,
+    end: p.end ?? null,
+    fx,
+    proj,
+    names,
+    epilogue,
+  });
+  const [stance, setStance] = useState<Stance>(() => defaultStance(state, side));
+  const [plan, setPlanState] = useState<BlockPlan>(() =>
+    normalizePlan(suggestPlan(state, side, defaultStance(state, side)), own),
+  );
+  const setPlan = useCallback((f: (p: BlockPlan) => BlockPlan) => setPlanState(f), []);
+  const [selected, setSelected] = useState(0);
+  const [tour, setTour] = useState(false);
+  useEffect(() => {
+    setPlanState(normalizePlan(suggestPlan(state, side, defaultStance(state, side)), state[side]));
+    setStance(defaultStance(state, side));
+    setSelected(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [p.block, state.phase]);
+  const fc = useMemo(() => forecast(state, side, plan.phases), [state, side, plan]);
+  const planningFit = useMemo(
+    () => [...reachable(own, 2).flat(), ...reachable(foe, 2).flat()],
+    [own, foe],
+  );
+  useBattleAmbience(p.status, p.storageKey);
+  useEffect(() => {
+    if (!p.autoplay || !p.replayEvents.length) return undefined;
+    let seen = "";
+    try {
+      seen = localStorage.getItem(`naval3-seen-${p.storageKey}`) ?? "";
+    } catch {
+      /* sin almacenamiento */
+    }
+    const mark = `${p.block}`;
+    if (seen === mark) return undefined;
+    try {
+      localStorage.setItem(`naval3-seen-${p.storageKey}`, mark);
+    } catch {
+      /* sin almacenamiento */
+    }
+    const t = window.setTimeout(() => {
+      mapBox.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      replay.play();
+    }, 500);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [p.storageKey, p.block, p.replayEvents.length]);
+  useEffect(() => {
+    if (p.canPlan && !tutorialSeen()) setTour(true);
+  }, [p.canPlan]);
+  const frame = replay.frame;
+  const showPlan = p.canPlan && !frame;
+  const shownPhase = replay.idx >= 0 ? p.replayEvents[replay.idx] : null;
+  const last = fc.steps[fc.steps.length - 1];
+  const selStep = fc.steps[selected];
+  return (
+    <article
+      className="space-y-4 rounded border border-destructive/70 p-3 sm:p-4"
+      aria-label={`Duelo contra ${foeName}`}
+    >
+      <header className="flex flex-wrap items-start justify-between gap-2">
+        <div>
+          <h3 className="text-lg text-primary">{p.title}</h3>
+          <p className="text-xs text-muted-foreground">
+            {FLEETS[foe.fleet].name} · {FLEET_PROFILES[foe.fleet].trait}
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-1">
+          <Button size="sm" variant="outline" onClick={() => setTour(true)}>
+            <GraduationCap /> Tutorial
+          </Button>
+          <DuelHelp fleet={own.fleet} />
+          <SoundControls />
+        </div>
+      </header>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <HullBar
+          label="Tu nave"
+          hull={shownPhase ? shownPhase[side].hullAfter : own.hull}
+          max={own.maxHull}
+          mine
+          projected={showPlan ? last?.ownHull : undefined}
+        />
+        <HullBar
+          label={foeName}
+          hull={shownPhase ? shownPhase[foeSide].hullAfter : foe.hull}
+          max={foe.maxHull}
+          mine={false}
+          projected={showPlan ? last?.foeHull : undefined}
+        />
+      </div>
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+        <div className="space-y-2">
+          <div data-tour="mapa" ref={mapBox}>
+            <TacticalMap
+              own={frame?.own ?? own}
+              foe={frame?.foe ?? foe}
+              foeLabel={foeName}
+              steps={showPlan ? fc.steps : undefined}
+              envelope={showPlan ? fc.envelope : undefined}
+              selected={selected}
+              fitPoints={
+                showPlan ? planningFit : replay.fitPoints.length ? replay.fitPoints : undefined
+              }
+              onFx={(f) => (fx.current = f)}
+              onProjection={(pr) => (proj.current = pr)}
+              caption={
+                shownPhase
+                  ? `Repetición · ronda ${replay.idx + 1} de ${p.replayEvents.length}`
+                  : showPlan
+                    ? `Ronda ${selected + 1}: azul = dónde acabará tu nave · rojo discontinuo = lo más probable del enemigo · nube roja = adónde podría ir`
+                    : "Mapa táctico (norte arriba)"
+              }
+            />
+          </div>
+          {p.replayEvents.length > 0 && (
+            <ReplayControls r={replay} total={p.replayEvents.length} label={p.replayLabel} />
+          )}
+          {(p.replayEvents.length > 0 || replay.log.length > 0) && (
+            <LiveLog
+              lines={replay.log}
+              empty={`Pulsa «${p.replayLabel}» para revivir lo ocurrido.`}
+            />
+          )}
+        </div>
+        <div className="space-y-3">
+          <div data-tour="radar">
+            <Radar
+              own={frame?.own ?? (showPlan && selStep ? selStep.own : own)}
+              foe={frame?.foe ?? (showPlan && selStep ? selStep.foe : foe)}
+              geo={frame?.geo}
+              foeLabel={foeName}
+              approaching={p.status === "pendiente" && !frame && !showPlan}
+              torpedoesOut={frame ? 0 : own.torpedoesInFlight}
+              torpedoesIn={frame ? 0 : foe.torpedoesInFlight}
+              compact
+              caption={
+                frame
+                  ? "Puente de mando"
+                  : showPlan && selStep
+                    ? `Puente al final de la ronda ${selected + 1}: enemigo ${sideName(selStep.rel)} a ${selStep.distance.toFixed(0)} u`
+                    : "Puente de mando"
+              }
+            />
+          </div>
+          {debrief && !replay.playing && p.replayEvents.length > 0 && (
+            <DebriefPanel d={debrief} title={p.epilogueTitle} />
+          )}
+          {p.status !== "terminado" && (
+            <Second
+              state={state}
+              side={side}
+              onJump={
+                p.canPlan
+                  ? () =>
+                      setPlan((pl) => ({
+                        ...pl,
+                        phases: pl.phases.map((x, k) =>
+                          k === 0 ? { ...maneuverMove("parar", own), action: "saltar" } : x,
+                        ),
+                      }))
+                  : undefined
+              }
+            />
+          )}
+        </div>
+      </div>
+      {p.infoText && <p className="text-xs text-muted-foreground">{p.infoText}</p>}
+      {replay.playing ? (
+        <p role="status" className="rounded border border-amber-500/50 p-3 text-sm text-amber-200">
+          Reproduciendo lo ocurrido… Cuando termine podrás dar las órdenes del siguiente bloque.
+        </p>
+      ) : p.canPlan && p.onSubmit ? (
+        <Planner
+          state={state}
+          side={side}
+          plan={plan}
+          setPlan={setPlan}
+          stance={stance}
+          setStance={setStance}
+          selected={selected}
+          setSelected={setSelected}
+          steps={fc.steps as unknown as PathStep[]}
+          block={p.block}
+          submitLabel={p.submitLabel}
+          onSubmit={p.onSubmit}
+        />
+      ) : (
+        p.waitingText && (
+          <p role="status" className="rounded border border-primary/50 p-3 text-sm">
+            {p.waitingText}
+          </p>
+        )
+      )}
+      {p.footer}
+      {tour && <Tutorial fleet={own.fleet} canPlan={p.canPlan} onClose={() => setTour(false)} />}
+    </article>
+  );
+}
+
+// ───────────── Duelo real (servidor) ─────────────
 
 export function DuelCard({
   raid,
@@ -970,7 +1104,6 @@ export function DuelCard({
   onChanged: () => void;
 }) {
   const side: Side = raid.attacker_id === uid ? "attacker" : "defender";
-  const foeSide = other(side);
   const foeId = side === "attacker" ? raid.defender_id : raid.attacker_id;
   const state = useMemo(
     () => (raid.duel_state ? normalizeState(raid.duel_state) : null),
@@ -981,204 +1114,49 @@ export function DuelCard({
     () => events.filter((e) => e.block === raid.block_number - 1),
     [events, raid.block_number],
   );
-  const foeName = name(foeId);
-  const names = useMemo(
-    () => ({ [side]: "Tu nave", [foeSide]: foeName }) as Record<Side, string>,
-    [side, foeSide, foeName],
-  );
-  const debrief = useMemo(
-    () => (state ? blockDebrief(lastBlock, side, state) : null),
-    [lastBlock, side, state],
-  );
-  const epilogue = useMemo(
-    () => debriefLines(debrief, `Informe del bloque ${raid.block_number - 1}`),
-    [debrief, raid.block_number],
-  );
-  const fx = useRef<FxEngine | null>(null);
-  const replay = useReplay({
-    events: lastBlock,
-    me: side,
-    start: state,
-    end: null,
-    fx,
-    names,
-    epilogue,
-  });
-  const [ghost, setGhost] = useState<Geo | null>(null);
-  const [jumpSignal, setJumpSignal] = useState(0);
-  useBattleAmbience(state ? raid.status : null, raid.id);
-  useEffect(() => {
-    if (!lastBlock.length) return;
-    let seen = 0;
-    try {
-      seen = Number(localStorage.getItem(seenKey(raid.id)) ?? 0);
-    } catch {
-      /* sin almacenamiento */
-    }
-    if (seen < raid.block_number - 1) {
-      const t = window.setTimeout(() => replay.play(), 400);
-      try {
-        localStorage.setItem(seenKey(raid.id), String(raid.block_number - 1));
-      } catch {
-        /* sin almacenamiento */
-      }
-      return () => clearTimeout(t);
-    }
-    return undefined;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [raid.id, raid.block_number]);
   if (!state)
     return (
       <article className="rounded border border-destructive p-4 text-sm">
-        Contacto con {foeName} · preparando el duelo…
+        Contacto con {name(foeId)} · preparando el duelo…
       </article>
     );
-  const own = state[side];
-  const foe = state[foeSide];
   const myReady = side === "attacker" ? raid.attacker_ready : raid.defender_ready;
   const foeReady = side === "attacker" ? raid.defender_ready : raid.attacker_ready;
   const approaching = raid.status === "pendiente";
-  const frame = replay.frame;
-  const shownPhase = replay.idx >= 0 ? lastBlock[replay.idx] : null;
+  const foeName = name(foeId);
   return (
-    <article
-      className="space-y-4 rounded border border-destructive/70 p-3 sm:p-4"
-      aria-label={`Duelo contra ${foeName}`}
-    >
-      <header className="flex flex-wrap items-start justify-between gap-2">
-        <div>
-          <h3 className="text-lg text-primary">
-            {side === "attacker" ? "Ofensiva contra" : "Atacado por"} {foeName}
-          </h3>
-          <p className="text-xs text-muted-foreground">
-            {FLEETS[foe.fleet].name} · {FLEET_PROFILES[foe.fleet].trait}
-          </p>
-        </div>
-        <div className="flex gap-1">
-          <DuelHelp fleet={own.fleet} />
-          <SoundControls />
-        </div>
-      </header>
-      <div className="grid gap-3 sm:grid-cols-2">
-        <HullBar
-          label="Tu nave"
-          hull={shownPhase ? shownPhase[side].hullAfter : own.hull}
-          max={own.maxHull}
-          mine
-        />
-        <HullBar
-          label={foeName}
-          hull={shownPhase ? shownPhase[foeSide].hullAfter : foe.hull}
-          max={foe.maxHull}
-          mine={false}
-        />
-      </div>
-      <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
-        <div className="space-y-2 md:sticky md:top-2 md:self-start">
-          <Radar
-            own={frame?.own ?? own}
-            foe={frame?.foe ?? foe}
-            geo={frame?.geo}
-            ghost={frame ? null : ghost}
-            foeLabel={foeName}
-            approaching={approaching && !frame}
-            torpedoesOut={frame ? 0 : own.torpedoesInFlight}
-            torpedoesIn={frame ? 0 : foe.torpedoesInFlight}
-            onFx={(f) => (fx.current = f)}
-            caption={
-              shownPhase
-                ? `Bloque ${shownPhase.block} · fase ${replay.idx + 1} de ${lastBlock.length}`
-                : approaching
-                  ? `Aproximación · contacto en ${remaining(raid.deadline)}`
-                  : `Ahora: ${RANGE_NAMES[bandOf(geoOf(own, foe).distance)]} · torpedos ${own.torpedoesLoaded ? "cargados" : "sin cargar"}${ghost ? " · silueta discontinua: previsión de la fase elegida" : ""}`
-            }
-          />
-          {lastBlock.length > 0 && (
-            <ReplayControls
-              r={replay}
-              total={lastBlock.length}
-              label={`Ver bloque ${raid.block_number - 1}`}
-            />
-          )}
-          {(lastBlock.length > 0 || replay.log.length > 0) && (
-            <LiveLog
-              lines={replay.log}
-              empty={`Pulsa «Ver bloque ${raid.block_number - 1}» para revivir el último bloque.`}
-            />
-          )}
-        </div>
-        <div className="space-y-3">
-          {debrief && !replay.playing && (
-            <DebriefPanel d={debrief} title={`Informe del bloque ${raid.block_number - 1}`} />
-          )}
-          <Second
-            state={state}
-            side={side}
-            onJump={!myReady ? () => setJumpSignal((x) => x + 1) : undefined}
-          />
-          {myReady ? (
-            <p role="status" className="rounded border border-primary/50 p-3 text-sm">
-              Órdenes del bloque {raid.block_number} fijadas.{" "}
-              {approaching
-                ? `El combate empieza al llegar (${remaining(raid.deadline)}).`
-                : foeReady
-                  ? "Resolviendo…"
-                  : `Esperando a ${foeName} · plazo ${remaining(raid.deadline)}. Si no responde, pierde el duelo.`}
-            </p>
-          ) : (
-            <>
-              <p className="text-xs text-muted-foreground">
-                {approaching
-                  ? `En aproximación: ya puedes fijar el primer bloque. Contacto en ${remaining(raid.deadline)}.`
-                  : `Plazo ${remaining(raid.deadline)}. ${foeReady ? `${foeName} ya ha dado sus órdenes.` : ""} Si no das órdenes a tiempo, pierdes el duelo.`}
-              </p>
-              <Planner
-                state={state}
-                side={side}
-                raidId={raid.id}
-                block={raid.block_number}
-                jumpSignal={jumpSignal}
-                onGhost={setGhost}
-                onDone={onChanged}
-              />
-            </>
-          )}
-        </div>
-      </div>
-      {events.length > lastBlock.length && (
-        <details className="text-xs">
-          <summary className="cursor-pointer text-muted-foreground">
-            Registro completo · {events.length} fases
-          </summary>
-          <FullLog events={events} me={side} names={names} />
-        </details>
-      )}
-    </article>
+    <DuelBoard
+      title={`${side === "attacker" ? "Ofensiva contra" : "Atacado por"} ${foeName}`}
+      state={state}
+      side={side}
+      foeName={foeName}
+      replayEvents={lastBlock}
+      replayStart={state}
+      replayLabel={`Ver bloque ${raid.block_number - 1}`}
+      status={approaching ? "pendiente" : "enfrentado"}
+      block={raid.block_number}
+      canPlan={!myReady}
+      infoText={
+        myReady
+          ? undefined
+          : approaching
+            ? `En aproximación: ya puedes fijar el primer bloque. Contacto en ${remaining(raid.deadline)}.`
+            : `Plazo ${remaining(raid.deadline)}. ${foeReady ? `${foeName} ya ha dado sus órdenes.` : ""} Si no das órdenes a tiempo, pierdes el duelo.`
+      }
+      waitingText={`Órdenes del bloque ${raid.block_number} fijadas. ${approaching ? `El combate empieza al llegar (${remaining(raid.deadline)}).` : foeReady ? "Resolviendo…" : `Esperando a ${foeName} · plazo ${remaining(raid.deadline)}. Si no responde, pierde el duelo.`}`}
+      onSubmit={async (plan) => {
+        await submitDuelPlan({ data: { raidId: raid.id, block: raid.block_number, plan } });
+        toast.success("Órdenes fijadas");
+        onChanged();
+      }}
+      storageKey={raid.id}
+      autoplay
+      epilogueTitle={`Informe del bloque ${raid.block_number - 1}`}
+    />
   );
 }
 
-function FullLog({
-  events,
-  me,
-  names,
-}: {
-  events: DuelEventRow[];
-  me: Side;
-  names: Record<Side, string>;
-}) {
-  return (
-    <ol className="mt-2 space-y-2">
-      {events.map((e) => (
-        <li key={e.phase} className="border-l border-border pl-2">
-          <p className="mb-0.5 text-[11px] font-semibold text-primary">
-            Bloque {e.block} · fase {e.phase}
-          </p>
-          <PhaseLines e={e} me={me} names={names} />
-        </li>
-      ))}
-    </ol>
-  );
-}
+// ───────────── Archivo ─────────────
 
 export function DuelArchiveDialog({
   raid,
@@ -1194,15 +1172,8 @@ export function DuelArchiveDialog({
   onClose: () => void;
 }) {
   const side: Side = raid.attacker_id === uid ? "attacker" : "defender";
-  const foeSide = other(side);
   const foeId = side === "attacker" ? raid.defender_id : raid.attacker_id;
   const events = useMemo(() => raid.report?.v3_events ?? [], [raid.report]);
-  const end = raid.report?.v3_end ?? null;
-  const foeName = name(foeId);
-  const names = useMemo(
-    () => ({ [side]: "Tu nave", [foeSide]: foeName }) as Record<Side, string>,
-    [side, foeSide, foeName],
-  );
   const start = useMemo<DuelState | null>(() => {
     if (!raid.duel_state) return null;
     const s = normalizeState(raid.duel_state);
@@ -1216,17 +1187,6 @@ export function DuelArchiveDialog({
     }
     return s;
   }, [raid.duel_state, events]);
-  const epilogue = useMemo(() => {
-    const out: (Line & { who?: "segundo" | "informe" })[] = [];
-    if (end) out.push({ ...endLine(end, side, names), who: "informe" });
-    if (raid.duel_state)
-      out.push(...debriefLines(blockDebrief(events, side, raid.duel_state), "Balance del duelo"));
-    return out;
-  }, [end, side, names, raid.duel_state, events]);
-  const fx = useRef<FxEngine | null>(null);
-  const replay = useReplay({ events, me: side, start, end, fx, names, epilogue });
-  const e = replay.idx >= 0 ? events[replay.idx] : null;
-  const frame = replay.frame;
   return (
     <Dialog
       open
@@ -1237,32 +1197,28 @@ export function DuelArchiveDialog({
         }
       }}
     >
-      <DialogContent className="max-h-[94vh] max-w-4xl overflow-y-auto">
+      <DialogContent className="max-h-[94vh] max-w-5xl overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-primary">Duelo contra {foeName}</DialogTitle>
+          <DialogTitle className="text-primary">Duelo contra {name(foeId)}</DialogTitle>
           <DialogDescription>{summary}</DialogDescription>
         </DialogHeader>
-        <div className="flex justify-end gap-1">
-          {start && <DuelHelp fleet={start[side].fleet} />}
-          <SoundControls />
-        </div>
-        <div className="grid gap-3 md:grid-cols-2">
-          <div className="space-y-2">
-            {start && (
-              <Radar
-                own={frame?.own ?? start[side]}
-                foe={frame?.foe ?? start[foeSide]}
-                geo={frame?.geo}
-                foeLabel={foeName}
-                onFx={(f) => (fx.current = f)}
-                compact
-                caption={e ? `Bloque ${e.block} · fase ${e.phase}` : `${events.length} fases`}
-              />
-            )}
-            <ReplayControls r={replay} total={events.length} label="Reproducir duelo" />
-          </div>
-          <LiveLog lines={replay.log} empty="Pulsa «Reproducir duelo» o «Ver todo»." />
-        </div>
+        {start && (
+          <DuelBoard
+            title="Repetición del duelo"
+            state={start}
+            side={side}
+            foeName={name(foeId)}
+            replayEvents={events}
+            replayStart={start}
+            replayLabel="Reproducir duelo"
+            status="terminado"
+            block={0}
+            canPlan={false}
+            storageKey={`archivo-${raid.id}`}
+            end={raid.report?.v3_end ?? null}
+            epilogueTitle="Balance del duelo"
+          />
+        )}
       </DialogContent>
     </Dialog>
   );
@@ -1276,38 +1232,33 @@ export function DuelRules({ fleet }: { fleet: FleetId }) {
       <summary className="cursor-pointer text-primary">Cómo funciona el combate naval</summary>
       <ul className="mt-2 list-disc space-y-1 pl-5 text-muted-foreground">
         <li>
-          Duelo entre naves capitales en bloques de {PHASES_PER_BLOCK} fases: los dos dais las
+          Duelo entre naves capitales en bloques de {PHASES_PER_BLOCK} rondas: los dos dais las
           órdenes a ciegas y se resuelve en cuanto ambos confirmáis (máximo 24 h).
         </li>
         <li>
-          Cada fase eliges <b>máquinas</b> (parar, avante, avante toda), <b>timón</b> y{" "}
-          <b>acción</b>. El timón puede ser una intención —encarar, presentar el costado, alejarse—
-          que se ajusta sola a dónde esté el enemigo, o un giro fijo de 45°/90°.
+          Cada ronda eliges una <b>maniobra</b> (recto, virar 45°, giro cerrado de 90°, avante toda
+          o parar) y una <b>acción</b> (disparar, torpedos, escudos, evasión, reparar, embestir,
+          saltar).
         </li>
         <li>
-          Las armas van por <b>arcos</b>: proa, costados (babor y estribor) y popa. El radar pinta
-          en azul la potencia de cada arco y en rojo los del enemigo. Atacar su popa hace más daño;
-          darle la tuya, también.
+          El <b>mapa táctico</b> te enseña dónde acabará tu nave en cada ronda, adónde irá
+          probablemente el enemigo y el daño previsto. El <b>radar</b> te lo muestra desde tu
+          puente.
         </li>
         <li>
-          <b>Avante toda</b> fuerza los motores para dar caza o escapar: mucha más velocidad, pero
-          sin girar y con el fuego a la mitad. Parado se gira 45° más.
+          Las armas van por arcos (proa, costados, popa) y cada una rinde distinto según la
+          distancia. Atacar su popa duele más; darle la tuya, también.
         </li>
         <li>
-          Los torpedos solo salen por la proa, llegan en la fase siguiente (de cerca, al instante) y
-          pueden esquivarse. Después hay que recargar. Embestir exige tenerle a proa.
+          Se pierde si <b>la nave estalla</b> (casco a 0: el perfil se reinicia por completo) o si{" "}
+          <b>saltas al disforme</b> (pierdes el duelo, salvas la nave).
         </li>
         <li>
-          Se pierde de dos formas: <b>la nave estalla</b> (casco a 0: el perfil se reinicia por
-          completo) o <b>saltas al disforme</b> (pierdes el duelo, salvas la nave). El salto es
-          instantáneo, pero puede fallar.
+          ¿Primera vez? Prueba un <b>simulacro contra la IA</b>: sin riesgo y sin esperas.
         </li>
-        <li>Si no das órdenes a tiempo pierdes el duelo (si nadie las da, pierde el atacante).</li>
       </ul>
       <p className="mt-2 text-xs">
-        <span className="text-primary">Tu flota · {p.trait}:</span> {p.traitText} Velocidad{" "}
-        {p.speed} (avante toda {p.speed + p.burn}), giro {p.agility * 45}°, esquiva {p.dodge} %.
-        Proa: {p.prowName}. Costados: {p.broadsideName}. {p.torpedoes} {p.torpedoName} por salva.
+        <span className="text-primary">Tu flota · {p.trait}:</span> {p.traitText}
       </p>
     </details>
   );

@@ -151,8 +151,8 @@ describe("combate naval v3 con rumbo y arcos", () => {
     const s = newDuel(newSide("imperium", {}, 30, 30), newSide("orks", {}, 40, 40), seeded(8));
     for (const st of ["asalto", "optima", "defensiva"] as const) {
       const p = suggestPlan(s, "attacker", st);
-      expect(p.phases).toHaveLength(5);
-      expect(predictPath(s, "attacker", p.phases)).toHaveLength(5);
+      expect(p.phases).toHaveLength(3);
+      expect(predictPath(s, "attacker", p.phases)).toHaveLength(3);
     }
     const rng = seeded(9);
     let st = s;

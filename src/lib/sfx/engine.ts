@@ -169,7 +169,9 @@ export function startLoop(id: LoopId, fade = 1.5) {
   if (def.files.length) {
     const file = def.files[Math.floor(Math.random() * def.files.length)]!;
     loops.set(id, { src: [], gain });
-    void buffer(file).then((b) => {
+    const source =
+      id === "musica_combate" ? loadCustomMusic().then((c) => c ?? buffer(file)) : buffer(file);
+    void source.then((b) => {
       const entry = loops.get(id);
       if (!b || !entry) return;
       const src = a.createBufferSource();
@@ -309,5 +311,71 @@ function synth(id: SoundId, a: AudioContext, t: number, dest: AudioNode) {
       o.start(t);
       o.stop(t + 1);
     }
+  }
+}
+
+// ───────────── Música propia del jugador (solo en su navegador) ─────────────
+
+const DB = "atalaya-audio";
+const STORE = "files";
+let customMusic: AudioBuffer | null | undefined;
+
+function db(): Promise<IDBDatabase> {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB, 1);
+    req.onupgradeneeded = () => req.result.createObjectStore(STORE);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function idbGet<T>(key: string): Promise<T | undefined> {
+  const d = await db();
+  return new Promise((resolve, reject) => {
+    const r = d.transaction(STORE).objectStore(STORE).get(key);
+    r.onsuccess = () => resolve(r.result as T | undefined);
+    r.onerror = () => reject(r.error);
+  });
+}
+
+async function idbSet(key: string, value: unknown) {
+  const d = await db();
+  return new Promise<void>((resolve, reject) => {
+    const tx = d.transaction(STORE, "readwrite");
+    if (value === undefined) tx.objectStore(STORE).delete(key);
+    else tx.objectStore(STORE).put(value, key);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function loadCustomMusic(): Promise<AudioBuffer | null> {
+  if (customMusic !== undefined) return customMusic;
+  try {
+    const rec = await idbGet<{ name: string; blob: Blob }>("musica_combate");
+    const a = ac();
+    customMusic = rec && a ? await a.decodeAudioData(await rec.blob.arrayBuffer()) : null;
+  } catch {
+    customMusic = null;
+  }
+  return customMusic;
+}
+
+/** Nombre del archivo de música propia guardado, si lo hay. */
+export async function customMusicName(): Promise<string | null> {
+  try {
+    return (await idbGet<{ name: string }>("musica_combate"))?.name ?? null;
+  } catch {
+    return null;
+  }
+}
+
+/** Guarda (o quita, con null) la música de combate propia. Se queda en este navegador. */
+export async function setCustomMusic(file: File | null) {
+  await idbSet("musica_combate", file ? { name: file.name, blob: file } : undefined);
+  customMusic = undefined;
+  if (loops.has("musica_combate")) {
+    stopLoop("musica_combate", 0.5);
+    setTimeout(() => startLoop("musica_combate", 1.5), 700);
   }
 }

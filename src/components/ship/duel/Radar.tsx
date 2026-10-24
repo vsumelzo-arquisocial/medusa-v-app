@@ -70,6 +70,8 @@ export function Radar({
   foe,
   geo,
   ghost,
+  ghosts,
+  selected = 0,
   foeLabel,
   approaching = false,
   torpedoesOut = 0,
@@ -83,6 +85,9 @@ export function Radar({
   /** Geometría a mostrar (por defecto la del estado; en la repetición, la de la fase). */
   geo?: Geo | undefined;
   ghost?: Geo | null;
+  /** Pronóstico: posición relativa del enemigo al final de cada ronda (en el marco de nuestra nave prevista). */
+  ghosts?: Geo[] | undefined;
+  selected?: number;
   foeLabel: string;
   approaching?: boolean;
   torpedoesOut?: number;
@@ -257,6 +262,43 @@ export function Radar({
                 />
               );
             })}
+          {/* Pronóstico de las rondas */}
+          {ghosts && ghosts.length > 0 && (
+            <g>
+              <polyline
+                points={[foeP, ...ghosts.map((x) => radarPoint(x.rel, x.distance))]
+                  .map((p) => `${p.x},${p.y}`)
+                  .join(" ")}
+                fill="none"
+                stroke="#f87171"
+                strokeDasharray="3 3"
+                strokeOpacity={0.7}
+              />
+              {ghosts.map((x, i) => {
+                const p = radarPoint(x.rel, x.distance);
+                return (
+                  <g
+                    key={i}
+                    transform={`translate(${p.x} ${p.y})`}
+                    opacity={i === selected ? 1 : 0.5}
+                  >
+                    <g transform={`rotate(${x.foeHeading})`}>
+                      <path
+                        d={SHIP}
+                        fill="none"
+                        stroke="#fca5a5"
+                        strokeDasharray="2 1.5"
+                        strokeWidth={i === selected ? 1.4 : 0.8}
+                      />
+                    </g>
+                    <text y={3} textAnchor="middle" className="fill-red-200 text-[8px] font-bold">
+                      {i + 1}
+                    </text>
+                  </g>
+                );
+              })}
+            </g>
+          )}
           {/* Posición prevista */}
           {gp && ghost && (
             <g transform={`translate(${gp.x} ${gp.y}) rotate(${ghost.foeHeading})`} opacity="0.6">

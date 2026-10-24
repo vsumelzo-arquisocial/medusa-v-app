@@ -125,17 +125,22 @@ export class FxEngine {
   speed = 1;
   shake = 0;
 
-  constructor(private canvas: HTMLCanvasElement) {
+  constructor(
+    private canvas: HTMLCanvasElement,
+    /** Tamaño lógico del lienzo (el mismo sistema de coordenadas que el SVG de debajo). */
+    private logicalW = 320,
+    private logicalH = 320,
+  ) {
     this.ctx = canvas.getContext("2d")!;
     this.resize();
   }
 
   resize() {
     const dpr = Math.min(2, window.devicePixelRatio || 1);
-    const w = this.canvas.clientWidth || 320;
+    const w = this.canvas.clientWidth || this.logicalW;
     this.canvas.width = Math.round(w * dpr);
-    this.canvas.height = Math.round(w * dpr);
-    this.scale = (w * dpr) / 320;
+    this.canvas.height = Math.round((w * dpr * this.logicalH) / this.logicalW);
+    this.scale = (w * dpr) / this.logicalW;
   }
 
   clear() {

@@ -1,5 +1,7 @@
 # Combate naval v3 · rumbo y arcos
 
+> **Actualización (24-10-2026):** bloques de **3 rondas** (antes 5) y máximo 6 bloques. Cada ronda se elige una **maniobra** (recto, virar 45° a babor/estribor, giro cerrado de 90°, avante toda, parar) y una **acción**. La interfaz combina un **mapa táctico** visto desde arriba (trayectoria prevista de tu nave, trayectoria más probable del enemigo según la IA, zona que puede alcanzar y daño previsto) con el **radar del puente**. Hay **simulacro contra la IA** (en el navegador, sin riesgo) y **tutorial guiado**. Los jugadores pueden poner su propia música de combate (se guarda solo en su navegador).
+
 Duelo entre naves capitales, al estilo Battlefleet Gothic pero jugable a ciegas por bloques. Sustituye a la v2 (escoltas).
 
 ## Ritmo

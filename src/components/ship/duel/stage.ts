@@ -16,7 +16,7 @@ import {
 } from "@/lib/naval3/types";
 import type { Line } from "@/lib/naval3/narrate";
 import type { FxEngine, P } from "./fx";
-import { radarPoint, type Geo } from "./Radar";
+import type { Geo } from "./Radar";
 
 type RGB = [number, number, number];
 const OWN: RGB = [140, 210, 255];
@@ -25,7 +25,6 @@ const RED: RGB = [255, 110, 90];
 const GREEN: RGB = [120, 255, 160];
 const BLUE: RGB = [140, 200, 255];
 const GREY: RGB = [200, 200, 200];
-const CENTER: P = { x: 160, y: 160 };
 
 export const MOVE_AT = 1.6;
 export const PHASE_SECONDS = 5.4;
@@ -76,8 +75,10 @@ export function phaseCues(opts: {
   end: DuelEnd | null;
   last: boolean;
   maxHull: Record<Side, number>;
+  /** Punto en pantalla de cada nave antes/después de maniobrar (mapa táctico). */
+  pt: (s: Side, moved: boolean) => P;
 }): Cue[] {
-  const { e, me, fleets, names, before, after, fx, end, last, maxHull } = opts;
+  const { e, me, fleets, names, before, after, fx, end, last, maxHull, pt } = opts;
   const foe: Side = me === "attacker" ? "defender" : "attacker";
   const other = (s: Side): Side => (s === me ? foe : me);
   const cues: Cue[] = [];
@@ -85,9 +86,9 @@ export function phaseCues(opts: {
     cues.push({ t, ...(run ? { run } : {}), ...(line ? { line } : {}) });
   const tone = (actor: Side, good: boolean): Line["tone"] =>
     (actor === me) === good ? "good" : "bad";
-  const pBefore = radarPoint(before.rel, before.distance);
-  const pAfter = radarPoint(after.rel, after.distance);
-  const posOf = (s: Side, moved: boolean) => (s === me ? CENTER : moved ? pAfter : pBefore);
+  const pBefore = pt(foe, false);
+  const pAfter = pt(foe, true);
+  const posOf = (s: Side, moved: boolean) => pt(s, moved);
   /** El sonido viene del lado del enemigo (estribor = derecha). */
   const pan = (moved: boolean) => Math.sin(((moved ? after : before).rel * Math.PI) / 180) * 0.8;
   const L = e[me];
@@ -96,7 +97,7 @@ export function phaseCues(opts: {
   at(0, () => play("radar_ping", { gain: 0.6 }), {
     side: null,
     tone: "neutral",
-    text: `Fase ${e.phase} · ${RANGE_NAMES[e.rangeBefore]}`,
+    text: `Ronda ${e.phase} · ${RANGE_NAMES[e.rangeBefore]}`,
     who: "fase",
   });
   for (const s of [me, foe] as const)
@@ -178,14 +179,14 @@ export function phaseCues(opts: {
     MOVE_AT,
     () => {
       if (L.speed === 2) {
-        fx()?.engines(CENTER, 0, true, 0);
+        fx()?.engines(pt(me, false), (L.heading * Math.PI) / 4, true, 0);
         play("avante_toda");
       }
       if (F.speed === 2) {
-        fx()?.engines(pBefore, (after.foeHeading * Math.PI) / 180, true, 0);
+        fx()?.engines(pBefore, (F.heading * Math.PI) / 4, true, 0);
         play("avante_toda", { pan: pan(false), gain: 0.6 });
       }
-      if (L.action === "escudos") fx()?.shieldBubble(CENTER, 0.6);
+      if (L.action === "escudos") fx()?.shieldBubble(pt(me, true), 0.6);
       if (F.action === "escudos") fx()?.shieldBubble(pAfter, 1.2);
     },
     {
@@ -199,7 +200,7 @@ export function phaseCues(opts: {
   for (const s of [me, foe] as const) {
     const r = e[s].ram;
     if (!r) continue;
-    const mid = { x: (CENTER.x + pAfter.x) / 2, y: (CENTER.y + pAfter.y) / 2 };
+    const mid = { x: (pt(me, true).x + pAfter.x) / 2, y: (pt(me, true).y + pAfter.y) / 2 };
     at(
       2.9,
       () => {
@@ -264,7 +265,7 @@ export function phaseCues(opts: {
           : {
               side: s,
               tone: "neutral",
-              text: `${names[s]} lanza ${l.torpedoesLaunched} torpedos por la proa: llegarán en la próxima fase.`,
+              text: `${names[s]} lanza ${l.torpedoesLaunched} torpedos por la proa: llegarán en la próxima ronda.`,
             },
       );
       return;
@@ -405,7 +406,7 @@ function secondComment(
   if (pct <= 0.35 && L.hullAfter > 0)
     return say(`${v.lord}, estamos al límite. El salto disforme es nuestra mejor baza.`, "bad");
   if (F.torpedoesLaunched && !F.instantTorpedoes)
-    return say("¡Torpedos enemigos en camino! Evasión o avante toda en la próxima fase.", "bad");
+    return say("¡Torpedos enemigos en camino! Evasión o avante toda en la próxima ronda.", "bad");
   if (F.hitArc === "popa" && F.fireDealt > 0)
     return say("¡Nos están dando en la popa! Hay que virar ya.", "bad");
   if (taken >= 5 && F.fireDealt >= F.torpedoesHit * TORPEDO_DAMAGE && L.action !== "escudos")

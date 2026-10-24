@@ -1,4 +1,4 @@
-/** Narración en castellano de cada fase, para la repetición y el registro. */
+/** Narración en castellano de cada ronda, para la repetición y el registro. */
 import { TORPEDO_DAMAGE } from "./factions";
 import { RANGE_NAMES, type DuelEnd, type PhaseEvent, type Side, type SidePhaseLog } from "./types";
 
@@ -156,7 +156,7 @@ function actionLine(
             {
               side: s,
               tone: "neutral",
-              text: `${names[s]} lanza ${l.torpedoesLaunched} torpedos: llegarán en la próxima fase.`,
+              text: `${names[s]} lanza ${l.torpedoesLaunched} torpedos: llegarán en la próxima ronda.`,
             },
           ];
     case "escudos":
