@@ -13,7 +13,7 @@ Montada con `scripts/build-sfx.py` (recortes, mezclas, normalización y bucles) 
 - **ZapSplat** — «Missile or bomb incoming whoosh and explosion» (719426), zapsplat.com.
 - **enviromaniac2** (Freesound 411572) — «Target on radar».
 
-La música de combate (`musica_combate_1.mp3`) es una composición original hecha con esos sonidos.
+La música de fondo (`/sfx/musica/aproximacion.mp3` y `/sfx/musica/combate.mp3`) la aporta el propietario de la app, que tiene permiso para usarla en esta app privada.
 
 ## Sonidos anteriores (Wikimedia Commons)
 - broadside.mp3 — "Explosion-LS100155.ogg" (dominio público)

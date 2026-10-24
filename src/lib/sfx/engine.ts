@@ -169,10 +169,7 @@ export function startLoop(id: LoopId, fade = 1.5) {
   if (def.files.length) {
     const file = def.files[Math.floor(Math.random() * def.files.length)]!;
     loops.set(id, { src: [], gain });
-    const source =
-      id === "musica_combate" || id === "musica_tension"
-        ? loadCustomMusic(id).then(async (c) => c ?? (await remoteMusic(id)) ?? buffer(file))
-        : buffer(file);
+    const source = buffer(file);
     void source.then((b) => {
       const entry = loops.get(id);
       if (!b || !entry) return;
@@ -313,108 +310,5 @@ function synth(id: SoundId, a: AudioContext, t: number, dest: AudioNode) {
       o.start(t);
       o.stop(t + 1);
     }
-  }
-}
-
-// ───────────── Música propia del jugador (solo en su navegador) ─────────────
-
-const DB = "atalaya-audio";
-const STORE = "files";
-const customMusic = new Map<MusicSlot, AudioBuffer | null>();
-
-/** Huecos de música que el jugador puede sustituir por su propia música. */
-export type MusicSlot = "musica_tension" | "musica_combate";
-
-function db(): Promise<IDBDatabase> {
-  return new Promise((resolve, reject) => {
-    const req = indexedDB.open(DB, 1);
-    req.onupgradeneeded = () => req.result.createObjectStore(STORE);
-    req.onsuccess = () => resolve(req.result);
-    req.onerror = () => reject(req.error);
-  });
-}
-
-async function idbGet<T>(key: string): Promise<T | undefined> {
-  const d = await db();
-  return new Promise((resolve, reject) => {
-    const r = d.transaction(STORE).objectStore(STORE).get(key);
-    r.onsuccess = () => resolve(r.result as T | undefined);
-    r.onerror = () => reject(r.error);
-  });
-}
-
-async function idbSet(key: string, value: unknown) {
-  const d = await db();
-  return new Promise<void>((resolve, reject) => {
-    const tx = d.transaction(STORE, "readwrite");
-    if (value === undefined) tx.objectStore(STORE).delete(key);
-    else tx.objectStore(STORE).put(value, key);
-    tx.oncomplete = () => resolve();
-    tx.onerror = () => reject(tx.error);
-  });
-}
-
-async function loadCustomMusic(slot: MusicSlot): Promise<AudioBuffer | null> {
-  if (customMusic.has(slot)) return customMusic.get(slot)!;
-  let buf: AudioBuffer | null = null;
-  try {
-    const rec = await idbGet<{ name: string; blob: Blob }>(slot);
-    const a = ac();
-    buf = rec && a ? await a.decodeAudioData(await rec.blob.arrayBuffer()) : null;
-  } catch {
-    buf = null;
-  }
-  customMusic.set(slot, buf);
-  return buf;
-}
-
-/** Nombre del archivo de música propia guardado en un hueco, si lo hay. */
-export async function customMusicName(slot: MusicSlot = "musica_combate"): Promise<string | null> {
-  try {
-    return (await idbGet<{ name: string }>(slot))?.name ?? null;
-  } catch {
-    return null;
-  }
-}
-
-/** Guarda (o quita, con null) una música propia. Se queda en este navegador. */
-export async function setCustomMusic(file: File | null, slot: MusicSlot = "musica_combate") {
-  await idbSet(slot, file ? { name: file.name, blob: file } : undefined);
-  customMusic.delete(slot);
-  if (loops.has(slot)) {
-    stopLoop(slot, 0.5);
-    setTimeout(() => startLoop(slot, 1.5), 700);
-  }
-}
-
-// ───────────── Música de la campaña (almacenamiento privado del servidor) ─────────────
-
-type RemoteResolver = (slot: MusicSlot) => Promise<string | null>;
-let remoteResolver: RemoteResolver | null = null;
-const remoteCache = new Map<MusicSlot, Promise<AudioBuffer | null>>();
-
-/** La app indica cómo obtener la URL (firmada) de la música de la campaña. */
-export function setRemoteMusicResolver(fn: RemoteResolver) {
-  remoteResolver = fn;
-}
-
-function remoteMusic(slot: MusicSlot): Promise<AudioBuffer | null> {
-  if (!remoteResolver) return Promise.resolve(null);
-  let p = remoteCache.get(slot);
-  if (!p) {
-    p = remoteResolver(slot)
-      .then((url) => (url ? buffer(url) : null))
-      .catch(() => null);
-    remoteCache.set(slot, p);
-  }
-  return p;
-}
-
-/** Tras subir música nueva: olvidar la caché y reiniciar el bucle si suena. */
-export function refreshRemoteMusic(slot: MusicSlot) {
-  remoteCache.delete(slot);
-  if (loops.has(slot)) {
-    stopLoop(slot, 0.5);
-    setTimeout(() => startLoop(slot, 1.5), 700);
   }
 }

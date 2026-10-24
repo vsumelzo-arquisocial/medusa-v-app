@@ -132,8 +132,8 @@ export const LOOPS: Record<LoopId, SoundDef> = {
     volume: 0.5,
   },
   reactor: { layer: "ambiente", files: ["/sfx/lib/reactor_1.mp3"], volume: 0.35 },
-  musica_tension: { layer: "musica", files: ["/sfx/lib/musica_tension_1.mp3"], volume: 0.5 },
-  musica_combate: { layer: "musica", files: ["/sfx/lib/musica_combate_1.mp3"], volume: 0.55 },
+  musica_tension: { layer: "musica", files: ["/sfx/musica/aproximacion.mp3"], volume: 0.6 },
+  musica_combate: { layer: "musica", files: ["/sfx/musica/combate.mp3"], volume: 0.6 },
 };
 
 /** Hojas de sprites de efectos (explosiones reales). Vacío = solo partículas. */
