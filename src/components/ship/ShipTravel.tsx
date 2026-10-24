@@ -15,6 +15,7 @@ import { BODIES, bodyById, bodyName, formatDuration, travelSeconds } from "@/lib
 import { BODY_TEXTURES } from "@/lib/system-art";
 import { playReactorIgnition, playWarpJump, stopJumpAudio } from "@/lib/jump-audio";
 import { WarpJumpOverlay } from "@/components/ship/WarpJumpOverlay";
+import { AbortJumpOverlay } from "@/components/ship/AbortJumpOverlay";
 
 const ERR: Record<string, string> = {
   "in warp": "Tu nave ya está viajando por el warp.",
@@ -25,7 +26,15 @@ const ERR: Record<string, string> = {
 };
 const IGNITION_MS = 2800;
 
-type Phase = "idle" | "igniting" | "wizard" | "jumping";
+/** Cuenta atrás legible: con segundos por debajo de una hora (antes mostraba "0 min" en el último minuto). */
+function countdown(seconds: number) {
+  const s = Math.max(0, Math.ceil(seconds));
+  if (s >= 3600) return formatDuration(s);
+  const m = Math.floor(s / 60);
+  return `${m}:${String(s % 60).padStart(2, "0")} min`;
+}
+
+type Phase = "idle" | "igniting" | "wizard" | "jumping" | "aborting";
 
 /** Motor de salto del puente de mando. El viaje se resuelve en el servidor con ship_set_course. */
 export function ShipTravel({ uid, shipImage }: { uid: string; shipImage: string }) {
@@ -35,6 +44,7 @@ export function ShipTravel({ uid, shipImage }: { uid: string; shipImage: string 
   const [dest, setDest] = useState("");
   const [now, setNow] = useState(() => Date.now());
   const jumpResult = useRef<Promise<boolean> | null>(null);
+  const abortResult = useRef<Promise<boolean> | null>(null);
 
   useEffect(() => {
     const t = setInterval(() => setNow(Date.now()), 1000);
@@ -43,6 +53,16 @@ export function ShipTravel({ uid, shipImage }: { uid: string; shipImage: string 
   useEffect(() => () => stopJumpAudio(), []);
 
   const me = data?.fleet.find((f) => f.user_id === uid);
+  // Al llegar a cero, pedir el estado al servidor (que registra la llegada) sin esperar al refresco periódico.
+  const arrivedAt = me && !me.body_id && me.arrives_at ? new Date(me.arrives_at).getTime() : null;
+  const due = arrivedAt !== null && arrivedAt <= now;
+  useEffect(() => {
+    if (!due) return;
+    void qc.invalidateQueries({ queryKey: ["campaign"] });
+    const t = setInterval(() => void qc.invalidateQueries({ queryKey: ["campaign"] }), 2000);
+    return () => clearInterval(t);
+  }, [due, qc]);
+
   if (!data) return null;
   if (!me)
     return (
@@ -91,19 +111,28 @@ export function ShipTravel({ uid, shipImage }: { uid: string; shipImage: string 
     qc.invalidateQueries({ queryKey: ["campaign"] });
   }
 
-  async function abort() {
-    const { error } = await supabase.rpc("ship_abort_course");
-    if (error) {
-      toast.error(
-        error.message.includes("already returning")
-          ? "Ya estás regresando."
-          : error.message.includes("not traveling")
-            ? "Tu nave no está viajando."
-            : error.message,
-      );
-      return;
-    }
-    toast.success(`Salto anulado: regresando a ${bodyName(me!.travel_from)}`);
+  function abort() {
+    setPhase("aborting");
+    abortResult.current = (async () => {
+      const { error } = await supabase.rpc("ship_abort_course");
+      if (error) {
+        toast.error(
+          error.message.includes("already returning")
+            ? "Ya estás regresando."
+            : error.message.includes("not traveling")
+              ? "Tu nave no está viajando."
+              : error.message,
+        );
+        return false;
+      }
+      return true;
+    })();
+  }
+
+  async function abortFinished() {
+    const ok = await (abortResult.current ?? Promise.resolve(false));
+    if (ok) toast.success(`Salto anulado: regresando a ${bodyName(me!.travel_from)}`);
+    setPhase("idle");
     qc.invalidateQueries({ queryKey: ["campaign"] });
   }
 
@@ -135,13 +164,22 @@ export function ShipTravel({ uid, shipImage }: { uid: string; shipImage: string 
             </p>
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-2 text-sm">
-          <span>{bodyName(me.travel_from)}</span>
-          <span className="text-primary" aria-hidden="true">
-            ⟶
-          </span>
-          <span className="text-primary">{bodyName(me.destination)}</span>
-        </div>
+        {returning ? (
+          <p className="text-sm">
+            <span className="text-primary" aria-hidden="true">
+              ⟲{" "}
+            </span>
+            Regresando a <span className="text-primary">{bodyName(me.destination)}</span>
+          </p>
+        ) : (
+          <div className="flex flex-wrap items-center gap-2 text-sm">
+            <span>{bodyName(me.travel_from)}</span>
+            <span className="text-primary" aria-hidden="true">
+              ⟶
+            </span>
+            <span className="text-primary">{bodyName(me.destination)}</span>
+          </div>
+        )}
         {!returning && (
           <progress
             className="ship-progress mt-3 h-2 w-full"
@@ -151,7 +189,9 @@ export function ShipTravel({ uid, shipImage }: { uid: string; shipImage: string 
           />
         )}
         <p className="mt-2 text-xs text-muted-foreground" role="timer">
-          Llegada en {formatDuration(remaining)} · no puedes atacar ni ser atacado durante el viaje.
+          {remaining > 0
+            ? `Llegada en ${countdown(remaining)} · no puedes atacar ni ser atacado durante el viaje.`
+            : "Saliendo del warp…"}
         </p>
         {!returning && (
           <Button
@@ -163,11 +203,19 @@ export function ShipTravel({ uid, shipImage }: { uid: string; shipImage: string 
                   `¿Anular el salto y volver a ${bodyName(me.travel_from)}? El regreso tarda lo mismo que llevas viajando.`,
                 )
               )
-                void abort();
+                abort();
             }}
+            disabled={phase === "aborting"}
           >
             Anular salto y volver
           </Button>
+        )}
+        {phase === "aborting" && (
+          <AbortJumpOverlay
+            shipImage={shipImage}
+            origin={bodyName(me.travel_from)}
+            onDone={() => void abortFinished()}
+          />
         )}
       </section>
     );
