@@ -123,7 +123,7 @@ function Sistema() {
               <div className="space-y-2 text-sm">
                 <p className="text-primary">{sel.kind === "moon" ? `Luna de ${bodyName(sel.parent)}` : `Planeta · órbita ${sel.orbit}`}</p>
                 <p className="text-xs text-muted-foreground">{sel.biome}</p>
-                {!sel.playable && <p className="text-xs text-muted-foreground">No habitable: no se puede desembarcar ni viajar aquí.</p>}
+                {!sel.playable && <p className="text-xs text-muted-foreground">No conquistable: tu nave puede viajar y orbitar aquí, pero no hay regiones donde desembarcar.</p>}
                 {sel.playable && <>
                   <p className="text-xs">{regionsOf(sel.id).length} regiones · {status(sel.id) === "open" ? <span className="text-primary">Abierto a la conquista</span> : <span className="text-muted-foreground">Bloqueado</span>}</p>
                   <ul className="grid grid-cols-2 gap-1 text-xs">{share(sel.id).map(({ f, pct }) => <li key={f} className={FORCE_CLASSES[f]}>■ {FORCE_NAMES[f]} {pct} %</li>)}</ul>

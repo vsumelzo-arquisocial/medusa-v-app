@@ -69,7 +69,12 @@ export function OrbitalView({ shipName, onPlanetClick, race, faction, threats }:
         className={`holo-planet group absolute left-1/2 top-[34%] aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full focus:outline-none ${compact ? "w-[52%]" : "w-[22%]"}`}
       >
         <div className="pointer-events-none absolute -inset-[7%] opacity-90 mix-blend-screen [filter:saturate(1.3)_brightness(1.15)_drop-shadow(0_0_8px_oklch(0.8_0.2_150/0.6))]">
-          <Globe map={BODY_MAPS[body]} texture={BODY_TEXTURES[body]} styleFor={styleFor} selected={null} onSelect={() => {}} attacks={attacks} interactive={false} />
+          {BODY_MAPS[body] ? (
+            <Globe map={BODY_MAPS[body]} texture={BODY_TEXTURES[body]} styleFor={styleFor} selected={null} onSelect={() => {}} attacks={attacks} interactive={false} />
+          ) : (
+            // Cuerpos sin regiones (gigantes gaseosos, Ignis): solo la superficie, sin mapa de regiones.
+            <div className="planet-surface aspect-square w-full rounded-full shadow-[inset_-18px_-12px_36px_rgba(0,0,0,.85)]" style={{ backgroundImage: `url(${BODY_TEXTURES[body]})` }} />
+          )}
         </div>
         <div className="holo-lines absolute inset-0 rounded-full" />
         <div className="absolute inset-0 rounded-full shadow-[0_0_40px_oklch(0.8_0.2_150/0.6),inset_0_0_30px_oklch(0.85_0.2_150/0.7)] transition group-hover:shadow-[0_0_70px_oklch(0.85_0.22_150/0.9),inset_0_0_40px_oklch(0.9_0.2_150/0.9)]" />

@@ -21,7 +21,7 @@ const ERR: Record<string, string> = {
   "already there": "Tu nave ya está en ese destino.",
   "ship busy": "Tu nave está en un duelo naval: no puede saltar al warp.",
   "no ship": "Primero necesitas una nave.",
-  "bad body": "Ese destino no es habitable.",
+  "bad body": "Ese destino no existe.",
 };
 const IGNITION_MS = 2800;
 
@@ -175,7 +175,7 @@ export function ShipTravel({ uid, shipImage }: { uid: string; shipImage: string 
 
   // ── Estacionada ──────────────────────────────────────────────
   const here = me.body_id;
-  const targets = BODIES.filter((b) => b.playable && b.id !== here);
+  const targets = BODIES.filter((b) => b.id !== here);
   const selected = bodyById(dest);
   const secs = dest ? travelSeconds(here, dest) : 0;
 
@@ -242,7 +242,7 @@ export function ShipTravel({ uid, shipImage }: { uid: string; shipImage: string 
             aria-label="Destinos"
           >
             {targets.map((b) => {
-              const blocked = status(b.id) !== "open";
+              const blocked = b.playable && status(b.id) !== "open";
               const active = dest === b.id;
               return (
                 <button
@@ -267,6 +267,11 @@ export function ShipTravel({ uid, shipImage }: { uid: string; shipImage: string 
                     {b.biome}
                   </span>
                   <span className="text-xs">⧗ {formatDuration(travelSeconds(here, b.id))}</span>
+                  {!b.playable && (
+                    <span className="border border-border px-1 text-[10px] uppercase text-muted-foreground">
+                      No conquistable
+                    </span>
+                  )}
                   {blocked && (
                     <span className="border border-destructive/70 px-1 text-[10px] uppercase text-destructive">
                       Bloqueado
@@ -280,9 +285,11 @@ export function ShipTravel({ uid, shipImage }: { uid: string; shipImage: string 
             <p className="text-xs text-muted-foreground" aria-live="polite">
               Destino: <span className="text-primary">{selected.name}</span> · duración{" "}
               {formatDuration(secs)}.
-              {status(selected.id) !== "open"
-                ? " Destino bloqueado: podrás llegar, pero no desembarcar ni atacar."
-                : ""}
+              {!selected.playable
+                ? " Sin regiones: podrás orbitarlo, pero no desembarcar ni atacar."
+                : status(selected.id) !== "open"
+                  ? " Destino bloqueado: podrás llegar, pero no desembarcar ni atacar."
+                  : ""}
             </p>
           )}
           <div className="flex flex-wrap justify-end gap-2">
