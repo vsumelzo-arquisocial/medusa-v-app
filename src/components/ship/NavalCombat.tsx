@@ -308,11 +308,6 @@ export function NavalCommand() {
       repairing:
         !!ownShip?.hull_repair_until && new Date(ownShip.hull_repair_until).getTime() > serverNow,
       shieldLevel: lvl("camara_escudos"),
-      neighbors: mine?.body_id
-        ? (sys?.fleet ?? [])
-            .filter((f) => f.user_id !== data.uid && f.body_id === mine.body_id)
-            .map((f) => playerImage(f.user_id))
-        : [],
     };
   };
   return (

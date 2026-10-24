@@ -29,8 +29,6 @@ export interface ShipSceneProps {
   repairing?: boolean;
   /** Nivel de la cámara de escudos (0-3): intensidad de la burbuja. */
   shieldLevel?: number;
-  /** Naves de otros capitanes en la misma órbita. */
-  neighbors?: string[];
 }
 
 const W = 1200;
@@ -45,6 +43,98 @@ function loadImage(src: string) {
   const img = new Image();
   img.src = src;
   return img;
+}
+
+/** Generador pseudoaleatorio con semilla: el cielo es siempre el mismo, sin patrones regulares. */
+function mulberry(seed: number) {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/** Color de estrella según su temperatura (azuladas, blancas, amarillas, anaranjadas). */
+const STAR_TINTS = ["#9fb8ff", "#c9d6ff", "#f4f6ff", "#fff4e0", "#ffe2b8", "#ffc9a0"];
+
+/**
+ * Cielo profundo pre-renderizado (el doble de ancho para desplazarlo sin cortes):
+ * banda galáctica, nebulosas suaves con el color de la facción y miles de estrellas tenues.
+ */
+function renderDeepSky(tint: string): HTMLCanvasElement {
+  const c = document.createElement("canvas");
+  c.width = W * 2;
+  c.height = H;
+  const g = c.getContext("2d")!;
+  const rnd = mulberry(7919);
+  g.fillStyle = "#020309";
+  g.fillRect(0, 0, c.width, H);
+  // Banda galáctica diagonal: muchas manchas difusas a lo largo de una curva
+  for (let i = 0; i < 260; i++) {
+    const u = rnd();
+    const x = u * c.width;
+    const y = H * (0.15 + 0.5 * u * 0.5) + Math.sin(u * 9) * 40 + (rnd() - 0.5) * 140;
+    const r = 40 + rnd() * 120;
+    const rg = g.createRadialGradient(x, y, 0, x, y, r);
+    const warm = rnd() < 0.5;
+    rg.addColorStop(0, warm ? "rgba(190,170,150,0.035)" : "rgba(150,165,210,0.035)");
+    rg.addColorStop(1, "rgba(0,0,0,0)");
+    g.fillStyle = rg;
+    g.fillRect(x - r, y - r, r * 2, r * 2);
+  }
+  // Nebulosas de color (la de la facción y otras dos)
+  const nebulae: [number, number, number, string][] = [
+    [0.78, 0.18, 380, tint],
+    [1.55, 0.3, 420, "#6a3fa0"],
+    [0.25, 0.55, 300, "#1f5f7a"],
+  ];
+  for (const [fx, fy, size, col] of nebulae) {
+    for (let k = 0; k < 18; k++) {
+      const x = fx * W + (rnd() - 0.5) * size * 1.4;
+      const y = fy * H + (rnd() - 0.5) * size * 0.6;
+      const r = size * (0.25 + rnd() * 0.5);
+      const rg = g.createRadialGradient(x, y, 0, x, y, r);
+      rg.addColorStop(0, hexA(col, 0.05 + rnd() * 0.04));
+      rg.addColorStop(1, "rgba(0,0,0,0)");
+      g.fillStyle = rg;
+      g.fillRect(x - r, y - r, r * 2, r * 2);
+    }
+  }
+  // Polvo estelar: estrellas diminutas más densas cerca de la banda
+  for (let i = 0; i < 2600; i++) {
+    const x = rnd() * c.width;
+    const band = H * (0.15 + 0.25 * (x / c.width)) + Math.sin((x / c.width) * 9) * 40;
+    const y = rnd() < 0.55 ? band + (rnd() + rnd() + rnd() - 1.5) * 120 : rnd() * H;
+    g.globalAlpha = 0.15 + rnd() * 0.45;
+    g.fillStyle = STAR_TINTS[Math.floor(rnd() * STAR_TINTS.length)]!;
+    const sz = rnd() < 0.92 ? 0.7 : 1.3;
+    g.fillRect(x, y, sz, sz);
+  }
+  g.globalAlpha = 1;
+  return c;
+}
+
+/** Sprite de estrella difusa por color (se dibuja con drawImage: mucho más barato que un degradado por estrella). */
+const starSprites = new Map<string, HTMLCanvasElement>();
+function starSprite(tint: string) {
+  let c = starSprites.get(tint);
+  if (!c) {
+    c = document.createElement("canvas");
+    c.width = c.height = 32;
+    const g = c.getContext("2d")!;
+    const rg = g.createRadialGradient(16, 16, 0, 16, 16, 16);
+    rg.addColorStop(0, hexA(tint, 1));
+    rg.addColorStop(0.18, hexA(tint, 0.6));
+    rg.addColorStop(0.45, hexA(tint, 0.12));
+    rg.addColorStop(1, hexA(tint, 0));
+    g.fillStyle = rg;
+    g.fillRect(0, 0, 32, 32);
+    starSprites.set(tint, c);
+  }
+  return c;
 }
 
 const ready = (img: HTMLImageElement | null | undefined): img is HTMLImageElement =>
@@ -70,13 +160,11 @@ export function ShipExterior(props: ShipSceneProps) {
     combat = null,
     repairing = false,
     shieldLevel = 1,
-    neighbors = [],
   } = props;
   const canvas = useRef<HTMLCanvasElement>(null);
   const [sound, setSound] = useState(false);
   const damage = Math.max(0, Math.min(1, 1 - hull / Math.max(1, maxHull)));
   const enginesOn = moving || !!travel || !!combat;
-  const neighborKey = neighbors.join("|");
 
   useEffect(() => {
     const c = canvas.current;
@@ -91,7 +179,6 @@ export function ShipExterior(props: ShipSceneProps) {
     const planet =
       orbitBody && BODY_TEXTURES[orbitBody] ? loadImage(BODY_TEXTURES[orbitBody]) : null;
     const enemy = combat ? loadImage(combat.enemyImage) : null;
-    const others = neighbors.slice(0, 4).map(loadImage);
     const atmo = (orbitBody && ATMOSPHERE[orbitBody]) || "#7fd0ff";
 
     // Geometría de la nave en el lienzo
@@ -101,16 +188,48 @@ export function ShipExterior(props: ShipSceneProps) {
     const shipAt = (fx: number, fy: number, h: number) =>
       [shipX + fx * shipW, shipY + fy * h] as const;
 
-    // Partículas
-    const stars = [0.25, 0.55, 1].map((depth, layer) =>
-      Array.from({ length: 70 + layer * 30 }, (_, i) => ({
-        x: (i * 397.13 + layer * 131) % W,
-        y: (i * 211.71 + layer * 57) % H,
-        size: depth * (1 + (i % 3) * 0.5),
+    // Cielo: fondo profundo pre-renderizado + estrellas vivas en varias profundidades
+    const deepSky = renderDeepSky(shield);
+    const rnd = mulberry(1337);
+    const stars = Array.from({ length: 260 }, () => {
+      const depth = 0.15 + rnd() ** 2 * 0.85;
+      return {
+        x: rnd() * W,
+        y: rnd() * H,
         depth,
-        tw: (i * 1.7) % 6.28,
-      })),
-    );
+        size: 0.6 + depth * (0.6 + rnd() * 1.4),
+        tint: STAR_TINTS[Math.floor(rnd() * STAR_TINTS.length)]!,
+        tw: rnd() * 6.28,
+        twSpeed: 0.6 + rnd() * 2.4,
+        bright: rnd() < 0.05,
+      };
+    });
+    // Motas de polvo cercanas: pasan rápido y desenfocadas (sensación de movimiento)
+    const motes = Array.from({ length: 26 }, () => ({
+      x: rnd() * W,
+      y: rnd() * H,
+      r: 1.5 + rnd() * 3,
+      v: 0.6 + rnd() * 0.8,
+      a: 0.05 + rnd() * 0.1,
+    }));
+    type Meteor = { x: number; y: number; vx: number; vy: number; life: number };
+    let meteor: Meteor | null = null;
+    let nextMeteor = 4 + rnd() * 6;
+    // Escoltas de la misma flota en formación (atrás, más pequeñas y veladas por la distancia)
+    const escorts = combat
+      ? [
+          { fx: 0.44, fy: 0.0, w: 0.16, alpha: 0.7, phase: 0.0 },
+          { fx: 0.02, fy: 0.05, w: 0.13, alpha: 0.55, phase: 1.7 },
+          { fx: 0.02, fy: 0.6, w: 0.14, alpha: 0.6, phase: 3.1 },
+        ]
+      : [
+          { fx: 0.66, fy: 0.02, w: 0.2, alpha: 0.7, phase: 0.0 },
+          { fx: 0.06, fy: 0.08, w: 0.15, alpha: 0.55, phase: 1.7 },
+          { fx: 0.8, fy: 0.42, w: 0.17, alpha: 0.6, phase: 3.1 },
+        ];
+    type EscortShot = { sx: number; sy: number; tx: number; ty: number; t: number };
+    const escortShots: EscortShot[] = [];
+    let nextEscortShot = 1.2;
     const warpStreaks = Array.from({ length: 140 }, (_, i) => ({
       a: (i * 2.39996) % 6.283,
       r: (i * 53) % 900,
@@ -156,17 +275,48 @@ export function ShipExterior(props: ShipSceneProps) {
         ctx.fillRect(0, 0, W, H);
         const dir = travel === "return" ? -1 : 1;
         ctx.globalCompositeOperation = "screen";
+        const cx = W * 0.78,
+          cy = H * 0.45;
+        // Nubes de la disformidad que giran despacio alrededor del punto de fuga
+        for (let k = 0; k < 7; k++) {
+          const ang = t * 0.15 * dir + k * 0.9;
+          const rr = 180 + k * 70;
+          const x = cx + Math.cos(ang) * rr * 1.3;
+          const y = cy + Math.sin(ang) * rr * 0.7;
+          const r = 160 + k * 30;
+          const cg = ctx.createRadialGradient(x, y, 0, x, y, r);
+          cg.addColorStop(0, k % 2 ? "rgba(160,60,220,0.10)" : "rgba(90,40,180,0.12)");
+          cg.addColorStop(1, "rgba(0,0,0,0)");
+          ctx.fillStyle = cg;
+          ctx.fillRect(x - r, y - r, r * 2, r * 2);
+        }
+        // Estelas en espiral suave que se desvanecen por los dos extremos
+        ctx.lineCap = "round";
         for (const s of warpStreaks) {
           s.r = (s.r + dir * s.v * 520 * dt + 900) % 900;
           const r0 = s.r,
-            r1 = s.r + 60 + s.v * 80;
-          const cx = W * 0.78,
-            cy = H * 0.45;
-          ctx.strokeStyle = `rgba(200,150,255,${Math.min(0.7, r0 / 500)})`;
-          ctx.lineWidth = 1 + s.v;
+            r1 = s.r + 40 + s.v * 70;
+          const a0 = s.a + r0 * 0.0009 * dir;
+          const a1 = s.a + r1 * 0.0009 * dir;
+          const x0 = cx + Math.cos(a0) * r0 * 1.4,
+            y0 = cy + Math.sin(a0) * r0 * 0.8;
+          const x1 = cx + Math.cos(a1) * r1 * 1.4,
+            y1 = cy + Math.sin(a1) * r1 * 0.8;
+          const alpha = Math.min(0.55, r0 / 600);
+          const lg = ctx.createLinearGradient(x0, y0, x1, y1);
+          lg.addColorStop(0, "rgba(200,150,255,0)");
+          lg.addColorStop(0.5, `rgba(215,175,255,${alpha})`);
+          lg.addColorStop(1, "rgba(200,150,255,0)");
+          ctx.strokeStyle = lg;
+          ctx.lineWidth = 0.6 + s.v * 0.9;
           ctx.beginPath();
-          ctx.moveTo(cx + Math.cos(s.a) * r0 * 1.4, cy + Math.sin(s.a) * r0 * 0.8);
-          ctx.lineTo(cx + Math.cos(s.a) * r1 * 1.4, cy + Math.sin(s.a) * r1 * 0.8);
+          ctx.moveTo(x0, y0);
+          ctx.quadraticCurveTo(
+            (x0 + x1) / 2 + Math.sin(a0) * 6 * dir,
+            (y0 + y1) / 2 - Math.cos(a0) * 6 * dir,
+            x1,
+            y1,
+          );
           ctx.stroke();
         }
         ctx.globalCompositeOperation = "source-over";
@@ -192,26 +342,218 @@ export function ShipExterior(props: ShipSceneProps) {
         }
         return;
       }
-      // Espacio: degradado con nebulosa tenue del color de la facción
-      ctx.fillStyle = "#03040a";
-      ctx.fillRect(0, 0, W, H);
-      const neb = ctx.createRadialGradient(W * 0.8, H * 0.2, 10, W * 0.8, H * 0.2, W * 0.6);
-      neb.addColorStop(0, hexA(shield, 0.1));
-      neb.addColorStop(1, "rgba(0,0,0,0)");
-      ctx.fillStyle = neb;
-      ctx.fillRect(0, 0, W, H);
-      const speed = moving || combat ? 60 : 6;
-      for (const layer of stars) {
-        for (const s of layer) {
-          const x = (((s.x - t * speed * s.depth) % W) + W) % W;
-          const tw = reduced ? 0.8 : 0.55 + 0.45 * Math.sin(t * 1.5 + s.tw);
-          ctx.globalAlpha = Math.min(1, (0.25 + s.depth * 0.6) * tw);
-          ctx.fillStyle = s.depth > 0.9 ? "#e8eeff" : "#aab8ff";
-          const len = moving ? s.size * 6 * s.depth : s.size;
-          ctx.fillRect(x, s.y, Math.max(1, len), Math.max(1, s.size));
+      // Espacio profundo: fondo pre-renderizado que deriva despacio (paralaje lejano)
+      const fast = moving;
+      const drift = (t * (fast ? 14 : combat ? 5 : 2.5)) % (W * 2);
+      ctx.drawImage(deepSky, -drift, 0);
+      ctx.drawImage(deepSky, W * 2 - drift, 0);
+      // Estrellas vivas: deriva lenta con leve componente vertical, centelleo individual
+      const speed = fast ? 55 : combat ? 14 : 7;
+      ctx.save();
+      ctx.globalCompositeOperation = "screen";
+      for (const st of stars) {
+        const x = (((st.x - t * speed * st.depth) % W) + W) % W;
+        const y = (((st.y + t * speed * st.depth * 0.08) % H) + H) % H;
+        const tw = reduced ? 0.85 : 0.6 + 0.4 * Math.sin(t * st.twSpeed + st.tw);
+        const a = Math.min(1, (0.25 + st.depth * 0.75) * tw);
+        if (fast && st.depth > 0.6) {
+          // Estela suave (no una línea recta dura): degradado corto que se desvanece hacia atrás
+          const len = st.depth * 14;
+          const lg = ctx.createLinearGradient(x, y, x + len, y - len * 0.08);
+          lg.addColorStop(0, hexA(st.tint, a));
+          lg.addColorStop(1, hexA(st.tint, 0));
+          ctx.strokeStyle = lg;
+          ctx.lineWidth = st.size;
+          ctx.lineCap = "round";
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + len, y - len * 0.08);
+          ctx.stroke();
+        } else {
+          const r = st.size * (st.bright ? 4 : 2.2);
+          ctx.globalAlpha = a;
+          ctx.drawImage(starSprite(st.tint), x - r, y - r, r * 2, r * 2);
+          ctx.globalAlpha = 1;
+          if (st.bright) {
+            // Destello de difracción en las estrellas brillantes
+            ctx.strokeStyle = hexA(st.tint, a * 0.35);
+            ctx.lineWidth = 0.8;
+            const f = r * 3.5 * tw;
+            ctx.beginPath();
+            ctx.moveTo(x - f, y);
+            ctx.lineTo(x + f, y);
+            ctx.moveTo(x, y - f);
+            ctx.lineTo(x, y + f);
+            ctx.stroke();
+          }
         }
       }
-      ctx.globalAlpha = 1;
+      // Estrella fugaz ocasional
+      if (!reduced) {
+        nextMeteor -= dt;
+        if (!meteor && nextMeteor <= 0) {
+          meteor = {
+            x: W * (0.2 + rnd() * 0.8),
+            y: rnd() * H * 0.4,
+            vx: -(500 + rnd() * 400),
+            vy: 120 + rnd() * 180,
+            life: 1,
+          };
+          nextMeteor = 6 + rnd() * 10;
+        }
+        if (meteor) {
+          meteor.life -= dt * 1.3;
+          meteor.x += meteor.vx * dt;
+          meteor.y += meteor.vy * dt;
+          const tail = 90;
+          const n = Math.hypot(meteor.vx, meteor.vy);
+          const lg = ctx.createLinearGradient(
+            meteor.x,
+            meteor.y,
+            meteor.x - (meteor.vx / n) * tail,
+            meteor.y - (meteor.vy / n) * tail,
+          );
+          lg.addColorStop(0, `rgba(255,255,255,${0.8 * meteor.life})`);
+          lg.addColorStop(1, "rgba(255,255,255,0)");
+          ctx.strokeStyle = lg;
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(meteor.x, meteor.y);
+          ctx.lineTo(meteor.x - (meteor.vx / n) * tail, meteor.y - (meteor.vy / n) * tail);
+          ctx.stroke();
+          if (meteor.life <= 0) meteor = null;
+        }
+      }
+      ctx.restore();
+    };
+
+    /** Motas de polvo en primer plano, desenfocadas. */
+    const drawMotes = (t: number) => {
+      if (reduced) return;
+      const fast = moving || !!travel;
+      ctx.save();
+      ctx.globalCompositeOperation = "screen";
+      for (const m of motes) {
+        const x = ((((m.x - t * (fast ? 260 : 18) * m.v) % (W + 40)) + W + 40) % (W + 40)) - 20;
+        const y = m.y + Math.sin(t * 0.3 + m.x) * 6;
+        const r = m.r * (fast ? 3 : 2);
+        ctx.globalAlpha = m.a;
+        ctx.drawImage(starSprite("#c8d2ff"), x - r, y - r, r * 2, r * 2);
+        ctx.globalAlpha = 1;
+      }
+      ctx.restore();
+    };
+
+    /** Silueta de la escolta: la misma nave, apagada y algo desenfocada por la distancia. */
+    let escortCanvas: HTMLCanvasElement | null = null;
+    const escortArt = (): CanvasImageSource => {
+      if (escortCanvas) return escortCanvas;
+      const w = Math.min(420, ship.naturalWidth);
+      const h = Math.round((ship.naturalHeight / ship.naturalWidth) * w);
+      const c2 = document.createElement("canvas");
+      c2.width = w;
+      c2.height = h;
+      const g = c2.getContext("2d")!;
+      g.filter = "brightness(0.72) saturate(0.6) contrast(0.92) blur(0.4px)";
+      g.drawImage(ship, 0, 0, w, h);
+      // El fondo oscuro de la ilustración se vuelve transparente (sin recuadro visible)
+      try {
+        const d = g.getImageData(0, 0, w, h);
+        const px = d.data;
+        for (let i = 0; i < px.length; i += 4) {
+          const lum = (px[i]! * 0.3 + px[i + 1]! * 0.59 + px[i + 2]! * 0.11) / 255;
+          const a = Math.max(0, Math.min(1, (lum - 0.05) / 0.12));
+          px[i + 3] = Math.round(px[i + 3]! * a);
+        }
+        g.putImageData(d, 0, 0);
+      } catch {
+        /* lienzo protegido: se dibuja tal cual */
+      }
+      escortCanvas = c2;
+      return c2;
+    };
+
+    /** Escoltas de la misma flota en formación; en combate apoyan con su fuego. */
+    const drawEscorts = (t: number, dt: number) => {
+      if (!ready(ship)) return;
+      const ratio = ship.naturalHeight / ship.naturalWidth;
+      for (const e of escorts) {
+        const w = W * e.w;
+        const h = w * ratio;
+        const x = e.fx * W + (reduced ? 0 : Math.sin(t * 0.35 + e.phase) * 14);
+        const y = e.fy * H + (reduced ? 0 : Math.sin(t * 0.6 + e.phase) * 5);
+        // Motores
+        ctx.save();
+        ctx.globalCompositeOperation = "screen";
+        for (const [fx, fy] of rig.engines) {
+          const ex = x + fx * w;
+          const ey = y + fy * h;
+          const r =
+            (enginesOn ? 26 : 12) * (reduced ? 1 : 0.85 + 0.15 * Math.sin(t * 25 + e.phase));
+          const g = ctx.createRadialGradient(ex, ey, 0, ex, ey, r);
+          g.addColorStop(0, hexA(rig.glow, 0.7 * e.alpha));
+          g.addColorStop(1, hexA(rig.glow, 0));
+          ctx.fillStyle = g;
+          ctx.fillRect(ex - r, ey - r, r * 2, r * 2);
+          if (enginesOn && !rig.halo) {
+            const lg = ctx.createLinearGradient(ex - 70, ey, ex, ey);
+            lg.addColorStop(0, hexA(rig.glow, 0));
+            lg.addColorStop(1, hexA(rig.glow, 0.5 * e.alpha));
+            ctx.fillStyle = lg;
+            ctx.beginPath();
+            ctx.moveTo(ex, ey - 3);
+            ctx.lineTo(ex - 70, ey);
+            ctx.lineTo(ex, ey + 3);
+            ctx.fill();
+          }
+        }
+        ctx.restore();
+        ctx.save();
+        ctx.globalAlpha = e.alpha;
+        ctx.drawImage(escortArt(), x, y, w, h);
+        ctx.restore();
+      }
+      if (!combat || reduced) return;
+      // Fuego de apoyo hacia el enemigo
+      nextEscortShot -= dt;
+      if (nextEscortShot <= 0) {
+        const e = escorts[Math.floor(Math.random() * escorts.length)]!;
+        const w = W * e.w;
+        escortShots.push({
+          sx: e.fx * W + w * 0.9,
+          sy: e.fy * H + w * ratio * 0.45,
+          tx: W - 140 + (Math.random() - 0.5) * 60,
+          ty: 160 + (Math.random() - 0.5) * 60,
+          t: 0,
+        });
+        nextEscortShot = 0.6 + Math.random() * 1.4;
+      }
+      ctx.save();
+      ctx.globalCompositeOperation = "screen";
+      for (let i = escortShots.length - 1; i >= 0; i--) {
+        const sh = escortShots[i]!;
+        sh.t += dt * 1.4;
+        const p = Math.min(1, sh.t);
+        const x = sh.sx + (sh.tx - sh.sx) * p;
+        const y = sh.sy + (sh.ty - sh.sy) * p;
+        ctx.fillStyle = hexA(rig.glow, 0.9);
+        ctx.beginPath();
+        ctx.arc(x, y, 2.2, 0, Math.PI * 2);
+        ctx.fill();
+        if (sh.t >= 1) {
+          for (let k = 0; k < 6; k++)
+            sparks.push({
+              x: sh.tx,
+              y: sh.ty,
+              vx: (Math.random() - 0.5) * 140,
+              vy: (Math.random() - 0.5) * 140,
+              life: 0.8,
+              color: "#ffd9a0",
+            });
+          escortShots.splice(i, 1);
+        }
+      }
+      ctx.restore();
     };
 
     const drawPlanet = (t: number) => {
@@ -246,29 +588,30 @@ export function ShipExterior(props: ShipSceneProps) {
       ctx.fillStyle = depthShade;
       ctx.fillRect(0, H - 220, W, 220);
       ctx.restore();
-      // Atmósfera: borde luminoso
+      // Atmósfera: halo difuminado que nace en el borde del planeta y se disipa hacia el espacio
       ctx.save();
       ctx.globalCompositeOperation = "screen";
-      for (let i = 0; i < 3; i++) {
-        ctx.strokeStyle = hexA(atmo, 0.35 - i * 0.1);
-        ctx.lineWidth = 6 + i * 10;
-        ctx.beginPath();
-        ctx.arc(cx, cy, R + i * 6, Math.PI * 1.2, Math.PI * 1.8);
-        ctx.stroke();
-      }
+      const halo = ctx.createRadialGradient(cx, cy, R - 40, cx, cy, R + 110);
+      halo.addColorStop(0, hexA(atmo, 0));
+      halo.addColorStop(0.22, hexA(atmo, 0.28));
+      halo.addColorStop(0.3, hexA(atmo, 0.22));
+      halo.addColorStop(0.5, hexA(atmo, 0.09));
+      halo.addColorStop(0.75, hexA(atmo, 0.025));
+      halo.addColorStop(1, hexA(atmo, 0));
+      ctx.fillStyle = halo;
+      ctx.fillRect(0, H - 320, W, 320);
+      // El lado iluminado brilla más que el del terminador
+      const side = ctx.createLinearGradient(0, 0, W, 0);
+      side.addColorStop(0, "rgba(0,0,0,0.85)");
+      side.addColorStop(0.5, "rgba(0,0,0,0.25)");
+      side.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.globalCompositeOperation = "multiply";
+      ctx.fillStyle = side;
+      ctx.beginPath();
+      ctx.arc(cx, cy, R + 110, Math.PI, Math.PI * 2);
+      ctx.arc(cx, cy, R - 2, Math.PI * 2, Math.PI, true);
+      ctx.fill();
       ctx.restore();
-      // Naves vecinas en órbita, lejanas
-      others.forEach((img, i) => {
-        if (!ready(img)) return;
-        const w = 110 - i * 12;
-        const x = ((W + 200 - ((t * (10 + i * 4) + i * 330) % (W + 400)) + W) % (W + 400)) - 200;
-        const y = 60 + i * 42;
-        ctx.save();
-        ctx.globalAlpha = 0.55;
-        ctx.globalCompositeOperation = "lighten";
-        ctx.drawImage(img, x, y, w, (img.naturalHeight / img.naturalWidth) * w);
-        ctx.restore();
-      });
     };
 
     const drawEngines = (t: number, h: number, bob: number) => {
@@ -639,6 +982,7 @@ export function ShipExterior(props: ShipSceneProps) {
 
       drawBackground(t, dt);
       drawPlanet(t);
+      drawEscorts(t, dt);
       drawEngines(t, h, bob);
       if (ready(ship)) {
         ctx.save();
@@ -659,6 +1003,7 @@ export function ShipExterior(props: ShipSceneProps) {
       drawCombat(t, dt, h, bob);
       drawShield(t, dt, h, bob);
       drawSparks(dt);
+      drawMotes(t);
 
       if (reduced) return; // un fotograma fijo con todos los elementos
       frame = requestAnimationFrame(draw);
@@ -670,7 +1015,7 @@ export function ShipExterior(props: ShipSceneProps) {
     };
     if (reduced) {
       // Dibujar cuando carguen las imágenes
-      const imgs = [ship, planet, enemy, ...others].filter((i): i is HTMLImageElement => !!i);
+      const imgs = [ship, planet, enemy].filter((i): i is HTMLImageElement => !!i);
       let pending = imgs.length;
       const done = () => {
         pending -= 1;
@@ -685,7 +1030,6 @@ export function ShipExterior(props: ShipSceneProps) {
       cancelAnimationFrame(frame);
       io.disconnect();
     };
-    // neighborKey resume la lista de naves vecinas
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     image,
@@ -699,7 +1043,6 @@ export function ShipExterior(props: ShipSceneProps) {
     combat?.enemyImage,
     repairing,
     shieldLevel,
-    neighborKey,
     enginesOn,
   ]);
 
