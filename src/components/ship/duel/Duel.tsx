@@ -1618,6 +1618,11 @@ export function DuelRules({ fleet }: { fleet: FleetId }) {
           los dos lo elegís.
         </li>
         <li>
+          <b>Aproximación:</b> en el mismo planeta, 5 min más 1 h por cada zona de desembarco del
+          defensor allí (máx. 4 h); desde otro planeta, lo que dure el viaje. Mientras tanto nada se
+          bloquea salvo viajar. Durante el combate, las obras y mejoras quedan en pausa.
+        </li>
+        <li>
           Cada ronda eliges una <b>maniobra</b> (recto, virar 45°, giro cerrado de 90°, avante toda
           o parar) y una <b>acción</b> (disparar, torpedos, escudos, evasión, reparar, embestir,
           saltar).

@@ -289,6 +289,18 @@ export function NavalCommand() {
   const inWarp = !!ownStatus?.warp_until && new Date(ownStatus.warp_until).getTime() > serverNow;
   const traveling = active.some((r) => r.status === "pendiente" && r.attacker_id === data.uid);
   const targetStatus = data.fleetStatus.find((s) => s.user_id === target);
+  /** Aproximación: mismo planeta 5 min + 1 h por zona de desembarco del defensor (máx. 4 h); otro planeta, el viaje. */
+  const approachSeconds = (from: string, to: string, defender: string) =>
+    from === to
+      ? 300 +
+        3600 *
+          Math.min(
+            4,
+            (sys?.regions ?? []).filter(
+              (r) => r.body_id === to && r.owner_id === defender && r.is_spaceport,
+            ).length,
+          )
+      : Math.max(300, travelSeconds(from, to));
   const targetUnavailable =
     !!targetStatus?.busy ||
     (!!targetStatus?.warp_until && new Date(targetStatus.warp_until).getTime() > serverNow);
@@ -334,8 +346,9 @@ export function NavalCommand() {
           )}
           {active.length > 0 && (
             <p role="status" className="border-y border-destructive py-3 text-destructive">
-              Nave comprometida · no puedes lanzar otra ofensiva ni recibir ataques de otros
-              jugadores.
+              {active.some((r) => r.status === "enfrentado")
+                ? "En combate · obras, mejoras y escoltas en pausa hasta que termine el duelo."
+                : "Aproximación en curso · puedes seguir con obras, mejoras y combates en tierra, pero la nave no puede viajar ni entrar en otro duelo."}
             </p>
           )}
         </>
@@ -400,14 +413,14 @@ export function NavalCommand() {
                     return (
                       <span className="text-xs text-muted-foreground">
                         {loc
-                          ? `${bodyName(loc)}${mine ? ` · +${formatDuration(travelSeconds(mine, loc)) || "0 min"} de viaje` : ""}`
+                          ? `${bodyName(loc)}${mine ? ` · contacto en ${formatDuration(approachSeconds(mine, loc, p.id)) || "5 min"}` : ""}`
                           : "En el warp · no localizable"}
                       </span>
                     );
                   })()}
                   <span className="text-xs text-muted-foreground">
                     {data.fleetStatus.find((s) => s.user_id === p.id)?.busy
-                      ? "En combate"
+                      ? "Ocupada en un duelo"
                       : new Date(
                             data.fleetStatus.find((s) => s.user_id === p.id)?.warp_until ?? "",
                           ).getTime() > serverNow
@@ -459,7 +472,14 @@ export function NavalCommand() {
           className="mt-4 h-auto w-full whitespace-normal py-4"
           disabled={busy || !target || active.length > 0 || targetUnavailable}
           onClick={() => {
-            if (confirm(`¿Lanzar ofensiva contra ${name(target)} por 100 créditos?`))
+            const from = sys?.fleet.find((f) => f.user_id === data.uid)?.body_id;
+            const to = sys?.fleet.find((f) => f.user_id === target)?.body_id;
+            const eta = from && to ? formatDuration(approachSeconds(from, to, target)) : "";
+            if (
+              confirm(
+                `¿Lanzar ofensiva contra ${name(target)} por 100 créditos?${eta ? ` Contacto en ${eta}.` : ""}`,
+              )
+            )
               void act(
                 () => supabase.rpc("declare_raid3" as never, { _defender: target } as never),
                 "Ofensiva lanzada",

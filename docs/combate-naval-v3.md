@@ -106,3 +106,12 @@ Código: `src/lib/naval3/` (motor, Segundo, narración, servidor), `src/componen
 - **Radar guía:** el enemigo es un eco verde con su silueta que se ilumina al pasar el barrido; abajo, daño que hacen nuestras baterías esa ronda y daño que recibimos.
 - **Esquema de armas:** la nave vista desde arriba con sus arcos y distancias; pestañas Baterías / Torpedos / Embestida y botón para ver el del rival.
 - Migración: `20261025000000_naval_mode_voice.sql`.
+
+## Actualización: aproximación según la posición y bloqueos solo en combate
+
+- **Mismo planeta:** 5 min + 1 h por cada zona de desembarco del defensor en ese planeta (máx. 4 h).
+- **Otro planeta:** la aproximación dura lo que el viaje (mínimo 5 min). Ya no se suman 24 h.
+- **Durante la aproximación** ninguno queda bloqueado: obras, mejoras, escoltas, desembarcos y ataques en tierra siguen disponibles. Solo se impide viajar a otro planeta (el defensor queda anclado) y entrar en otro duelo.
+- **Durante el combate** se bloquean obras, mejoras y escoltas; las que estaban en curso se pausan y, al terminar el duelo, continúan donde se quedaron (columna `ships.works_paused_at` y disparador `naval_combat_works`).
+- Ya no se exige que no haya obras para poder atacar o ser atacado (se pausan).
+- Migración: `20261025020000_naval_approach.sql`.
