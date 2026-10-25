@@ -7,6 +7,7 @@ import { BODIES, bodyName } from "@/lib/system";
 import { BODY_MAPS } from "@/lib/planet";
 import { BODY_TEXTURES } from "@/lib/system-art";
 import logo from "@/assets/atalaya-logo.png";
+import { DashboardMusic } from "./DashboardMusic";
 
 export interface DashPlayer {
   id: string;
@@ -413,6 +414,7 @@ export function CampaignDashboard({
           <span className="font-mono text-2xl tabular-nums text-primary">
             {clock.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" })}
           </span>
+          <DashboardMusic />
           <button
             type="button"
             className="dash-tool border border-primary/40 p-2 text-primary"
