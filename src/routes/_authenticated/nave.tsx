@@ -22,6 +22,7 @@ import {
 } from "@/components/ship/ShipBlueprint";
 import { ShipIncome } from "@/components/ship/ShipIncome";
 import { moduleEffect } from "@/lib/module-effects";
+import { DeepStrikePanel } from "@/components/ship/DeepStrikePanel";
 
 export const Route = createFileRoute("/_authenticated/nave")({
   head: () => ({
@@ -62,7 +63,14 @@ function Nave() {
   const identity = fleetId(prof.profile?.army_race, prof.profile?.army_faction);
   const fleet = fleetFor(prof.profile?.army_race, prof.profile?.army_faction);
   const refresh = () => {
-    for (const key of ["ship", "profile", "daily-income", "naval-raids", "income-breakdown"])
+    for (const key of [
+      "ship",
+      "profile",
+      "daily-income",
+      "naval-raids",
+      "income-breakdown",
+      "deep-strike",
+    ])
       void qc.invalidateQueries({ queryKey: [key] });
   };
   async function action(
@@ -337,6 +345,9 @@ function Nave() {
                         </div>
                       )}
                     </dl>
+                    {t.id === "asalto_profundo" && (
+                      <DeepStrikePanel disabled={busy || data.status.busy} />
+                    )}
                     <p className="mt-3 text-sm">
                       Nivel {m?.level ?? 0}/{t.max_level}
                     </p>

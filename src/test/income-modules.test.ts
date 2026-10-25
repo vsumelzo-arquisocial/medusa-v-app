@@ -41,3 +41,13 @@ describe("módulos de combate", () => {
     expect(boardingCharges("imperium", { cubierta_abordaje: 2 })).toBe(2);
   });
 });
+
+describe("asalto profundo", () => {
+  it("cada facción tiene su nombre de módulo", async () => {
+    const { FLEETS, moduleName } = await import("@/lib/ship-identity");
+    for (const f of Object.keys(FLEETS) as (keyof typeof FLEETS)[])
+      expect(moduleName("asalto_profundo", f)).not.toBe("asalto_profundo");
+    expect(moduleName("asalto_profundo", "aeldari")).toBe("Portal de la Telaraña");
+    expect(moduleName("asalto_profundo", "imperium")).toBe("Cápsulas de desembarco");
+  });
+});

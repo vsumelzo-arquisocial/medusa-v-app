@@ -21,6 +21,8 @@ import { operationBlocked } from "@/lib/campaign-operations";
 import { Button } from "@/components/ui/button";
 import { campaignForce, campaignColor, FORCE_NAMES, FORCE_CLASSES } from "@/lib/campaign-forces";
 import { CampaignLegend } from "@/components/planet/CampaignLegend";
+import { deepStrikeError, deepStrikeQuery } from "@/lib/deep-strike";
+import { moduleName, fleetId } from "@/lib/ship-identity";
 
 export const Route = createFileRoute("/_authenticated/planeta/$body")({
   head: ({ params }) => ({
@@ -99,6 +101,16 @@ function Planeta() {
     setAtkList("");
     ["campaign", "games", "profile"].forEach((k) => qc.invalidateQueries({ queryKey: [k] }));
   }
+  const { data: strike } = useQuery(deepStrikeQuery);
+  async function deepStrike(regionId: number, enemy: boolean) {
+    if (enemy && !atkList) { toast.error("Elige la lista con la que atacas"); return; }
+    const args = enemy ? { _region: regionId, _kind: atkKind, _points: atkPoints, _list: atkList } : { _region: regionId };
+    const { error } = await supabase.rpc("deep_strike_region" as never, args as never);
+    if (error) { toast.error(deepStrikeError(error.message)); return; }
+    toast.success(enemy ? "¡Asalto profundo lanzado! Tenéis 7 días para jugar" : "¡Asalto profundo! Toma iniciada: será tuya en 1 día");
+    setAtkList("");
+    ["campaign", "games", "profile", "deep-strike"].forEach((k) => qc.invalidateQueries({ queryKey: [k] }));
+  }
   const [, force] = useState(0);
   useEffect(() => { const t = setInterval(() => force((x) => x + 1), 30000); return () => clearInterval(t); }, []);
 
@@ -114,6 +126,7 @@ function Planeta() {
   const incomingAttacks = active.filter((a) => a.defender_id === me);
   const hasShip = data.ships.some((s) => s.user_id === me);
   const landed = mine.length > 0;
+  const landedHere = mine.some((r) => r.is_spaceport);
 
   const styleFor = (id: number): CellStyle => {
     const r = data.regions.find((x) => x.id === id);
@@ -229,7 +242,37 @@ function Planeta() {
                           Reclamar (1 día)
                         </Button>
                       )
-                    ) : <p className="text-xs text-muted-foreground">No es vecina de tus regiones.</p>
+                    ) : (() => {
+                      const strikeName = moduleName("asalto_profundo", fleetId(prof.profile?.army_race, prof.profile?.army_faction));
+                      if (!strike || strike.level < 1) return <p className="text-xs text-muted-foreground">No es vecina de tus regiones. Con el módulo de asalto profundo de tu nave podrías atacarla.</p>;
+                      if (region.is_spaceport) return <p className="text-xs text-muted-foreground">No es vecina de tus regiones. Una zona de desembarco no admite asalto profundo.</p>;
+                      if (!landedHere) return <p className="text-xs text-muted-foreground">No es vecina. Para un asalto profundo necesitas tu zona de desembarco en este planeta.</p>;
+                      if (!strike.operational || !strike.charged) return <p className="text-xs text-muted-foreground">No es vecina. {strikeName}: {!strike.operational ? "averiado o en obras" : strike.ready_at ? "recargando" : "sin carga (recárgalo en Nave)"}.</p>;
+                      return (
+                        <div className="space-y-2 border border-amber-400/50 p-2">
+                          <p className="text-xs uppercase tracking-wider text-amber-300">⇣ {strikeName} · 1 carga</p>
+                          {region.owner_id && (
+                            <>
+                              <div className="flex gap-1">
+                                {(["normal", "patrulla"] as const).map((k) => <button key={k} onClick={() => { setAtkKind(k); setAtkList(""); }} className={`flex-1 border px-2 py-1 text-xs uppercase ${atkKind === k ? "border-primary text-primary" : "border-border text-muted-foreground"}`}>{k === "normal" ? "Batalla normal" : "Patrulla"}</button>)}
+                              </div>
+                              <select value={atkList} onChange={(e) => setAtkList(e.target.value)} className="w-full border border-border bg-background px-2 py-1 text-xs">
+                                <option value="">— Lista para el ataque —</option>
+                                {atkLists.map((l) => <option key={l.id} value={l.id}>{l.name} ({l.points} pts)</option>)}
+                              </select>
+                            </>
+                          )}
+                          <Button
+                            variant="outline"
+                            disabled={region.owner_id ? playerBlocked || !atkList : neutralBlocked}
+                            onClick={() => { if (confirm(`¿Lanzar ${strikeName} sobre ${region.name}? La carga se gasta pase lo que pase.`)) void deepStrike(region.id, !!region.owner_id); }}
+                            className="h-auto w-full whitespace-normal border-amber-400 px-3 py-2 text-xs uppercase text-amber-300 disabled:opacity-40"
+                          >
+                            {region.owner_id ? "Asalto profundo: atacar (7 días)" : "Asalto profundo: tomar (1 día)"}
+                          </Button>
+                        </div>
+                      );
+                    })()
                   )}
                 </div>
               );

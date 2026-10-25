@@ -26,6 +26,8 @@ export function moduleEffect(id: string, level: number): string {
       return `−${10 * L} % reclutamiento · −${Math.round((100 * Math.min(3, L)) / 3)} % pérdida por distancia`;
     case "forja":
       return `obras más rápidas${L >= 3 ? " · 2 obras a la vez" : ""}`;
+    case "asalto_profundo":
+      return `ataque a regiones no vecinas · recarga ${L >= 3 ? 1000 : L === 2 ? 1500 : 2000} cr / 24 h`;
     default:
       return "";
   }

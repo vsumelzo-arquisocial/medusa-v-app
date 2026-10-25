@@ -40,6 +40,7 @@ const PLACES: Record<string, { view: View; x: number; edge: Edge; label?: "top" 
   baterias: { view: "top", x: 0.52, edge: "top" },
   camara_escudos: { view: "top", x: 0.64, edge: "mid", label: "bottom" },
   casco: { view: "top", x: 0.8, edge: "top" },
+  asalto_profundo: { view: "top", x: 0.42, edge: "mid", label: "top" },
 };
 
 export const SHORT: Record<string, string> = {
@@ -55,6 +56,7 @@ export const SHORT: Record<string, string> = {
   caja_creditos: "Cámara cr.",
   astropatico: "Antena",
   forja: "Astillero",
+  asalto_profundo: "Asalto",
 };
 
 export const STATE_COLOR = {
