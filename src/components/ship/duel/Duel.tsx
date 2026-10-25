@@ -1346,8 +1346,8 @@ export function DuelBoard(p: DuelBoardProps) {
         <div className="space-y-3">
           <div data-tour="radar">
             <Radar
-              own={frame?.own ?? (showPlan && selStep ? selStep.own : own)}
-              foe={frame?.foe ?? (showPlan && selStep ? selStep.foe : foe)}
+              own={frame?.own ?? own}
+              foe={frame?.foe ?? foe}
               geo={frame?.geo}
               foeLabel={foeName}
               approaching={p.status === "pendiente" && !frame && !showPlan}
@@ -1355,12 +1355,10 @@ export function DuelBoard(p: DuelBoardProps) {
               torpedoesIn={frame ? 0 : foe.torpedoesInFlight}
               compact
               simple
-              ourDamage={showPlan && selStep ? expectedHit(selStep.own, foe) : undefined}
-              theirDamage={showPlan && selStep ? expectedHit(foe, selStep.own) : undefined}
+              ourDamage={frame ? undefined : expectedHit(own, foe)}
+              theirDamage={frame ? undefined : expectedHit(foe, own)}
               alarm={showPlan}
-              caption={
-                showPlan && !single && selStep ? `Al final de la ronda ${selected + 1}` : undefined
-              }
+              caption={frame ? "Situación en la repetición" : "Situación actual"}
             />
           </div>
           {!over && (
