@@ -1037,7 +1037,7 @@ export function ModePicker({
   const opts: { m: DuelMode; title: string; text: string }[] = [
     {
       m: 1,
-      title: "De una en una",
+      title: "De una en una (por defecto)",
       text: "Más fluido e intuitivo: decides cada ronda viendo lo que acaba de pasar. Para cuando los dos estáis conectados (15 min por ronda).",
     },
     {
@@ -1058,7 +1058,7 @@ export function ModePicker({
           : online === false
             ? `${peerName} no está conectado: mejor de tres en tres.`
             : "Comprobando si tu rival está conectado…"}{" "}
-        Solo se juega de una en una si los dos lo elegís.
+        Por defecto se juega de una en una; de tres en tres solo si los dos lo elegís.
       </p>
       <div className="grid gap-2 sm:grid-cols-2">
         {opts.map((o) => (

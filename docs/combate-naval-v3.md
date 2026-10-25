@@ -98,7 +98,7 @@ Código: `src/lib/naval3/` (motor, Segundo, narración, servidor), `src/componen
 
 ## Actualización: modos de combate, presencia, voz y salto en dos tiempos
 
-- **Modo de combate:** al empezar, cada jugador elige *de una en una* (más fluido, 15 min por ronda) o *de tres en tres* (más rápido y con más azar, 24 h por bloque). Solo se juega de una en una si los dos lo eligen; si alguien no elige antes del contacto, tres en tres. En una en una, si vence el plazo nadie pierde: el duelo pasa a tres en tres. Cualquiera puede pasar a tres en tres con un botón. Se guarda en `naval_raids.attacker_mode/defender_mode` y `duel_state.mode`.
+- **Modo de combate:** al empezar, cada jugador elige *de una en una* (más fluido, 15 min por ronda) o *de tres en tres* (más rápido y con más azar, 24 h por bloque). Por defecto se juega de una en una: basta con que uno la elija o que nadie elija antes del contacto; de tres en tres solo si los dos lo eligen. En una en una, si vence el plazo nadie pierde: el duelo pasa a tres en tres. Cualquiera puede pasar a tres en tres con un botón. Se guarda en `naval_raids.attacker_mode/defender_mode` y `duel_state.mode`.
 - **Rival en línea:** presencia en tiempo real (canal `duel:<id>` de Supabase Realtime) y avisos instantáneos al fijar órdenes, cambiar de modo o mandar un audio.
 - **Mensajes de voz:** uno por jugador y ronda, máximo 10 s. Bucket privado `voz` + tabla `naval_voice`; se borran al escucharlos y, si nadie los escucha, a las 24 h (limpieza en `duelTick`).
 - **Órdenes vacías al empezar:** el Primer Oficial da su sugerencia y tres posturas; al pulsar una, decide las órdenes por ti.

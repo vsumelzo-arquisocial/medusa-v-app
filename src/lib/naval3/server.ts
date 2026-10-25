@@ -55,11 +55,11 @@ interface RaidRow {
 const COLS =
   "id,attacker_id,defender_id,status,deadline,block_number,attacker_ready,defender_ready,attacker_mode,defender_mode,duel_state,report";
 
-/** De una en una solo si los dos lo eligen; si alguno elige tres, tres. Sin decidir: undefined. */
+/** Por defecto de una en una: de tres en tres solo si los dos lo eligen. Sin decidir: undefined. */
 function agreedMode(raid: RaidRow): DuelMode | undefined {
   if (raid.duel_state?.mode) return raid.duel_state.mode;
-  if (raid.attacker_mode === 3 || raid.defender_mode === 3) return 3;
-  if (raid.attacker_mode === 1 && raid.defender_mode === 1) return 1;
+  if (raid.attacker_mode === 1 || raid.defender_mode === 1) return 1;
+  if (raid.attacker_mode === 3 && raid.defender_mode === 3) return 3;
   return undefined;
 }
 
@@ -250,7 +250,7 @@ async function step(db: Admin, input: RaidRow) {
   if (!raid.duel_state) raid = await initDuel(db, raid);
   if (raid.status === "pendiente") {
     if (!due(raid.deadline)) return;
-    const mode = agreedMode(raid) ?? 3;
+    const mode = agreedMode(raid) ?? 1;
     const state: DuelState = { ...raid.duel_state!, mode };
     const changed = raid.duel_state?.mode !== mode;
     const { data } = await db
