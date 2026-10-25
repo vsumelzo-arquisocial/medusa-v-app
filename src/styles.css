@@ -350,3 +350,26 @@ html[data-fleet] h1,html[data-fleet] h2,html[data-fleet] h3 { letter-spacing:0; 
 @keyframes dash-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .dash .dash-tool { opacity: .25; transition: opacity .3s; }
 .dash:hover .dash-tool, .dash .dash-tool:focus-visible { opacity: 1; }
+
+/* ───── Plano de ingeniería (página Nave) ───── */
+.blueprint {
+  background-color: #071629;
+  background-image:
+    linear-gradient(rgba(125, 225, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(125, 225, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(rgba(125, 225, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(125, 225, 255, 0.035) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+}
+.blueprint-scan { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, transparent, rgba(125, 225, 255, 0.07), transparent); width: 30%; animation: blueprint-scan 7s linear infinite; }
+@keyframes blueprint-scan { from { transform: translateX(-100%); } to { transform: translateX(430%); } }
+.blueprint-blink { animation: blueprint-blink 1.2s ease-in-out infinite; }
+@keyframes blueprint-blink { 50% { opacity: .35; } }
+.blueprint-ping { transform-box: fill-box; transform-origin: center; animation: blueprint-ping 1.6s ease-out infinite; }
+@keyframes blueprint-ping { from { transform: scale(.6); opacity: 1; } to { transform: scale(1.8); opacity: 0; } }
+.blueprint-engine { animation: blueprint-blink 0.9s ease-in-out infinite; }
+.blueprint-shield { animation: blueprint-shield 4s ease-in-out infinite; }
+@keyframes blueprint-shield { 50% { stroke-opacity: .2; } }
+@media (prefers-reduced-motion: reduce) {
+  .blueprint-scan, .blueprint-blink, .blueprint-ping, .blueprint-engine, .blueprint-shield { animation: none; }
+}

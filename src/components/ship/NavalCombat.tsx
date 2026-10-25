@@ -30,7 +30,7 @@ import { FLEET_PROFILES } from "@/lib/naval3/factions";
 import { newSide } from "@/lib/naval3/engine";
 import { bestRange } from "@/lib/naval3/advisor";
 import { RANGE_NAMES, type DuelState, type ModuleLevels } from "@/lib/naval3/types";
-import { bodyName, formatDuration, travelSeconds } from "@/lib/system";
+import { bodyName, formatDuration, travelSecondsWith } from "@/lib/system";
 
 const DEFAULT: NavalOrder[] = ["escudos", "fuego", "abordaje", "fuego", "escudos"];
 interface Raid {
@@ -301,7 +301,14 @@ export function NavalCommand() {
               (r) => r.body_id === to && r.owner_id === defender && r.is_spaceport,
             ).length,
           )
-      : Math.max(300, travelSeconds(from, to));
+      : Math.max(
+          300,
+          travelSecondsWith(
+            from,
+            to,
+            data.mods.find((m) => m.module === "motores_plasma" && !m.damaged)?.level ?? 0,
+          ),
+        );
   const targetUnavailable =
     !!targetStatus?.busy ||
     (!!targetStatus?.warp_until && new Date(targetStatus.warp_until).getTime() > serverNow);

@@ -1473,6 +1473,7 @@ export type Database = {
         Returns: string
       }
       create_ship: { Args: { _name: string }; Returns: undefined }
+      income_breakdown: { Args: never; Returns: Json }
       daily_income_status: {
         Args: never
         Returns: {
@@ -1720,6 +1721,7 @@ export type Database = {
         }[]
       }
       travel_seconds: { Args: { _a: string; _b: string }; Returns: number }
+      travel_seconds_for: { Args: { _uid: string; _a: string; _b: string }; Returns: number }
       use_honour: { Args: { _game: string; _id: string }; Returns: undefined }
       use_support: {
         Args: { _game: string; _kind: string }

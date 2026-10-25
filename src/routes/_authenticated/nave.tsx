@@ -14,6 +14,14 @@ import { ShipWorkQueue } from "@/components/ship/ShipWorkQueue";
 import { DailyIncome } from "@/components/ship/DailyIncome";
 import { dailyIncomeQuery } from "@/lib/daily-income";
 import { shipUpgradeCost } from "@/lib/ship-upgrade-cost";
+import {
+  ShipBlueprint,
+  STATE_COLOR,
+  STATE_LABEL,
+  moduleState,
+} from "@/components/ship/ShipBlueprint";
+import { ShipIncome } from "@/components/ship/ShipIncome";
+import { moduleEffect } from "@/lib/module-effects";
 
 export const Route = createFileRoute("/_authenticated/nave")({
   head: () => ({
@@ -54,7 +62,7 @@ function Nave() {
   const identity = fleetId(prof.profile?.army_race, prof.profile?.army_faction);
   const fleet = fleetFor(prof.profile?.army_race, prof.profile?.army_faction);
   const refresh = () => {
-    for (const key of ["ship", "profile", "daily-income", "naval-raids"])
+    for (const key of ["ship", "profile", "daily-income", "naval-raids", "income-breakdown"])
       void qc.invalidateQueries({ queryKey: [key] });
   };
   async function action(
@@ -125,21 +133,40 @@ function Nave() {
             </Button>
           )}
         </header>
-        <div className="relative mb-5 overflow-hidden bg-ship-space">
-          <img
-            src={fleet.image}
-            alt={fleet.name}
-            width={768}
-            height={512}
-            className="mx-auto aspect-[3/2] max-h-[440px] w-full object-contain"
-          />
-          <div className="absolute bottom-3 left-3 border-l-2 border-primary bg-background/90 px-3 py-2 text-xs">
-            <p className="text-primary">{fleet.specialty}</p>
-            <p className="text-muted-foreground">
-              Casco racial {fleet.hull} · {ship?.region ?? "Órbita alta"}
-            </p>
+        {ship ? (
+          <div className="mb-5">
+            <ShipBlueprint
+              fleet={identity}
+              fleetName={fleet.name}
+              shipName={ship.name}
+              modules={data.modules}
+              maxLevels={Object.fromEntries(data.types.map((x) => [x.id, x.max_level]))}
+              hull={ship.hull_hp ?? data.status.max_hull}
+              maxHull={data.status.max_hull}
+              selected={selected}
+              onSelect={(id) => {
+                setSelected(id);
+                document
+                  .getElementById("module-detail")
+                  ?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+              }}
+            />
           </div>
-        </div>
+        ) : (
+          <div className="relative mb-5 overflow-hidden bg-ship-space">
+            <img
+              src={fleet.image}
+              alt={fleet.name}
+              width={768}
+              height={512}
+              className="mx-auto aspect-[3/2] max-h-[440px] w-full object-contain"
+            />
+            <div className="absolute bottom-3 left-3 border-l-2 border-primary bg-background/90 px-3 py-2 text-xs">
+              <p className="text-primary">{fleet.specialty}</p>
+              <p className="text-muted-foreground">Casco racial {fleet.hull} · Órbita alta</p>
+            </div>
+          </div>
+        )}
         {!ship ? (
           <form
             className="flex flex-wrap gap-3"
@@ -266,17 +293,18 @@ function Nave() {
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                   {data.types.map((type) => {
                     const mod = data.modules.find((x) => x.module === type.id);
+                    const st = moduleState(mod);
                     return (
                       <Button
                         key={type.id}
                         variant="outline"
                         aria-pressed={selected === type.id}
-                        className={`h-auto min-h-24 min-w-0 flex-col items-start whitespace-normal p-3 text-left ${selected === type.id ? "border-primary bg-accent" : ""} ${mod?.damaged ? "border-destructive" : ""}`}
+                        className={`h-auto min-h-20 min-w-0 flex-col items-start whitespace-normal border-l-4 p-3 text-left ${selected === type.id ? "border-primary bg-accent" : ""}`}
+                        style={{ borderLeftColor: STATE_COLOR[st] }}
                         onClick={() => setSelected(type.id)}
                       >
                         <span className="text-xs text-muted-foreground">
-                          {mod?.damaged ? "AVERÍA" : mod?.building_until ? "EN OBRAS" : "SISTEMA"} ·
-                          N{mod?.level ?? 0}/{type.max_level}
+                          {STATE_LABEL[st].toUpperCase()} · N{mod?.level ?? 0}/{type.max_level}
                         </span>
                         <span className="text-sm text-primary">
                           {moduleName(type.id, identity)}
@@ -287,9 +315,28 @@ function Nave() {
                   })}
                 </div>
                 {t && (
-                  <aside className="border-l border-border pl-4">
+                  <aside id="module-detail" className="scroll-mt-4 border-l border-border pl-4">
+                    <p className="text-xs uppercase text-muted-foreground">{t.name}</p>
                     <h3 className="text-lg text-primary">{moduleName(t.id, identity)}</h3>
                     <p className="mt-2 text-sm text-muted-foreground">{t.description}</p>
+                    <dl className="mt-3 space-y-1 text-xs">
+                      <div>
+                        <dt className="inline text-muted-foreground">Ahora: </dt>
+                        <dd className="inline">
+                          {(m?.level ?? 0) > 0
+                            ? moduleEffect(t.id, effective(t.id))
+                            : "sin construir"}
+                        </dd>
+                      </div>
+                      {projected < t.max_level && (
+                        <div>
+                          <dt className="inline text-muted-foreground">Con N{projected + 1}: </dt>
+                          <dd className="inline text-primary">
+                            {moduleEffect(t.id, projected + 1)}
+                          </dd>
+                        </div>
+                      )}
+                    </dl>
                     <p className="mt-3 text-sm">
                       Nivel {m?.level ?? 0}/{t.max_level}
                     </p>
@@ -379,6 +426,14 @@ function Nave() {
                 )}
               </div>
             </section>
+            <ShipIncome
+              onAntenna={() => {
+                setSelected("astropatico");
+                document
+                  .getElementById("module-detail")
+                  ?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+              }}
+            />
             <ShipWorkQueue
               jobs={data.queue}
               identity={identity}

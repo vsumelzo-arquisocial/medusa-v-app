@@ -23,6 +23,7 @@ import {
   inWarp,
   warpPlan,
   type Rng,
+  boardingCharges,
 } from "./engine";
 import {
   ARC_NAMES,
@@ -182,7 +183,7 @@ export function suggestPlan(input: DuelState, side: Side, stance: Stance, rng?: 
   const ramStrong = stats(own).ram >= 6;
   let loaded = own.torpedoesLoaded;
   let foeInFlight = foe.torpedoesInFlight > 0;
-  let boardsLeft = own.boardingLeft ?? BOARDING_CHARGES[own.fleet];
+  let boardsLeft = own.boardingLeft ?? boardingCharges(own.fleet, own.modules);
   const phases: PhasePlan[] = [];
   for (let i = 0; i < blockRounds(state); i++) {
     // ¿Embestida posible ahora?
@@ -326,7 +327,7 @@ export function briefing(input: DuelState, side: Side): Advice[] {
       tone: "danger",
       text: `Fuera de combate: ${off.map((x) => SECTION_INFO[x].name).join(", ")}. Reparar los reactiva uno por ronda.`,
     });
-  const charges = own.boardingLeft ?? BOARDING_CHARGES[own.fleet];
+  const charges = own.boardingLeft ?? boardingCharges(own.fleet, own.modules);
   if (charges > 0)
     out.push({
       tone: "info",

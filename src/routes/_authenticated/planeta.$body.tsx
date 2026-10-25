@@ -173,7 +173,7 @@ function Planeta() {
           })} />}
           <div className="mt-2"><CampaignLegend regions={bodyRegions} players={data.players} /></div>
           <div className="mt-3 border-t border-border pt-2">
-            <p className="mb-1 text-[10px] uppercase tracking-widest text-muted-foreground">Tus bonificaciones · solo cuentan las regiones de {myShip?.body_id ? bodyName(myShip.body_id) : "tu planeta (nave en el warp)"}</p>
+            <p className="mb-1 text-[10px] uppercase tracking-widest text-muted-foreground">Tus bonificaciones · todos tus planetas, menos cuanto más lejos de la nave</p>
             <RegionBonuses owned={bonusRegions.map((r) => r.type)} />
           </div>
         </Panel>

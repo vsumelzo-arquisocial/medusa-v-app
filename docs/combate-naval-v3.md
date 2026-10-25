@@ -126,3 +126,25 @@ Código: `src/lib/naval3/` (motor, Segundo, narración, servidor), `src/componen
 - **Radar:** asistente de peligros con alarma: torpedos en camino, embestida o abordaje posibles, proa enemiga con torpedos cargados, popa expuesta y secciones fuera de combate.
 - **Esquema de secciones** junto a la barra de casco de cada nave.
 - Migración: `20261025030000_naval_destroyed_ship.sql`.
+
+## Módulos de la nave (página Nave) e ingresos del dominio
+
+| Módulo | Efecto por nivel |
+|---|---|
+| Puente de mando (máx. 5) | 2 + 2 ranuras, +3 casco, +50 cr/día; limita el nivel del resto |
+| Motores | +1 velocidad en combate cada 2 niveles; −10 % de viaje y aproximación a otro planeta |
+| Tubos de torpedos (antes Arma de proa) | +1 torpedo por salva; −5 % de esquiva enemiga |
+| Baterías navales | +1 andanada a corta/media; +½ (redondeo arriba) a los cañones de proa media/lejos |
+| Blindaje | −6 % de daño recibido; +2 embestida |
+| Generador de escudos | +1 escudo |
+| Cubierta de abordaje | +10 % éxito y +1 daño a contacto; nivel 3: +1 carga de abordaje |
+| Refuerzo de casco | +8 casco |
+| Bodega | 100 + 100 OC |
+| Antena astropática | −10 % reclutamiento; −⅓ de la pérdida por distancia |
+| Cámara de créditos / Astillero | sin cambios |
+
+Valor a nivel 3 contra la misma flota sin módulos (`bun scripts/naval3-modules.ts 80`): baterías 76 %, torpedos 77 %, blindaje 73 %, escudos 64 %, abordaje 63 %, motores 57 % (además acortan viajes).
+
+**Ingresos y bonificaciones de región:** cuentan las regiones de todos los planetas conquistados, multiplicadas por la distancia a la nave: mismo planeta o sus lunas 100 %, −15 % por órbita (máx. −75 %), y la antena reduce esa pérdida ⅓ por nivel. Las minas dan +40 cr/día fijos cada una (sin tope). El resto de bonificaciones usa las regiones equivalentes: 0,10 con 1, 0,15 con 2, 0,20 con 3+ (lineal entre medias). SQL: `region_factor`, `region_reach`, `region_rate`, `daily_income_amount`, `income_breakdown`, `travel_seconds_for` (migración `20261025040000_nave_modulos_ingresos.sql`).
+
+**Plano de ingeniería:** `ShipBlueprint` dibuja el alzado lateral y la planta de la nave racial a partir de `src/assets/blueprint/` (generado con `python3 scripts/blueprint.py`), con cada módulo en su sitio, nivel, estado (operativo, en obras, avería, vacío) e integridad del casco (color del trazo y rayado rojo).

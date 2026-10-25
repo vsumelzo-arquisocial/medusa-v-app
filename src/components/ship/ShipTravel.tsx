@@ -11,7 +11,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { campaignQuery } from "@/lib/campaign-queries";
-import { BODIES, bodyById, bodyName, formatDuration, travelSeconds } from "@/lib/system";
+import { BODIES, bodyById, bodyName, formatDuration, travelSecondsWith } from "@/lib/system";
+import { shipQuery } from "@/lib/ship-queries";
 import { BODY_TEXTURES } from "@/lib/system-art";
 import { playReactorIgnition, playWarpJump, stopJumpAudio } from "@/lib/jump-audio";
 import { WarpJumpOverlay } from "@/components/ship/WarpJumpOverlay";
@@ -40,6 +41,9 @@ type Phase = "idle" | "igniting" | "wizard" | "jumping" | "aborting";
 export function ShipTravel({ uid, shipImage }: { uid: string; shipImage: string }) {
   const { data } = useQuery(campaignQuery);
   const qc = useQueryClient();
+  const { data: own } = useQuery(shipQuery);
+  const motors = own?.modules.find((m) => m.module === "motores_plasma" && !m.damaged)?.level ?? 0;
+  const travelSeconds = (from: string, to: string) => travelSecondsWith(from, to, motors);
   const [phase, setPhase] = useState<Phase>("idle");
   const [dest, setDest] = useState("");
   const [now, setNow] = useState(() => Date.now());

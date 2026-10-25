@@ -113,7 +113,7 @@ function weaponTable(s: SideState, arc: Arc): RangeTable {
     let x = v;
     if (r === 0) x += m.cubierta_abordaje;
     if (arc !== "proa" && arc !== "popa" && (r === 1 || r === 2)) x += m.baterias;
-    if (arc === "proa" && (r === 2 || r === 3)) x += m.lanza_proa;
+    if (arc === "proa" && (r === 2 || r === 3)) x += Math.ceil(m.baterias / 2);
     return x;
   }) as RangeTable;
 }
@@ -129,6 +129,17 @@ export function boardingChance(own: SideState, foe: SideState, foeAction: Action
   if (foeAction === "escudos" && !isOff(foe, "escudos")) c -= 20;
   if (foeAction === "evasion") c -= 15;
   return clamp(c, 10, 90);
+}
+
+/** Cargas de abordaje: las de la flota y +1 con la cubierta de abordaje a nivel 3. */
+export function boardingCharges(fleet: FleetId, modules: Partial<ModuleLevels>): number {
+  const base = BOARDING_CHARGES[fleet];
+  return base + ((modules.cubierta_abordaje ?? 0) >= 3 ? 1 : 0);
+}
+
+/** Reducción del daño recibido por el blindaje: 6 % por nivel. */
+export function armourFactor(s: Pick<SideState, "modules">): number {
+  return 1 - 0.06 * (s.modules.blindaje_proa ?? 0);
 }
 
 export const BOARDING_DAMAGE: [number, number] = [2, 4];
@@ -153,7 +164,7 @@ export function stats(s: SideState) {
     agility: p.agility,
     shields: isOff(s, "escudos") ? 0 : p.shields + m.camara_escudos,
     dodge: p.dodge,
-    torpedoes: p.torpedoes,
+    torpedoes: p.torpedoes + m.lanza_proa,
     ram: p.ram + 2 * m.blindaje_proa,
     ramArmour: m.blindaje_proa,
     repair: 3 + m.forja,
@@ -186,7 +197,8 @@ export function defenceFactor(target: SideState, relFromTarget: number): number 
   const w = arcWeights(relFromTarget);
   return (
     (w.proa * stats(target).prowArmour + (w.babor + w.estribor) + w.popa * p.sternWeakness) *
-    (p.fireReduction ?? 1)
+    (p.fireReduction ?? 1) *
+    armourFactor(target)
   );
 }
 
@@ -229,12 +241,14 @@ export function torpedoDodge(
   targetSpeed: Speed,
   shooter: FleetId,
   close: boolean,
+  guidance = 0,
 ): number {
   let d = FLEET_PROFILES[target.fleet].dodge;
   if (targetAction === "evasion") d += EVASION_BONUS;
   if (targetSpeed === 2) d += 10;
   if (shooter === "tau") d /= 2;
   if (close) d /= 2;
+  d -= 5 * guidance;
   return clamp(Math.round(d), 0, 85);
 }
 
@@ -335,7 +349,7 @@ export function newSide(
   disabled: Section[] = [],
 ): SideState {
   return {
-    boardingLeft: BOARDING_CHARGES[fleet],
+    boardingLeft: boardingCharges(fleet, modules),
     disabled: [...disabled],
     fleet,
     modules: { ...EMPTY_MODULES, ...modules },
@@ -367,7 +381,7 @@ export function newDuel(attacker: SideState, defender: SideState, rng?: Rng): Du
 export function normalizeState(input: DuelState): DuelState {
   const s = structuredClone(input);
   for (const side of SIDES) {
-    s[side].boardingLeft ??= BOARDING_CHARGES[s[side].fleet];
+    s[side].boardingLeft ??= boardingCharges(s[side].fleet, s[side].modules);
     s[side].disabled ??= [];
   }
   if (!s.attacker.pos || !s.defender.pos) {
@@ -487,6 +501,7 @@ export function resolveBlock(
         logs[target].speed,
         s[side].fleet,
         false,
+        s[side].modules.lanza_proa,
       );
       const r = rollTorpedoes(n, dodge, s[side].fleet, rng);
       logs[side].torpedoesHit += r.hit;
@@ -648,7 +663,14 @@ export function resolveBlock(
         own.torpedoesLoaded = false;
         if (s.range <= 1) {
           log.instantTorpedoes = true;
-          const dodge = torpedoDodge(foe, logs[target].action, logs[target].speed, own.fleet, true);
+          const dodge = torpedoDodge(
+            foe,
+            logs[target].action,
+            logs[target].speed,
+            own.fleet,
+            true,
+            own.modules.lanza_proa,
+          );
           const r = rollTorpedoes(n, dodge, own.fleet, rng);
           log.torpedoesHit += r.hit;
           log.torpedoesDodged += r.dodged;
