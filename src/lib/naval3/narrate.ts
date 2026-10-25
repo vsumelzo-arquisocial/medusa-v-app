@@ -1,5 +1,5 @@
 /** Narración en castellano de cada ronda, para la repetición y el registro. */
-import { TORPEDO_DAMAGE } from "./factions";
+import { SECTION_INFO, TORPEDO_DAMAGE } from "./factions";
 import { RANGE_NAMES, type DuelEnd, type PhaseEvent, type Side, type SidePhaseLog } from "./types";
 
 export interface Line {
@@ -111,6 +111,18 @@ export function narratePhase(e: PhaseEvent, me: Side, names: Record<Side, string
   for (const s of sides) lines.push(...actionLine(e[s], s, names, tone));
   for (const s of sides) {
     const l = e[s];
+    if (l.repairedModule)
+      lines.push({
+        side: s,
+        tone: tone(s, true),
+        text: `${names[s]} vuelve a poner en marcha ${SECTION_INFO[l.repairedModule].name.toLowerCase()}.`,
+      });
+    if (l.critical)
+      lines.push({
+        side: s,
+        tone: tone(s, true),
+        text: `¡Impacto crítico de ${names[s]}! ${SECTION_INFO[l.critical].name} de ${names[foe(s)]} fuera de combate (${SECTION_INFO[l.critical].effect}).`,
+      });
     if (l.repaired)
       lines.push({
         side: s,
@@ -176,8 +188,25 @@ function actionLine(
       ];
     case "evasion":
       return [{ side: s, tone: "neutral", text: `${names[s]} ejecuta maniobras evasivas.` }];
+    case "abordar": {
+      const b = l.boardingRoll;
+      if (!b) return [];
+      return [
+        b.success
+          ? {
+              side: s,
+              tone: tone(s, true),
+              text: `¡Las cápsulas de abordaje de ${names[s]} perforan el casco! −${b.damage}${b.critical ? ` y dejan ${SECTION_INFO[b.critical].name.toLowerCase()} fuera de combate (${SECTION_INFO[b.critical].effect})` : ""}.`,
+            }
+          : {
+              side: s,
+              tone: tone(s, false),
+              text: `El abordaje de ${names[s]} fracasa (${b.chance} %): repelidos en los pasillos.`,
+            },
+      ];
+    }
     case "reparar":
-      return l.repaired
+      return l.repaired || l.repairedModule
         ? []
         : [
             {
@@ -206,8 +235,8 @@ export function endLine(end: DuelEnd, me: Side, names: Record<Side, string>): Li
       tone: d === me ? "bad" : "good",
       text:
         d === me
-          ? "Nuestra nave se parte en dos y desaparece en una bola de fuego. Todo está perdido: el perfil se reinicia."
-          : `La nave de ${names[d]} estalla. Su comandante tendrá que empezar de cero.`,
+          ? "Nuestra nave se parte en dos y desaparece en una bola de fuego. Habrá que reconstruirla en el astillero (24 h) y perderemos sus mejoras; las conquistas siguen en pie."
+          : `La nave de ${names[d]} estalla. Tendrá que reconstruirla desde el astillero.`,
     };
   }
   if (end.reason === "salto") {

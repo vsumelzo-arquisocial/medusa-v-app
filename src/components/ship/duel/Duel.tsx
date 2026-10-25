@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } fro
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import {
+  Anchor,
   Flame,
   GraduationCap,
   Pause,
@@ -27,7 +28,16 @@ import {
 } from "@/components/ui/dialog";
 import { FLEETS, type FleetId } from "@/lib/ship-identity";
 import { ACTION_INFO, FLEET_PROFILES, SECOND } from "@/lib/naval3/factions";
-import { blockRounds, inWarp, mainArc, normalizeState, other, warpPlan } from "@/lib/naval3/engine";
+import {
+  blockRounds,
+  expectedHit,
+  inWarp,
+  isOff,
+  mainArc,
+  normalizeState,
+  other,
+  warpPlan,
+} from "@/lib/naval3/engine";
 import {
   STANCES,
   blockDebrief,
@@ -68,6 +78,7 @@ import {
 import { Radar, geoOf, type Geo } from "./Radar";
 import { TacticalMap, poseAt, type Motion, type PortalStage, type Projection } from "./TacticalMap";
 import { ShipSchematic } from "./ShipSchematic";
+import { ModuleStatus } from "./ModuleStatus";
 import { VoiceComms } from "./VoiceComms";
 import { useDuelLink } from "./live";
 import type { FxEngine } from "./fx";
@@ -101,8 +112,19 @@ const ACTION_ICON: Record<Action, LucideIcon> = {
   embestir: Zap,
   reparar: Wrench,
   saltar: Sparkles,
+  abordar: Anchor,
 };
-const ACTIONS = Object.keys(ACTION_ICON) as Action[];
+/** «Recargar» ya no es una orden: Torpedos recarga solo cuando los tubos están vacíos. */
+const ACTIONS: Action[] = [
+  "fuego",
+  "torpedos",
+  "abordar",
+  "escudos",
+  "evasion",
+  "embestir",
+  "reparar",
+  "saltar",
+];
 const TONE: Record<Advice["tone"], string> = {
   info: "border-border text-foreground",
   good: "border-emerald-500/60 text-emerald-200",
@@ -408,11 +430,25 @@ function Planner({
                       {ACTIONS.map((a) => {
                         const Icon = ACTION_ICON[a];
                         const on = r.a === a;
+                        const charges = own.boardingLeft ?? 0;
+                        const blocked =
+                          (a === "abordar" && charges <= 0) ||
+                          (a === "torpedos" && isOff(own, "torpedos")) ||
+                          (a === "embestir" && isOff(own, "motores"));
                         return (
                           <button
                             key={a}
                             type="button"
-                            title={ACTION_INFO[a]!.text}
+                            disabled={blocked}
+                            title={
+                              blocked
+                                ? a === "abordar"
+                                  ? "Sin cápsulas de abordaje"
+                                  : `${a === "torpedos" ? "Torpedos" : "Motores"} fuera de combate`
+                                : a === "torpedos" && !own.torpedoesLoaded && i === 0
+                                  ? "Tubos vacíos: recarga y dispara a media potencia"
+                                  : ACTION_INFO[a]!.text
+                            }
                             aria-label={ACTION_INFO[a]!.short}
                             aria-pressed={on}
                             onClick={(e) => {
@@ -426,10 +462,19 @@ function Planner({
                                     : { a },
                               );
                             }}
-                            className={`flex min-w-0 flex-col items-center gap-0.5 rounded border px-0.5 py-1 text-[9px] ${on ? (a === "saltar" ? "border-fuchsia-400 bg-fuchsia-500/20 text-fuchsia-200" : "border-primary bg-accent text-primary") : "border-border text-muted-foreground hover:text-foreground"}`}
+                            className={`relative flex min-w-0 flex-col items-center gap-0.5 rounded border px-0.5 py-1 text-[9px] disabled:opacity-30 ${on ? (a === "saltar" ? "border-fuchsia-400 bg-fuchsia-500/20 text-fuchsia-200" : "border-primary bg-accent text-primary") : "border-border text-muted-foreground hover:text-foreground"}`}
                           >
                             <Icon className={single ? "size-5" : "size-3.5"} />
-                            <span className="truncate">{ACTION_INFO[a]!.short}</span>
+                            <span className="truncate">
+                              {a === "torpedos" && !own.torpedoesLoaded && i === 0
+                                ? "Recargar"
+                                : ACTION_INFO[a]!.short}
+                            </span>
+                            {a === "abordar" && charges > 0 && (
+                              <span className="absolute right-0.5 top-0.5 rounded bg-amber-500/80 px-0.5 text-[8px] font-bold leading-none text-black">
+                                {charges}
+                              </span>
+                            )}
                           </button>
                         );
                       })}
@@ -469,7 +514,7 @@ function Planner({
         </select>
         {emergencyJump === 0 && (
           <span className="w-full text-xs text-amber-300">
-            Sin red: si la nave cae a 0, se pierde todo el perfil.
+            Sin red: si la nave cae a 0, se pierde la nave y sus mejoras (24 h de astillero).
           </span>
         )}
       </div>
@@ -1239,20 +1284,26 @@ export function DuelBoard(p: DuelBoardProps) {
         </div>
       </header>
       <div className="grid gap-3 sm:grid-cols-2">
-        <HullBar
-          label="Tu nave"
-          hull={shownPhase ? shownPhase[side].hullAfter : own.hull}
-          max={own.maxHull}
-          mine
-          projected={showPlan && planReady ? last?.ownHull : undefined}
-        />
-        <HullBar
-          label={foeName}
-          hull={shownPhase ? shownPhase[foeSide].hullAfter : foe.hull}
-          max={foe.maxHull}
-          mine={false}
-          projected={showPlan && planReady ? last?.foeHull : undefined}
-        />
+        <div className="space-y-1.5">
+          <HullBar
+            label="Tu nave"
+            hull={shownPhase ? shownPhase[side].hullAfter : own.hull}
+            max={own.maxHull}
+            mine
+            projected={showPlan && planReady ? last?.ownHull : undefined}
+          />
+          <ModuleStatus s={own} label="Tu nave" />
+        </div>
+        <div className="space-y-1.5">
+          <HullBar
+            label={foeName}
+            hull={shownPhase ? shownPhase[foeSide].hullAfter : foe.hull}
+            max={foe.maxHull}
+            mine={false}
+            projected={showPlan && planReady ? last?.foeHull : undefined}
+          />
+          <ModuleStatus s={foe} label={foeName} />
+        </div>
       </div>
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
         <div className="space-y-2">
@@ -1276,7 +1327,7 @@ export function DuelBoard(p: DuelBoardProps) {
                 shownPhase
                   ? `Repetición · ronda ${replay.idx + 1} de ${p.replayEvents.length}`
                   : showPlan
-                    ? "Azul: tu ruta · rojo: lo más probable del enemigo"
+                    ? "Azul: tu ruta · zona roja: hasta dónde puede llegar el enemigo"
                     : undefined
               }
             />
@@ -1304,8 +1355,9 @@ export function DuelBoard(p: DuelBoardProps) {
               torpedoesIn={frame ? 0 : foe.torpedoesInFlight}
               compact
               simple
-              ourDamage={showPlan && selStep ? selStep.ourHit : undefined}
-              theirDamage={showPlan && selStep ? selStep.theirHit : undefined}
+              ourDamage={showPlan && selStep ? expectedHit(selStep.own, foe) : undefined}
+              theirDamage={showPlan && selStep ? expectedHit(foe, selStep.own) : undefined}
+              alarm={showPlan}
               caption={
                 showPlan && !single && selStep ? `Al final de la ronda ${selected + 1}` : undefined
               }
@@ -1637,9 +1689,10 @@ export function DuelRules({ fleet }: { fleet: FleetId }) {
           distancia. Atacar su popa duele más; darle la tuya, también.
         </li>
         <li>
-          Se pierde si <b>la nave estalla</b> (casco a 0: el perfil se reinicia por completo) o si{" "}
-          <b>saltas al disforme</b> (pierdes el duelo, salvas la nave). El salto tarda: declaras,
-          aguantas una ronda quieto y sin defensas, y luego saltas.
+          Se pierde si <b>la nave estalla</b> (casco a 0: pierdes la nave y sus mejoras y pasa 24 h
+          en el astillero; conquistas, créditos y unidades siguen) o si <b>saltas al disforme</b>{" "}
+          (pierdes el duelo, salvas la nave). El salto tarda: declaras, aguantas una ronda quieto y
+          sin defensas, y luego saltas.
         </li>
         <li>
           ¿Primera vez? Prueba un <b>simulacro contra la IA</b>: sin riesgo y sin esperas.

@@ -44,6 +44,33 @@ export interface FleetProfile {
 }
 
 export const TORPEDO_DAMAGE = 2;
+
+/** Cargas de abordaje por duelo. */
+export const BOARDING_CHARGES: Record<FleetId, number> = {
+  orks: 3,
+  tyranids: 3,
+  genestealer: 3,
+  chaos: 2,
+  daemons: 2,
+  drukhari: 2,
+  imperium: 2,
+  votann: 1,
+  necrons: 1,
+  aeldari: 1,
+  tau: 0,
+};
+
+/** Nombre y efecto de cada sección cuando queda fuera de combate. */
+export const SECTION_INFO: Record<
+  "puente" | "baterias" | "torpedos" | "motores" | "escudos",
+  { name: string; effect: string; module: string }
+> = {
+  puente: { name: "Puente", effect: "solo giros de 45°", module: "puente" },
+  baterias: { name: "Baterías", effect: "disparo a la mitad", module: "baterias" },
+  torpedos: { name: "Torpedos", effect: "sin torpedos", module: "lanza_proa" },
+  motores: { name: "Motores", effect: "sin avante toda ni embestida", module: "motores_plasma" },
+  escudos: { name: "Escudos", effect: "sin escudos", module: "camara_escudos" },
+};
 export const PHASES_PER_BLOCK = 3;
 export const MAX_BLOCKS = 6;
 export const EVASION_BONUS = 30;
@@ -345,7 +372,12 @@ export const ACTION_INFO: Record<string, { name: string; short: string; text: st
   torpedos: {
     name: "Torpedos",
     short: "Torpedos",
-    text: "Salva por la proa: el enemigo debe estar delante. Impacta en la ronda siguiente (de cerca, al instante) y puede esquivarse.",
+    text: "Salva por la proa: el enemigo debe estar delante. Impacta en la ronda siguiente (de cerca, al instante) y puede esquivarse. Si los tubos están vacíos, recarga y dispara a media potencia.",
+  },
+  abordar: {
+    name: "Abordaje",
+    short: "Abordar",
+    text: "Solo en Contacto. Lanza cápsulas de abordaje: si sale bien, daña el casco y puede dejar fuera de combate una sección enemiga. Cargas limitadas por duelo según la raza.",
   },
   recargar: {
     name: "Recargar",
@@ -370,7 +402,7 @@ export const ACTION_INFO: Record<string, { name: string; short: string; text: st
   reparar: {
     name: "Reparar",
     short: "Reparar",
-    text: "Control de daños: recupera casco. No dispara.",
+    text: "Control de daños: reactiva una sección fuera de combate o, si no hay, recupera casco. No dispara.",
   },
   saltar: {
     name: "Salto disforme",

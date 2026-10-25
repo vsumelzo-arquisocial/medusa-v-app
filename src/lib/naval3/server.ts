@@ -3,14 +3,24 @@
  * - En cuanto existe el duelo se prepara su estado: se pueden fijar las órdenes del bloque 1 durante la aproximación.
  * - Al llegar el atacante empieza el combate; cada bloque se resuelve cuando los dos confirman (máx. 24 h).
  * - Plazo vencido: si nadie confirmó pierde el atacante; si solo uno, pierde el otro.
- * - Nave destruida: su dueño reinicia el perfil.
+ * - Nave destruida: módulos a 0 y 24 h de astillero (el perfil y las conquistas siguen).
+ * - Las secciones fuera de combate al terminar quedan como módulos averiados.
  * Concurrencia optimista sobre block_number para no resolver nunca dos veces.
  */
 import type { FleetId } from "@/lib/ship-identity";
 import { blockRounds, inWarp, newDuel, newSide, resolveBlock, warpPlan, type Rng } from "./engine";
 import { blockPlanSchema } from "./schema";
 import { botPlan } from "./advisor";
-import type { BlockPlan, DuelMode, DuelState, ModuleLevels, PhaseEvent, Side } from "./types";
+import type {
+  BlockPlan,
+  DuelMode,
+  DuelState,
+  ModuleLevels,
+  PhaseEvent,
+  Section,
+  Side,
+} from "./types";
+import { SECTION_INFO } from "./factions";
 
 type Admin = (typeof import("@/integrations/supabase/client.server"))["supabaseAdmin"];
 
@@ -24,6 +34,7 @@ interface SideData {
   hull: number;
   max_hull: number;
   modules: ModuleLevels;
+  damaged?: string[];
 }
 
 interface RaidRow {
@@ -70,14 +81,23 @@ async function sideData(db: Admin, uid: string): Promise<SideData> {
   return data as unknown as SideData;
 }
 
+const SECTION_OF_MODULE = Object.fromEntries(
+  (Object.entries(SECTION_INFO) as [Section, { module: string }][]).map(([sec, i]) => [
+    i.module,
+    sec,
+  ]),
+) as Record<string, Section>;
+const sectionsOf = (mods?: string[]) =>
+  (mods ?? []).map((m) => SECTION_OF_MODULE[m]).filter((x): x is Section => !!x);
+
 async function initDuel(db: Admin, raid: RaidRow): Promise<RaidRow> {
   const [a, d] = await Promise.all([
     sideData(db, raid.attacker_id),
     sideData(db, raid.defender_id),
   ]);
   const state = newDuel(
-    newSide(a.fleet, a.modules, a.hull, a.max_hull),
-    newSide(d.fleet, d.modules, d.hull, d.max_hull),
+    newSide(a.fleet, a.modules, a.hull, a.max_hull, sectionsOf(a.damaged)),
+    newSide(d.fleet, d.modules, d.hull, d.max_hull, sectionsOf(d.damaged)),
     secureRng,
   );
   const { data } = await db
@@ -196,6 +216,21 @@ async function resolve(db: Admin, raid: RaidRow) {
   await db.from("ships").update({ hull_hp: state.defender.hull }).eq("user_id", raid.defender_id);
 
   const end = state.finished;
+  if (end) {
+    // Secciones que acaban fuera de combate → módulos averiados (las de la nave destruida se pierden con ella)
+    for (const side of ["attacker", "defender"] as const) {
+      if (end.destroyed.includes(side)) continue;
+      const mods = (state[side].disabled ?? []).map((x) => SECTION_INFO[x].module);
+      if (mods.length)
+        await db.rpc(
+          "naval_mark_damaged" as never,
+          {
+            _uid: side === "attacker" ? raid.attacker_id : raid.defender_id,
+            _modules: mods,
+          } as never,
+        );
+    }
+  }
   if (!end) {
     // Las dos naves en modo salto: se resuelve sin esperar a nadie.
     const row = claimed[0] as unknown as RaidRow;
@@ -206,7 +241,7 @@ async function resolve(db: Admin, raid: RaidRow) {
   await finish(db, raid, end.winner, reason);
   for (const side of end.destroyed) {
     const uid = side === "attacker" ? raid.attacker_id : raid.defender_id;
-    await db.rpc("reset_profile_uid" as never, { _uid: uid } as never);
+    await db.rpc("ship_destroyed" as never, { _uid: uid } as never);
   }
 }
 

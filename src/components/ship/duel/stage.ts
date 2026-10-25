@@ -6,7 +6,7 @@
  */
 import { play } from "@/lib/sfx/engine";
 import type { FleetId } from "@/lib/ship-identity";
-import { FLEET_PROFILES, SECOND, TORPEDO_DAMAGE } from "@/lib/naval3/factions";
+import { FLEET_PROFILES, SECOND, SECTION_INFO, TORPEDO_DAMAGE } from "@/lib/naval3/factions";
 import {
   RANGE_NAMES,
   type DuelEnd,
@@ -323,6 +323,76 @@ export function phaseCues(opts: {
   };
   shoot(me);
   shoot(foe);
+  // Abordajes: cápsulas que cruzan hasta el casco enemigo
+  for (const s of [me, foe] as const) {
+    const b = e[s].boardingRoll;
+    if (!b) continue;
+    const target = other(s);
+    at(
+      3.0,
+      () => {
+        const from = posOf(s, true);
+        const to = posOf(target, true);
+        fx()?.launch(from, to, 4, 0);
+        play("torpedo_lanzamiento", { gain: 0.7 });
+      },
+      { side: s, tone: "neutral", text: `${names[s]} lanza cápsulas de abordaje…` },
+    );
+    at(
+      4.0,
+      () => {
+        const to = posOf(target, true);
+        if (b.success) {
+          fx()?.explosion(to, 0.7, 0);
+          fx()?.text(to, `−${b.damage}`, target === me ? RED : GREEN, 0, 13);
+          if (b.critical)
+            fx()?.text(
+              { x: to.x, y: to.y + 22 },
+              `${SECTION_INFO[b.critical].name.toUpperCase()} FUERA`,
+              RED,
+              0.2,
+              9,
+            );
+          play("impacto_casco", { gain: 0.8 });
+        } else fx()?.text({ x: to.x, y: to.y + 22 }, "ABORDAJE REPELIDO", GREY, 0, 9);
+      },
+      b.success
+        ? {
+            side: s,
+            tone: tone(s, true),
+            text: `¡Abordaje con éxito! −${b.damage}${b.critical ? ` · ${SECTION_INFO[b.critical].name} de ${names[target]} fuera de combate` : ""}.`,
+          }
+        : {
+            side: s,
+            tone: tone(s, false),
+            text: `El abordaje de ${names[s]} es repelido (${b.chance} %).`,
+          },
+    );
+  }
+  // Críticos por disparo
+  for (const s of [me, foe] as const) {
+    const c = e[s].critical;
+    if (!c) continue;
+    at(
+      3.9,
+      () => {
+        const to = posOf(other(s), true);
+        fx()?.text(
+          { x: to.x, y: to.y + 22 },
+          `CRÍTICO · ${SECTION_INFO[c].name.toUpperCase()}`,
+          RED,
+          0,
+          9,
+        );
+        play("alarma", { gain: other(s) === me ? 0.7 : 0.3 });
+      },
+      {
+        side: s,
+        tone: tone(s, true),
+        text: `¡Impacto crítico! ${SECTION_INFO[c].name} de ${names[other(s)]} fuera de combate (${SECTION_INFO[c].effect}).`,
+      },
+    );
+  }
   for (const s of [me, foe] as const)
     if (e[s].action === "evasion")
       at(3.0, () => fx()?.jink(posOf(s, true), 0), {
@@ -334,6 +404,16 @@ export function phaseCues(opts: {
   // 6. Reparación y regeneración
   for (const s of [me, foe] as const) {
     const l = e[s];
+    if (l.repairedModule)
+      at(
+        4.35,
+        () => fx()?.text(posOf(s, true), `${SECTION_INFO[l.repairedModule!].name} ✓`, GREEN, 0, 10),
+        {
+          side: s,
+          tone: tone(s, true),
+          text: `${names[s]} vuelve a poner en marcha ${SECTION_INFO[l.repairedModule].name.toLowerCase()}.`,
+        },
+      );
     if (l.repaired)
       at(4.4, () => fx()?.text(posOf(s, true), `+${l.repaired}`, GREEN, 0, 12), {
         side: s,

@@ -2,6 +2,70 @@ import { useEffect, useRef } from "react";
 import { bandOf, dist, rawFire, relBearing } from "@/lib/naval3/engine";
 import { RANGE_NAMES, type Range, type SideState } from "@/lib/naval3/types";
 import { FxEngine, type P } from "./fx";
+import { play } from "@/lib/sfx/engine";
+import { reachable } from "@/lib/naval3/advisor";
+import { isOff, stats } from "@/lib/naval3/engine";
+import { SECTION_INFO } from "@/lib/naval3/factions";
+
+export interface Danger {
+  id: string;
+  level: "alarma" | "aviso";
+  text: string;
+}
+
+/** Peligros para la nave en la ronda que viene: lo que el enemigo PUEDE hacer, no lo que hará. */
+export function assessDangers(own: SideState, foe: SideState, g: Geo): Danger[] {
+  const out: Danger[] = [];
+  if (foe.torpedoesInFlight > 0)
+    out.push({
+      id: "torpedos",
+      level: "alarma",
+      text: `¡${foe.torpedoesInFlight} torpedos en camino! Impactan al empezar la ronda: Esquivar o avante toda.`,
+    });
+  const reach = reachable(foe, 1)[0] ?? [];
+  const minD = reach.reduce(
+    (m, p) => Math.min(m, Math.hypot(p.x - own.pos.x, p.y - own.pos.y)),
+    g.distance,
+  );
+  const facingUs = Math.abs(g.relFoe) <= 60;
+  if (minD <= 2 && facingUs && stats(foe).ram > 0 && !isOff(foe, "motores"))
+    out.push({
+      id: "embestida",
+      level: "alarma",
+      text: "Peligro de embestida: puede alcanzarnos de frente.",
+    });
+  if (minD <= 2 && (foe.boardingLeft ?? 0) > 0)
+    out.push({
+      id: "abordaje",
+      level: g.distance < 2 ? "alarma" : "aviso",
+      text: `Puede abordarnos si llega a Contacto (${foe.boardingLeft} cápsula${foe.boardingLeft === 1 ? "" : "s"}).`,
+    });
+  if (
+    foe.torpedoesLoaded &&
+    !isOff(foe, "torpedos") &&
+    Math.abs(g.relFoe) <= 45 &&
+    g.distance <= 9 &&
+    stats(foe).torpedoes > 0
+  )
+    out.push({
+      id: "salva",
+      level: "aviso",
+      text: "Su proa nos apunta y tiene torpedos cargados.",
+    });
+  if (Math.abs(g.rel) >= 135 && g.distance <= 9)
+    out.push({
+      id: "popa",
+      level: "aviso",
+      text: "Tenemos al enemigo a popa: nuestros motores quedan expuestos.",
+    });
+  for (const sec of own.disabled ?? [])
+    out.push({
+      id: `off-${sec}`,
+      level: "aviso",
+      text: `${SECTION_INFO[sec].name} fuera de combate (${SECTION_INFO[sec].effect}).`,
+    });
+  return out;
+}
 
 /** Radio en pantalla de cada límite de banda (2, 5, 9 y 15 unidades). */
 const EDGE_R = [30, 70, 110, 148];
@@ -82,6 +146,7 @@ export function Radar({
   simple = false,
   ourDamage,
   theirDamage,
+  alarm = false,
 }: {
   own: SideState;
   foe: SideState;
@@ -103,6 +168,8 @@ export function Radar({
   /** Daño previsto de nuestras baterías / del enemigo en la ronda (si no, el de la posición actual). */
   ourDamage?: number | undefined;
   theirDamage?: number | undefined;
+  /** Sonar la alarma cuando aparece un peligro grave. */
+  alarm?: boolean;
 }) {
   const g = geo ?? geoOf(own, foe);
   const band: Range = bandOf(g.distance);
@@ -132,6 +199,13 @@ export function Radar({
   const best = [...ours].sort((a, b) => b.v - a.v)[0]!;
   const theirNow = theirDamage ?? rawFire(foe, g.relFoe, band).value;
   const ourShown = ourDamage ?? ourNow;
+  const dangers = simple && !approaching ? assessDangers(own, foe, g) : [];
+  const dangerKey = dangers.map((d) => d.id).join("|");
+  useEffect(() => {
+    if (alarm && dangers.some((d) => d.level === "alarma")) play("alarma", { gain: 0.6 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dangerKey, alarm]);
+  const ramDanger = dangers.some((d) => d.id === "embestida" || d.id === "abordaje");
   // Barrido del auspex: el eco del enemigo se ilumina al pasar el haz y se va apagando.
   const sweepRef = useRef<SVGGElement>(null);
   const echoRef = useRef<SVGGElement>(null);
@@ -293,17 +367,53 @@ export function Radar({
           {!approaching &&
             torpedoesIn > 0 &&
             Array.from({ length: Math.min(torpedoesIn, 6) }, (_, i) => {
-              const p = radarPoint(g.rel + (i % 2 ? 6 : -6), g.distance * (0.62 - 0.08 * i));
+              const p = radarPoint(g.rel + (i % 2 ? 6 : -6), g.distance * (0.75 - 0.06 * i));
               return (
-                <circle
-                  key={`i${i}`}
-                  cx={p.x}
-                  cy={p.y}
-                  r="2.3"
-                  className="fill-red-400 motion-safe:animate-pulse"
-                />
+                <g key={`i${i}`}>
+                  <circle r="2.6" className="fill-red-400">
+                    <animate
+                      attributeName="cx"
+                      values={`${p.x};${160 + (p.x - 160) * 0.15}`}
+                      dur="2.2s"
+                      begin={`${i * 0.25}s`}
+                      repeatCount="indefinite"
+                    />
+                    <animate
+                      attributeName="cy"
+                      values={`${p.y};${160 + (p.y - 160) * 0.15}`}
+                      dur="2.2s"
+                      begin={`${i * 0.25}s`}
+                      repeatCount="indefinite"
+                    />
+                    <animate
+                      attributeName="opacity"
+                      values="1;1;0"
+                      dur="2.2s"
+                      begin={`${i * 0.25}s`}
+                      repeatCount="indefinite"
+                    />
+                  </circle>
+                </g>
               );
             })}
+          {/* Peligro de embestida o abordaje: sector rojo intermitente hacia el enemigo */}
+          {ramDanger && (
+            <path
+              d={wedgePath(160, 160, 120, g.rel - 22, g.rel + 22)}
+              className="fill-red-500 motion-safe:animate-pulse"
+              fillOpacity={0.28}
+            />
+          )}
+          {dangers.some((d) => d.level === "alarma") && (
+            <circle
+              cx="160"
+              cy="160"
+              r="150"
+              fill="none"
+              className="stroke-red-500 motion-safe:animate-pulse"
+              strokeWidth="3"
+            />
+          )}
           {/* Pronóstico de las rondas */}
           {!simple && ghosts && ghosts.length > 0 && (
             <g>
@@ -421,42 +531,50 @@ export function Radar({
         )}
       </div>
       {simple && !approaching && (
-        <dl className="mt-2 grid grid-cols-3 gap-1 text-center text-[11px]">
-          <div className="rounded border border-primary/30 p-1">
-            <dt className="text-muted-foreground">Enemigo</dt>
-            <dd className="font-semibold text-red-200">
-              {facing.arc === "proa"
-                ? "a proa"
-                : facing.arc === "popa"
-                  ? "a popa"
-                  : `a ${facing.arc}`}{" "}
-              · {RANGE_NAMES[band]}
-            </dd>
-          </div>
-          <div className="rounded border border-sky-500/40 p-1">
-            <dt className="text-muted-foreground">Le hacemos</dt>
-            <dd
-              className={`text-base font-bold ${ourShown >= theirNow ? "text-emerald-300" : "text-sky-200"}`}
-            >
-              −{ourShown.toFixed(ourDamage !== undefined ? 1 : 0)}
-            </dd>
-          </div>
-          <div className="rounded border border-red-500/40 p-1">
-            <dt className="text-muted-foreground">Nos hacen</dt>
-            <dd
-              className={`text-base font-bold ${theirNow > ourShown ? "text-red-300" : "text-red-200"}`}
-            >
-              −{theirNow.toFixed(theirDamage !== undefined ? 1 : 0)}
-            </dd>
-          </div>
-          {best.arc !== facing.arc && best.v > ourNow && (
-            <p className="col-span-3 text-amber-200">
-              Mejor con el enemigo a{" "}
-              {best.arc === "proa" ? "proa" : best.arc === "popa" ? "popa" : best.arc} (−
-              {best.v.toFixed(0)})
-            </p>
-          )}
-        </dl>
+        <div className="mt-2 space-y-1">
+          <ul aria-live="polite" className="space-y-1">
+            {dangers.length === 0 ? (
+              <li className="rounded border border-emerald-500/40 bg-emerald-950/20 px-2 py-1 text-center text-[11px] text-emerald-200">
+                Sin peligros inmediatos
+              </li>
+            ) : (
+              dangers.map((d) => (
+                <li
+                  key={d.id}
+                  className={`rounded border px-2 py-1 text-[11px] ${d.level === "alarma" ? "border-red-500 bg-red-950/40 font-semibold text-red-200 motion-safe:animate-pulse" : "border-amber-500/60 bg-amber-950/20 text-amber-200"}`}
+                >
+                  {d.level === "alarma" ? "⚠ " : "• "}
+                  {d.text}
+                </li>
+              ))
+            )}
+          </ul>
+          <dl className="grid grid-cols-3 gap-1 text-center text-[10px]">
+            <div className="rounded border border-primary/30 p-1">
+              <dt className="text-muted-foreground">Enemigo</dt>
+              <dd className="font-semibold text-red-200">
+                {facing.arc === "proa"
+                  ? "a proa"
+                  : facing.arc === "popa"
+                    ? "a popa"
+                    : `a ${facing.arc}`}{" "}
+                · {RANGE_NAMES[band]}
+              </dd>
+            </div>
+            <div className="rounded border border-sky-500/40 p-1">
+              <dt className="text-muted-foreground">Le hacemos</dt>
+              <dd className="text-sm font-bold text-sky-200">
+                −{ourShown.toFixed(ourDamage !== undefined ? 1 : 0)}
+              </dd>
+            </div>
+            <div className="rounded border border-red-500/40 p-1">
+              <dt className="text-muted-foreground">Nos hacen</dt>
+              <dd className="text-sm font-bold text-red-200">
+                −{theirNow.toFixed(theirDamage !== undefined ? 1 : 0)}
+              </dd>
+            </div>
+          </dl>
+        </div>
       )}
       {caption && (
         <figcaption className="mt-1 text-center text-xs text-muted-foreground">

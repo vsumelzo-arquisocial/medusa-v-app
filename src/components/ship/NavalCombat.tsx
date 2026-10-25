@@ -79,6 +79,7 @@ export const raidsQuery = queryOptions({
         busy: boolean;
         warp_until: string | null;
         max_hull: number;
+        rebuild_until?: string | null;
       }[];
     };
     return {
@@ -344,6 +345,12 @@ export function NavalCommand() {
               recibir ataques.
             </p>
           )}
+          {new Date(ownStatus?.rebuild_until ?? 0).getTime() > serverNow && (
+            <p role="status" className="border-y border-amber-500 py-3 text-amber-300">
+              Nave en el astillero · lista en {remaining(ownStatus?.rebuild_until ?? "")}. Hasta
+              entonces no puedes lanzar ni recibir ofensivas navales ni viajar.
+            </p>
+          )}
           {active.length > 0 && (
             <p role="status" className="border-y border-destructive py-3 text-destructive">
               {active.some((r) => r.status === "enfrentado")
@@ -419,13 +426,17 @@ export function NavalCommand() {
                     );
                   })()}
                   <span className="text-xs text-muted-foreground">
-                    {data.fleetStatus.find((s) => s.user_id === p.id)?.busy
-                      ? "Ocupada en un duelo"
-                      : new Date(
-                            data.fleetStatus.find((s) => s.user_id === p.id)?.warp_until ?? "",
-                          ).getTime() > serverNow
-                        ? "En el warp · protegida"
-                        : "Disponible"}
+                    {new Date(
+                      data.fleetStatus.find((s) => s.user_id === p.id)?.rebuild_until ?? 0,
+                    ).getTime() > serverNow
+                      ? "En el astillero"
+                      : data.fleetStatus.find((s) => s.user_id === p.id)?.busy
+                        ? "Ocupada en un duelo"
+                        : new Date(
+                              data.fleetStatus.find((s) => s.user_id === p.id)?.warp_until ?? "",
+                            ).getTime() > serverNow
+                          ? "En el warp · protegida"
+                          : "Disponible"}
                   </span>
                 </Button>
               );

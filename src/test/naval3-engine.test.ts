@@ -152,6 +152,49 @@ describe("combate naval v3 con rumbo y arcos", () => {
     expect(r.state.finished?.reason).toBe("salto");
   });
 
+  it("abordaje: solo en Contacto, gasta cargas y la T'au no tiene", () => {
+    const s = place(duel(), 1, 0, 4);
+    expect(s.attacker.boardingLeft).toBe(2);
+    expect(s.defender.boardingLeft).toBe(3);
+    const r = resolveBlock(s, hold("abordar", 0), hold("fuego", 0), seeded(11));
+    const rolls = r.events.map((e) => e.attacker.boardingRoll).filter(Boolean);
+    expect(rolls.length).toBe(2);
+    expect(r.state.attacker.boardingLeft).toBe(0);
+    expect(r.events[2]!.attacker.forced).toMatch(/cápsulas/);
+    const far = resolveBlock(
+      place(duel(), 8, 0, 4),
+      hold("abordar", 0),
+      hold("fuego", 0),
+      seeded(12),
+    );
+    expect(far.events[0]!.attacker.boardingRoll).toBeNull();
+    expect(far.events[0]!.attacker.action).toBe("fuego");
+    expect(newSide("tau", {}, 22, 22).boardingLeft).toBe(0);
+  });
+
+  it("las secciones fuera de combate limitan la nave y Reparar las reactiva", () => {
+    const s = place(duel(), 6, 0, 4);
+    s.attacker.disabled = ["torpedos", "motores"];
+    const r = resolveBlock(
+      s,
+      {
+        phases: [
+          { speed: 2, turn: 0, action: "torpedos" },
+          { speed: 1, turn: 0, action: "reparar" },
+          { speed: 1, turn: 0, action: "reparar" },
+        ],
+        emergencyJump: 0,
+      },
+      hold("evasion", 0),
+      seeded(13),
+    );
+    expect(r.events[0]!.attacker.action).toBe("fuego");
+    expect(r.events[0]!.attacker.speed).toBe(1);
+    expect(r.events[1]!.attacker.repairedModule).toBe("torpedos");
+    expect(r.events[2]!.attacker.repairedModule).toBe("motores");
+    expect(r.state.attacker.disabled).toEqual([]);
+  });
+
   it("salto de emergencia al bajar del umbral", () => {
     const s = place(duel(), 1, 0, 4);
     s.attacker.hull = 9;

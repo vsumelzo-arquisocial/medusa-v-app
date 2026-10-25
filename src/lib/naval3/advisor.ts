@@ -2,10 +2,12 @@
  * El Segundo al mando: lee la geometría (distancia, arcos, rumbos), propone planes y avisa de errores.
  * La interfaz (consejos) y la IA (bot) usan las mismas reglas.
  */
-import { FLEET_PROFILES, SECOND, TORPEDO_DAMAGE } from "./factions";
+import { BOARDING_CHARGES, FLEET_PROFILES, SECOND, SECTION_INFO, TORPEDO_DAMAGE } from "./factions";
 import { MANEUVERS, maneuverMove } from "./maneuvers";
 import {
   bandOf,
+  boardingChance,
+  isOff,
   dist,
   expectedHit,
   legalize,
@@ -139,6 +141,7 @@ function simulateStep(
   if (legal.speed === 2) ourHit *= 0.5;
   if (p.action === "escudos" || p.action === "recargar") ourHit *= 0.5;
   if (p.action === "evasion" || p.action === "reparar" || p.action === "torpedos") ourHit = 0;
+  if (p.action === "abordar") ourHit = band === 0 && (own.boardingLeft ?? 0) > 0 ? 1.5 : ourHit;
   if (p.action === "escudos") theirHit = Math.max(0, theirHit - 3) * 0.7;
   if (p.action === "evasion") theirHit *= 0.5;
   return {
@@ -179,6 +182,7 @@ export function suggestPlan(input: DuelState, side: Side, stance: Stance, rng?: 
   const ramStrong = stats(own).ram >= 6;
   let loaded = own.torpedoesLoaded;
   let foeInFlight = foe.torpedoesInFlight > 0;
+  let boardsLeft = own.boardingLeft ?? BOARDING_CHARGES[own.fleet];
   const phases: PhasePlan[] = [];
   for (let i = 0; i < blockRounds(state); i++) {
     // ¿Embestida posible ahora?
@@ -209,13 +213,22 @@ export function suggestPlan(input: DuelState, side: Side, stance: Stance, rng?: 
       else if (stance === "defensiva" && own.hull < own.maxHull * 0.7 && step.theirHit < 1.5)
         action = "reparar";
       else if (step.theirHit >= 4 && step.theirHit > step.ourHit + 1.5) action = "escudos";
-      else if (loaded && prowAfter <= 40 && step.band >= 1) action = "torpedos";
-      else if (!loaded && stats(own).torpedoes > 0 && step.ourHit <= 2) action = "recargar";
+      else if (
+        step.band === 0 &&
+        boardsLeft > 0 &&
+        stance !== "defensiva" &&
+        (BOARDING_CHARGES[own.fleet] >= 2 || step.ourHit < 3)
+      )
+        action = "abordar";
+      else if (loaded && prowAfter <= 40 && step.band >= 1 && !isOff(own, "torpedos"))
+        action = "torpedos";
+      else if (!loaded && stats(own).torpedoes > 0 && step.ourHit <= 2 && !isOff(own, "torpedos"))
+        action = "torpedos";
       else action = "fuego";
       chosen = { ...best!.move, action };
     }
-    if (chosen.action === "torpedos") loaded = false;
-    if (chosen.action === "recargar") loaded = true;
+    if (chosen.action === "torpedos") loaded = !loaded;
+    if (chosen.action === "abordar") boardsLeft--;
     if (chosen.action === "reparar") own.hull = Math.min(own.maxHull, own.hull + stats(own).repair);
     foeInFlight = false;
     phases.push(chosen);
@@ -305,7 +318,19 @@ export function briefing(input: DuelState, side: Side): Advice[] {
   if (!own.torpedoesLoaded)
     out.push({
       tone: "warn",
-      text: "Nuestros tubos están vacíos: hay que recargar antes de lanzar.",
+      text: "Nuestros tubos están vacíos: la orden Torpedos recargará esta ronda.",
+    });
+  const off = own.disabled ?? [];
+  if (off.length)
+    out.push({
+      tone: "danger",
+      text: `Fuera de combate: ${off.map((x) => SECTION_INFO[x].name).join(", ")}. Reparar los reactiva uno por ronda.`,
+    });
+  const charges = own.boardingLeft ?? BOARDING_CHARGES[own.fleet];
+  if (charges > 0)
+    out.push({
+      tone: "info",
+      text: `Nos quedan ${charges} cápsula${charges > 1 ? "s" : ""} de abordaje: solo sirven en Contacto.`,
     });
   const pf = FLEET_PROFILES[foe.fleet];
   out.push({ tone: "info", text: `Enemigo: ${pf.trait}. ${pf.traitText}` });
@@ -342,7 +367,26 @@ export function phaseAdvice(
       text: "Salto: esta ronda y la siguiente quietos y sin defensas; luego saltamos. Perdemos el duelo, salvamos la nave.",
     };
   if (p.action === "torpedos" && !loaded)
-    return { tone: "danger", text: "Tubos vacíos: esta orden se convertirá en recarga." };
+    return {
+      tone: "info",
+      text: "Tubos vacíos: esta ronda recargamos y disparamos a media potencia.",
+    };
+  if (p.action === "abordar") {
+    if ((own.boardingLeft ?? 0) <= 0)
+      return {
+        tone: "danger",
+        text: "No nos quedan cápsulas de abordaje: dispararemos en su lugar.",
+      };
+    if (step.band !== 0)
+      return {
+        tone: "danger",
+        text: `Para abordar hay que estar en Contacto (quedaremos a ${step.distance.toFixed(1)} u). Si no, dispararemos.`,
+      };
+    return {
+      tone: "good",
+      text: `¡Al abordaje! ~${boardingChance(own, step.foe, "fuego")} % de éxito: 2–4 de daño y puede inutilizar una sección.`,
+    };
+  }
   if (p.action === "torpedos" && Math.abs(step.rel) > 45)
     return {
       tone: "danger",
@@ -560,6 +604,10 @@ function hitWithActions(
     pa.action === "embestir"
   )
     return 0;
+  if (pa.action === "abordar")
+    return band === 0 && (a.boardingLeft ?? 0) > 0
+      ? (boardingChance(a, b, pb.action) / 100) * 3
+      : expectedHit(a, b, band);
   if (pa.action === "torpedos")
     return Math.abs(relBearing(a, b.pos)) <= 45 && a.torpedoesLoaded
       ? stats(a).torpedoes * TORPEDO_DAMAGE * 0.55

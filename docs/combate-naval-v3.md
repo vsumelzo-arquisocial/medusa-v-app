@@ -115,3 +115,14 @@ Código: `src/lib/naval3/` (motor, Segundo, narración, servidor), `src/componen
 - **Durante el combate** se bloquean obras, mejoras y escoltas; las que estaban en curso se pausan y, al terminar el duelo, continúan donde se quedaron (columna `ships.works_paused_at` y disparador `naval_combat_works`).
 - Ya no se exige que no haya obras para poder atacar o ser atacado (se pausan).
 - Migración: `20261025020000_naval_approach.sql`.
+
+## Actualización: nave destruida sin reinicio, abordajes, secciones y radar de peligros
+
+- **Nave destruida:** ya no reinicia el perfil. Se pierden los módulos (nivel 0), las escoltas y las obras; el casco vuelve al máximo y la nave pasa 24 h en el astillero (sin ofensivas navales ni viajes). Conquistas, créditos y unidades siguen. Funciones `ship_destroyed` y columna `ships.rebuild_until`.
+- **Abordaje** (nueva acción, sustituye a «Recargar»): solo en Contacto; éxito base 50 % (+10 % por nivel de cubierta de abordaje, −20 % si el rival sube escudos, −15 % si esquiva); 2–4 de daño y 35 % de dejar fuera de combate una sección. Cargas por duelo: 3 Orkos, Tiránidos y Cultos; 2 Caos, Demonios, Drukhari e Imperio; 1 Votann, Necrones y Aeldari; 0 T'au.
+- **Torpedos** recarga sola si los tubos están vacíos (y dispara a media potencia).
+- **Secciones:** puente (solo giros de 45°), baterías (disparo a la mitad), torpedos, motores (sin avante toda ni embestida) y escudos. Se pierden por abordaje o, rara vez (6 %), por una andanada de 4 o más. «Reparar» reactiva una por ronda. Las que sigan rotas al acabar el duelo quedan como módulos averiados (`naval_mark_damaged`) y vuelven rotas al siguiente duelo hasta repararlas.
+- **Mapa:** norte arriba y siempre centrado en tu nave; solo tus arcos de fuego (desde el centro de la nave) y la zona que el enemigo puede alcanzar; sin ruta prevista del enemigo.
+- **Radar:** asistente de peligros con alarma: torpedos en camino, embestida o abordaje posibles, proa enemiga con torpedos cargados, popa expuesta y secciones fuera de combate.
+- **Esquema de secciones** junto a la barra de casco de cada nave.
+- Migración: `20261025030000_naval_destroyed_ship.sql`.

@@ -6,6 +6,7 @@
 import type { FleetId } from "@/lib/ship-identity";
 import {
   BAND_EDGES,
+  BOARDING_CHARGES,
   EVASION_BONUS,
   FLEET_PROFILES,
   MAX_BLOCKS,
@@ -15,6 +16,7 @@ import {
   TORPEDO_DAMAGE,
   type RangeTable,
 } from "./factions";
+import { SECTIONS } from "./types";
 import type {
   Action,
   Arc,
@@ -25,6 +27,7 @@ import type {
   PhaseEvent,
   PhasePlan,
   Range,
+  Section,
   Side,
   SidePhaseLog,
   SideState,
@@ -115,6 +118,32 @@ function weaponTable(s: SideState, arc: Arc): RangeTable {
   }) as RangeTable;
 }
 
+/** ¿Está esa sección fuera de combate? */
+export function isOff(s: Pick<SideState, "disabled">, sec: Section): boolean {
+  return !!s.disabled?.includes(sec);
+}
+
+/** Probabilidad (%) de que un abordaje salga bien. */
+export function boardingChance(own: SideState, foe: SideState, foeAction: Action): number {
+  let c = 50 + 10 * own.modules.cubierta_abordaje;
+  if (foeAction === "escudos" && !isOff(foe, "escudos")) c -= 20;
+  if (foeAction === "evasion") c -= 15;
+  return clamp(c, 10, 90);
+}
+
+export const BOARDING_DAMAGE: [number, number] = [2, 4];
+/** Probabilidad de crítico al abordar con éxito, y por cada andanada fuerte (≥ 4 de daño). */
+export const BOARDING_CRIT = 0.35;
+export const FIRE_CRIT = 0.06;
+
+function knockOut(target: SideState, rng: Rng): Section | null {
+  const up = SECTIONS.filter((x) => !isOff(target, x));
+  if (!up.length) return null;
+  const sec = up[Math.floor(rng() * up.length)]!;
+  target.disabled = [...(target.disabled ?? []), sec];
+  return sec;
+}
+
 export function stats(s: SideState) {
   const p = FLEET_PROFILES[s.fleet];
   const m = s.modules;
@@ -122,7 +151,7 @@ export function stats(s: SideState) {
     speed: p.speed + Math.floor(m.motores_plasma / 2),
     burn: p.burn,
     agility: p.agility,
-    shields: p.shields + m.camara_escudos,
+    shields: isOff(s, "escudos") ? 0 : p.shields + m.camara_escudos,
     dodge: p.dodge,
     torpedoes: p.torpedoes,
     ram: p.ram + 2 * m.blindaje_proa,
@@ -236,16 +265,17 @@ export function helmTurn(s: SideState, foePos: Vec, helm: Helm, cap: number): Tu
 
 /** Normaliza velocidad y giro según la acción, la agilidad y la posición del enemigo. */
 export function legalize(s: SideState, p: PhasePlan, foePos: Vec): { speed: Speed; turn: Turn } {
-  if (p.action === "embestir") return { speed: 2, turn: 0 };
+  const noBurn = isOff(s, "motores");
+  if (p.action === "embestir") return { speed: noBurn ? 1 : 2, turn: 0 };
   if (p.action === "saltar") return { speed: 0, turn: 0 };
-  const speed = p.speed;
+  const speed: Speed = noBurn && p.speed === 2 ? 1 : p.speed;
   if (speed === 2) return { speed, turn: 0 };
   return { speed, turn: helmTurn(s, foePos, p.turn, maxTurn(s, speed)) };
 }
 
 export function maxTurn(s: SideState, speed: Speed): number {
   if (speed === 2) return 0;
-  return Math.min(2, stats(s).agility + (speed === 0 ? 1 : 0));
+  return Math.min(isOff(s, "puente") ? 1 : 2, stats(s).agility + (speed === 0 ? 1 : 0));
 }
 
 export function unitsFor(s: SideState, speed: Speed): number {
@@ -302,8 +332,11 @@ export function newSide(
   modules: Partial<ModuleLevels>,
   hull: number,
   maxHull: number,
+  disabled: Section[] = [],
 ): SideState {
   return {
+    boardingLeft: BOARDING_CHARGES[fleet],
+    disabled: [...disabled],
     fleet,
     modules: { ...EMPTY_MODULES, ...modules },
     hull: Math.max(1, Math.min(hull, maxHull)),
@@ -333,6 +366,10 @@ export function newDuel(attacker: SideState, defender: SideState, rng?: Rng): Du
 /** Duelos guardados antes de existir el rumbo: les da posiciones equivalentes a su banda. */
 export function normalizeState(input: DuelState): DuelState {
   const s = structuredClone(input);
+  for (const side of SIDES) {
+    s[side].boardingLeft ??= BOARDING_CHARGES[s[side].fleet];
+    s[side].disabled ??= [];
+  }
   if (!s.attacker.pos || !s.defender.pos) {
     const d = [1, 3.5, 7, 12][s.range] ?? 12;
     s.attacker.pos = { x: 0, y: -d / 2 };
@@ -361,6 +398,9 @@ function emptyLog(p: PhasePlan, legal: { speed: Speed; turn: Turn }, s: SideStat
     ram: null,
     warp: null,
     repaired: 0,
+    repairedModule: null,
+    boardingRoll: null,
+    critical: null,
     regen: 0,
     hullAfter: 0,
     pos: s.pos,
@@ -418,9 +458,18 @@ export function resolveBlock(
       } else if (emergency[side] && plan.action !== "saltar") {
         plan.action = "saltar";
         forced = "Salto de emergencia: el casco bajó del umbral fijado.";
+      } else if (plan.action === "torpedos" && isOff(s[side], "torpedos")) {
+        plan.action = "fuego";
+        forced = "Tubos de torpedos fuera de combate: dispara en su lugar.";
       } else if (plan.action === "torpedos" && !s[side].torpedoesLoaded) {
         plan.action = "recargar";
-        forced = "Tubos vacíos: en lugar de lanzar, recarga.";
+        forced = "Tubos vacíos: recarga y dispara a media potencia.";
+      } else if (plan.action === "abordar" && (s[side].boardingLeft ?? 0) <= 0) {
+        plan.action = "fuego";
+        forced = "No quedan cápsulas de abordaje: dispara en su lugar.";
+      } else if (plan.action === "embestir" && isOff(s[side], "motores")) {
+        plan.action = "fuego";
+        forced = "Motores dañados: sin avante toda no hay embestida. Dispara en su lugar.";
       }
       const legal = legalize(s[side], plan, s[other(side)].pos);
       logs[side] = emptyLog(plan, legal, s[side]);
@@ -542,6 +591,28 @@ export function resolveBlock(
       const foe = s[target];
       const rel = relBearing(own, foe.pos);
       const relFoe = relBearing(foe, own.pos);
+      if (log.action === "abordar") {
+        if (s.range !== 0) {
+          log.action = "fuego";
+          log.forced = "Abordaje imposible: no estamos en Contacto. Dispara en su lugar.";
+        } else {
+          own.boardingLeft = Math.max(0, (own.boardingLeft ?? 0) - 1);
+          const chance = boardingChance(own, foe, logs[target].action);
+          const success = rng() * 100 < chance;
+          let damage = 0;
+          let critical: Section | null = null;
+          if (success) {
+            damage =
+              BOARDING_DAMAGE[0] +
+              Math.floor(rng() * (BOARDING_DAMAGE[1] - BOARDING_DAMAGE[0] + 1));
+            if (rng() < BOARDING_CRIT) critical = knockOut(foe, rng);
+            dmg[target] += damage;
+            own.boarding += 1;
+          }
+          log.boardingRoll = { chance, success, damage, critical };
+          continue;
+        }
+      }
       if (log.action === "torpedos" && Math.abs(rel) > 45) {
         log.action = "fuego";
         log.forced =
@@ -552,6 +623,7 @@ export function resolveBlock(
         const f = rawFire(own, rel, s.range);
         let raw = f.value * (1 - p.variance + rng() * 2 * p.variance);
         if (log.action === "recargar" || log.action === "escudos") raw *= 0.5;
+        if (isOff(own, "baterias")) raw *= 0.5;
         if (log.speed === 2) raw *= 0.5;
         if (logs[target].action === "evasion") raw *= 0.5;
         raw *= defenceFactor(foe, relFoe);
@@ -566,6 +638,7 @@ export function resolveBlock(
         log.fireDealt = dealt;
         log.shieldsAbsorbed = shots - dealt;
         dmg[target] += dealt;
+        if (dealt >= 4 && rng() < FIRE_CRIT) log.critical = knockOut(foe, rng);
         if (s.range === 0 && dealt > 0) own.boarding += own.fleet === "drukhari" ? 2 : 1;
         if (log.action === "recargar") own.torpedoesLoaded = true;
       } else if (log.action === "torpedos") {
@@ -593,8 +666,13 @@ export function resolveBlock(
     for (const side of SIDES) {
       const own = stats(s[side]);
       const before = s[side].hull;
-      if (logs[side].action === "reparar")
-        s[side].hull = Math.min(s[side].maxHull, s[side].hull + own.repair);
+      if (logs[side].action === "reparar") {
+        const broken = s[side].disabled ?? [];
+        if (broken.length) {
+          logs[side].repairedModule = broken[0]!;
+          s[side].disabled = broken.slice(1);
+        } else s[side].hull = Math.min(s[side].maxHull, s[side].hull + own.repair);
+      }
       logs[side].repaired = s[side].hull - before;
       const mid = s[side].hull;
       s[side].hull = Math.min(s[side].maxHull, s[side].hull + own.regen);

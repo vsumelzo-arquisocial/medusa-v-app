@@ -12,7 +12,19 @@ export type Turn = -2 | -1 | 0 | 1 | 2;
 export type Helm = Turn | "encarar" | "costado" | "huir";
 
 export type Action =
-  "fuego" | "torpedos" | "recargar" | "escudos" | "evasion" | "embestir" | "reparar" | "saltar";
+  | "fuego"
+  | "torpedos"
+  | "recargar"
+  | "escudos"
+  | "evasion"
+  | "embestir"
+  | "reparar"
+  | "saltar"
+  | "abordar";
+
+/** Secciones de la nave que un crítico o un abordaje pueden dejar fuera de combate. */
+export type Section = "puente" | "baterias" | "torpedos" | "motores" | "escudos";
+export const SECTIONS: Section[] = ["puente", "baterias", "torpedos", "motores", "escudos"];
 
 export type Arc = "proa" | "estribor" | "popa" | "babor";
 export const ARC_NAMES: Record<Arc, string> = {
@@ -65,6 +77,10 @@ export interface SideState {
   boarding: number;
   /** Salto disforme en curso: 0 nada · 1 declarado (ronda de aguante) · 2 listo para saltar. */
   warpCharge?: number;
+  /** Cargas de abordaje que quedan en este duelo. */
+  boardingLeft?: number;
+  /** Secciones fuera de combate (críticos, abordajes o averías previas). */
+  disabled?: Section[];
 }
 
 export type Side = "attacker" | "defender";
@@ -116,6 +132,17 @@ export interface SidePhaseLog {
     stage?: "declara" | "carga" | "salta";
   };
   repaired: number;
+  /** Sección reactivada con Reparar (en vez de casco). */
+  repairedModule?: Section | null;
+  /** Abordaje lanzado esta ronda. */
+  boardingRoll?: null | {
+    chance: number;
+    success: boolean;
+    damage: number;
+    critical: Section | null;
+  };
+  /** Crítico causado por el disparo de esta nave. */
+  critical?: Section | null;
   regen: number;
   hullAfter: number;
   /** Posición y rumbo al terminar la fase (para la repetición). */

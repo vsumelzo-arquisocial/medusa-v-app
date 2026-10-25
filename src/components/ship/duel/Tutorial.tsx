@@ -32,18 +32,18 @@ function steps(fleet: FleetId): Step[] {
     {
       target: "mapa",
       title: "El mapa táctico",
-      text: "Visto desde arriba, con el norte arriba. Vuestra nave es la azul y el enemigo la roja. Los conos de color son los arcos de fuego: donde caiga el enemigo dentro de vuestro cono, le disparáis con esas armas. Los anillos marcan las distancias: Contacto, Cerca y Media.",
+      text: "Visto desde arriba, con el norte arriba y vuestra nave siempre en el centro. Los conos azules son vuestros arcos de fuego: donde caiga el enemigo dentro de un cono, le disparáis con esas armas. Los anillos marcan las distancias: Contacto, Cerca y Media.",
     },
     {
       target: "mapa",
       title: "Pronóstico",
-      text: "Las siluetas azules numeradas (1, 2, 3) son dónde acabará vuestra nave al final de cada ronda con las órdenes actuales. Las rojas discontinuas, lo que el enemigo hará con más probabilidad. La nube roja es todo lo que podría alcanzar si hace otra cosa. Las cifras sobre el mapa son el daño previsto.",
+      text: "Las siluetas azules numeradas son dónde acabará vuestra nave con las órdenes actuales. La zona roja es todo lo que el enemigo puede alcanzar: no sabemos qué hará, pero no saldrá de ahí.",
       needsPlan: true,
     },
     {
       target: "radar",
       title: "El radar del puente",
-      text: "Visto desde vuestra nave, con la proa siempre arriba. El eco verde es el enemigo: se ilumina al pasar el barrido. Abajo os dice dónde está, cuánto daño le hacen nuestras baterías esa ronda y cuánto nos hace él.",
+      text: "Vuestro asistente de peligros: la proa siempre arriba y el enemigo como eco verde. Si vienen torpedos, si puede embestirnos o abordarnos, o si le enseñamos la popa, sonará la alarma y os lo dirá debajo.",
     },
     {
       target: "posturas",
@@ -77,7 +77,7 @@ function steps(fleet: FleetId): Step[] {
     {
       target: "salto",
       title: "Red de seguridad",
-      text: "Si la nave llega a 0 de casco, estalla y vuestro perfil se reinicia por completo. Fijad un salto automático: si el casco baja de ese umbral, declararé el salto por vos (tarda dos rondas).",
+      text: "Si la nave llega a 0 de casco, estalla: la perdéis con sus mejoras y pasa 24 h en el astillero. Fijad un salto automático: si el casco baja de ese umbral, declararé el salto por vos (tarda dos rondas).",
       needsPlan: true,
     },
     {

@@ -42,6 +42,26 @@ export function makeProjection(points: Vec[], minSpan = 18): Projection {
   };
 }
 
+/** Escala para que, con tu nave siempre en el centro, quepan todos los puntos relevantes. */
+export function centeredScale(points: Vec[], minSpan = 16): number {
+  let d = 0;
+  for (const a of points)
+    for (const b of points)
+      d = Math.max(d, Math.abs(a.x - b.x), Math.abs(a.y - b.y) * (MAP_W / MAP_H));
+  return MAP_W / Math.max(minSpan, d * 2 * 1.08 + 4);
+}
+
+/** Proyección norte arriba centrada en un punto (tu nave). */
+export function centeredProjection(center: Vec, scale: number): Projection {
+  return {
+    scale,
+    pt: (v) => ({
+      x: MAP_W / 2 + (v.x - center.x) * scale,
+      y: MAP_H / 2 - (v.y - center.y) * scale,
+    }),
+  };
+}
+
 const SHIP = "M0 -11 L7 6 L3 4 L0 9 L-3 4 L-7 6 Z";
 
 /** Envolvente convexa (cadena monótona). */
@@ -359,14 +379,11 @@ export function TacticalMap({
   const fitKey = [own.pos, foe.pos, ...(fitPoints ?? [])]
     .map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`)
     .join("|");
-  const proj = useMemo(
-    () => makeProjection([own.pos, foe.pos, ...(fitPoints ?? [])]),
+  const scale = useMemo(
+    () => centeredScale([own.pos, foe.pos, ...(fitPoints ?? [])]),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [fitKey],
   );
-  useEffect(() => {
-    onProjection?.(proj);
-  }, [proj, onProjection]);
   const canvas = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     if (!canvas.current || !onFx) return;
@@ -396,6 +413,11 @@ export function TacticalMap({
   }, [motion]);
   const ownPose = motion ? poseAt(motion.own, t) : { pos: own.pos, deg: own.heading * 45 };
   const foePose = motion ? poseAt(motion.foe, t) : { pos: foe.pos, deg: foe.heading * 45 };
+  // Tú eres el protagonista: la vista sigue siempre a tu nave (norte arriba)
+  const proj = centeredProjection(ownPose.pos, scale);
+  useEffect(() => {
+    onProjection?.(proj);
+  });
   const segLen = (sg?: Segment) =>
     sg ? Math.hypot(sg.to.pos.x - sg.from.pos.x, sg.to.pos.y - sg.from.pos.y) : 0;
   const s = proj.scale;
@@ -483,23 +505,7 @@ export function TacticalMap({
               strokeDasharray="3 3"
             />
           )}
-          {!motion && (
-            <>
-              <Arcs
-                s={sel ? sel.foe : foe}
-                at={sel ? proj.pt(sel.foe.pos) : foeP}
-                scale={s}
-                color="#ef4444"
-                faint
-              />
-              <Arcs
-                s={sel ? sel.own : own}
-                at={sel ? proj.pt(sel.own.pos) : ownP}
-                scale={s}
-                color="#38bdf8"
-              />
-            </>
-          )}
+          {!motion && <Arcs s={own} at={ownP} scale={s} color="#38bdf8" />}
           {steps && steps.length > 0 && (
             <>
               <defs>
@@ -531,20 +537,7 @@ export function TacticalMap({
                 strokeOpacity={0.85}
                 markerEnd="url(#arrow-own)"
               />
-              <path
-                d={curvePath(
-                  [
-                    { pos: foe.pos, heading: foe.heading },
-                    ...steps.map((x) => ({ pos: x.foe.pos, heading: x.foe.heading })),
-                  ],
-                  proj,
-                )}
-                fill="none"
-                stroke="#f87171"
-                strokeWidth={1.3}
-                strokeDasharray="4 3"
-                strokeOpacity={0.8}
-              />
+
               {steps.map((x, i) => (
                 <g key={i}>
                   {i < (ownUpTo ?? steps.length) && (
@@ -556,58 +549,8 @@ export function TacticalMap({
                       active={i === selected}
                     />
                   )}
-                  <GhostShip
-                    at={proj.pt(x.foe.pos)}
-                    deg={x.foe.heading * 45}
-                    color="#fca5a5"
-                    n={i + 1}
-                    active={i === selected}
-                  />
                 </g>
               ))}
-              {sel && selected < (ownUpTo ?? steps.length) && (
-                <g>
-                  {sel.ourHit > 0.4 && (
-                    <>
-                      <line
-                        x1={proj.pt(sel.own.pos).x}
-                        y1={proj.pt(sel.own.pos).y}
-                        x2={proj.pt(sel.foe.pos).x}
-                        y2={proj.pt(sel.foe.pos).y}
-                        stroke="#38bdf8"
-                        strokeWidth={1}
-                        strokeDasharray="1 3"
-                      />
-                      <text
-                        x={proj.pt(sel.own.pos).x * 0.35 + proj.pt(sel.foe.pos).x * 0.65}
-                        y={proj.pt(sel.own.pos).y * 0.35 + proj.pt(sel.foe.pos).y * 0.65 - 4}
-                        textAnchor="middle"
-                        className="text-[10px] font-bold"
-                        fill="#7dd3fc"
-                        stroke="#000"
-                        strokeWidth={2.5}
-                        paintOrder="stroke"
-                      >
-                        −{sel.ourHit.toFixed(1)}
-                      </text>
-                    </>
-                  )}
-                  {sel.theirHit > 0.4 && (
-                    <text
-                      x={proj.pt(sel.own.pos).x * 0.65 + proj.pt(sel.foe.pos).x * 0.35}
-                      y={proj.pt(sel.own.pos).y * 0.65 + proj.pt(sel.foe.pos).y * 0.35 + 12}
-                      textAnchor="middle"
-                      className="text-[10px] font-bold"
-                      fill="#fca5a5"
-                      stroke="#000"
-                      strokeWidth={2.5}
-                      paintOrder="stroke"
-                    >
-                      −{sel.theirHit.toFixed(1)}
-                    </text>
-                  )}
-                </g>
-              )}
             </>
           )}
           <RealShip

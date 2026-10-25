@@ -22,6 +22,7 @@ export const phasePlanSchema = z.object({
     "embestir",
     "reparar",
     "saltar",
+    "abordar",
   ]),
 });
 

@@ -83,23 +83,18 @@ export function DuelHelp({ fleet }: { fleet: FleetId }) {
             {sec === "El radar" && (
               <>
                 <p>
-                  Tu nave está siempre en el centro, con la proa hacia arriba. Los anillos son las
-                  distancias: <b>Contacto</b>, <b>Cerca</b>, <b>Media</b> y <b>Lejos</b>.
+                  El radar es tu <b>asistente de peligros</b>. Tu nave está en el centro con la proa
+                  hacia arriba; el eco verde es el enemigo y se ilumina al pasar el barrido.
                 </p>
                 <p>
-                  Las <b>cuñas azules</b> son tus arcos de fuego (proa, costados, popa); el número
-                  es el daño que harías con ese arco a la distancia actual. Los <b>conos rojos</b>{" "}
-                  alrededor del enemigo son sus arcos: si estás dentro de su cono más grande, te va
-                  a doler.
+                  Debajo te avisa, con alarma si es grave, de lo que el enemigo <b>puede</b> hacerte
+                  en la ronda que viene: torpedos en camino, peligro de embestida o de abordaje si
+                  puede llegar a Contacto, su proa apuntándote con torpedos cargados, tu popa
+                  expuesta y tus secciones fuera de combate.
                 </p>
                 <p>
-                  La <b>silueta discontinua</b> muestra dónde estará el enemigo en la ronda que
-                  estás editando, suponiendo que mantiene el rumbo.
-                </p>
-                <p>
-                  En la repetición verás las andanadas salir de la nave y llegar al blanco (o pasar
-                  de largo si fallan), los torpedos con su estela (los esquivados se desvían), los
-                  destellos azules de los escudos y los números de daño.
+                  También muestra cuánto daño le hacen tus baterías esa ronda y cuánto te hace él si
+                  se queda donde está.
                 </p>
               </>
             )}
@@ -163,14 +158,26 @@ export function DuelHelp({ fleet }: { fleet: FleetId }) {
                 </p>
                 <p>
                   <b>Torpedos</b>: solo salen por la proa. Llegan en la ronda siguiente (de cerca,
-                  al instante) y cada uno puede esquivarse. Después hay que recargar.
+                  al instante) y cada uno puede esquivarse. Si los tubos están vacíos, la misma
+                  orden recarga (y disparas a media potencia).
                 </p>
                 <p>
                   <b>Embestida</b>: avante toda en línea recta contra un enemigo que tengas a proa.
                   Si llegas, el choque es brutal… también para ti.
                 </p>
                 <p>
-                  <b>Reparar</b>: control de daños, recupera casco.
+                  <b>Abordaje</b>: solo en Contacto. Lanzas cápsulas de abordaje: si sale bien (≈50
+                  %, menos si el rival sube escudos o esquiva) haces 2–4 de daño y puedes dejar
+                  fuera de combate una sección enemiga. Cargas por duelo: 3 Orkos, Tiránidos y
+                  Cultos; 2 Caos, Demonios, Drukhari e Imperio; 1 Votann, Necrones y Aeldari; 0
+                  T'au.
+                </p>
+                <p>
+                  <b>Secciones</b>: un abordaje o, rara vez, una andanada fuerte puede inutilizar
+                  puente (solo giros de 45°), baterías (disparo a la mitad), torpedos, motores (sin
+                  avante toda ni embestida) o escudos. <b>Reparar</b> reactiva una por ronda; si no
+                  hay ninguna, recupera casco. Las que sigan rotas al terminar quedan averiadas en
+                  la nave hasta repararlas en Ingeniería.
                 </p>
               </>
             )}
@@ -181,8 +188,8 @@ export function DuelHelp({ fleet }: { fleet: FleetId }) {
                   <b>saltar al disforme</b>.
                 </p>
                 <p className="text-red-300">
-                  Si la nave estalla, tu perfil se reinicia por completo: nave, planetas, créditos…
-                  todo.
+                  Si la nave estalla, la pierdes con todas sus mejoras y escoltas y pasa 24 h en el
+                  astillero (sin ofensivas navales). Tus conquistas, créditos y unidades siguen.
                 </p>
                 <p>
                   El <b>salto disforme</b> es instantáneo: pierdes el duelo pero salvas la nave.
